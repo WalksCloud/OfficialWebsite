@@ -20,6 +20,9 @@ jobs:
         node: [14]
 
     steps:
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
       - name: Checkout 🛎
         uses: actions/checkout@master
 
@@ -42,3 +45,19 @@ jobs:
       - name: Run linter 👀
         run: npm run lint
 
+      - name: Build
+        run: npm run generate
+
+      - name: Archive Production Artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: dist
+          path: dist
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          cname: walks.cloud
+          publish_dir: ./dist
+          force_orphan: true
