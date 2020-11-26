@@ -13,18 +13,14 @@ export default {
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: '' },
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-    ],
+    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
   css: [],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: [
-    '~plugins/i18n.js'
-  ],
+  plugins: ['~plugins/i18n.js'],
 
   // Auto import components (https://go.nuxtjs.dev/config-components)
   components: true,
@@ -34,7 +30,7 @@ export default {
     // https://go.nuxtjs.dev/eslint
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/stylelint
-    //'@nuxtjs/stylelint-module',
+    // '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
   ],
@@ -65,11 +61,11 @@ export default {
     defaultLocale: 'en',
     locales: [
       { code: 'en', iso: 'en-US', name: 'English', file: 'en-US.js' },
-      //{ code: 'zh', iso: 'zh-TW', name: '繁體中文', file: 'zh-TW.js' },
+      // { code: 'zh', iso: 'zh-TW', name: '繁體中文', file: 'zh-TW.js' },
     ],
     seo: true,
     detectBrowserLanguage: {
-      useCookie: false
+      useCookie: false,
     },
     lazy: true,
     vueI18nLoader: true,
@@ -78,7 +74,7 @@ export default {
 
   router: {
     base: process.env.NODE_ENV !== 'production' ? '' : '',
-    trailingSlash: true
+    trailingSlash: true,
   },
 
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
