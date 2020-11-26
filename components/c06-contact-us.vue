@@ -1,5 +1,5 @@
 <template>
-  <v-sheet id="contact" color="#333333" dark tag="section" tile>
+  <v-sheet id="contact-us" color="#333333" dark tag="section" tile>
     <div class="py-12"></div>
 
     <v-container>
