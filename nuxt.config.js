@@ -114,7 +114,7 @@ export default {
   build: {},
 
   publicRuntimeConfig: {
-    buildTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+    buildTime: moment().format('YYYY-MM-DD HH:mm:ss Z'),
     buildHash: git.short() + (git.isDirty() ? "-dirty" : ""),
   },
 }
