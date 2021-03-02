@@ -19,6 +19,16 @@
         class="title font-weight-light grey--text text--lighten-1 text-center"
       >
         &copy; {{ new Date().getFullYear() }} — {{ title }} Inc.
+        <span style="font-size: 10px">
+          <a href="https://github.com/WalksCloud/OfficialWebsite">GitHub</a> (<a
+            :href="
+              'https://github.com/WalksCloud/OfficialWebsite/commit/' +
+              $config.buildHash
+            "
+            >#{{ $config.buildHash }}</a
+          >
+          {{ $config.buildTime }})
+        </span>
       </div>
     </v-footer>
   </v-app>

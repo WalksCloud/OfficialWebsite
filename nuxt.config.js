@@ -1,4 +1,6 @@
 import colors from 'vuetify/es5/util/colors'
+import moment from 'moment'
+import git from 'git-rev-sync'
 
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
@@ -33,7 +35,13 @@ export default {
     // '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/moment',
   ],
+
+  moment: {
+    defaultTimezone: 'Asia/Taipei',
+    timezone: true,
+  },
 
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
@@ -104,4 +112,9 @@ export default {
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {},
+
+  publicRuntimeConfig: {
+    buildTime: moment().format('YYYY-MM-DD HH:mm:ss'),
+    buildHash: git.short() + (git.isDirty() ? "-dirty" : ""),
+  },
 }
