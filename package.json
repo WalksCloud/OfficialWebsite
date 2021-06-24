@@ -44,7 +44,7 @@
     "is-https": "^4.0.0",
     "is-svg": "^4.3.1",
     "lint-staged": "^11.0.0",
-    "nuxt-i18n": "^6.27.0",
+    "nuxt-i18n": "^6.27.2",
     "prettier": "^2.3.1",
     "stylelint": "^13.13.1",
     "stylelint-config-prettier": "^8.0.2",
