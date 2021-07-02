@@ -12,6 +12,7 @@
                 <span
                   :class="[
                     $vuetify.breakpoint.smAndDown ? 'display-3' : 'display-4',
+                    'companyname',
                   ]"
                   class="font-weight-black"
                 >

@@ -2,10 +2,10 @@
   <v-app dark>
     <v-app-bar app height="100">
       <v-avatar class="mr-3" color="grey darken-5" size="70">
-        <v-img contain max-height="70%" src="icon.png"></v-img>
+        <v-img contain max-height="100%" src="icon_gradual_512.svg"></v-img>
       </v-avatar>
 
-      <v-toolbar-title class="font-weight-black headline">
+      <v-toolbar-title class="font-weight-black headline companyname">
         {{ title }}
       </v-toolbar-title>
     </v-app-bar>
@@ -19,6 +19,7 @@
         class="title font-weight-light grey--text text--lighten-1 text-center"
       >
         &copy; {{ new Date().getFullYear() }} — {{ title }} Inc.
+        <companyname-ch />
         <span style="font-size: 10px">
           <a href="https://github.com/WalksCloud/OfficialWebsite">GitHub</a> (<a
             :href="
@@ -35,6 +36,8 @@
 </template>
 
 <script>
+import 'assets/main.scss'
+
 export default {
   data() {
     return {
@@ -46,7 +49,7 @@ export default {
         },
       ],
       miniVariant: false,
-      title: 'Walks Cloud',
+      title: 'WalksCloud',
     }
   },
 }

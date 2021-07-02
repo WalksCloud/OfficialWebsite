@@ -1,5 +1,5 @@
 export default {
-  companyName: 'Walks Cloud',
+  companyName: 'WalksCloud',
   companyNameSlogan: 'Makes your Cloud Works Great',
   aboutUS: 'About US',
   aboutUSDesc:
