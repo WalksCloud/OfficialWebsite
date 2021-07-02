@@ -2,6 +2,20 @@ import colors from 'vuetify/es5/util/colors'
 import moment from 'moment'
 import git from 'git-rev-sync'
 
+const wcurl = 'https://walks.cloud'
+const title = 'WalksCloud'
+const desc = 'We makes your Cloud Works Great\n\nWe\'re creating a enterprise ready of Cloud application, the goal is provide users with everything that is needed to build rich and engaging management applications using ours products.'
+const preview_image = {
+  url: 'icon_512.png',
+  type: 'image/png',
+  width: 420,
+  height: 420,
+}
+const fb_meta = {
+  app_id: '',
+  pages_id: '',
+}
+
 export default {
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'static',
@@ -9,13 +23,31 @@ export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     titleTemplate: '%s - Makes Your Cloud Works Great',
-    title: 'WalksCloud',
+    title: title,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
+      { name: 'robots', content: 'index,follow' },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:image', content: preview_image.url },
+      { hid: 'fb:app_id', property: 'fb:app_id', content: fb_meta.app_id },
+      { hid: 'fb:pages', property: 'fb:pages', content: fb_meta.pages_id },
+      { hid: 'og:title', property: 'og:title', content: title },
+      { hid: 'og:url', property: 'og:url', content: wcurl },
+      { hid: 'og:image', property: 'og:image', content: preview_image.url },
+      { hid: 'og:image:type', property: 'og:image:type', content: preview_image.type },
+      { hid: 'og:image:width', property: 'og:image:width', content: preview_image.width },
+      { hid: 'og:image:height', property: 'og:image:height', content: preview_image.height },
+      { hid: 'og:site_name', property: 'og:site_name', content: title },
+      { hid: 'og:locale', property: 'og:locale', content: 'en-US' },
+      { hid: 'og:description', property: 'og:description', content: desc },
+      { hid: 'description', name: 'description', content: desc },
+      { hid: 'author', name: 'author', content: '' },
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+    link: [
+      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'shortcut icon', type: 'image/x-icon', href: '/favicon.ico' },
+    ],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
