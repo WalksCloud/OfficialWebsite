@@ -18,7 +18,7 @@
       <div
         class="title font-weight-light grey--text text--lighten-1 text-center"
       >
-        &copy; {{ new Date().getFullYear() }} — {{ title }} Inc.
+        &copy; {{ new Date().getFullYear() }} — {{ companyName }}
         <companyname-ch />
         <span style="font-size: 10px">
           <a href="https://github.com/WalksCloud/OfficialWebsite">GitHub</a> (<a
@@ -50,6 +50,7 @@ export default {
       ],
       miniVariant: false,
       title: 'WalksCloud',
+      companyName: 'Walks Cloud Inc.',
     }
   },
 }
