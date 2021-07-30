@@ -65,8 +65,6 @@ export default {
     '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/stylelint
     // '@nuxtjs/stylelint-module',
-    // https://google-analytics.nuxtjs.org
-    '@nuxtjs/google-analytics',
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
     '@nuxtjs/moment',
@@ -83,6 +81,8 @@ export default {
     '@nuxtjs/axios',
     // https://go.nuxtjs.dev/pwa
     '@nuxtjs/pwa',
+    // https://github.com/nuxt-community/google-gtag-module
+    '@nuxtjs/google-gtag',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
     'nuxt-i18n',
@@ -144,8 +144,19 @@ export default {
     },
   },
 
-  googleAnalytics: {
+  'google-gtag': {
     id: 'G-ZBYN9XH3NX',
+    config:{
+      // this are the config options for `gtag`
+      // check out official docs: https://developers.google.com/analytics/devguides/collection/gtagjs/
+      anonymize_ip: true, // anonymize IP
+      send_page_view: true, // might be necessary to avoid duplicated page track on page reload
+      linker:{
+        //domains:['walks.cloud'],
+      },
+    },
+    debug: false, // enable to track in dev mode
+    disableAutoPageTrack: false, // disable if you don't want to track each page route with router.afterEach(...)
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
