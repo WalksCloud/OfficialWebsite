@@ -4,14 +4,15 @@ import git from 'git-rev-sync'
 
 const wcurl = 'https://walks.cloud'
 const title = 'WalksCloud'
-const desc = 'We makes your Cloud Works Great\n\nWe\'re creating a enterprise ready of Cloud application, the goal is provide users with everything that is needed to build rich and engaging management applications using ours products.'
-const preview_image = {
+const desc =
+  "We makes your Cloud Works Great\n\nWe're creating a enterprise ready of Cloud application, the goal is provide users with everything that is needed to build rich and engaging management applications using ours products."
+const previewImage = {
   url: 'icon_512.png',
   type: 'image/png',
   width: 420,
   height: 420,
 }
-const fb_meta = {
+const fbMeta = {
   app_id: '',
   pages_id: '',
 }
@@ -23,21 +24,33 @@ export default {
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     titleTemplate: '%s - Makes Your Cloud Works Great',
-    title: title,
+    title,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { name: 'robots', content: 'index,follow' },
       { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:image', content: preview_image.url },
-      { hid: 'fb:app_id', property: 'fb:app_id', content: fb_meta.app_id },
-      { hid: 'fb:pages', property: 'fb:pages', content: fb_meta.pages_id },
+      { name: 'twitter:image', content: previewImage.url },
+      { hid: 'fb:app_id', property: 'fb:app_id', content: fbMeta.app_id },
+      { hid: 'fb:pages', property: 'fb:pages', content: fbMeta.pages_id },
       { hid: 'og:title', property: 'og:title', content: title },
       { hid: 'og:url', property: 'og:url', content: wcurl },
-      { hid: 'og:image', property: 'og:image', content: preview_image.url },
-      { hid: 'og:image:type', property: 'og:image:type', content: preview_image.type },
-      { hid: 'og:image:width', property: 'og:image:width', content: preview_image.width },
-      { hid: 'og:image:height', property: 'og:image:height', content: preview_image.height },
+      { hid: 'og:image', property: 'og:image', content: previewImage.url },
+      {
+        hid: 'og:image:type',
+        property: 'og:image:type',
+        content: previewImage.type,
+      },
+      {
+        hid: 'og:image:width',
+        property: 'og:image:width',
+        content: previewImage.width,
+      },
+      {
+        hid: 'og:image:height',
+        property: 'og:image:height',
+        content: previewImage.height,
+      },
       { hid: 'og:site_name', property: 'og:site_name', content: title },
       { hid: 'og:locale', property: 'og:locale', content: 'en-US' },
       { hid: 'og:description', property: 'og:description', content: desc },
@@ -146,13 +159,13 @@ export default {
 
   'google-gtag': {
     id: 'G-ZBYN9XH3NX',
-    config:{
+    config: {
       // this are the config options for `gtag`
       // check out official docs: https://developers.google.com/analytics/devguides/collection/gtagjs/
       anonymize_ip: true, // anonymize IP
       send_page_view: true, // might be necessary to avoid duplicated page track on page reload
-      linker:{
-        //domains:['walks.cloud'],
+      linker: {
+        // domains:['walks.cloud'],
       },
     },
     debug: false, // enable to track in dev mode
@@ -160,10 +173,16 @@ export default {
   },
 
   // Build Configuration (https://go.nuxtjs.dev/config-build)
-  build: {},
+  build: {
+    babel: {
+      plugins: [
+        ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
+      ],
+    },
+  },
 
   publicRuntimeConfig: {
     buildTime: moment().format('YYYY-MM-DD HH:mm:ss Z'),
-    buildHash: git.short() + (git.isDirty() ? "-dirty" : ""),
+    buildHash: git.short() + (git.isDirty() ? '-dirty' : ''),
   },
 }
