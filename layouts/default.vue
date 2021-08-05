@@ -56,7 +56,8 @@ export default {
 }
 </script>
 
-<style lang="stylus" scoped>
-.container.container--fluid
-  padding 0
+<style lang="scss" scoped>
+.container.container--fluid {
+  padding: 0;
+}
 </style>
