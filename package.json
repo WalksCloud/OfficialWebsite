@@ -47,7 +47,7 @@
     "husky": "^7.0.1",
     "is-https": "^4.0.0",
     "is-svg": "^4.3.1",
-    "lint-staged": "^11.1.1",
+    "lint-staged": "^11.1.2",
     "nuxt-i18n": "^6.28.1",
     "prettier": "^2.3.2",
     "stylelint": "^13.13.1",
