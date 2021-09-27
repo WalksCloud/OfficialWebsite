@@ -55,7 +55,7 @@
     "stylelint-config-standard": "^22.0.0",
     "stylelint-plugin-stylus": "^0.11.0",
     "stylus": "^0.55.0",
-    "stylus-loader": "^4.3.3",
+    "stylus-loader": "^6.1.0",
     "typescript": "^4.4.3",
     "ufo": "^0.7.9",
     "vue": "^2.6.14",
