@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@nuxt/builder": "^2.15.8",
-    "@nuxtjs/eslint-config": "^6.0.1",
+    "@nuxtjs/eslint-config": "^7.0.0",
     "@nuxtjs/eslint-module": "^3.0.2",
     "@nuxtjs/google-gtag": "^1.0.4",
     "@nuxtjs/moment": "^1.6.1",
@@ -37,7 +37,7 @@
     "@nuxtjs/vuetify": "^1.12.1",
     "@types/git-rev-sync": "^2.0.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.32.0",
+    "eslint": "^8.1.0",
     "eslint-ast-utils": "^1.1.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-nuxt": "^2.0.0",
