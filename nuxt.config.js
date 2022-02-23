@@ -109,6 +109,9 @@ export default {
       name: 'WalksCloud',
       useWebmanifestExtension: true,
     },
+    workbox: {
+      workboxURL: 'https://storage.googleapis.com/workbox-cdn/releases/6.2.0/workbox-sw.js',
+    },
   },
 
   i18n: {
