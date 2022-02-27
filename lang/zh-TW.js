@@ -56,9 +56,9 @@ export default async (context, locale) => {
     contactPhone: '聯絡電話',
     contactRequirements: '需要服務需求',
     contactServices: [
-      'IT 外包 & 整體規劃（網路建置、設備維護）',
-      '雲端帳號管理',
-      '資產管理系統',
+      { id: 'it', name: 'IT 外包 & 整體規劃（網路建置、設備維護）' },
+      { id: 'iam', name: '雲端帳號管理' },
+      { id: 'crm', name: '資產管理系統' },
     ],
   });
 };
