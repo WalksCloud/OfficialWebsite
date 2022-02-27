@@ -4,10 +4,8 @@
 
     <v-container class="text-center">
       <h2 class="display-2 font-weight-bold mb-3">{{ $t('aboutUS') }}</h2>
-
       <v-responsive class="mx-auto mb-8" width="56">
         <v-divider class="mb-1"></v-divider>
-
         <v-divider></v-divider>
       </v-responsive>
 
@@ -15,7 +13,9 @@
         class="mx-auto title font-weight-light mb-8"
         max-width="720"
       >
-        {{ $t('aboutUSDesc') }}
+        <div v-for="(desc, i) in $t('aboutUSDesc').trim().split('\n')" :key="i">
+          {{ desc }}
+        </div>
       </v-responsive>
 
       <!--

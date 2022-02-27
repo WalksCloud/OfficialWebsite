@@ -18,18 +18,12 @@
       <div
         class="title font-weight-light grey--text text--lighten-1 text-center"
       >
-        &copy; {{ new Date().getFullYear() }} — {{ companyName }}
+        &copy; {{ nowYear }} — {{ companyName }}
         <companyname-ch />
-        <span style="font-size: 10px">
-          <a href="https://github.com/WalksCloud/OfficialWebsite">GitHub</a> (<a
-            :href="
-              'https://github.com/WalksCloud/OfficialWebsite/commit/' +
-              $config.buildHash
-            "
-            >#{{ $config.buildHash }}</a
-          >
+        <div style="font-size: 10px">
+          <a href="https://github.com/WalksCloud/OfficialWebsite">GitHub</a> (<a :href="`https://github.com/WalksCloud/OfficialWebsite/commit/` + $config.buildHash">#{{ $config.buildHash }}</a>
           {{ $config.buildTime }})
-        </span>
+        </div>
       </div>
     </v-footer>
   </v-app>
@@ -41,6 +35,7 @@ import 'assets/main.scss'
 export default {
   data() {
     return {
+      nowYear: (new Date().getFullYear()),
       items: [
         {
           icon: 'mdi-apps',
@@ -52,7 +47,7 @@ export default {
       title: 'WalksCloud',
       companyName: 'Walks Cloud Inc.',
     }
-  },
+  }
 }
 </script>
 
