@@ -121,11 +121,18 @@ export default {
     defaultLocale: 'en',
     locales: [
       { code: 'en', iso: 'en-US', name: 'English', file: 'en-US.js' },
-      // { code: 'zh', iso: 'zh-TW', name: '繁體中文', file: 'zh-TW.js' },
+      { code: 'zh', iso: 'zh-TW', name: '繁體中文', file: 'zh-TW.js' },
     ],
+    fallbackLocale: {
+      'zh-Hans': ['zh-Hant'],
+      'zh-Hant': ['zh-TW'],
+      default: ['en'],
+    },
     seo: true,
     detectBrowserLanguage: {
-      useCookie: false,
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root', // recommended
     },
     lazy: true,
     vueI18nLoader: true,
