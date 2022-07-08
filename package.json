@@ -38,7 +38,7 @@
     "@nuxtjs/stylelint-module": "^4.1.0",
     "@nuxtjs/vuetify": "^1.12.3",
     "@types/git-rev-sync": "^2.0.0",
-    "@vue/cli-plugin-babel": "^5.0.1",
+    "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-plugin-eslint": "^5.0.1",
     "@vue/cli-plugin-router": "^5.0.1",
     "@vue/cli-plugin-vuex": "^5.0.1",
