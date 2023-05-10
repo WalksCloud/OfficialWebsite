@@ -41,9 +41,9 @@ export default async (context, locale) => {
 不論是管理系統、網路建置、活動直播，皆可滿足您的需求
       `,
     teamMembers: [
-      { name: 'Pennyken Huang', desc: 'CEO' },
-      { name: 'Haraguroicha Hsu', desc: 'CTO' },
-      { name: 'Jimmy Pan', desc: 'CIO' },
+      { name: 'Pennyken Huang', desc: 'CEO', avatar: 'https://lh3.googleusercontent.com/a-/ACB-R5QoaEtUBtNEe2kpSSPTqxbY4OP70tKxM4ytzQ=s90' },
+      { name: 'Haraguroicha Hsu', desc: 'CTO', avatar: 'https://www.gravatar.com/avatar/4bb161cc965b81d364f0b9605f2af3de?s=90' },
+      { name: 'Jimmy Pan', desc: 'CIO', avatar: 'https://www.gravatar.com/avatar/741cd239cb86f48917207ee61bf8cd69?s=90' },
     ],
     contactUS: 'Contact US',
     contactCompanyName: '公司名稱',

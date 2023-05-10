@@ -50,10 +50,16 @@
                     color="primary"
                     size="88"
                   >
+                    <v-img
+                      v-if="member.avatar"
+                      alt="Avatar"
+                      :src="member.avatar"
+                    ></v-img>
                     <v-icon
+                      v-else
                       large
-                      v-text="icon"
-                    />
+                      class="mdi mdi-account-circle"
+                    ></v-icon>
                   </v-avatar>
                 </div>
               </v-theme-provider>
