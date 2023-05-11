@@ -81,6 +81,7 @@ typings/
 .next
 
 # Nuxt.js build / generate output
+.output
 .nuxt
 
 # Nuxt generate

@@ -1,7 +1,7 @@
 <template>
   <section id="stats">
     <v-parallax
-      :height="$vuetify.breakpoint.smAndDown ? 1200 : 900"
+      :height="smAndDown.value ? 1200 : 900"
       src="img/features.jpg"
     >
       <div class="py-12" />
@@ -34,7 +34,7 @@
       <v-container fill-height>
         <v-row class="mx-auto">
           <v-col
-            v-for="(member, i) in $t('teamMembers')"
+            v-for="(member, i) in $tm('teamMembers')"
             :key="i"
             cols="12"
             md="4"
@@ -51,9 +51,9 @@
                     size="88"
                   >
                     <v-img
-                      v-if="member.avatar"
+                      v-if="$rt(member.avatar)"
                       alt="Avatar"
-                      :src="member.avatar"
+                      :src="$rt(member.avatar)"
                     ></v-img>
                     <v-icon
                       v-else
@@ -66,12 +66,12 @@
 
               <v-card-title
                 class="justify-center font-weight-black grey--text text--darken-1"
-                v-text="member.name"
+                v-text="$rt(member.name)"
               />
 
               <v-card-text
                 class="text-center subtitle-1 grey--text text--darken-1"
-                v-text="member.desc"
+                v-text="$rt(member.desc)"
               />
             </v-card>
           </v-col>
@@ -91,5 +91,16 @@
 </style>
 
 <script>
-export default {}
+import { useLayout, useDisplay } from 'vuetify'
+
+export default {
+  setup() {
+    const { getLayoutItem } = useLayout()
+    const { smAndDown } = useDisplay()
+    return {
+      getLayoutItem,
+      smAndDown,
+    }
+  },
+}
 </script>

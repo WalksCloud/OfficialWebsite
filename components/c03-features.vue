@@ -46,7 +46,7 @@
 
       <v-row>
         <v-col
-          v-for="({ icon, title, text }, i) in $t('featuredServices')"
+          v-for="({ icon, title, text }, i) in $tm('featuredServices')"
           :key="i"
           cols="12"
           md="4"
@@ -55,17 +55,17 @@
             <v-theme-provider dark>
               <div>
                 <v-avatar color="primary" size="88">
-                  <v-icon large v-text="icon"></v-icon>
+                  <v-icon large v-text="$rt(icon)"></v-icon>
                 </v-avatar>
               </div>
             </v-theme-provider>
 
             <v-card-title
               class="justify-center font-weight-black text-uppercase grey--text text--darken-1"
-              v-text="title"
+              v-text="$rt(title)"
             ></v-card-title>
 
-            <v-card-text class="subtitle-1 grey--text text--darken-1" v-text="text"></v-card-text>
+            <v-card-text class="subtitle-1 grey--text text--darken-1" v-text="$rt(text)"></v-card-text>
           </v-card>
         </v-col>
       </v-row>

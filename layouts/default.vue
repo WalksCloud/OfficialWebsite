@@ -1,6 +1,6 @@
 <template>
   <v-app dark>
-    <v-app-bar app height="100">
+    <v-app-bar name="app-bar" app height="100">
       <v-avatar class="mr-3" color="grey darken-5" size="70">
         <v-img contain max-height="100%" src="icon_gradual_512.svg"></v-img>
       </v-avatar>
@@ -11,10 +11,10 @@
     </v-app-bar>
     <v-main>
       <v-container fluid>
-        <nuxt />
+        <slot />
       </v-container>
     </v-main>
-    <v-footer class="justify-center" color="#292929" height="100">
+    <v-footer name="app-footer" class="justify-center" color="#292929" height="100">
       <div
         class="title font-weight-light grey--text text--lighten-1 text-center"
       >

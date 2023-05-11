@@ -1,4 +1,8 @@
-import colors from 'vuetify/es5/util/colors'
+import { defineNuxtConfig } from 'nuxt/config'
+import VueI18nPlugin from '@intlify/unplugin-vue-i18n'
+import { resolve, dirname } from 'node:path'
+import { fileURLToPath } from 'url'
+import colors from 'vuetify/lib/util/colors'
 import moment from 'moment'
 import git from 'git-rev-sync'
 
@@ -17,7 +21,7 @@ const fbMeta = {
   pages_id: '',
 }
 
-export default {
+export default defineNuxtConfig({
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'static',
 
@@ -64,18 +68,22 @@ export default {
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
-  css: ['@mdi/font/css/materialdesignicons.css'],
+  css: [
+    'vuetify/lib/styles/main.sass',
+    '@mdi/font/css/materialdesignicons.min.css',
+  ],
 
   // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
-  plugins: ['~plugins/i18n.js'],
-
-  // Auto import components (https://go.nuxtjs.dev/config-components)
-  components: true,
+  plugins: [
+    'plugins/vuetify.js',
+    'plugins/i18n.js',
+    'plugins/vue-gtag.client.js',
+  ],
 
   // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
   buildModules: [
     // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
+    // '@nuxtjs/eslint-module',
     // https://go.nuxtjs.dev/stylelint
     // '@nuxtjs/stylelint-module',
     // https://go.nuxtjs.dev/vuetify
@@ -91,16 +99,13 @@ export default {
   // Modules (https://go.nuxtjs.dev/config-modules)
   modules: [
     // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
-    // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
-    // https://go.nuxtjs.dev/pwa
-    '@nuxtjs/pwa',
-    // https://github.com/nuxt-community/google-gtag-module
-    '@nuxtjs/google-gtag',
+    // '@nuxtjs/eslint-module',
+    // https://github.com/vite-pwa/nuxt
+    '@vite-pwa/nuxt',
     // https://go.nuxtjs.dev/content
     '@nuxt/content',
-    'nuxt-i18n',
+    // https://v8.i18n.nuxtjs.org/getting-started/setup
+    '@nuxtjs/i18n',
   ],
 
   pwa: {
@@ -118,24 +123,33 @@ export default {
 
   i18n: {
     langDir: 'lang/',
+    legacy: false,
+    globalInjection: true,
+    globalSFCScope: true,
+    forceStringify: false,
+    defaultSFCLang: 'yaml',
     defaultLocale: 'en',
     locales: [
-      { code: 'en', iso: 'en-US', name: 'English', file: 'en-US.js' },
-      { code: 'zh', iso: 'zh-TW', name: '繁體中文', file: 'zh-TW.js' },
+      { code: 'en', iso: 'en-US', name: 'English', file: 'en-US.yaml' },
+      { code: 'zh', iso: 'zh-TW', name: '繁體中文', file: 'zh-TW.yaml' },
     ],
+    fallbackFormat: true,
+    formatFallbackMessages: true,
+    fallbackWarn: false,
+    missingWarn: false,
     fallbackLocale: {
       'zh-Hans': ['zh-Hant'],
       'zh-Hant': ['zh-TW'],
       default: ['en'],
     },
+    esm: false,
     seo: true,
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
       redirectOn: 'root', // recommended
     },
-    lazy: true,
-    vueI18nLoader: true,
+    lazy: false,
     strategy: 'no_prefix',
   },
 
@@ -143,9 +157,6 @@ export default {
     base: process.env.NODE_ENV !== 'production' ? '' : '',
     trailingSlash: true,
   },
-
-  // Axios module configuration (https://go.nuxtjs.dev/config-axios)
-  axios: {},
 
   // Content module configuration (https://go.nuxtjs.dev/config-content)
   content: {},
@@ -169,27 +180,24 @@ export default {
     },
   },
 
-  'google-gtag': {
-    id: 'G-ZBYN9XH3NX',
-    config: {
-      // this are the config options for `gtag`
-      // check out official docs: https://developers.google.com/analytics/devguides/collection/gtagjs/
-      anonymize_ip: true, // anonymize IP
-      send_page_view: true, // might be necessary to avoid duplicated page track on page reload
-      linker: {
-        // domains:['walks.cloud'],
-      },
-    },
-    debug: false, // enable to track in dev mode
-    disableAutoPageTrack: false, // disable if you don't want to track each page route with router.afterEach(...)
-  },
-
   // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
-    babel: {
-      plugins: [
-        ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
-      ],
+    transpile: ['vuetify'],
+//    babel: {
+//      plugins: [
+//        ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
+//      ],
+//    },
+  },
+
+  vite: {
+    plugins: [
+      VueI18nPlugin.vite({
+        include: [resolve(dirname(fileURLToPath(import.meta.url)), './locales/*')],
+      }),
+    ],
+    define: {
+      'process.env.DEBUG': false,
     },
   },
 
@@ -197,4 +205,4 @@ export default {
     buildTime: moment().format('YYYY-MM-DD HH:mm:ss Z'),
     buildHash: git.short() + (git.isDirty() ? '-dirty' : ''),
   },
-}
+})

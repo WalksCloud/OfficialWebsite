@@ -2,7 +2,7 @@
   <section id="hero">
     <v-row no-gutters>
       <v-img
-        :min-height="'calc(100vh - ' + $vuetify.application.top + 'px)'"
+        :min-height="'calc(100vh - ' + getLayoutItem('app-bar').top + 'px)'"
         src="img/hero-back.jpg"
       >
         <v-theme-provider dark>
@@ -11,7 +11,7 @@
               <v-col class="white--text text-center" cols="12" tag="h1">
                 <span
                   :class="[
-                    $vuetify.breakpoint.smAndDown ? 'display-3' : 'display-4',
+                    smAndDown.value ? 'display-3' : 'display-4',
                     'companyname',
                   ]"
                   class="font-weight-black"
@@ -21,7 +21,7 @@
                 <br />
                 <span
                   :class="[
-                    $vuetify.breakpoint.smAndDown ? 'display-1' : 'display-2',
+                    smAndDown.value ? 'display-1' : 'display-2',
                   ]"
                   class="font-weight-light"
                 >
@@ -45,6 +45,8 @@
 </template>
 
 <script>
+import { useLayout, useDisplay } from 'vuetify'
+
 export default {
   props: {
     title: {
@@ -55,6 +57,14 @@ export default {
       type: String,
       default: '',
     },
+  },
+  setup() {
+    const { getLayoutItem } = useLayout()
+    const { smAndDown } = useDisplay()
+    return {
+      getLayoutItem,
+      smAndDown,
+    }
   },
 }
 </script>

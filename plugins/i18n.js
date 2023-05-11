@@ -1,11 +1,11 @@
-/* eslint-disable */
-export default function ({ app }) {
-  // beforeLanguageSwitch called right before setting a new locale
-  app.i18n.beforeLanguageSwitch = (oldLocale, newLocale) => {
-    console.log(oldLocale, newLocale)
-  }
-  // onLanguageSwitched called right after a new locale has been set
-  app.i18n.onLanguageSwitched = (oldLocale, newLocale) => {
-    console.log(oldLocale, newLocale)
-  }
-}
+export default defineNuxtPlugin(nuxtApp => {
+  // called right before setting a new locale
+  nuxtApp.hook('i18n:beforeLocaleSwitch', ({ oldLocale, newLocale, initialSetup, context }) => {
+    console.log('onBeforeLanguageSwitch', oldLocale, newLocale, initialSetup)
+  })
+
+  // called right after a new locale has been set
+  nuxtApp.hook('i18n:localeSwitched', ({oldLocale, newLocale}) => {
+    console.log('onLanguageSwitched', oldLocale, newLocale)
+  })
+})
