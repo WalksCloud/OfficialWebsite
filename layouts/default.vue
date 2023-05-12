@@ -22,7 +22,7 @@
         <companyname-ch />
         <div style="font-size: 10px">
           <a href="https://github.com/WalksCloud/OfficialWebsite">GitHub</a> (<a :href="`https://github.com/WalksCloud/OfficialWebsite/commit/` + $config.buildHash">#{{ $config.buildHash }}</a>
-          {{ $config.buildTime }}) | <a href="//auth.select/term-of-use">Term of Use</a> | <a href="//auth.select/privacy-policy">Privacy Policy</a>
+          {{ $config.buildTime }}) | <a href="https://auth.select/term-of-use">Term of Use</a> | <a href="https://auth.select/privacy-policy">Privacy Policy</a>
         </div>
       </div>
     </v-footer>

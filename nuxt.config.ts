@@ -142,8 +142,8 @@ export default defineNuxtConfig({
       'zh-Hant': ['zh-TW'],
       default: ['en'],
     },
-    esm: false,
-    seo: false,
+    esm: true,
+    seo: true,
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
@@ -188,6 +188,10 @@ export default defineNuxtConfig({
 //        ['@babel/plugin-proposal-private-property-in-object', { loose: true }],
 //      ],
 //    },
+  },
+
+  experimental: {
+    payloadExtraction: false,
   },
 
   vite: {
