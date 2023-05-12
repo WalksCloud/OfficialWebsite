@@ -45,6 +45,12 @@ jobs:
 
 #      - name: Run linter 👀
 #        run: npm run lint
+      - name: Setup Timezone
+        uses: szenius/set-timezone@v1.2
+        with:
+          timezoneLinux: "Asia/Taipei"
+          timezoneMacos: "Asia/Taipei"
+          timezoneWindows: "Taipei Standard Time"
 
       - name: Build
         run: npm run generate
