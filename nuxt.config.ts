@@ -26,45 +26,47 @@ export default defineNuxtConfig({
   target: 'static',
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
-  head: {
-    titleTemplate: '%s - Makes Your Cloud Works Great',
-    title,
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { name: 'robots', content: 'index,follow' },
-      { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:image', content: previewImage.url },
-      { hid: 'fb:app_id', property: 'fb:app_id', content: fbMeta.app_id },
-      { hid: 'fb:pages', property: 'fb:pages', content: fbMeta.pages_id },
-      { hid: 'og:title', property: 'og:title', content: title },
-      { hid: 'og:url', property: 'og:url', content: wcurl },
-      { hid: 'og:image', property: 'og:image', content: previewImage.url },
-      {
-        hid: 'og:image:type',
-        property: 'og:image:type',
-        content: previewImage.type,
-      },
-      {
-        hid: 'og:image:width',
-        property: 'og:image:width',
-        content: previewImage.width,
-      },
-      {
-        hid: 'og:image:height',
-        property: 'og:image:height',
-        content: previewImage.height,
-      },
-      { hid: 'og:site_name', property: 'og:site_name', content: title },
-      { hid: 'og:locale', property: 'og:locale', content: 'en-US' },
-      { hid: 'og:description', property: 'og:description', content: desc },
-      { hid: 'description', name: 'description', content: desc },
-      { hid: 'author', name: 'author', content: '' },
-    ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
-      { rel: 'shortcut icon', type: 'image/x-icon', href: '/favicon.ico' },
-    ],
+  app: {
+    head: {
+      titleTemplate: '%s - Makes Your Cloud Works Great',
+      title,
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { name: 'robots', content: 'index,follow' },
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:image', content: previewImage.url },
+        { hid: 'fb:app_id', property: 'fb:app_id', content: fbMeta.app_id },
+        { hid: 'fb:pages', property: 'fb:pages', content: fbMeta.pages_id },
+        { hid: 'og:title', property: 'og:title', content: title },
+        { hid: 'og:url', property: 'og:url', content: wcurl },
+        { hid: 'og:image', property: 'og:image', content: previewImage.url },
+        {
+          hid: 'og:image:type',
+          property: 'og:image:type',
+          content: previewImage.type,
+        },
+        {
+          hid: 'og:image:width',
+          property: 'og:image:width',
+          content: previewImage.width,
+        },
+        {
+          hid: 'og:image:height',
+          property: 'og:image:height',
+          content: previewImage.height,
+        },
+        { hid: 'og:site_name', property: 'og:site_name', content: title },
+        { hid: 'og:locale', property: 'og:locale', content: 'en-US' },
+        { hid: 'og:description', property: 'og:description', content: desc },
+        { hid: 'description', name: 'description', content: desc },
+        { hid: 'author', name: 'author', content: '' },
+      ],
+      link: [
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+        { rel: 'shortcut icon', type: 'image/x-icon', href: '/favicon.ico' },
+      ],
+    },
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
