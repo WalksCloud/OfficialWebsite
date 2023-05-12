@@ -117,7 +117,7 @@ export default defineNuxtConfig({
       useWebmanifestExtension: true,
     },
     workbox: {
-      workboxURL: 'https://storage.googleapis.com/workbox-cdn/releases/6.2.0/workbox-sw.js',
+      //workboxURL: 'https://storage.googleapis.com/workbox-cdn/releases/6.2.0/workbox-sw.js',
     },
   },
 
@@ -142,14 +142,14 @@ export default defineNuxtConfig({
       'zh-Hant': ['zh-TW'],
       default: ['en'],
     },
-    esm: true,
-    seo: true,
+    esm: false,
+    seo: false,
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
       redirectOn: 'root', // recommended
     },
-    lazy: false,
+    lazy: true,
     strategy: 'no_prefix',
   },
 
@@ -193,7 +193,7 @@ export default defineNuxtConfig({
   vite: {
     plugins: [
       VueI18nPlugin.vite({
-        include: [resolve(dirname(fileURLToPath(import.meta.url)), './lang/*')],
+        //include: [resolve(dirname(fileURLToPath(import.meta.url)), './lang/*')],
       }),
     ],
     define: {
