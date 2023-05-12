@@ -110,7 +110,7 @@ export default defineNuxtConfig({
 
   pwa: {
     icon: {
-      source: 'static/icon.png',
+      source: 'icon_512.png',
     },
     manifest: {
       name: 'WalksCloud',
@@ -193,7 +193,7 @@ export default defineNuxtConfig({
   vite: {
     plugins: [
       VueI18nPlugin.vite({
-        include: [resolve(dirname(fileURLToPath(import.meta.url)), './locales/*')],
+        include: [resolve(dirname(fileURLToPath(import.meta.url)), './lang/*')],
       }),
     ],
     define: {
