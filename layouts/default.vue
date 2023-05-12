@@ -21,8 +21,8 @@
         &copy; {{ nowYear }} — {{ companyName }}
         <companyname-ch />
         <div style="font-size: 10px">
-          <a href="https://github.com/WalksCloud/OfficialWebsite">GitHub</a> (<a :href="`https://github.com/WalksCloud/OfficialWebsite/commit/` + $config.buildHash">#{{ $config.buildHash }}</a>
-          {{ $config.buildTime }}) | <a href="https://auth.select/term-of-use">Term of Use</a> | <a href="https://auth.select/privacy-policy">Privacy Policy</a>
+          <a href="https://github.com/WalksCloud/OfficialWebsite">GitHub</a> (<a :href="`https://github.com/WalksCloud/OfficialWebsite/commit/` + $config.public.buildHash">#{{ $config.public.buildHash }}</a>
+          {{$config.public.buildTime}}) | <a href="https://auth.select/term-of-use">Term of Use</a> | <a href="https://auth.select/privacy-policy">Privacy Policy</a>
         </div>
       </div>
     </v-footer>
