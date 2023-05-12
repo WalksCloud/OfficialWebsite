@@ -5,13 +5,13 @@
         :min-height="'calc(100vh - ' + getLayoutItem('app-bar').top + 'px)'"
         src="img/hero-back.jpg"
       >
-        <v-theme-provider dark>
-          <v-container fill-height>
-            <v-row align="center" class="white--text mx-auto" justify="center">
+        <v-theme-provider theme="dark">
+          <v-container class="fill-height">
+            <v-row align="center" class="text-white mx-auto" justify="center">
               <v-col class="white--text text-center" cols="12" tag="h1">
                 <span
                   :class="[
-                    smAndDown.value ? 'display-3' : 'display-4',
+                    smAndDown ? 'text-h3' : 'text-h2',
                     'companyname',
                   ]"
                   class="font-weight-black"
@@ -21,7 +21,7 @@
                 <br />
                 <span
                   :class="[
-                    smAndDown.value ? 'display-1' : 'display-2',
+                    smAndDown ? 'text-h5' : 'text-h4',
                   ]"
                   class="font-weight-light"
                 >
@@ -30,9 +30,10 @@
               </v-col>
               <v-btn
                 class="align-self-end"
-                fab
-                outlined
-                @click="$vuetify.goTo('#about-us')"
+                variant="outlined"
+                rounded="circle"
+                size="56"
+                @click="goto('about-us')"
               >
                 <v-icon>mdi-chevron-double-down</v-icon>
               </v-btn>
@@ -61,7 +62,11 @@ export default {
   setup() {
     const { getLayoutItem } = useLayout()
     const { smAndDown } = useDisplay()
+    const goto = (to) => {
+      document.getElementById(to).scrollIntoView({behavior: 'smooth'})
+    }
     return {
+      goto,
       getLayoutItem,
       smAndDown,
     }

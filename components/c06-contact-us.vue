@@ -1,5 +1,5 @@
 <template>
-  <v-sheet id="contact-us" color="#333333" dark tag="section" tile>
+  <v-sheet id="contact-us" color="#333333" theme="dark" tag="section" tile>
     <div class="py-12"/>
 
     <!-- <v-container class="text-center">
@@ -9,22 +9,22 @@
         <v-divider/>
       </v-responsive>
 
-      <v-theme-provider light>
+      <v-theme-provider theme="light">
         <v-row>
           <v-col cols="12">
-            <v-text-field dark flat v-model="companyName" v-bind:label="$t('contactCompanyName')" outlined/>
+            <v-text-field theme="dark" flat v-model="companyName" v-bind:label="$t('contactCompanyName')" outlined/>
           </v-col>
 
           <v-col cols="12">
-            <v-text-field dark flat v-model="name" v-bind:label="$t('contactName')" outlined/>
+            <v-text-field theme="dark" flat v-model="name" v-bind:label="$t('contactName')" outlined/>
           </v-col>
 
           <v-col cols="12">
-            <v-text-field dark flat v-model="email" v-bind:label="$t('contactEmail')" outlined/>
+            <v-text-field theme="dark" flat v-model="email" v-bind:label="$t('contactEmail')" outlined/>
           </v-col>
 
           <v-col cols="12">
-            <v-text-field dark flat v-model="phone" v-bind:label="$t('contactPhone')" outlined/>
+            <v-text-field theme="dark" flat v-model="phone" v-bind:label="$t('contactPhone')" outlined/>
           </v-col>
 
           <v-col cols="12">
@@ -41,9 +41,9 @@
                     v-model="svc.selected"
                     :label="svc.name"
                     :value="svc.id"
-                    color="primary"
+                    color="blue-darken-2"
                     hide-details
-                    dark
+                    theme="dark"
                   />
                 </div>
               </v-col>

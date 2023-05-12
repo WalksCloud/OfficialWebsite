@@ -1,13 +1,13 @@
 <template>
   <section id="stats">
     <v-parallax
-      :height="smAndDown.value ? 1200 : 900"
+      :height="smAndDown ? 1200 : 900"
       src="img/features.jpg"
     >
       <div class="py-12" />
 
       <v-container class="text-center">
-        <h2 class="display-2 font-weight-bold mb-3">
+        <h2 class="text-h3 font-weight-bold mb-3">
           {{ $t('aboutTeam') }}
         </h2>
         <v-responsive
@@ -19,7 +19,7 @@
         </v-responsive>
 
         <v-responsive
-          class="mx-auto title font-weight-light mb-8"
+          class="mx-auto text-h6 font-weight-light mb-8"
           max-width="720"
         >
           <div
@@ -31,7 +31,7 @@
         </v-responsive>
       </v-container>
 
-      <v-container fill-height>
+      <v-container>
         <v-row class="mx-auto">
           <v-col
             v-for="(member, i) in $tm('teamMembers')"
@@ -40,14 +40,14 @@
             md="4"
           >
             <v-card
-              class="py-12 px-4 member"
-              color="text-center grey lighten-2"
+              class="py-12 px-4 member text-center"
+              color="grey-lighten-2"
               flat
             >
-              <v-theme-provider dark>
+              <v-theme-provider theme="dark">
                 <div>
                   <v-avatar
-                    color="primary"
+                    color="blue-darken-2"
                     size="88"
                   >
                     <v-img
@@ -57,22 +57,22 @@
                     ></v-img>
                     <v-icon
                       v-else
-                      large
                       class="mdi mdi-account-circle"
+                      size="36"
                     ></v-icon>
                   </v-avatar>
                 </div>
+
+                <v-card-title
+                  class="justify-center font-weight-black text-grey-darken-1"
+                  v-text="$rt(member.name)"
+                />
+
+                <v-card-text
+                  class="text-center subtitle-1 text-grey-darken-1"
+                  v-text="$rt(member.desc)"
+                />
               </v-theme-provider>
-
-              <v-card-title
-                class="justify-center font-weight-black grey--text text--darken-1"
-                v-text="$rt(member.name)"
-              />
-
-              <v-card-text
-                class="text-center subtitle-1 grey--text text--darken-1"
-                v-text="$rt(member.desc)"
-              />
             </v-card>
           </v-col>
         </v-row>
