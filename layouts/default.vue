@@ -2,7 +2,7 @@
   <v-app theme="dark">
     <v-app-bar name="app-bar" app height="100" class="px-4 py-1">
       <v-avatar color="grey-darken-5" size="70">
-        <v-img contain max-height="100%" src="icon_gradual_512.svg"></v-img>
+        <v-img contain max-height="100%" src="/icon_gradual_512.svg"></v-img>
       </v-avatar>
 
       <v-toolbar-title class="font-weight-black text-h5 companyname">

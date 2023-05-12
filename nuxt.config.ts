@@ -142,7 +142,7 @@ export default defineNuxtConfig({
       'zh-Hant': ['zh-TW'],
       default: ['en'],
     },
-    esm: false,
+    esm: true,
     seo: true,
     detectBrowserLanguage: {
       useCookie: true,

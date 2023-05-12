@@ -4,6 +4,7 @@
     "types": [
       "@nuxt/types",
       "@nuxtjs/i18n",
+      "@intlify/unplugin-vue-i18n/messages",
     ]
   },
 }
