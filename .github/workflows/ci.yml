@@ -68,6 +68,6 @@ jobs:
         if: ${{ github.event_name == 'push' }}
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          cname: walks.cloud
+          cname: official-website.walks.cloud
           publish_dir: ./.output/public
           force_orphan: true
