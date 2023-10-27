@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html >
+<head><meta charset="utf-8">
+<title>WalksCloud - Makes Your Cloud Works Great</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="index,follow">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="icon_512.png">
+<meta property="fb:app_id" content="">
+<meta property="fb:pages" content="">
+<meta property="og:title" content="WalksCloud">
+<meta property="og:url" content="https://walks.cloud">
+<meta property="og:image" content="icon_512.png">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="420">
+<meta property="og:image:height" content="420">
+<meta property="og:site_name" content="WalksCloud">
+<meta property="og:locale" content="en-US">
+<meta property="og:description" content="We makes your Cloud Works Great
+
+We're creating a enterprise ready of Cloud application, the goal is provide users with everything that is needed to build rich and engaging management applications using ours products.">
+<meta name="description" content="We makes your Cloud Works Great
+
+We're creating a enterprise ready of Cloud application, the goal is provide users with everything that is needed to build rich and engaging management applications using ours products.">
+<meta name="author" content="">
+<link rel="icon" type="image/x-icon" href="/favicon.ico">
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico">
+<style id="vuetify-theme-stylesheet">:root {
+      --v-theme-background: 255,255,255;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 255,255,255;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-variant: 66,66,66;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 238,238,238;
+      --v-theme-primary: 98,0,238;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 55,0,179;
+      --v-theme-primary-darken-1-overlay-multiplier: 2;
+      --v-theme-secondary: 3,218,198;
+      --v-theme-secondary-overlay-multiplier: 1;
+      --v-theme-secondary-darken-1: 1,135,134;
+      --v-theme-secondary-darken-1-overlay-multiplier: 1;
+      --v-theme-error: 176,0,32;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 1;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 1;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 1;
+      --v-theme-on-background: 0,0,0;
+      --v-theme-on-surface: 0,0,0;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 0,0,0;
+      --v-theme-on-secondary-darken-1: 255,255,255;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 0, 0, 0;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 0.87;
+      --v-medium-emphasis-opacity: 0.6;
+      --v-disabled-opacity: 0.38;
+      --v-idle-opacity: 0.04;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.12;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 33, 37, 41;
+      --v-theme-on-kbd: 255, 255, 255;
+      --v-theme-code: 245, 245, 245;
+      --v-theme-on-code: 0, 0, 0;
+    }
+    .v-theme--light {
+      color-scheme: normal;
+      --v-theme-background: 255,255,255;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 255,255,255;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-variant: 66,66,66;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 238,238,238;
+      --v-theme-primary: 98,0,238;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 55,0,179;
+      --v-theme-primary-darken-1-overlay-multiplier: 2;
+      --v-theme-secondary: 3,218,198;
+      --v-theme-secondary-overlay-multiplier: 1;
+      --v-theme-secondary-darken-1: 1,135,134;
+      --v-theme-secondary-darken-1-overlay-multiplier: 1;
+      --v-theme-error: 176,0,32;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 1;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 1;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 1;
+      --v-theme-on-background: 0,0,0;
+      --v-theme-on-surface: 0,0,0;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 0,0,0;
+      --v-theme-on-secondary-darken-1: 255,255,255;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 0, 0, 0;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 0.87;
+      --v-medium-emphasis-opacity: 0.6;
+      --v-disabled-opacity: 0.38;
+      --v-idle-opacity: 0.04;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.12;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 33, 37, 41;
+      --v-theme-on-kbd: 255, 255, 255;
+      --v-theme-code: 245, 245, 245;
+      --v-theme-on-code: 0, 0, 0;
+    }
+    .v-theme--dark {
+      color-scheme: dark;
+      --v-theme-background: 18,18,18;
+      --v-theme-background-overlay-multiplier: 1;
+      --v-theme-surface: 33,33,33;
+      --v-theme-surface-overlay-multiplier: 1;
+      --v-theme-surface-variant: 189,189,189;
+      --v-theme-surface-variant-overlay-multiplier: 2;
+      --v-theme-on-surface-variant: 66,66,66;
+      --v-theme-primary: 187,134,252;
+      --v-theme-primary-overlay-multiplier: 2;
+      --v-theme-primary-darken-1: 55,0,179;
+      --v-theme-primary-darken-1-overlay-multiplier: 1;
+      --v-theme-secondary: 3,218,197;
+      --v-theme-secondary-overlay-multiplier: 2;
+      --v-theme-secondary-darken-1: 3,218,197;
+      --v-theme-secondary-darken-1-overlay-multiplier: 2;
+      --v-theme-error: 207,102,121;
+      --v-theme-error-overlay-multiplier: 2;
+      --v-theme-info: 33,150,243;
+      --v-theme-info-overlay-multiplier: 2;
+      --v-theme-success: 76,175,80;
+      --v-theme-success-overlay-multiplier: 2;
+      --v-theme-warning: 251,140,0;
+      --v-theme-warning-overlay-multiplier: 2;
+      --v-theme-on-background: 255,255,255;
+      --v-theme-on-surface: 255,255,255;
+      --v-theme-on-primary: 255,255,255;
+      --v-theme-on-primary-darken-1: 255,255,255;
+      --v-theme-on-secondary: 0,0,0;
+      --v-theme-on-secondary-darken-1: 0,0,0;
+      --v-theme-on-error: 255,255,255;
+      --v-theme-on-info: 255,255,255;
+      --v-theme-on-success: 255,255,255;
+      --v-theme-on-warning: 255,255,255;
+      --v-border-color: 255, 255, 255;
+      --v-border-opacity: 0.12;
+      --v-high-emphasis-opacity: 1;
+      --v-medium-emphasis-opacity: 0.7;
+      --v-disabled-opacity: 0.5;
+      --v-idle-opacity: 0.1;
+      --v-hover-opacity: 0.04;
+      --v-focus-opacity: 0.12;
+      --v-selected-opacity: 0.08;
+      --v-activated-opacity: 0.12;
+      --v-pressed-opacity: 0.16;
+      --v-dragged-opacity: 0.08;
+      --v-theme-kbd: 33, 37, 41;
+      --v-theme-on-kbd: 255, 255, 255;
+      --v-theme-code: 52, 52, 52;
+      --v-theme-on-code: 204, 204, 204;
+    }
+    .bg-background {
+      --v-theme-overlay-multiplier: var(--v-theme-background-overlay-multiplier);
+      background-color: rgb(var(--v-theme-background)) !important;
+      color: rgb(var(--v-theme-on-background)) !important;
+    }
+    .bg-surface {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface)) !important;
+      color: rgb(var(--v-theme-on-surface)) !important;
+    }
+    .bg-surface-variant {
+      --v-theme-overlay-multiplier: var(--v-theme-surface-variant-overlay-multiplier);
+      background-color: rgb(var(--v-theme-surface-variant)) !important;
+      color: rgb(var(--v-theme-on-surface-variant)) !important;
+    }
+    .bg-primary {
+      --v-theme-overlay-multiplier: var(--v-theme-primary-overlay-multiplier);
+      background-color: rgb(var(--v-theme-primary)) !important;
+      color: rgb(var(--v-theme-on-primary)) !important;
+    }
+    .bg-primary-darken-1 {
+      --v-theme-overlay-multiplier: var(--v-theme-primary-darken-1-overlay-multiplier);
+      background-color: rgb(var(--v-theme-primary-darken-1)) !important;
+      color: rgb(var(--v-theme-on-primary-darken-1)) !important;
+    }
+    .bg-secondary {
+      --v-theme-overlay-multiplier: var(--v-theme-secondary-overlay-multiplier);
+      background-color: rgb(var(--v-theme-secondary)) !important;
+      color: rgb(var(--v-theme-on-secondary)) !important;
+    }
+    .bg-secondary-darken-1 {
+      --v-theme-overlay-multiplier: var(--v-theme-secondary-darken-1-overlay-multiplier);
+      background-color: rgb(var(--v-theme-secondary-darken-1)) !important;
+      color: rgb(var(--v-theme-on-secondary-darken-1)) !important;
+    }
+    .bg-error {
+      --v-theme-overlay-multiplier: var(--v-theme-error-overlay-multiplier);
+      background-color: rgb(var(--v-theme-error)) !important;
+      color: rgb(var(--v-theme-on-error)) !important;
+    }
+    .bg-info {
+      --v-theme-overlay-multiplier: var(--v-theme-info-overlay-multiplier);
+      background-color: rgb(var(--v-theme-info)) !important;
+      color: rgb(var(--v-theme-on-info)) !important;
+    }
+    .bg-success {
+      --v-theme-overlay-multiplier: var(--v-theme-success-overlay-multiplier);
+      background-color: rgb(var(--v-theme-success)) !important;
+      color: rgb(var(--v-theme-on-success)) !important;
+    }
+    .bg-warning {
+      --v-theme-overlay-multiplier: var(--v-theme-warning-overlay-multiplier);
+      background-color: rgb(var(--v-theme-warning)) !important;
+      color: rgb(var(--v-theme-on-warning)) !important;
+    }
+    .text-background {
+      color: rgb(var(--v-theme-background)) !important;
+    }
+    .border-background {
+      --v-border-color: var(--v-theme-background);
+    }
+    .text-surface {
+      color: rgb(var(--v-theme-surface)) !important;
+    }
+    .border-surface {
+      --v-border-color: var(--v-theme-surface);
+    }
+    .text-surface-variant {
+      color: rgb(var(--v-theme-surface-variant)) !important;
+    }
+    .border-surface-variant {
+      --v-border-color: var(--v-theme-surface-variant);
+    }
+    .on-surface-variant {
+      color: rgb(var(--v-theme-on-surface-variant)) !important;
+    }
+    .text-primary {
+      color: rgb(var(--v-theme-primary)) !important;
+    }
+    .border-primary {
+      --v-border-color: var(--v-theme-primary);
+    }
+    .text-primary-darken-1 {
+      color: rgb(var(--v-theme-primary-darken-1)) !important;
+    }
+    .border-primary-darken-1 {
+      --v-border-color: var(--v-theme-primary-darken-1);
+    }
+    .text-secondary {
+      color: rgb(var(--v-theme-secondary)) !important;
+    }
+    .border-secondary {
+      --v-border-color: var(--v-theme-secondary);
+    }
+    .text-secondary-darken-1 {
+      color: rgb(var(--v-theme-secondary-darken-1)) !important;
+    }
+    .border-secondary-darken-1 {
+      --v-border-color: var(--v-theme-secondary-darken-1);
+    }
+    .text-error {
+      color: rgb(var(--v-theme-error)) !important;
+    }
+    .border-error {
+      --v-border-color: var(--v-theme-error);
+    }
+    .text-info {
+      color: rgb(var(--v-theme-info)) !important;
+    }
+    .border-info {
+      --v-border-color: var(--v-theme-info);
+    }
+    .text-success {
+      color: rgb(var(--v-theme-success)) !important;
+    }
+    .border-success {
+      --v-border-color: var(--v-theme-success);
+    }
+    .text-warning {
+      color: rgb(var(--v-theme-warning)) !important;
+    }
+    .border-warning {
+      --v-border-color: var(--v-theme-warning);
+    }
+    .on-background {
+      color: rgb(var(--v-theme-on-background)) !important;
+    }
+    .on-surface {
+      color: rgb(var(--v-theme-on-surface)) !important;
+    }
+    .on-primary {
+      color: rgb(var(--v-theme-on-primary)) !important;
+    }
+    .on-primary-darken-1 {
+      color: rgb(var(--v-theme-on-primary-darken-1)) !important;
+    }
+    .on-secondary {
+      color: rgb(var(--v-theme-on-secondary)) !important;
+    }
+    .on-secondary-darken-1 {
+      color: rgb(var(--v-theme-on-secondary-darken-1)) !important;
+    }
+    .on-error {
+      color: rgb(var(--v-theme-on-error)) !important;
+    }
+    .on-info {
+      color: rgb(var(--v-theme-on-info)) !important;
+    }
+    .on-success {
+      color: rgb(var(--v-theme-on-success)) !important;
+    }
+    .on-warning {
+      color: rgb(var(--v-theme-on-warning)) !important;
+    }
+</style><link rel="modulepreload" as="script" crossorigin href="/_nuxt/entry.f2689442.js"><link rel="preload" as="style" href="/_nuxt/entry.9d8f9f06.css"><link rel="modulepreload" as="script" crossorigin href="/_nuxt/default.d0e7c61d.js"><link rel="modulepreload" as="script" crossorigin href="/_nuxt/index.c22098d5.js"><link rel="preload" as="style" href="/_nuxt/index.29c5b2d7.css"><link rel="prefetch" as="script" crossorigin href="/_nuxt/error.f8dae643.js"><link rel="prefetch" as="script" crossorigin href="/_nuxt/nuxt-link.155a8cb0.js"><link rel="prefetch" as="script" crossorigin href="/_nuxt/en-US.831309e5.js"><link rel="prefetch" as="script" crossorigin href="/_nuxt/zh-TW.89b5b896.js"><link rel="prefetch" as="script" crossorigin href="/_nuxt/workbox-window.prod.es5.dc90f814.js"><link rel="prefetch" as="script" crossorigin href="/_nuxt/error-component.31dfe9f3.js"><link rel="stylesheet" href="/_nuxt/entry.9d8f9f06.css"><link rel="stylesheet" href="/_nuxt/index.29c5b2d7.css"><style>.v-container.v-container--fluid[data-v-588fdeba]{padding:0}</style><style>.member{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);background-color:hsla(0,0%,88%,.667)!important}</style></head>
+<body ><div id="__nuxt"><!--[--><div class="v-application v-theme--dark v-layout v-layout--full-height v-locale--is-ltr" style="z-index:1000;" data-v-588fdeba><div class="v-application__wrap"><!--[--><header class="v-toolbar v-toolbar--density-default v-theme--dark v-locale--is-ltr v-app-bar px-4 py-1" style="top:0;z-index:1004;transform:translateY(0%);position:fixed;transition:none !important;" app data-v-588fdeba><!----><!--[--><div class="v-toolbar__content" style="height:100px;"><!----><!----><!--[--><div class="v-avatar v-theme--dark bg-grey-darken-5 v-avatar--density-default v-avatar--variant-flat" style="width:70px;height:70px;" data-v-588fdeba><!--[--><div class="v-responsive v-img v-img--booting" style="max-height:100%;" contain data-v-588fdeba><div class="v-responsive__sizer" style=""></div><!--[--><!--[--><!----><!----><!----><!----><!----><!--]--><!--]--><!----></div><!--]--><!--[--><!----><span class="v-avatar__underlay"></span><!--]--></div><div class="v-toolbar-title font-weight-black text-h5 companyname" style="" data-v-588fdeba><div class="v-toolbar-title__placeholder"><!----><!--[-->WalksCloud<!--]--></div></div><!--]--><!----></div><!--]--><!--[--><!----><!--]--></header><main class="v-main" style="--v-layout-left:0px;--v-layout-right:0px;--v-layout-top:0px;--v-layout-bottom:0px;transition:none !important;" data-v-588fdeba><!--[--><div class="v-container v-container--fluid v-locale--is-ltr" style="" data-v-588fdeba><!--[--><!--[--><div><section id="hero"><div class="v-row v-row--no-gutters" style=""><div class="v-responsive v-img v-img--booting" style="min-height:calc(100vh - 0px);"><div class="v-responsive__sizer" style=""></div><!--[--><!--[--><!----><!----><!----><!----><!----><!--]--><!--]--><div class="v-responsive__content"><!--[--><!--[--><div class="v-container v-locale--is-ltr fill-height" style=""><div class="v-row align-center justify-center text-white mx-auto" style=""><h1 class="v-col v-col-12 white--text text-center" style=""><span class="text-h3 companyname font-weight-black">WalksCloud</span><br><span class="text-h5 font-weight-light">Get Everything Works Great</span></h1><button type="button" class="v-btn v-theme--dark v-btn--density-default rounded-circle v-btn--variant-outlined align-self-end" style="height:56px;width:56px;"><!--[--><span class="v-btn__overlay"></span><span class="v-btn__underlay"></span><!--]--><!----><span class="v-btn__content" data-no-activator><!--[--><!--[--><i class="mdi-chevron-double-down mdi v-icon notranslate v-theme--dark v-icon--size-default" style="" aria-hidden="true"></i><!--]--><!--]--></span><!----><!----></button></div></div><!--]--><!--]--></div></div></div></section><section id="about-us"><div class="py-12"></div><div class="v-container v-locale--is-ltr text-center" style=""><h2 class="text-h3 font-weight-bold mb-3">About Walks Cloud</h2><div class="v-responsive mx-auto mb-8" style="width:56px;"><div class="v-responsive__sizer" style=""></div><!----><div class="v-responsive__content"><!--[--><hr class="v-divider v-theme--dark mb-1" style="" aria-orientation="horizontal" role="separator"><hr class="v-divider v-theme--dark" style="" aria-orientation="horizontal" role="separator"><!--]--></div></div><div class="v-responsive mx-auto text-h6 font-weight-light mb-8" style="max-width:720px;"><div class="v-responsive__sizer" style=""></div><!----><div class="v-responsive__content"><!--[--><!--[--><div>We&#39;re creating a enterprise ready of Cloud application, the goal is provide users with everything that is needed to build rich and engaging management applications using ours products.</div><!--]--><!--]--></div></div><div></div></div><div class="py-12"></div></section><section id="features" class="bg-grey"><div class="py-12"></div><div class="v-container v-locale--is-ltr text-center" style=""><h2 class="text-h3 font-weight-bold mb-3">We can bring benefits for you</h2><div class="v-responsive mx-auto mb-12" style="width:56px;"><div class="v-responsive__sizer" style=""></div><!----><div class="v-responsive__content"><!--[--><hr class="v-divider v-theme--dark mb-1" style="" aria-orientation="horizontal" role="separator"><hr class="v-divider v-theme--dark" style="" aria-orientation="horizontal" role="separator"><!--]--></div></div><div class="v-responsive mx-auto text-h6 font-weight-light mb-8" style="max-width:720px;"><div class="v-responsive__sizer" style=""></div><!----><div class="v-responsive__content"><!--[--><!--[--><div>您身為中小企業，專注於自己的產品已分身乏術？</div><div>沒有足夠預算聘請 MIS 或使用超貴的系統， HR 身兼多職？</div><div>到職離職開通或關閉帳號太繁瑣，好難操作？</div><div>網路不通、電腦壞掉幾乎不能工作，怎麼辦？</div><div>網站突然不能開，打電話問了半天才知道是憑證過期？</div><div>新進、離職員工資產不清，WiFi 密碼老是被離職員工偷用？</div><div>公司 NAS 資料被看光光？</div><!--]--><!--]--></div></div><h2 class="text-h5 font-weight-bold mb-3">We can provided highest quality services in industry</h2><div class="v-responsive mx-auto mb-12" style="width:56px;"><div class="v-responsive__sizer" style=""></div><!----><div class="v-responsive__content"><!--[--><hr class="v-divider v-theme--dark mb-1" style="" aria-orientation="horizontal" role="separator"><hr class="v-divider v-theme--dark" style="" aria-orientation="horizontal" role="separator"><!--]--></div></div><div class="v-responsive mx-auto text-h6 font-weight-light mb-8" style="max-width:720px;"><div class="v-responsive__sizer" style=""></div><!----><div class="v-responsive__content"><!--[--><!--[--><div>簡單自動化的管理系統，縮短現行流程工時至少 60% 以上</div><div>系統客製化高，不用擔心不符合需求</div><div>為您妥善營運所有 MIS 工作範疇，我們可即時得知網路障礙，確保網路時時暢通</div><!--]--><!--]--></div></div><h2 class="text-h5 font-weight-bold mb-3">Services Item</h2><div class="v-responsive mx-auto mb-12" style="width:56px;"><div class="v-responsive__sizer" style=""></div><!----><div class="v-responsive__content"><!--[--><hr class="v-divider v-theme--dark mb-1" style="" aria-orientation="horizontal" role="separator"><hr class="v-divider v-theme--dark" style="" aria-orientation="horizontal" role="separator"><!--]--></div></div><div class="v-row" style=""><!--[--><div class="v-col-md-4 v-col-12" style=""><div class="v-card v-card--flat v-theme--dark bg-grey-lighten-2 v-card--density-default v-card--variant-elevated py-12 px-4" style=""><!----><div class="v-card__loader"><div class="v-progress-linear v-theme--dark v-locale--is-ltr" style="top:0;height:0;--v-progress-linear-height:2px;left:50%;transform:translateX(-50%);" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100"><!----><div class="v-progress-linear__background" style="width:100%;"></div><div class="v-progress-linear__indeterminate"><!--[--><div class="v-progress-linear__indeterminate long" style=""></div><div class="v-progress-linear__indeterminate short" style=""></div><!--]--></div><!----></div></div><!----><!----><!--[--><!--[--><div><div class="v-avatar v-theme--dark bg-blue-darken-2 v-avatar--density-default v-avatar--variant-flat" style="width:88px;height:88px;"><!--[--><i class="mdi-clippy mdi v-icon notranslate v-theme--dark" style="font-size:36px;height:36px;width:36px;" aria-hidden="true"></i><!--]--><!--[--><!----><span class="v-avatar__underlay"></span><!--]--></div></div><!--]--><div class="v-card-title justify-center font-weight-black text-uppercase text-grey text-darken-1" style="">IT 外包 &amp; 整體規劃</div><div class="v-card-text subtitle-1 text-grey text-darken-1" style="">網路建置、設備維護</div><!--]--><!----><!--[--><!----><span class="v-card__underlay"></span><!--]--></div></div><div class="v-col-md-4 v-col-12" style=""><div class="v-card v-card--flat v-theme--dark bg-grey-lighten-2 v-card--density-default v-card--variant-elevated py-12 px-4" style=""><!----><div class="v-card__loader"><div class="v-progress-linear v-theme--dark v-locale--is-ltr" style="top:0;height:0;--v-progress-linear-height:2px;left:50%;transform:translateX(-50%);" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100"><!----><div class="v-progress-linear__background" style="width:100%;"></div><div class="v-progress-linear__indeterminate"><!--[--><div class="v-progress-linear__indeterminate long" style=""></div><div class="v-progress-linear__indeterminate short" style=""></div><!--]--></div><!----></div></div><!----><!----><!--[--><!--[--><div><div class="v-avatar v-theme--dark bg-blue-darken-2 v-avatar--density-default v-avatar--variant-flat" style="width:88px;height:88px;"><!--[--><i class="mdi-account-circle mdi v-icon notranslate v-theme--dark" style="font-size:36px;height:36px;width:36px;" aria-hidden="true"></i><!--]--><!--[--><!----><span class="v-avatar__underlay"></span><!--]--></div></div><!--]--><div class="v-card-title justify-center font-weight-black text-uppercase text-grey text-darken-1" style="">雲端帳號管理</div><div class="v-card-text subtitle-1 text-grey text-darken-1" style="">帳號管理系統 IAM</div><!--]--><!----><!--[--><!----><span class="v-card__underlay"></span><!--]--></div></div><div class="v-col-md-4 v-col-12" style=""><div class="v-card v-card--flat v-theme--dark bg-grey-lighten-2 v-card--density-default v-card--variant-elevated py-12 px-4" style=""><!----><div class="v-card__loader"><div class="v-progress-linear v-theme--dark v-locale--is-ltr" style="top:0;height:0;--v-progress-linear-height:2px;left:50%;transform:translateX(-50%);" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100"><!----><div class="v-progress-linear__background" style="width:100%;"></div><div class="v-progress-linear__indeterminate"><!--[--><div class="v-progress-linear__indeterminate long" style=""></div><div class="v-progress-linear__indeterminate short" style=""></div><!--]--></div><!----></div></div><!----><!----><!--[--><!--[--><div><div class="v-avatar v-theme--dark bg-blue-darken-2 v-avatar--density-default v-avatar--variant-flat" style="width:88px;height:88px;"><!--[--><i class="mdi-fingerprint mdi v-icon notranslate v-theme--dark" style="font-size:36px;height:36px;width:36px;" aria-hidden="true"></i><!--]--><!--[--><!----><span class="v-avatar__underlay"></span><!--]--></div></div><!--]--><div class="v-card-title justify-center font-weight-black text-uppercase text-grey text-darken-1" style="">資產管理系統</div><div class="v-card-text subtitle-1 text-grey text-darken-1" style="">coming soon</div><!--]--><!----><!--[--><!----><span class="v-card__underlay"></span><!--]--></div></div><!--]--></div></div><div class="py-12"></div></section><section id="stats"><div class="v-responsive v-img v-img--booting v-parallax" style="height:1200px;"><div class="v-responsive__sizer" style=""></div><!--[--><!--[--><!----><!----><!----><!----><!----><!--]--><!--]--><div class="v-responsive__content"><!--[--><div class="py-12"></div><div class="v-container v-locale--is-ltr text-center" style=""><h2 class="text-h3 font-weight-bold mb-3">團隊介紹</h2><div class="v-responsive mx-auto mb-8" style="width:56px;"><div class="v-responsive__sizer" style=""></div><!----><div class="v-responsive__content"><!--[--><hr class="v-divider v-theme--dark mb-1" style="" aria-orientation="horizontal" role="separator"><hr class="v-divider v-theme--dark" style="" aria-orientation="horizontal" role="separator"><!--]--></div></div><div class="v-responsive mx-auto text-h6 font-weight-light mb-8" style="max-width:720px;"><div class="v-responsive__sizer" style=""></div><!----><div class="v-responsive__content"><!--[--><!--[--><div>團隊擁有豐富開發及 IT 管理經驗</div><div>精通相關系統開發及維運、資安架構、網路維護</div><div>熟知公司營運所有 MIS knowhow 及痛點</div><div>曾設定可容納 500 至 1,500 名以上與會者研討會無線網絡</div><div>資產管理系統開發</div><div>不論是管理系統、網路建置、活動直播，皆可滿足您的需求</div><!--]--><!--]--></div></div></div><div class="v-container v-locale--is-ltr" style=""><div class="v-row mx-auto" style=""><!--[--><div class="v-col-md-4 v-col-12" style=""><div class="v-card v-card--flat v-theme--dark bg-grey-lighten-2 v-card--density-default v-card--variant-elevated py-12 px-4 member text-center" style=""><!----><div class="v-card__loader"><div class="v-progress-linear v-theme--dark v-locale--is-ltr" style="top:0;height:0;--v-progress-linear-height:2px;left:50%;transform:translateX(-50%);" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100"><!----><div class="v-progress-linear__background" style="width:100%;"></div><div class="v-progress-linear__indeterminate"><!--[--><div class="v-progress-linear__indeterminate long" style=""></div><div class="v-progress-linear__indeterminate short" style=""></div><!--]--></div><!----></div></div><!----><!----><!--[--><!--[--><div><div class="v-avatar v-theme--dark bg-blue-darken-2 v-avatar--density-default v-avatar--variant-flat" style="width:88px;height:88px;"><!--[--><div class="v-responsive v-img v-img--booting" style="" aria-label="Avatar" role="img"><div class="v-responsive__sizer" style=""></div><!--[--><!--[--><!----><!----><!----><!----><!----><!--]--><!--]--><!----></div><!--]--><!--[--><!----><span class="v-avatar__underlay"></span><!--]--></div></div><div class="v-card-title justify-center font-weight-black text-grey-darken-1" style="">Pennyken Huang</div><div class="v-card-text text-center subtitle-1 text-grey-darken-1" style="">CEO</div><!--]--><!--]--><!----><!--[--><!----><span class="v-card__underlay"></span><!--]--></div></div><div class="v-col-md-4 v-col-12" style=""><div class="v-card v-card--flat v-theme--dark bg-grey-lighten-2 v-card--density-default v-card--variant-elevated py-12 px-4 member text-center" style=""><!----><div class="v-card__loader"><div class="v-progress-linear v-theme--dark v-locale--is-ltr" style="top:0;height:0;--v-progress-linear-height:2px;left:50%;transform:translateX(-50%);" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100"><!----><div class="v-progress-linear__background" style="width:100%;"></div><div class="v-progress-linear__indeterminate"><!--[--><div class="v-progress-linear__indeterminate long" style=""></div><div class="v-progress-linear__indeterminate short" style=""></div><!--]--></div><!----></div></div><!----><!----><!--[--><!--[--><div><div class="v-avatar v-theme--dark bg-blue-darken-2 v-avatar--density-default v-avatar--variant-flat" style="width:88px;height:88px;"><!--[--><div class="v-responsive v-img v-img--booting" style="" aria-label="Avatar" role="img"><div class="v-responsive__sizer" style=""></div><!--[--><!--[--><!----><!----><!----><!----><!----><!--]--><!--]--><!----></div><!--]--><!--[--><!----><span class="v-avatar__underlay"></span><!--]--></div></div><div class="v-card-title justify-center font-weight-black text-grey-darken-1" style="">Haraguroicha Hsu</div><div class="v-card-text text-center subtitle-1 text-grey-darken-1" style="">CTO</div><!--]--><!--]--><!----><!--[--><!----><span class="v-card__underlay"></span><!--]--></div></div><div class="v-col-md-4 v-col-12" style=""><div class="v-card v-card--flat v-theme--dark bg-grey-lighten-2 v-card--density-default v-card--variant-elevated py-12 px-4 member text-center" style=""><!----><div class="v-card__loader"><div class="v-progress-linear v-theme--dark v-locale--is-ltr" style="top:0;height:0;--v-progress-linear-height:2px;left:50%;transform:translateX(-50%);" role="progressbar" aria-hidden="true" aria-valuemin="0" aria-valuemax="100"><!----><div class="v-progress-linear__background" style="width:100%;"></div><div class="v-progress-linear__indeterminate"><!--[--><div class="v-progress-linear__indeterminate long" style=""></div><div class="v-progress-linear__indeterminate short" style=""></div><!--]--></div><!----></div></div><!----><!----><!--[--><!--[--><div><div class="v-avatar v-theme--dark bg-blue-darken-2 v-avatar--density-default v-avatar--variant-flat" style="width:88px;height:88px;"><!--[--><div class="v-responsive v-img v-img--booting" style="" aria-label="Avatar" role="img"><div class="v-responsive__sizer" style=""></div><!--[--><!--[--><!----><!----><!----><!----><!----><!--]--><!--]--><!----></div><!--]--><!--[--><!----><span class="v-avatar__underlay"></span><!--]--></div></div><div class="v-card-title justify-center font-weight-black text-grey-darken-1" style="">Jimmy Pan</div><div class="v-card-text text-center subtitle-1 text-grey-darken-1" style="">CIO</div><!--]--><!--]--><!----><!--[--><!----><span class="v-card__underlay"></span><!--]--></div></div><!--]--></div></div><div class="py-12"></div><!--]--></div></div></section><section class="v-sheet v-theme--dark" style="background-color:#333333;" id="contact-us" tile><div class="py-12"></div><div class="py-12"></div></section></div><!--]--><!--]--></div><!--]--></main><footer class="v-footer v-theme--dark justify-center" style="background-color:#292929;" data-v-588fdeba><div class="text-h6 font-weight-light text-grey text-lighten-1 text-center" data-v-588fdeba> © 2023 — Walks Cloud Inc. <img class="companyname-ch" src="/Logo_wordmark_company.svg" data-v-588fdeba><div style="font-size:10px;" data-v-588fdeba><a href="https://github.com/WalksCloud/OfficialWebsite" data-v-588fdeba>GitHub</a> (<a href="https://github.com/WalksCloud/OfficialWebsite/commit/9cc36c7" data-v-588fdeba>#9cc36c7</a> 2023-10-27 18:10:14 +08:00) | <a href="https://auth.select/term-of-use" data-v-588fdeba>Term of Use</a> | <a href="https://auth.select/privacy-policy" data-v-588fdeba>Privacy Policy</a></div></div></footer><!--]--></div></div><!--]--></div><script>window.__NUXT__=(function(a,b){return {data:{},state:{},_errors:{},serverRendered:true,prerenderedAt:1698401452467,config:{public:{buildTime:"2023-10-27 18:10:14 +08:00",buildHash:"9cc36c7",content:{locales:[],defaultLocale:b,integrity:1698401414521,experimental:{stripQueryParameters:a,clientDB:a,advancedIgnoresPattern:a},api:{baseURL:"\u002Fapi\u002F_content"},navigation:{fields:[]},tags:{p:"prose-p",a:"prose-a",blockquote:"prose-blockquote","code-inline":"prose-code-inline",code:"prose-code",em:"prose-em",h1:"prose-h1",h2:"prose-h2",h3:"prose-h3",h4:"prose-h4",h5:"prose-h5",h6:"prose-h6",hr:"prose-hr",img:"prose-img",ul:"prose-ul",ol:"prose-ol",li:"prose-li",strong:"prose-strong",table:"prose-table",thead:"prose-thead",tbody:"prose-tbody",td:"prose-td",th:"prose-th",tr:"prose-tr"},highlight:a,wsUrl:b,documentDriven:a,host:b,trailingSlash:a,anchorLinks:{depth:4,exclude:[1]}},i18n:{experimental:{jsTsFormatResource:a},baseUrl:b}},app:{baseURL:"\u002F",buildAssetsDir:"\u002F_nuxt\u002F",cdnURL:b}}}}(false,""))</script><script type="module" src="/_nuxt/entry.f2689442.js" crossorigin></script></body>
+</html>
