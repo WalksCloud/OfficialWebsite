@@ -40,9 +40,6 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      - name: Install dependencies 👨🏻‍💻
-        run: npm ci
-
 #      - name: Run linter 👀
 #        run: npm run lint
       - name: Setup Timezone
@@ -52,8 +49,13 @@ jobs:
           timezoneMacos: "Asia/Taipei"
           timezoneWindows: "Taipei Standard Time"
 
+      - uses: oven-sh/setup-bun@v1
+
+      - name: Install dependencies 👨🏻‍💻
+        run: bun install
+
       - name: Build
-        run: npm run generate
+        run: bun run generate
 
       - name: Archive Production Artifact
         uses: actions/upload-artifact@v3
