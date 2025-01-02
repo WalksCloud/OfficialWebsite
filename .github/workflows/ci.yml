@@ -18,19 +18,30 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest]
-        node: [18]
+        node: [20]
 
     steps:
+      - name: Setup Timezone
+        uses: szenius/set-timezone@v2.0
+        with:
+          timezoneLinux: "Asia/Taipei"
+          timezoneMacos: "Asia/Taipei"
+          timezoneWindows: "Taipei Standard Time"
+
       - name: Install jq
         run: sudo apt-get install -y jq
 
-      - name: Checkout 🛎
-        uses: actions/checkout@v4
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
 
       - name: Setup node env 🏗
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node }}
+
+      - name: Checkout 🛎
+        uses: actions/checkout@v4
 
       - name: Cache node_modules 📦
         uses: actions/cache@v3
@@ -42,14 +53,6 @@ jobs:
 
 #      - name: Run linter 👀
 #        run: npm run lint
-      - name: Setup Timezone
-        uses: szenius/set-timezone@v1.2
-        with:
-          timezoneLinux: "Asia/Taipei"
-          timezoneMacos: "Asia/Taipei"
-          timezoneWindows: "Taipei Standard Time"
-
-      - uses: oven-sh/setup-bun@v1
 
       - name: Install dependencies 👨🏻‍💻
         run: bun install
