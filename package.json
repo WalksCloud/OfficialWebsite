@@ -51,7 +51,7 @@
     "vue": "^3.2.47",
     "vue-server-renderer": "^2.7.14",
     "vue-template-compiler": "^2.7.16",
-    "vuetify": "^3.2.3"
+    "vuetify": "^3.7.6"
   },
   "browserslist": [
     "> 1%",
