@@ -42,7 +42,7 @@
     "is-https": "^4.0.0",
     "is-svg": "^5.0.0",
     "lint-staged": "^15.3.0",
-    "nuxt": "^3.12.4",
+    "nuxt": "^3.15.1",
     "stylus": "^0.59.0",
     "stylus-loader": "^7.1.0",
     "typescript": "^5.7.2",
