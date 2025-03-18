@@ -28,7 +28,7 @@
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
-    "@intlify/unplugin-vue-i18n": "^0.10.0",
+    "@intlify/unplugin-vue-i18n": "^6.0.4",
     "@mdi/font": "^7.2.96",
     "@nuxt/builder": "^2.16.3",
     "@nuxtjs/google-gtag": "^1.0.4",
