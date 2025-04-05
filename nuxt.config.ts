@@ -25,6 +25,8 @@ export default defineNuxtConfig({
   // Target (https://go.nuxtjs.dev/config-target)
   target: 'static',
 
+  compatibilityDate: '2024-04-03',
+
   // Global page headers (https://go.nuxtjs.dev/config-head)
   app: {
     head: {
