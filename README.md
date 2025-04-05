@@ -4,17 +4,17 @@
 
 ```bash
 # install dependencies
-$ npm install
+$ bun install
 
 # serve with hot reload at localhost:3000
-$ npm run dev
+$ bun run dev
 
 # build for production and launch server
-$ npm run build
-$ npm run start
+$ bun run build
+$ bun run start
 
 # generate static project
-$ npm run generate
+$ bun run generate
 ```
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
