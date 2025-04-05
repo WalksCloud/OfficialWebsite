@@ -43,7 +43,7 @@
     "is-svg": "^5.1.0",
     "lint-staged": "^15.3.0",
     "nuxt": "^3.12.4",
-    "stylus": "^0.59.0",
+    "stylus": "^0.64.0",
     "stylus-loader": "^8.1.1",
     "typescript": "^5.7.2",
     "ufo": "^1.1.2",
