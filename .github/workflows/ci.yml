@@ -62,7 +62,7 @@ jobs:
 #        run: npm run lint
 
       - name: Install dependencies 👨🏻‍💻
-        run: bun install --trust
+        run: bun install --trust --no-save
 
       - name: Build
         run: bun run --bun generate
