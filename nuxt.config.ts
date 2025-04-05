@@ -210,7 +210,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       buildTime: moment().format('YYYY-MM-DD HH:mm:ss Z'),
-      buildHash: git.short() + (git.isDirty() ? '-dirty' : ''),
+      buildHash: git.short(".") + (git.isDirty() ? '-dirty' : ''),
     },
   },
 })
