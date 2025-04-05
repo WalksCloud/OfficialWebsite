@@ -2,7 +2,7 @@ import { defineNuxtConfig } from 'nuxt/config'
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'url'
-import colors from 'vuetify/lib/util/colors'
+import colors from 'vuetify/lib/util/colors.js'
 import moment from 'moment'
 import git from 'git-rev-sync'
 
