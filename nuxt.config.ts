@@ -126,6 +126,9 @@ export default defineNuxtConfig({
   i18n: {
     langDir: 'lang/',
     legacy: false,
+    bundle: {
+      optimizeTranslationDirective: false,
+    },
     globalInjection: true,
     globalSFCScope: true,
     forceStringify: false,
