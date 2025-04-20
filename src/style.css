@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+:root {
+  font-family: "Noto Sans TC", "Barlow", sans-serif;
+}
+
+
+/*font-light 
+font-weight: 300;
+
+font-medium
+font-weight: 500;
+
+font-bold
+font-weight: 700;*/
+
+
+@theme {
+  --color-primary: #1e90ff;
+}
+
+.font-barlow {
+  font-family: "Barlow", sans-serif;
+}
+.icon-element {
+  font-size: 48px;
+}
+
+.block-title {
+  border-left: 8px solid var(--color-primary);
+  padding-left: 10px;
+}
+
+.home-bg {
+  background: transparent url(/hero-back.jpg) scroll no-repeat 50% 50%;
+  background-size: cover;
+}
+.dark-bg {
+  background: #efefef;
+}
+.loading-container {
+  background: rgba(255, 255, 255, .7);
+}
+
+/*@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}*/
