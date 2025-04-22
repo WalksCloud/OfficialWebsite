@@ -15,9 +15,15 @@ export const useAlertStore = defineStore('alert', {
         hideLoading() {
             this.loading = false
         },
-        message(title, content) {
+        message(title, content, autoClose = false) {
             this.alert.title = title
             this.alert.content = content
+
+            if(autoClose) {
+                setTimeout(() => {
+                  this.clear()
+                }, 5000)
+            }
         },
         clear() {
             this.alert.title = ''

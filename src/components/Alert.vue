@@ -13,15 +13,15 @@ const { clear } = store
     <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
       <div class="flex min-h-[50vh] md:min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
         <transition name="slide-down" appear>
-          <div v-if="alert.title" class="w-5/6 lg:w-1/4 relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:my-8">
-            <div class="bg-white px-5 pt-6">
-			        <h3 class="text-base font-semibold text-gray-900" v-text="alert.title"></h3>
-			        <div class="mt-2">
-			          <p class="text-sm text-gray-500" v-text="alert.content"></p>
+          <div v-if="alert.title" class="w-5/6 lg:w-1/4 relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:my-8 bg-white">
+            <div class="px-5 pt-6">
+			        <h3 class="font-bold text-gray-900" v-text="alert.title"></h3>
+			        <div class="my-2 lg:mt-2 lg:mb-4">
+			          <p class="text-gray-500" v-text="alert.content"></p>
 			        </div>
 			      </div>
-			      <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-			        <button @click="clear" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">{{ $t('close') }}</button>
+			      <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+			        <button @click="clear" type="button" class="text-white bg-primary border-1 hover:border-primary hover:bg-white hover:text-primary rounded-lg text-sm px-3 lg:px-5 py-1.5 lg:py-2.5">{{ $t('close') }}</button>
 			      </div>
           </div>
         </transition>

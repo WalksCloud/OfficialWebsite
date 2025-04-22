@@ -36,7 +36,7 @@ const submit = async() => {
   useAlertStore().showLoading()
   setTimeout(() => {
     useAlertStore().hideLoading()
-    useAlertStore().message(t('success'), t('sent-successful'))
+    useAlertStore().message(t('success'), t('sent-successful'), true)
   }, 1000)
 
   

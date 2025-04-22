@@ -15,11 +15,9 @@
 			    <div class="text-left lg:text-center">
 			    	<p class="font-bold my-2 lg:my-4">
 			    		{{ row.name }}
-			    		<a v-if="row.website_url" class="align-top inline-block" :href="row.website_url" target="_blank"><span class="material-symbols-outlined">link</span></a>
+			    		<a v-if="row.website_url" :href="row.website_url" target="_blank" class="ms-1"><span class="text-gray-600 align-top material-symbols-outlined">public</span></a>
 			    	</p>
 			    	<p class="text-gray-600">{{ row.intro }}</p>
-
-			    	<a v-if="row.website_url" class="hidden lg:inline-block mt-2 lg:mt-6 text-gray-600 text-sm" :href="row.website_url" target="_blank">{{ $t('personal_website') }}</a>
 			    </div>
 		  </div>
 		</div>
