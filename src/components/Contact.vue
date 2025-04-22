@@ -1,4 +1,5 @@
 <script setup>
+import { useAlertStore } from '@/stores/alert'
 import { reactive } from 'vue'
 import { useVuelidate } from '@vuelidate/core'
 import { required, email } from '@vuelidate/validators'
@@ -32,15 +33,26 @@ const v$ = useVuelidate({
 }, formData)
 
 const submit = async() => {
+  useAlertStore().showLoading()
+  setTimeout(() => {
+    useAlertStore().hideLoading()
+    useAlertStore().message(t('success'), t('sent-successful'))
+  }, 1000)
+
+  
   v$.value.$validate();
   if (!v$.value.$error) {
-  	console.log(formData)
-
-    // await send(formData).then( response => {
-
+    // useAlertStore().showLoading()
+    // await send(formData).then( () => {
+    //   useAlertStore().message(t('success'), t('sent-successful'))
+    //   // reset formData
+    //   for (var key in formData) {
+    //     formData[key] = (typeof key === Array) ? [] : ''
+    //   }
     // }).catch( error => {
-    //   useAlertStore().error(error.message, error.error)
+    //   useAlertStore().message(t('failed'), t('sent-failed'))
     // }).finally( () => {
+    //   useAlertStore().hideLoading()
     //   v$.value.$reset();
     // });
   }
@@ -55,13 +67,12 @@ const submit = async() => {
       <p v-for="row in $tm('contact-section.intro')">{{ row }}</p>
   </div>
 
-  <!-- todo: form-->
   <div class="lg:w-2/3 mx-auto text-left">
     <div class="mb-3 lg:mb-6">
       <label class="text-gray-600">{{ $t('form.company_name') }} *</label>
       <div class="mt-2" :class="{ 'has-validation is-invalid': v$.company_name.$errors.length, 'is-valid': !v$.company_name.$errors.length && formData.company_name }">
 
-        <input v-model.trim="formData.company_name" required :placeholder="$t('form.enter', { field: $t('form.company_name') })" type="text" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+        <input v-model.trim="formData.company_name" required :placeholder="$t('form.enter', { field: $t('form.company_name') })" type="text" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6">
 
         <div class="text-red-600 mt-2 text-end text-sm" v-for="error of v$.company_name.$errors" :key="error.$uid">
           <p v-if="error.$validator === 'required'">{{ $t('error.required') }}</p>
@@ -72,7 +83,7 @@ const submit = async() => {
       <label class="text-gray-600">{{ $t('form.company_number') }}</label>
       <div class="mt-2" :class="{ 'has-validation is-invalid': v$.company_number.$errors.length, 'is-valid': !v$.company_number.$errors.length && formData.company_number }">
 
-        <input v-model.trim="formData.company_number" :placeholder="$t('form.enter', { field: $t('form.company_number') })" type="text" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+        <input v-model.trim="formData.company_number" :placeholder="$t('form.enter', { field: $t('form.company_number') })" type="text" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6">
 
         <div class="text-red-600 mt-2 text-end text-sm" v-for="error of v$.company_number.$errors" :key="error.$uid">
           
@@ -83,7 +94,7 @@ const submit = async() => {
       <label class="text-gray-600">{{ $t('form.name') }} *</label>
       <div class="mt-2" :class="{ 'has-validation is-invalid': v$.name.$errors.length, 'is-valid': !v$.name.$errors.length && formData.name }">
 
-        <input v-model.trim="formData.name" required :placeholder="$t('form.enter', { field: $t('form.name') })" type="text" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+        <input v-model.trim="formData.name" required :placeholder="$t('form.enter', { field: $t('form.name') })" type="text" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6">
 
         <div class="text-red-600 mt-2 text-end text-sm" v-for="error of v$.name.$errors" :key="error.$uid">
           <p v-if="error.$validator === 'required'">{{ $t('error.required') }}</p>
@@ -94,7 +105,7 @@ const submit = async() => {
       <label class="text-gray-600">{{ $t('form.email') }} *</label>
       <div class="mt-2" :class="{ 'has-validation is-invalid': v$.email.$errors.length, 'is-valid': !v$.email.$errors.length && formData.email }">
 
-        <input v-model.trim="formData.email" required :placeholder="$t('form.enter', { field: $t('form.email') })" type="text" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+        <input v-model.trim="formData.email" required :placeholder="$t('form.enter', { field: $t('form.email') })" type="text" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6">
 
         <div class="text-red-600 mt-2 text-end text-sm" v-for="error of v$.email.$errors" :key="error.$uid">
           <p v-if="error.$validator === 'required'">{{ $t('error.required') }}</p>
@@ -106,7 +117,7 @@ const submit = async() => {
       <label class="text-gray-600">{{ $t('form.phone') }}</label>
       <div class="mt-2" :class="{ 'has-validation is-invalid': v$.phone.$errors.length, 'is-valid': !v$.phone.$errors.length && formData.phone }">
 
-        <input v-model.trim="formData.phone" :placeholder="$t('form.enter', { field: $t('form.phone') })" type="text" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-indigo-600 sm:text-sm/6">
+        <input v-model.trim="formData.phone" :placeholder="$t('form.enter', { field: $t('form.phone') })" type="text" class="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 outline-1 -outline-offset-1 outline-gray-300 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-primary sm:text-sm/6">
 
         <div class="text-red-600 mt-2 text-end text-sm" v-for="error of v$.phone.$errors" :key="error.$uid">
           <p v-if="error.$validator === 'required'">{{ $t('error.required') }}</p>
@@ -118,8 +129,8 @@ const submit = async() => {
       <div class="mt-2" :class="{ 'has-validation is-invalid': v$.requirements.$errors.length, 'is-valid': !v$.requirements.$errors.length && formData.requirements }">
         <div class="flex flex-wrap">
           <div v-for="(value, index) in requirements" class="flex items-center me-4 my-2">
-            <input :id="`requirements-checkbox-${index}`" v-model="formData.requirements" type="checkbox" :value="value" class="w-4 h-4">
-            <label :for="`requirements-checkbox-${index}`" class="ms-2 text-gray-600 whitespace-nowrap" v-text="value"></label>
+            <input :id="`requirements-checkbox-${index}`" v-model="formData.requirements" type="checkbox" :value="value" class="w-4 h-4 peer">
+            <label :for="`requirements-checkbox-${index}`" class="ms-2 text-gray-600 whitespace-nowrap peer-checked:text-primary" v-text="value"></label>
           </div>
         </div>
         <div class="text-red-600 mt-2 text-end text-sm" v-for="error of v$.requirements.$errors" :key="error.$uid">
@@ -131,8 +142,8 @@ const submit = async() => {
       <label class="text-gray-600">{{ $t('form.terms') }}</label>
       <div class="mt-2" :class="{ 'has-validation is-invalid': v$.terms.$errors.length, 'is-valid': !v$.terms.$errors.length && formData.terms }">
         <div class="flex items-center me-4 my-2">
-          <input id="terms-checkbox" v-model="formData.terms" type="checkbox" value="1" class="w-4 h-4">
-          <label for="terms-checkbox" class="ms-2 text-gray-600 whitespace-nowrap">我同意</label>
+          <input id="terms-checkbox" v-model="formData.terms" type="checkbox" value="1" class="w-4 h-4 peer">
+          <label for="terms-checkbox" class="ms-2 text-gray-600 whitespace-nowrap peer-checked:text-primary">我同意</label>
         </div>
         <div class="text-red-600 mt-2 text-end text-sm" v-for="error of v$.terms.$errors" :key="error.$uid">
           <p v-if="error.$validator === 'required'">{{ $t('error.required') }}</p>

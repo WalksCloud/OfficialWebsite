@@ -1,22 +1,11 @@
 @import "tailwindcss";
-
-:root {
-  font-family: "Noto Sans TC", "Barlow", sans-serif;
-  scroll-behavior: smooth;
-}
-
-/*font-light 
-font-weight: 300;
-
-font-medium
-font-weight: 500;
-
-font-bold
-font-weight: 700;*/
-
-
 @theme {
   --color-primary: #1e90ff;
+}
+
+:root {
+  font-family: "Noto Sans TC", sans-serif;
+  scroll-behavior: smooth;
 }
 
 .font-barlow {
@@ -33,9 +22,6 @@ font-weight: 700;*/
   background-size: cover;
 }
 
-.loading-container {
-  background: rgba(255, 255, 255, .7);
-}
 .icon-element {
   font-size: 48px;
 }
@@ -45,18 +31,4 @@ font-weight: 700;*/
   .icon-element {
     font-size: 32px;
   }
-
 }
-
-/*@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}*/

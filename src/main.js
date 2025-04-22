@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import { createI18n } from 'vue-i18n'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -23,7 +24,9 @@ const i18n = createI18n({
 
 library.add(faSquareFacebook, faLinkedin)
 
+const pinia = createPinia()
 const app = createApp(App)
+app.use(pinia)
 app.use(i18n)
 app.component('font-awesome-icon', FontAwesomeIcon)
 app.mount('#app')

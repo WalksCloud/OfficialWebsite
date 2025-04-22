@@ -286,5 +286,9 @@
     "required": "此欄位為必填。",
     "email": "Email 格式錯誤。",
     "checked": "請勾選同意。"
-  }
+  },
+  "success": "成功",
+  "failed": "失敗",
+  "sent-successful": "我們會盡快回覆，謝謝。",
+  "sent-failed": "請再次檢查表單。"
 }
