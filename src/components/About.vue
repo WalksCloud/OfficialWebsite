@@ -1,13 +1,12 @@
 <template>
-<section id="about-section">
+<section id="about">
 	<div class="home-bg h-screen relative">
 		<div class="absolute bottom-20"><div class="w-3/4 mx-auto text-center">
-			<h2 class="text-4xl mb-3 font-bold text-white">{{ $t('about') }}</h2>
-			<p class="text-2xl text-white">{{ $t('about-section.title') }} </p>
+			<h2 class="text-5xl mb-3 font-bold text-white">{{ $t('about') }}</h2>
+			<p class="text-3xl text-white">{{ $t('about-section.title') }} </p>
 			<div class="my-6 mb-10 text-white">
 			    <p v-for="row in $tm('about-section.intro')">{{ row }}</p>
 			</div>
-
 			<div class="grid md:grid-cols-3 gap-6">
 			  <div v-for="row in $tm('about-section.about-items')" class="bg-white rounded-sm shadow-md p-6 border border-gray-200">
 			    <h3 class="text-xl font-bold mb-2">{{ row.title }}</h3>
@@ -15,6 +14,7 @@
 			  </div>
 			</div>
 		</div></div>
+		<div class="z-20 w-full h-full bg-black/35"></div>
 	</div>
 	
 	<div class="py-18"><div class="w-3/4 mx-auto text-center">

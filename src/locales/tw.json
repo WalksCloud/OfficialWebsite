@@ -6,6 +6,13 @@
   "partners": "合作夥伴",
   "contact": "聯絡我們",
   "personal_website": "個人網站",
+  "nav-links": {
+    "about": "關於行雲",
+    "services": "服務項目",
+    "team": "團隊介紹",
+    "partners": "合作夥伴",
+    "contact": "聯絡我們"
+  },
   "locales": {
     "en": "English",
     "tw": "繁體中文"

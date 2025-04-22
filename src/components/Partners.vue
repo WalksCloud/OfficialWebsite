@@ -1,5 +1,5 @@
 <template>
-<section class="py-18 section" id="partners-section">
+<section class="py-18 scroll-mt-[80px]" id="partners">
 	<div class="w-3/4 mx-auto text-center">
 		<h2 class="text-4xl mb-6 font-bold">{{ $t('partners') }}</h2>
 		<div class="mt-6 my-16 text-gray-600">

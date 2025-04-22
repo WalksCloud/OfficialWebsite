@@ -5,6 +5,13 @@
   "partners": "Partners",
   "contact": "Contact",
   "personal_website": "個人網站",
+  "nav-links": {
+    "about": "About",
+    "services": "Services",
+    "team": "Team",
+    "partners": "Partners",
+    "contact": "Contact"
+  },
   "locales": {
     "en": "English",
     "tw": "繁體中文"

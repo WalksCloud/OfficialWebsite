@@ -49,7 +49,7 @@ const submit = async() => {
 </script>
 
 <template>
-<section class="py-18" id="contact-section"><div class="w-3/4 mx-auto text-center">
+<section class="py-18 scroll-mt-[80px]" id="contact"><div class="w-3/4 mx-auto text-center">
   <h2 class="text-4xl mb-6 font-bold">{{ $t('contact') }}</h2>
   <div class="mt-6 my-16 text-gray-600">
     <p v-for="row in $tm('contact-section.intro')">{{ row }}</p>
@@ -119,7 +119,7 @@ const submit = async() => {
         <div class="flex flex-wrap">
           <div v-for="(value, index) in requirements" class="flex items-center me-4 my-2">
             <input :id="`requirements-checkbox-${index}`" v-model="formData.requirements" type="checkbox" :value="value" class="w-4 h-4">
-            <label :for="`requirements-checkbox-${index}`" class="ms-2 text-primary whitespace-nowrap" v-text="value"></label>
+            <label :for="`requirements-checkbox-${index}`" class="ms-2 text-gray-600 whitespace-nowrap" v-text="value"></label>
           </div>
         </div>
         <div class="text-red-600 mt-2 text-end text-sm" v-for="error of v$.requirements.$errors" :key="error.$uid">

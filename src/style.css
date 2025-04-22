@@ -2,6 +2,7 @@
 
 :root {
   font-family: "Noto Sans TC", "Barlow", sans-serif;
+  scroll-behavior: smooth;
 }
 
 
@@ -41,7 +42,6 @@ font-weight: 700;*/
 .loading-container {
   background: rgba(255, 255, 255, .7);
 }
-
 /*@media (prefers-color-scheme: light) {
   :root {
     color: #213547;
