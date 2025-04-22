@@ -1,4 +1,5 @@
 {
+  "brand-name": "WalksCloud",
   "about": "關於行雲",
   "services": "服務項目",
   "services_flows": "服務流程",
@@ -16,6 +17,16 @@
   "locales": {
     "en": "English",
     "tw": "繁體中文"
+  },
+  "close": "關閉",
+  "loading": "載入中...",
+  "footer": {
+    "facebook_url": "https://www.facebook.com/WalksCloud",
+    "linkedin_url": "https://www.linkedin.com/company/walkscloud/",
+    "term-of-use": "Term of Use",
+    "term-of-use_url": "https://dev.auth.select/term-of-use",
+    "privacy-policy": "Privacy Policy",
+    "privacy-policy_url": "https://dev.auth.select/privacy-policy"
   },
   "about-section": {
     "title": "Get Everything Works Great-讓行雲成為您的IT夥伴",

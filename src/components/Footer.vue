@@ -1,13 +1,15 @@
-<!-- todo
-Footer
-FB icon：https://www.facebook.com/WalksCloud
-Linkedin icon：https://www.linkedin.com/company/walkscloud/ -->
 <template>
-	<footer class="text-center py-6">
+	<footer class="text-center px-3 pb-3 lg:py-6 lg:px-0 text-sm lg:text-base">
     <p>
       © 2025 — Walks Cloud Inc. 
       <img class="align-bottom ms-2 h-[20px] inline-block" src="/logo-wordmark-company.svg" />
     </p>
-    <p class="mt-1 text-sm"><a href="#" target="_blank">Term of Use</a> | <a  href="#" target="_blank">Privacy Policy</a></p>
+
+    <a :href="$t('footer.facebook_url')" target="_black" class="inline-block my-2 me-2"><font-awesome-icon :icon="['fab', 'square-facebook']" class="text-2xl text-gray-600" /></a>
+    <a :href="$t('footer.linkedin_url')" target="_black" class="inline-block my-2"><font-awesome-icon :icon="['fab', 'linkedin']" class="text-2xl text-gray-600" /></a>
+    <p class="text-sm/1">
+      <a :href="$t('footer.term-of-use_url')" target="_blank">{{ $t('footer.term-of-use') }}</a> | 
+      <a :href="$t('footer.privacy-policy_url')" target="_blank">{{ $t('footer.privacy-policy') }}</a>
+    </p>
   </footer>
 </template>

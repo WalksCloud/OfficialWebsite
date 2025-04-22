@@ -11,7 +11,7 @@ import Footer from './components/Footer.vue'
 
 <template>
   <!-- <Alert /> -->
-  <div class="min-h-screen bg-white">
+  <div class="min-h-screen bg-white" :class="($i18n.locale === 'en') ? 'font-barlow': ''">
     <Navbar />
     <About />
     <Services />

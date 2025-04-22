@@ -1,43 +1,93 @@
+<script setup>
+import { ref, reactive, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+const { t, tm } = useI18n()
+
+let items = tm('about-section.questions-block.items')
+items.forEach((row) => {
+  row.showTooltip = false
+});
+
+const isMobile = ref(false)
+onMounted(() => {
+  isMobile.value = window.innerWidth < 1024
+})
+
+const handleHover = (index) => {
+  if (!isMobile.value) {
+    items[index].showTooltip = true
+  }
+}
+const handleLeave = (index) => {
+  if (!isMobile.value) {
+    items[index].showTooltip = false
+  }
+}
+const handleClick = (index) => {
+  if (isMobile.value) {
+    items[index].showTooltip = !items[index].showTooltip
+  }
+}
+</script>
+
 <template>
 <section id="about">
-	<div class="home-bg h-screen relative">
-		<div class="absolute bottom-20"><div class="w-3/4 mx-auto text-center">
-			<h2 class="text-5xl mb-3 font-bold text-white">{{ $t('about') }}</h2>
-			<p class="text-3xl text-white">{{ $t('about-section.title') }} </p>
-			<div class="my-6 mb-10 text-white">
+	<div class="home-bg h-[85vh] lg:h-screen relative">
+		<div class="w-full absolute bottom-25 lg:bottom-5"><div class="w-5/6 lg:w-3/4 mx-auto text-center">
+			<h2 class="text-4xl mb-2 lg:text-5xl lg:mb-3 font-bold text-white">{{ $t('about') }}</h2>
+			<p class="text-xl lg:text-3xl text-white">{{ $t('about-section.title') }} </p>
+			<div class="my-4 mb-4 lg:my-6 lg:mb-10 text-white">
 			    <p v-for="row in $tm('about-section.intro')">{{ row }}</p>
 			</div>
-			<div class="grid md:grid-cols-3 gap-6">
+			<!-- desktop -->
+			<div class="hidden lg:grid grid-cols-3 gap-6">
 			  <div v-for="row in $tm('about-section.about-items')" class="bg-white rounded-sm shadow-md p-6 border border-gray-200">
 			    <h3 class="text-xl font-bold mb-2">{{ row.title }}</h3>
 			    <p>{{ row.content }}</p>
 			  </div>
 			</div>
 		</div></div>
-		<div class="z-20 w-full h-full bg-black/35"></div>
+		<div class="z-20 w-full h-full bg-black/45 lg:bg-black/35"></div>
 	</div>
-	
-	<div class="py-18"><div class="w-3/4 mx-auto text-center">
-		<p class="text-3xl font-bold">{{ $t('about-section.questions-block.title') }}</p>
+	<!-- mobile -->
+	<div class="lg:hidden w-5/6 mx-auto grid gap-4 relative mt-[-60px]">
+	  <div v-for="row in $tm('about-section.about-items')" class="bg-white rounded-sm shadow p-4 border border-gray-200">
+	    <h3 class="font-bold mb-1">{{ row.title }}</h3>
+	    <p class="text-sm">{{ row.content }}</p>
+	  </div>
+	</div>
+
+	<div class="py-8 lg:py-18"><div class="w-5/6 lg:w-3/4 mx-auto text-center">
+		<p class="text-2xl lg:text-3xl font-bold">{{ $t('about-section.questions-block.title') }}</p>
 		<p class="mt-2 mb-8">{{ $t('about-section.questions-block.intro') }}</p>
-		<div class="grid md:grid-cols-3 gap-6">
-	    	<div v-for="item in $tm('about-section.questions-block.items')" class="bg-white rounded-sm shadow-md p-6 border border-gray-200">
-		  	<div class="group">
-			  <div>
-			  	<span class="icon-element material-symbols-outlined">{{ item.icon }}</span>
-			    <p>{{ item.title }}</p>
-			  </div>
-			  <div class="hidden group-hover:block">
-			  	<p>{{ item.content }}</p>
-			  </div>
-			</div>
-		  </div>
+		<div class="grid lg:grid-cols-3 gap-4 lg:gap-6">
+	    	<div v-for="(item, index) in items" @mouseenter="handleHover(index)" @mouseleave="handleLeave(index)" @click="handleClick(index)" class="rounded-sm shadow-md p-4 lg:p-6 border border-gray-200 relative" :class="[index % 2 === 0 ? 'bg-[#efefef] text-gray-700' : 'bg-white text-black']">
+			  	<div class="text-left lg:text-center">
+				  <div class="flex lg:block">
+				  	<span class="icon-element material-symbols-outlined">{{ item.icon }}</span>
+				    <p class="ms-2 lg:ms-0">{{ item.title }}</p>
+				  </div>
+				  <transition name="fade">
+				  	<div v-if="item.showTooltip" class="p-4 flex flex-col justify-center absolute top-0 left-0 w-full h-full text-sm" :class="[index % 2 === 0 ? 'bg-[#efefef] text-gray-700' : 'bg-white text-black']">{{ item.content }}</div>
+				  </transition>
+				</div>
+		 	</div>
 		</div>
-		<h2 class="text-4xl my-6 font-bold">{{ $t('about-section.services-block.title') }}</h2>
+		<h2 class="text-2xl my-6 lg:text-4xl lg:my-12 font-bold">{{ $t('about-section.services-block.title') }}</h2>
 		<div class="mt-6 text-gray-600">
 		    <p v-for="row in $tm('about-section.services-block.intro')">{{ row }}</p>
-		    <p class="mt-6 font-bold">{{ $t('about-section.services-block.message') }}</p>
+		    <p class="mt-4 lg:mt-6 font-bold">{{ $t('about-section.services-block.message') }}</p>
 		</div>
 	</div></div>
 </section>
 </template>
+<style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.2s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

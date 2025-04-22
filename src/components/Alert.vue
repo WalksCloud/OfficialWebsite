@@ -36,7 +36,7 @@ let state = reactive({
 		        </div>
 		      </div>
 		      <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-		        <button @click="closeMessageModal()" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">關閉</button>
+		        <button @click="closeMessageModal()" type="button" class="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 ring-1 shadow-xs ring-gray-300 ring-inset hover:bg-gray-50 sm:mt-0 sm:w-auto">{{ $t('close') }}</button>
 		      </div>
 		    </div>
 		  </div>
@@ -55,7 +55,7 @@ let state = reactive({
 	      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
 	      class="text-primary"></path>
 	  </svg>
-	  <p class="mt-2 font-weight-bold">Loading...</p>
+	  <p class="mt-2 font-weight-bold">{{ $t('loading') }}</p>
 	</div>
 	</div></div>
 </template>

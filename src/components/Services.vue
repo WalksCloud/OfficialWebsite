@@ -1,11 +1,11 @@
 <template>
-<section id="services" class="scroll-mt-[80px]">
-	<div class="dark-bg py-18"><div class="w-3/4 mx-auto text-center">
-		<h2 class="text-4xl mb-12 font-bold">{{ $t('services') }}</h2>
-		<div class="grid md:grid-cols-3 gap-12">
+<section id="services" class="scroll-mt-[50px] lg:scroll-mt-[80px]">
+	<div class="bg-[#efefef] py-8 lg:py-18"><div class="w-5/6 lg:w-3/4 mx-auto text-center">
+		<h2 class="text-2xl mb-6 lg:text-4xl lg:mb-12 font-bold">{{ $t('services') }}</h2>
+		<div class="grid lg:grid-cols-3 gap-6 lg:gap-12">
 	    	<div v-for="row in $tm('services-section.services')" class="text-left">
-			    <h3 class="text-xl font-bold mb-4 block-title">{{ row.title }}</h3>
-			    <div v-for="item in row.items" class="mb-4">
+			    <h3 class="text-xl lg:font-bold mb-2 lg:mb-4 block-title">{{ row.title }}</h3>
+			    <div v-for="item in row.items" class="mb-2 lg:mb-4">
 		    		<p class="font-bold">{{ item.title }}</p>
 		      		<p class="text-gray-600">{{ item.content }}</p>
 			  	</div>
@@ -13,10 +13,10 @@
 		</div>
 	</div></div>
 	
-	<div class="bg-white py-18"><div class="w-3/4 mx-auto text-center">
-		<h2 class="text-4xl mb-12 font-bold">{{ $t('services_flows') }}</h2>
-		<div class="w-3/4 mx-auto"><div class="grid grid-cols-4 gap-4">
-		  <div v-for="content in $tm('services-section.flows')"  class="aspect-square border flex flex-col justify-center items-center text-center rounded-[50%] shadow-md p-6 border border-gray-200">
+	<div class="bg-white py-8 lg:py-18"><div class="w-5/6 lg:w-3/4 mx-auto text-center">
+		<h2 class="text-2xl mb-6 lg:text-4xl lg:mb-12 font-bold">{{ $t('services_flows') }}</h2>
+		<div class="lg:w-3/4 mx-auto"><div class="grid lg:grid-cols-4 gap-4">
+		  <div v-for="content in $tm('services-section.flows')" class="lg:aspect-square border flex flex-col justify-center rounded-md lg:rounded-[50%] shadow lg:shadow-md p-4 lg:p-6 border-gray-200">
 		    <p class="font-bold">{{ $rt(content.title) }}</p>
 			<p class="text-gray-600">{{ $rt(content.content) }}</p>
 		  </div>

@@ -45,7 +45,7 @@ const closeMenu = () => {
     <nav class="px-3 lg:px-6 py-3 lg:py-4 flex justify-between items-center">
       <div>
         <img class="rounded-[50%] w-[28px] lg:w-[50px] inline-block" src="/logo-gradual.svg">
-        <h2 class="text-xl lg:text-2xl ms-2 inline-block align-middle font-barlow font-bold text-primary">WalksCloud</h2>
+        <h2 class="text-xl lg:text-2xl ms-2 inline-block align-middle font-barlow font-bold text-primary">{{ $t('brand-name') }}</h2>
       </div>
 
       <button class="lg:hidden" @click="isOpen = !isOpen">

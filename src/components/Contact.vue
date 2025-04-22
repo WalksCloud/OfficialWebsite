@@ -49,15 +49,15 @@ const submit = async() => {
 </script>
 
 <template>
-<section class="py-18 scroll-mt-[80px]" id="contact"><div class="w-3/4 mx-auto text-center">
-  <h2 class="text-4xl mb-6 font-bold">{{ $t('contact') }}</h2>
-  <div class="mt-6 my-16 text-gray-600">
-    <p v-for="row in $tm('contact-section.intro')">{{ row }}</p>
+<section class="py-8 lg:py-18 scroll-mt-[50px] lg:scroll-mt-[80px]" id="contact"><div class="w-5/6 lg:w-3/4 mx-auto text-center">
+  <h2 class="text-2xl lg:text-4xl mb-0 lg:mb-6 font-bold">{{ $t('contact') }}</h2>
+  <div class="mt-4 my-8 lg:mt-6 lg:my-16 text-gray-600">
+      <p v-for="row in $tm('contact-section.intro')">{{ row }}</p>
   </div>
 
   <!-- todo: form-->
-  <div class="w-2/3 mx-auto text-left">
-    <div class="mb-6">
+  <div class="lg:w-2/3 mx-auto text-left">
+    <div class="mb-3 lg:mb-6">
       <label class="text-gray-600">{{ $t('form.company_name') }} *</label>
       <div class="mt-2" :class="{ 'has-validation is-invalid': v$.company_name.$errors.length, 'is-valid': !v$.company_name.$errors.length && formData.company_name }">
 
@@ -68,7 +68,7 @@ const submit = async() => {
         </div>
       </div>
     </div>
-    <div class="mb-6">
+    <div class="mb-3 lg:mb-6">
       <label class="text-gray-600">{{ $t('form.company_number') }}</label>
       <div class="mt-2" :class="{ 'has-validation is-invalid': v$.company_number.$errors.length, 'is-valid': !v$.company_number.$errors.length && formData.company_number }">
 
@@ -79,7 +79,7 @@ const submit = async() => {
         </div>
       </div>
     </div>
-    <div class="mb-6">
+    <div class="mb-3 lg:mb-6">
       <label class="text-gray-600">{{ $t('form.name') }} *</label>
       <div class="mt-2" :class="{ 'has-validation is-invalid': v$.name.$errors.length, 'is-valid': !v$.name.$errors.length && formData.name }">
 
@@ -90,7 +90,7 @@ const submit = async() => {
         </div>
       </div>
     </div>
-    <div class="mb-6">
+    <div class="mb-3 lg:mb-6">
       <label class="text-gray-600">{{ $t('form.email') }} *</label>
       <div class="mt-2" :class="{ 'has-validation is-invalid': v$.email.$errors.length, 'is-valid': !v$.email.$errors.length && formData.email }">
 
@@ -102,7 +102,7 @@ const submit = async() => {
         </div>
       </div>
     </div>
-    <div class="mb-6">
+    <div class="mb-3 lg:mb-6">
       <label class="text-gray-600">{{ $t('form.phone') }}</label>
       <div class="mt-2" :class="{ 'has-validation is-invalid': v$.phone.$errors.length, 'is-valid': !v$.phone.$errors.length && formData.phone }">
 
@@ -113,7 +113,7 @@ const submit = async() => {
         </div>
       </div>
     </div>
-    <div class="mb-6">
+    <div class="mb-3 lg:mb-6">
       <label class="text-gray-600">{{ $t('form.requirements') }}</label>
       <div class="mt-2" :class="{ 'has-validation is-invalid': v$.requirements.$errors.length, 'is-valid': !v$.requirements.$errors.length && formData.requirements }">
         <div class="flex flex-wrap">
@@ -139,8 +139,8 @@ const submit = async() => {
         </div>
       </div>
     </div>
-    <div class="float-right">
-      <button @click="submit()" type="button" class="text-white bg-primary border-1 hover:border-primary hover:bg-white hover:text-primary rounded-lg text-sm px-5 py-2.5">{{ $t('form.submit') }}</button>
+    <div class="text-center lg:float-right">
+      <button @click="submit()" type="button" class="text-white bg-primary border-1 hover:border-primary hover:bg-white hover:text-primary rounded-lg text-sm px-3 lg:px-5 py-1.5 lg:py-2.5">{{ $t('form.submit') }}</button>
     </div>
   </div>
 </div></section>
