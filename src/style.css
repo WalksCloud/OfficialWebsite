@@ -3,6 +3,12 @@
   --color-primary: #1e90ff;
 }
 
+@layer utilities {
+  .shadow-dark {
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  }
+}
+
 :root {
   font-family: "Noto Sans TC", sans-serif;
   scroll-behavior: smooth;

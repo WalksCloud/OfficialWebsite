@@ -7,11 +7,19 @@
 		</div>
 		<div class="grid lg:grid-cols-3 gap-6 lg:gap-12">
 	    	<div class="flex lg:block" v-for="row in $tm('team-section.members')">
-	    		<img class="w-24 h-24 lg:w-[120px] lg:h-auto rounded-[50%] me-6 lg:m-auto" :src="row.image">
+	    		<div class="flex-none w-[96px] lg:w-[120px] me-6 lg:m-auto">
+	    			<img class="rounded-[50%]" :src="row.image">
+	    			<a v-if="row.website_url" class="text-gray-600 text-sm inline-block whitespace-nowrap mt-2 lg:hidden" :href="row.website_url" target="_blank">{{ $t('personal_website') }}</a>
+	    		</div>
+
 			    <div class="text-left lg:text-center">
-			    	<p class="font-bold my-2 lg:my-4">{{ row.name }}</p>
+			    	<p class="font-bold my-2 lg:my-4">
+			    		{{ row.name }}
+			    		<a v-if="row.website_url" class="align-top inline-block" :href="row.website_url" target="_blank"><span class="material-symbols-outlined">link</span></a>
+			    	</p>
 			    	<p class="text-gray-600">{{ row.intro }}</p>
-			    	<a v-if="row.website_url" class="mt-2 lg:mt-6 text-gray-600 text-sm inline-block" :href="row.website_url" target="_blank">{{ $t('personal_website') }}</a>
+
+			    	<a v-if="row.website_url" class="hidden lg:inline-block mt-2 lg:mt-6 text-gray-600 text-sm" :href="row.website_url" target="_blank">{{ $t('personal_website') }}</a>
 			    </div>
 		  </div>
 		</div>

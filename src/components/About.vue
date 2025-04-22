@@ -31,23 +31,22 @@ const handleClick = (index) => {
 </script>
 
 <template>
-<section id="about">
+<section id="about" class="pt-[53px] lg:pt-[82px]">
 	<div class="home-bg h-[85vh] lg:h-screen relative">
-		<div class="w-full absolute bottom-25 lg:bottom-5"><div class="w-5/6 lg:w-3/4 mx-auto text-center">
-			<h2 class="text-4xl mb-2 lg:text-5xl lg:mb-3 font-bold text-white">{{ $t('about') }}</h2>
-			<p class="text-xl lg:text-3xl text-white">{{ $t('about-section.title') }} </p>
-			<div class="my-4 mb-4 lg:my-6 lg:mb-10 text-white">
-			    <p v-for="row in $tm('about-section.intro')">{{ row }}</p>
+		<div class="w-full absolute bottom-25 lg:bottom-5"><div class="w-5/6 lg:w-3/4 mx-auto text-center text-white shadow-dark">
+			<h2 class="text-4xl mb-2 lg:text-5xl lg:mb-3 font-bold">{{ $t('about') }}</h2>
+			<p class="text-xl lg:text-3xl">{{ $t('about-section.title') }} </p>
+			<div class="my-4 mb-4 lg:my-6 lg:mb-10">
+			  <p v-for="row in $tm('about-section.intro')">{{ row }}</p>
 			</div>
 			<!-- desktop -->
-			<div class="hidden lg:grid grid-cols-3 gap-6">
+			<div class="hidden lg:grid grid-cols-3 gap-6 text-black text-shadow-none">
 			  <div v-for="row in $tm('about-section.about-items')" class="bg-white rounded-sm shadow-md p-6 border border-gray-200">
 			    <h3 class="text-xl font-bold mb-2">{{ row.title }}</h3>
 			    <p>{{ row.content }}</p>
 			  </div>
 			</div>
 		</div></div>
-		<div class="z-20 w-full h-full bg-black/45 lg:bg-black/35"></div>
 	</div>
 	<!-- mobile -->
 	<div class="lg:hidden w-5/6 mx-auto grid gap-4 relative mt-[-60px]">

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { useI18n } from 'vue-i18n'
-const { t, tm } = useI18n()
+const { locale, t, tm } = useI18n()
 
 const navlinks = tm('nav-links')
 const activeSection = ref(null)
@@ -9,6 +9,10 @@ const activeSection = ref(null)
 const setLocale = (event) => {
   localStorage.setItem("locale", event.target.value)
   isOpen.value = false
+}
+const setLocaleDirect = (newLocale) => {
+  locale.value = newLocale
+  setLocale({ target: { value: newLocale } }) 
 }
 const handleScroll = () => {
   const buffer = 100
@@ -68,11 +72,12 @@ const closeMenu = () => {
     <!-- Mobile Menu -->
     <div v-if="isOpen" class="lg:hidden bg-white/85 py-6 text-center flex flex-col space-y-4">
       <a v-for="(name, key) in $tm('nav-links')" @click="closeMenu" :class="{ 'text-primary': activeSection === key }" class="hover:text-primary" :href="`#${key}`">{{ name }}</a>
-      <div class="locale-changer inline-block text-gray-700">
-        <select v-model="$i18n.locale" @change="setLocale($event)">
-          <option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">{{ $t(`locales.${locale}`) }}</option>
-        </select>
-      </div>
+
+      <div class="mt-2 locale-changer"><div class="inline-flex rounded-lg overflow-hidden border border-gray-300">
+        <button v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :class="[$i18n.locale === locale ? 'bg-primary text-white' : 'bg-white text-gray-700']" @click="setLocaleDirect(locale)" class="px-4 py-2 text-sm">
+          {{ $t(`locales.${locale}`) }}
+        </button>
+      </div></div>
     </div>
   </header>
 </template>
