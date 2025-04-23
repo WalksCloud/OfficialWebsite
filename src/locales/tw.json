@@ -53,47 +53,47 @@
       "intro": "您身為HR、行政管理、IT人員，可能正在面臨：",
       "items": [
         {
-          "icon": "favorite",
+          "icon": "security",
           "title": "遠端辦公環境安全性不足，擔心未授權存取？",
           "content": "我們提供企業級 VPN 方案，確保遠端存取的安全性，提升混合辦公模式的可靠度。"
         },
         {
-          "icon": "favorite",
+          "icon": "engineering",
           "title": "沒有 IT 人員，遇到技術問題不知如何解決？",
           "content": "我們提供 IT 代管與技術支援，確保企業 IT 環境穩定運作，降低管理成本。"
         },
         {
-          "icon": "favorite",
+          "icon": "build",
           "title": "IT 環境維護複雜，影響企業運行效率？",
           "content": "我們提供 IT 監控、自動化管理與雲端虛擬化技術，簡化 IT 維護流程，提升企業 IT 營運效率。"
         },
         {
-          "icon": "favorite",
+          "icon": "laptop_chromebook",
           "title": "到職離職開通或關閉帳號太繁瑣，新進、離職員工資產不清？",
           "content": "我們提供設備管理系統，協助管理並即時監控設惡意軟體入侵，幫助企業有效管理硬體與軟體資產"
         },
         {
-          "icon": "favorite",
+          "icon": "passkey",
           "title": "設備與資產管理混亂，帳號權限難以控管？",
           "content": "透過企業資產管理與 IAM 系統，自動化設備與帳號權限管理，減少人為錯誤與資產遺失風險。"
         },
         {
-          "icon": "favorite",
+          "icon": "modeling",
           "title": "數位轉型進度緩慢，IT 架構無法支撐業務擴展？",
           "content": "透過雲端虛擬化與自動化 IT 管理系統，幫助企業加速數位轉型，靈活應對市場變化。"
         },
         {
-          "icon": "favorite",
+          "icon": "terminal",
           "title": "沒有足夠預算聘請 MIS 或使用超貴的系統， HR 身兼多職？",
           "content": "我們提供專業 IT 代管與外包、專業顧問服務，幫助企業IT相關業務皆正常運作"
         },
         {
-          "icon": "favorite",
+          "icon": "wifi_off",
           "title": "網路連線不穩定，影響工作效率與業務運營？",
           "content": "我們提供專業的網路建置與維運服務，確保企業網路環境穩定，提升運作效率。"
         },
         {
-          "icon": "favorite",
+          "icon": "mail",
           "title": "企業郵件與伺服器容易受到惡意攻擊？",
           "content": "我們的資安解決方案涵蓋郵件安全閘道、防火牆與 EDR 端點防護，確保企業資料安全。"
         }

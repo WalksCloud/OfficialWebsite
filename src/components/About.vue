@@ -64,7 +64,7 @@ const handleClick = (index) => {
 			  	<div class="text-left lg:text-center">
 				  <div class="flex lg:block">
 				  	<span class="icon-element material-symbols-outlined">{{ item.icon }}</span>
-				    <p class="ms-2 lg:ms-0">{{ item.title }}</p>
+				    <p class="ms-3 lg:ms-0">{{ item.title }}</p>
 				  </div>
 				  <transition name="fade">
 				  	<div v-if="item.showTooltip" class="p-4 flex flex-col justify-center absolute top-0 left-0 w-full h-full text-sm" :class="[index % 2 === 0 ? 'bg-[#efefef] text-gray-700' : 'bg-white text-black']">{{ item.content }}</div>
