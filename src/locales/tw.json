@@ -6,7 +6,6 @@
   "team": "團隊介紹",
   "partners": "合作夥伴",
   "contact": "聯絡我們",
-  "personal_website": "個人網站",
   "nav-links": {
     "about": "關於行雲",
     "services": "服務項目",
@@ -101,7 +100,8 @@
       ]
     },
     "services-block": {
-      "title": "我們能提供業界 CP 值最高的服務：",
+      "desktop-title": "我們能提供業界 CP 值最高的服務：",
+      "mobile-title": "我們能提供<br>業界 CP 值最高的服務：",
       "intro": [
         "簡單自動化的管理系統，縮短現行流程工時至少60％以上",
         "系統客製化高，能符合客戶不同需求",

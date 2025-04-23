@@ -9,9 +9,7 @@
 	    	<div class="flex lg:block" v-for="row in $tm('team-section.members')">
 	    		<div class="flex-none w-[96px] lg:w-[120px] me-6 lg:m-auto">
 	    			<img class="rounded-[50%]" :src="row.image">
-	    			<a v-if="row.website_url" class="text-gray-600 text-sm inline-block whitespace-nowrap mt-2 lg:hidden" :href="row.website_url" target="_blank">{{ $t('personal_website') }}</a>
 	    		</div>
-
 			    <div class="text-left lg:text-center">
 			    	<p class="font-bold my-2 lg:my-4">
 			    		{{ row.name }}

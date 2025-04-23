@@ -72,7 +72,9 @@ const handleClick = (index) => {
 				</div>
 		 	</div>
 		</div>
-		<h2 class="text-2xl my-6 lg:text-4xl lg:my-12 font-bold">{{ $t('about-section.services-block.title') }}</h2>
+
+		<h2 class="lg:hidden text-2xl my-6 font-bold" v-html="t('about-section.services-block.mobile-title')"></h2>
+		<h2 class="hidden lg:block text-4xl my-12 font-bold">{{ $t('about-section.services-block.desktop-title') }}</h2>
 		<div class="mt-6 text-gray-600">
 		    <p v-for="row in $tm('about-section.services-block.intro')">{{ row }}</p>
 		    <p class="mt-4 lg:mt-6 font-bold">{{ $t('about-section.services-block.message') }}</p>

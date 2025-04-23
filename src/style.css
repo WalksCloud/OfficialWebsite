@@ -32,7 +32,6 @@
   font-size: 48px;
 }
 
-
 @media (width < 64rem) {
   .icon-element {
     font-size: 32px;
