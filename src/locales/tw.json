@@ -261,7 +261,7 @@
         "name": "節省工具箱有限公司",
         "image": "/jason-tools.png",
         "url": "https://jason.tools/",
-        "intro": "PVE, PBS, NVIDIA vGPU/GRID"
+        "intro": "Proxmox, Zimbra, Graylog, LibreNMS"
       }
     ]
   },
