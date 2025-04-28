@@ -13,15 +13,15 @@ const { clear } = store
 		<div class="fixed inset-0 z-10 w-screen overflow-y-auto">
 			<div class="flex min-h-[50vh] md:min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
 				<transition name="slide-down" appear>
-					<div v-if="alert.title" class="w-5/6 lg:w-1/4 relative transform overflow-hidden rounded-lg bg-white shadow-xl transition-all sm:my-8 bg-white">
+					<div v-if="alert.title" class="w-5/6 lg:w-1/4 relative transform overflow-hidden rounded-lg shadow-xl transition-all sm:my-8 bg-white dark:bg-[#222831]">
 						<div class="px-5 pt-6">
-							<h3 class="font-bold text-gray-900" v-text="alert.title"></h3>
+							<h3 class="font-bold text-gray-900 dark:text-gray-300" v-text="alert.title"></h3>
 							<div class="my-2 lg:mt-2 lg:mb-4">
-								<p class="text-gray-500" v-text="alert.content"></p>
+								<p class="text-gray-500 dark:text-gray-200" v-text="alert.content"></p>
 							</div>
 						</div>
 						<div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-							<button @click="clear" type="button" class="text-white bg-primary border-1 hover:border-primary hover:bg-white hover:text-primary rounded-lg text-sm px-3 lg:px-5 py-1.5 lg:py-2.5">{{ $t('close') }}</button>
+							<button @click="clear" type="button" class="text-white bg-primary border-1 hover:border-primary hover:bg-white hover:text-primary dark:border-transparent dark:hover:bg-[#222831] rounded-lg text-sm px-3 lg:px-5 py-1.5 lg:py-2.5">{{ $t('close') }}</button>
 						</div>
 					</div>
 				</transition>
@@ -30,7 +30,7 @@ const { clear } = store
 	</div>
 
 	<!-- loading -->
-	<div class="bg-white/70 z-200 fixed"><div :class="{'flex': loading, 'hidden': !loading}" class="w-screen h-screen text-center items-center justify-center">
+	<div class="bg-white/70 dark:bg-[#222831]/70 z-200 fixed"><div :class="{'flex': loading, 'hidden': !loading}" class="w-screen h-screen text-center items-center justify-center">
 		<div>
 			<svg class="text-gray-300 animate-spin" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"
 			width="114" height="114">

@@ -42,7 +42,7 @@ const handleClick = (index) => {
 				</div>
 				<!-- desktop -->
 				<div class="hidden lg:grid grid-cols-3 gap-6 text-black text-shadow-none">
-					<div v-bind:key="row" v-for="row in $tm('about-section.about-items')" class="bg-white rounded-sm shadow-md p-6 border border-gray-200">
+					<div v-bind:key="row" v-for="row in $tm('about-section.about-items')" class="bg-white dark:bg-[#4e535d]/85 dark:text-gray-300 dark:border-transparent rounded-sm shadow-md p-6 border border-gray-200">
 						<h3 class="text-xl font-bold mb-2">{{ row.title }}</h3>
 						<p>{{ row.content }}</p>
 					</div>
@@ -52,7 +52,7 @@ const handleClick = (index) => {
 	</div>
 	<!-- mobile -->
 	<div class="lg:hidden w-5/6 mx-auto grid gap-4 relative mt-[-60px]">
-		<div v-bind:key="row" v-for="row in $tm('about-section.about-items')" class="bg-white rounded-sm shadow p-4 border border-gray-200">
+		<div v-bind:key="row" v-for="row in $tm('about-section.about-items')" class="bg-white rounded-sm shadow p-4 border border-gray-200 dark:bg-[#4e535d]/85 dark:text-gray-300 dark:border-transparent">
 			<h3 class="font-bold mb-1">{{ row.title }}</h3>
 			<p class="text-sm">{{ row.content }}</p>
 		</div>
@@ -62,14 +62,14 @@ const handleClick = (index) => {
 		<p class="text-2xl lg:text-3xl font-bold">{{ $t('about-section.questions-block.title') }}</p>
 		<p class="mt-2 mb-8">{{ $t('about-section.questions-block.intro') }}</p>
 		<div class="grid lg:grid-cols-3 gap-4 lg:gap-6">
-			<div v-bind:key="index" v-for="(item, index) in items" @mouseenter="handleHover(index)" @mouseleave="handleLeave(index)" @click="handleClick(index)" class="rounded-sm shadow-md p-4 lg:p-6 border border-gray-200 relative" :class="[index % 2 === 0 ? 'bg-[#efefef] text-gray-700' : 'bg-white text-black']">
+			<div v-bind:key="index" v-for="(item, index) in items" @mouseenter="handleHover(index)" @mouseleave="handleLeave(index)" @click="handleClick(index)" class="rounded-sm shadow-md p-4 lg:p-6 border border-gray-200 relative  dark:bg-[#4e535d] dark:text-gray-200 dark:border-transparent" :class="[index % 2 === 0 ? 'bg-[#efefef] text-gray-700' : 'bg-white text-black']">
 				<div class="text-left lg:text-center">
 					<div class="flex lg:block">
 						<span class="icon-element material-symbols-outlined">{{ item.icon }}</span>
 						<p class="ms-3 lg:ms-0">{{ item.title }}</p>
 					</div>
 					<transition name="fade">
-						<div v-if="item.showTooltip" class="p-4 flex flex-col justify-center absolute top-0 left-0 w-full h-full text-sm" :class="[index % 2 === 0 ? 'bg-[#efefef] text-gray-700' : 'bg-white text-black']">{{ item.content }}</div>
+						<div v-if="item.showTooltip" class="p-4 flex flex-col justify-center absolute top-0 left-0 w-full h-full text-sm dark:bg-[#4e535d] dark:text-white" :class="[index % 2 === 0 ? 'bg-[#efefef] text-gray-700' : 'bg-white text-black']">{{ item.content }}</div>
 					</transition>
 				</div>
 			</div>
@@ -77,7 +77,7 @@ const handleClick = (index) => {
 
 		<h2 class="lg:hidden text-2xl my-6 font-bold" v-html="t('about-section.services-block.mobile-title')"></h2>
 		<h2 class="hidden lg:block text-4xl my-12 font-bold">{{ $t('about-section.services-block.desktop-title') }}</h2>
-		<div class="mt-6 text-gray-600">
+		<div class="mt-6 text-gray-600 dark:text-gray-400">
 			<p v-bind:key="row" v-for="row in $tm('about-section.services-block.intro')">{{ row }}</p>
 			<p class="mt-4 lg:mt-6 font-bold">{{ $t('about-section.services-block.message') }}</p>
 		</div>

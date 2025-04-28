@@ -14,6 +14,8 @@
   scroll-behavior: smooth;
 }
 
+
+
 .font-barlow {
   font-family: "Barlow", sans-serif;
 }
@@ -35,5 +37,11 @@
 @media (width < 64rem) {
   .icon-element {
     font-size: 32px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #FFF;
   }
 }

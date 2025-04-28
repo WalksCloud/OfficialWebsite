@@ -45,23 +45,23 @@ const closeMenu = () => {
 </script>
 
 <template>
-	<header class="bg-white/85 shadow fixed top-0 left-0 w-full z-50">
+	<header class="bg-white/85 dark:bg-[#222831]/85 shadow fixed top-0 left-0 w-full z-50">
 		<nav class="px-3 lg:px-6 py-3 lg:py-4 flex justify-between items-center">
 			<div>
 				<img class="rounded-[50%] w-[28px] lg:w-[50px] inline-block" src="/logo-gradual.svg">
-				<h2 class="text-xl lg:text-2xl ms-2 inline-block align-middle font-barlow font-bold text-primary">{{ $t('brand-name') }}</h2>
+				<h2 class="text-xl lg:text-2xl ms-2 inline-block align-middle font-barlow font-bold text-primary dark:text-white">{{ $t('brand-name') }}</h2>
 			</div>
 
-			<button class="lg:hidden" @click="isOpen = !isOpen">
+			<button class="lg:hidden dark:text-white" @click="isOpen = !isOpen">
 				<span v-if="!isOpen" class="material-symbols-outlined">menu</span>
 				<span v-else class="material-symbols-outlined">close</span>
 			</button>
 
 			<!-- Desktop Menu -->
 			<div class="space-x-4 hidden lg:flex">
-				<a v-bind:key="key" v-for="(name, key) in $tm('nav-links')" :class="{ 'text-primary': activeSection === key }" class="hover:text-primary" :href="`#${key}`">{{ name }}</a>
+				<a v-bind:key="key" v-for="(name, key) in $tm('nav-links')" :class="{ 'text-primary': activeSection === key }" class="hover:text-primary dark:text-white" :href="`#${key}`">{{ name }}</a>
 
-				<div class="ms-2 locale-changer inline-block text-gray-700">
+				<div class="ms-2 locale-changer inline-block text-gray-700 dark:text-white">
 					<select v-model="$i18n.locale" @change="setLocale($event)">
 						<option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">{{ $t(`locales.${locale}`) }}</option>
 					</select>
@@ -70,12 +70,12 @@ const closeMenu = () => {
 		</nav>
 
 		<!-- Mobile Menu -->
-		<div v-if="isOpen" class="lg:hidden bg-white/85 py-6 text-center flex flex-col space-y-4">
-			<a v-bind:key="key" v-for="(name, key) in $tm('nav-links')" @click="closeMenu" :class="{ 'text-primary': activeSection === key }" class="hover:text-primary" :href="`#${key}`">{{ name }}</a>
+		<div v-if="isOpen" class="lg:hidden bg-white/85 dark:bg-[#222831]/85 py-6 text-center flex flex-col space-y-4">
+			<a v-bind:key="key" v-for="(name, key) in $tm('nav-links')" @click="closeMenu" :class="{ 'text-primary': activeSection === key }" class="hover:text-primary dark:text-white" :href="`#${key}`">{{ name }}</a>
 
 			<div class="mt-2 locale-changer">
-				<div class="inline-flex rounded-lg overflow-hidden border border-gray-300">
-					<button v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :class="[$i18n.locale === locale ? 'bg-primary text-white' : 'bg-white text-gray-700']" @click="setLocaleDirect(locale)" class="px-4 py-2 text-sm">
+				<div class="inline-flex rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600">
+					<button v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :class="[$i18n.locale === locale ? 'bg-primary text-white' : 'bg-white text-gray-700 dark:bg-[#222831]/85 dark:text-white']" @click="setLocaleDirect(locale)" class="px-4 py-2 text-sm">
 						{{ $t(`locales.${locale}`) }}
 					</button>
 				</div>
