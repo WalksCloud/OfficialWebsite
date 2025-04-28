@@ -1,0 +1,295 @@
+{
+  "brand-name": "WalksCloud",
+  "about": "關於行雲",
+  "services": "服務項目",
+  "services_flows": "服務流程",
+  "team": "團隊介紹",
+  "partners": "合作夥伴",
+  "contact": "聯絡我們",
+  "nav-links": {
+    "about": "關於行雲",
+    "services": "服務項目",
+    "team": "團隊介紹",
+    "partners": "合作夥伴",
+    "contact": "聯絡我們"
+  },
+  "locales": {
+    "en": "English",
+    "tw": "繁體中文"
+  },
+  "close": "關閉",
+  "loading": "載入中...",
+  "footer": {
+    "facebook_url": "https://www.facebook.com/WalksCloud",
+    "linkedin_url": "https://www.linkedin.com/company/walkscloud/",
+    "term-of-use": "Term of Use",
+    "term-of-use_url": "https://dev.auth.select/term-of-use",
+    "privacy-policy": "Privacy Policy",
+    "privacy-policy_url": "https://dev.auth.select/privacy-policy"
+  },
+  "about-section": {
+    "title": "Get Everything Works Great-讓行雲成為您的IT夥伴",
+    "intro": [
+      "提供您最完善的 MIS 服務，滿足軟硬體和網路維運需求",
+      "您專注公司發展，資訊管理及營運交給我們，",
+      "為您節省現有人工流程 60％以上的工時，共同創造最大價值"
+    ],
+    "about-items": [
+      {
+        "title": "全面 IT / MIS 代管 – 讓您專注核心業務",
+        "content": "專業 IT 代管與外包、專業顧問服務，涵蓋 MIS 營運、網路架構、設備管理、帳號管理及系統維運，幫助企業降低 IT 維護成本"
+      },
+      {
+        "title": "資安管理 – 全面守護您的營運安全",
+        "content": "為企業提供多重安全機制，防止惡意攻擊、資料外洩及未授權存取"
+      },
+      {
+        "title": "設備管理數位化 – 協助管理並即時監控設惡意軟體入侵",
+        "content": "幫助企業有效管理硬體與軟體資產，確保軟硬體與裝置安全性"
+      }
+    ],
+    "questions-block": {
+      "title": "我們能為您解決的問題跟情境",
+      "intro": "您身為HR、行政管理、IT人員，可能正在面臨：",
+      "items": [
+        {
+          "icon": "security",
+          "title": "遠端辦公環境安全性不足，擔心未授權存取？",
+          "content": "我們提供企業級 VPN 方案，確保遠端存取的安全性，提升混合辦公模式的可靠度。"
+        },
+        {
+          "icon": "engineering",
+          "title": "沒有 IT 人員，遇到技術問題不知如何解決？",
+          "content": "我們提供 IT 代管與技術支援，確保企業 IT 環境穩定運作，降低管理成本。"
+        },
+        {
+          "icon": "build",
+          "title": "IT 環境維護複雜，影響企業運行效率？",
+          "content": "我們提供 IT 監控、自動化管理與雲端虛擬化技術，簡化 IT 維護流程，提升企業 IT 營運效率。"
+        },
+        {
+          "icon": "laptop_chromebook",
+          "title": "到職離職開通或關閉帳號太繁瑣，新進、離職員工資產不清？",
+          "content": "我們提供設備管理系統，協助管理並即時監控設惡意軟體入侵，幫助企業有效管理硬體與軟體資產"
+        },
+        {
+          "icon": "passkey",
+          "title": "設備與資產管理混亂，帳號權限難以控管？",
+          "content": "透過企業資產管理與 IAM 系統，自動化設備與帳號權限管理，減少人為錯誤與資產遺失風險。"
+        },
+        {
+          "icon": "modeling",
+          "title": "數位轉型進度緩慢，IT 架構無法支撐業務擴展？",
+          "content": "透過雲端虛擬化與自動化 IT 管理系統，幫助企業加速數位轉型，靈活應對市場變化。"
+        },
+        {
+          "icon": "terminal",
+          "title": "沒有足夠預算聘請 MIS 或使用超貴的系統， HR 身兼多職？",
+          "content": "我們提供專業 IT 代管與外包、專業顧問服務，幫助企業IT相關業務皆正常運作"
+        },
+        {
+          "icon": "wifi_off",
+          "title": "網路連線不穩定，影響工作效率與業務運營？",
+          "content": "我們提供專業的網路建置與維運服務，確保企業網路環境穩定，提升運作效率。"
+        },
+        {
+          "icon": "mail",
+          "title": "企業郵件與伺服器容易受到惡意攻擊？",
+          "content": "我們的資安解決方案涵蓋郵件安全閘道、防火牆與 EDR 端點防護，確保企業資料安全。"
+        }
+      ]
+    },
+    "services-block": {
+      "desktop-title": "我們能提供業界 CP 值最高的服務：",
+      "mobile-title": "我們能提供<br>業界 CP 值最高的服務：",
+      "intro": [
+        "簡單自動化的管理系統，縮短現行流程工時至少60％以上",
+        "系統客製化高，能符合客戶不同需求",
+        "為您妥善營運所有 MIS 工作範疇，我們可即時得知網路障礙，確保網路時時暢通"
+      ],
+      "message": "無論您的企業面臨何種 IT 挑戰，我們都能提供適合的解決方案，幫助您順利營運與成長！"
+    }
+  },
+  "services-section": {
+    "services": [
+      {
+        "title": "全面 IT / MIS 代管-辦公室網路",
+        "items": [
+          {
+            "title": "IT / MIS 外包與技術支援",
+            "content": "提供全方位 IT 服務，確保企業 IT 環境穩定運作。"
+          },
+          {
+            "title": "辦公室網路建置與維運",
+            "content": "設備規劃、網路建置、設備維護，支援 Cisco、Juniper、Palo Alto、FortiGate、VyOS 等品牌。"
+          },
+          {
+            "title": "IT 監控與管理系統",
+            "content": "部署 Zabbix、LibreNMS、Grafana 監控系統，確保 IT 環境穩定。"
+          },
+          {
+            "title": "容器化技術與 DevOps",
+            "content": "建置企業級容器平台，提升開發與部署效率。"
+          },
+          {
+            "title": "802.1X 驗證系統建置維護",
+            "content": "提供企業級網路存取控制，提升安全性與管理效率。"
+          },
+          {
+            "title": "VPN 及遠端安全解決方案",
+            "content": "提供 OpenVPN、WireGuard，確保遠端存取安全。"
+          }
+        ]
+      },
+      {
+        "title": "全面 IT / MIS 代管-機房網路",
+        "items": [
+          {
+            "title": "IDC 機房建置與維運",
+            "content": "專業機房規劃、建置與代管，包含遠端操作 (Remote Hand) 服務。"
+          },
+          {
+            "title": "虛擬化與雲端解決方案",
+            "content": "協助企業轉移至 Proxmox VE 平台、建置虛擬化叢集、NVIDIA vGPU 運算叢集。"
+          },
+          {
+            "title": "網站與伺服器代管營運",
+            "content": "提供安全可靠的代管與維運服務。"
+          },
+          {
+            "title": "IT 監控與管理系統",
+            "content": "部署 Zabbix、LibreNMS、Grafana、Graylog 監控系統，確保 IT 環境穩定。"
+          },
+          {
+            "title": "容器化技術與 DevOps",
+            "content": "建置企業級容器平台，提升開發與部署效率。"
+          }
+        ]
+      },
+      {
+        "title": "資安管理",
+        "items": [
+          {
+            "title": "企業備份與安全方案",
+            "content": "提供 Proxmox Backup Server、Proxmox Mail Gateway 及資安監控方案，保護企業重要數據。"
+          },
+          {
+            "title": "802.1X 驗證系統建置維護",
+            "content": "提供企業級網路存取控制，提升安全性與管理效率。"
+          },
+          {
+            "title": "VPN 及遠端安全解決方案",
+            "content": "提供 OpenVPN、WireGuard，確保遠端存取安全。"
+          }
+        ]
+      },
+      {
+        "title": "資產管理",
+        "items": [
+          {
+            "title": "Jamf 企業級 Apple 設備管理",
+            "content": "Jamf Pro、Jamf Protect、Jamf Security Cloud 代管與維護。"
+          }
+        ]
+      },
+      {
+        "title": "客製需求",
+        "items": [
+          {
+            "title": "客製化系統開發",
+            "content": "根據所有服務項目及企業需求設計與開發專屬 IT 解決方案。"
+          }
+        ]
+      }
+    ],
+    "else": "其他項目",
+    "flows": [
+      {
+        "title": "01 確認需求",
+        "content": "需求訪談、規格確認"
+      },
+      {
+        "title": "02 系統建置",
+        "content": "根據需求建置客戶所需服務"
+      },
+      {
+        "title": "03 驗收測試",
+        "content": "驗收測試"
+      },
+      {
+        "title": "04 系統上線",
+        "content": "系統上線、教育訓練、後續維護"
+      }
+    ]
+  },
+  "team-section": {
+    "intro": [
+      "團隊擁有豐富開發及 IT / MIS 管理及專案經驗，",
+      "包括大型企業 IT 架構設計、雲端遷移、虛擬化技術導入及企業級網路安全方案。",
+      "專注於企業 IT 基礎架構、資安防護、網路架構與 IT 系統開發。",
+      "熟知公司營運所有 MIS knowhow 及痛點，",
+      "曾設定可容納 500 至 1,500 名以上與會者研討會無線網絡，及資產管理系統開發",
+      "不論是管理系統、網路建置、活動直播，皆可滿足您的需求"
+    ],
+    "members": [
+      {
+        "name": "Pennyken Huang",
+        "image": "/Pennyken-Huang.jpeg",
+        "website_url": "",
+        "intro": "網路佈線架構規劃十年以上經驗，曾協助大型研討會、萬人以上活動、辦公室的網路設計及執行需求，確保網路在各種情境下能順暢使用。"
+      },
+      {
+        "name": "Haraguroicha Hsu",
+        "image": "/Haraguroicha-Hsu.jpeg",
+        "website_url": "https://haraguroicha.work/",
+        "intro": "IT 基礎架構與網路技術專家，精通虛擬化技術、資安管理與企業 IT 營運最佳化，擁有超過十年的企業級 IT 規劃與建置經驗。"
+      },
+      {
+        "name": "Jimmy Pan",
+        "image": "/Jimmy-Pan.jpeg",
+        "website_url": "https://ptc.work/",
+        "intro": "IT 戰略顧問，專注於 IT 代管、數位轉型及自動化 IT 管理，曾協助多家企業提升 IT 管理效率，推動 IT 營運現代化。"
+      }
+    ]
+  },
+  "partners-section": {
+    "intro": [
+      "我們與頂尖 IT 企業及技術夥伴緊密合作，提供最專業的 IT 服務與技術支援，讓您獲得穩定、安全、高效的 IT 環境。"
+    ],
+    "partners": [
+      {
+        "name": "節省工具箱有限公司",
+        "image": "/jason-tools.png",
+        "image-class": ["py-2","px-4"],
+        "url": "https://jason.tools/",
+        "intro": "Proxmox, Zimbra, Graylog, LibreNMS"
+      }
+    ]
+  },
+  "contact-section": {
+    "intro": [
+      "想客製討論最適合您的需求，",
+      "讓我們為您設計最適合的 IT 解決方案 – 歡迎聯繫我們！"
+    ]
+  },
+  "form": {
+    "submit": "送出",
+    "enter": "請輸入{field}",
+    "company_name": "公司名稱",
+    "company_number": "公司統編",
+    "name": "聯絡人",
+    "email": "Email",
+    "phone": "聯絡電話",
+    "requirements": "需要服務需求",
+    "terms": "個資聲明+個資同意"
+  },
+  "error": {
+    "required": "此欄位為必填。",
+    "email": "Email 格式錯誤。",
+    "checked": "請勾選同意。"
+  },
+  "success": "成功",
+  "failed": "失敗",
+  "sent-successful": "我們會盡快回覆，謝謝。",
+  "sent-failed": "請再次檢查表單。"
+}
