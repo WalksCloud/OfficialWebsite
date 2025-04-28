@@ -65,7 +65,7 @@ jobs:
         run: bun install --trust --no-save
 
       - name: Build
-        run: bun run --bun generate
+        run: bun run --bun build --outDir .output
 
       - name: Upload Production Artifact
         uses: actions/upload-artifact@v4
@@ -79,5 +79,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           cname: official-website.walks.cloud
-          publish_dir: ./.output/public
+          publish_dir: ./.output
           force_orphan: true
