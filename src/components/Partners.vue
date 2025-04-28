@@ -7,7 +7,7 @@
 		</div>
 		<div class="grid lg:grid-cols-3 gap-6 lg:gap-12">
 			<div v-bind:key="row" v-for="row in $tm('partners-section.partners')">
-				<img class="h-[50px] lg:h-[80px] m-auto" :src="row.image">
+				<img class="bg-white rounded-sm h-[50px] lg:h-[80px] m-auto" :src="row.image">
 				<a v-if="row.url" :href="row.url" target="_blank" class="font-bold font-bold my-2 lg:my-4 inline-block" v-text="row.name"></a>
 				<p v-else class="font-bold my-2 lg:my-4" text="row.name"></p>
 				<p class="text-gray-600 dark:text-gray-400">{{ row.intro }}</p>
