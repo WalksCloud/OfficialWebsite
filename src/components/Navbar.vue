@@ -61,8 +61,8 @@ const closeMenu = () => {
 			<div class="space-x-4 hidden lg:flex">
 				<a v-bind:key="key" v-for="(name, key) in $tm('nav-links')" :class="{ 'text-primary': activeSection === key }" class="hover:text-primary dark:text-white" :href="`#${key}`">{{ name }}</a>
 
-				<div class="ms-2 locale-changer inline-block text-gray-700 dark:bg-[#222831] dark:text-white">
-					<select v-model="$i18n.locale" @change="setLocale($event)">
+				<div class="ms-2 locale-changer inline-block">
+					<select v-model="$i18n.locale" @change="setLocale($event)" class=" text-gray-700 dark:bg-[#222831] dark:text-white">
 						<option v-for="locale in $i18n.availableLocales" :key="`locale-${locale}`" :value="locale">{{ $t(`locales.${locale}`) }}</option>
 					</select>
 				</div>
