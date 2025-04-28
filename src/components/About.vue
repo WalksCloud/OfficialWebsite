@@ -42,7 +42,7 @@ const handleClick = (index) => {
 				</div>
 				<!-- desktop -->
 				<div class="hidden lg:grid grid-cols-3 gap-6 text-black text-shadow-none">
-					<div v-bind:key="row" v-for="row in $tm('about-section.about-items')" class="bg-white dark:bg-[#4e535d]/85 dark:text-gray-300 dark:border-transparent rounded-sm shadow-md p-6 border border-gray-200">
+					<div v-bind:key="row" v-for="row in $tm('about-section.about-items')" class="bg-white/85 dark:bg-[#4e535d]/85 dark:text-gray-300 dark:border-transparent rounded-sm shadow-md p-6 border border-gray-200">
 						<h3 class="text-xl font-bold mb-2">{{ row.title }}</h3>
 						<p>{{ row.content }}</p>
 					</div>
@@ -52,7 +52,7 @@ const handleClick = (index) => {
 	</div>
 	<!-- mobile -->
 	<div class="lg:hidden w-5/6 mx-auto grid gap-4 relative mt-[-60px]">
-		<div v-bind:key="row" v-for="row in $tm('about-section.about-items')" class="bg-white rounded-sm shadow p-4 border border-gray-200 dark:bg-[#4e535d]/85 dark:text-gray-300 dark:border-transparent">
+		<div v-bind:key="row" v-for="row in $tm('about-section.about-items')" class="bg-white rounded-sm shadow p-4 border border-gray-200 bg-white/85 dark:bg-[#4e535d]/85 dark:text-gray-300 dark:border-transparent">
 			<h3 class="font-bold mb-1">{{ row.title }}</h3>
 			<p class="text-sm">{{ row.content }}</p>
 		</div>
