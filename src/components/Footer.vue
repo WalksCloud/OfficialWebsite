@@ -16,7 +16,7 @@
     <a :href="$t('footer.linkedin_url')" target="_black" class="inline-block my-2">
       <font-awesome-icon :icon="['fab', 'linkedin']" class="text-2xl text-gray-600 dark:text-gray-300" />
     </a>
-    <p class="text-sm leading-1">
+    <p class="text-sm lg:leading-1">
       <a href="https://github.com/WalksCloud/OfficialWebsite">GitHub Repo</a>
 			(<a :href="`https://github.com/WalksCloud/OfficialWebsite/commit/` + env.buildHash">#{{env.buildHash}}</a> {{env.buildTime}}) | 
       <a :href="$t('footer.term-of-use_url')" target="_blank">{{ $t('footer.term-of-use') }}</a> | 
