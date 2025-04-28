@@ -5,12 +5,12 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSquareFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 
-import en from './locales/en.json'
-import tw from './locales/tw.json'
+import en from './locales/en-US.yaml'
+import tw from './locales/zh-TW.yaml'
 import './style.css'
 import App from './App.vue'
 
-//lang 
+//lang
 let locale = localStorage.getItem("locale")
 const i18n = createI18n({
   legacy: false,

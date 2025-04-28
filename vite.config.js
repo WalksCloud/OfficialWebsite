@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'
 import path from 'path'
 import { DateTime } from "luxon";
 import git from 'git-rev-sync'
+import ViteYaml from '@modyfi/vite-plugin-yaml';
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
@@ -16,6 +17,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       tailwindcss(),
+      ViteYaml(),
     ],
     resolve: {
       alias: {
