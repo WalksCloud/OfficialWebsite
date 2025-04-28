@@ -16,6 +16,7 @@ const i18n = createI18n({
   legacy: false,
   locale: (locale != null) ? locale : 'tw',
   fallbackLocale: 'en',
+  warnHtmlMessage: false,
   messages: {
     en: en,
     tw: tw
