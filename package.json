@@ -22,6 +22,8 @@
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.2.1",
+    "git-rev-sync": "^3.0.2",
+    "luxon": "^3.6.1",
     "vite": "^6.3.3"
   }
 }
