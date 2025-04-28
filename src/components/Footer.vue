@@ -9,8 +9,12 @@
       <img class="align-bottom ms-2 h-[20px] inline-block" src="/logo-wordmark-company.svg" />
     </p>
 
-    <a :href="$t('footer.facebook_url')" target="_black" class="inline-block my-2 me-2"><font-awesome-icon :icon="['fab', 'square-facebook']" class="text-2xl text-gray-600" /></a>
-    <a :href="$t('footer.linkedin_url')" target="_black" class="inline-block my-2"><font-awesome-icon :icon="['fab', 'linkedin']" class="text-2xl text-gray-600" /></a>
+    <a :href="$t('footer.facebook_url')" target="_black" class="inline-block my-2 me-2">
+      <font-awesome-icon :icon="['fab', 'square-facebook']" class="text-2xl text-gray-600" />
+    </a>
+    <a :href="$t('footer.linkedin_url')" target="_black" class="inline-block my-2">
+      <font-awesome-icon :icon="['fab', 'linkedin']" class="text-2xl text-gray-600" />
+    </a>
     <p class="text-sm/1">
       <a href="https://github.com/WalksCloud/OfficialWebsite">GitHub Repo</a>
 			(<a :href="`https://github.com/WalksCloud/OfficialWebsite/commit/` + env.buildHash">#{{env.buildHash}}</a> {{env.buildTime}}) | 
