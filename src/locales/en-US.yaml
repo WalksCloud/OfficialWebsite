@@ -24,11 +24,11 @@ footer:
   privacy-policy: Privacy Policy
   privacy-policy_url: https://dev.auth.select/privacy-policy
 about-section:
-  title: Get Everything Works Great-讓行雲成為您的IT夥伴
+  title: Get Everything Works Great - 讓行雲成為您的 IT 夥伴
   intro:
     - 提供您最完善的 MIS 服務，滿足軟硬體和網路維運需求
     - 您專注公司發展，資訊管理及營運交給我們，
-    - 為您節省現有人工流程 60％以上的工時，共同創造最大價值
+    - 為您節省現有人工流程 60% 以上的工時，共同創造最大價值
   about-items:
     - title: 全面 IT / MIS 代管 – 讓您專注核心業務
       content: 專業 IT 代管與外包、專業顧問服務，涵蓋 MIS 營運、網路架構、設備管理、帳號管理及系統維運，幫助企業降低 IT 維護成本
@@ -38,7 +38,7 @@ about-section:
       content: 幫助企業有效管理硬體與軟體資產，確保軟硬體與裝置安全性
   questions-block:
     title: 我們能為您解決的問題跟情境
-    intro: 您身為HR、行政管理、IT人員，可能正在面臨：
+    intro: 您身為 HR、行政管理、IT 人員，可能正在面臨：
     items:
       - icon: security
         title: 遠端辦公環境安全性不足，擔心未授權存取？
@@ -59,7 +59,7 @@ about-section:
         title: 數位轉型進度緩慢，IT 架構無法支撐業務擴展？
         content: 透過雲端虛擬化與自動化 IT 管理系統，幫助企業加速數位轉型，靈活應對市場變化。
       - icon: terminal
-        title: 沒有足夠預算聘請 MIS 或使用超貴的系統， HR 身兼多職？
+        title: 沒有足夠預算聘請 MIS 或使用超貴的系統，HR 身兼多職？
         content: 我們提供專業 IT 代管與外包、專業顧問服務，幫助企業IT相關業務皆正常運作
       - icon: wifi_off
         title: 網路連線不穩定，影響工作效率與業務運營？
@@ -71,13 +71,13 @@ about-section:
     desktop-title: 我們能提供業界 CP 值最高的服務：
     mobile-title: 我們能提供<br>業界 CP 值最高的服務：
     intro:
-      - 簡單自動化的管理系統，縮短現行流程工時至少60％以上
+      - 簡單自動化的管理系統，縮短現行流程工時至少 60% 以上
       - 系統客製化高，能符合客戶不同需求
       - 為您妥善營運所有 MIS 工作範疇，我們可即時得知網路障礙，確保網路時時暢通
     message: 無論您的企業面臨何種 IT 挑戰，我們都能提供適合的解決方案，幫助您順利營運與成長！
 services-section:
   services:
-    - title: 全面 IT / MIS 代管-辦公室網路
+    - title: 全面 IT / MIS 代管 - 辦公室網路
       items:
         - title: IT / MIS 外包與技術支援
           content: 提供全方位 IT 服務，確保企業 IT 環境穩定運作。
@@ -90,8 +90,8 @@ services-section:
         - title: 802.1X 驗證系統建置維護
           content: 提供企業級網路存取控制，提升安全性與管理效率。
         - title: VPN 及遠端安全解決方案
-          content: 提供 OpenVPN、WireGuard，確保遠端存取安全。
-    - title: 全面 IT / MIS 代管-機房網路
+          content: 提供 OpenVPN、WireGuard 確保遠端存取安全。
+    - title: 全面 IT / MIS 代管 - 機房網路
       items:
         - title: IDC 機房建置與維運
           content: 專業機房規劃、建置與代管，包含遠端操作 (Remote Hand) 服務。
@@ -110,11 +110,11 @@ services-section:
         - title: 802.1X 驗證系統建置維護
           content: 提供企業級網路存取控制，提升安全性與管理效率。
         - title: VPN 及遠端安全解決方案
-          content: 提供 OpenVPN、WireGuard，確保遠端存取安全。
+          content: 提供 OpenVPN、WireGuard 確保遠端存取安全。
     - title: 資產管理
       items:
         - title: Jamf 企業級 Apple 設備管理
-          content: Jamf Pro、Jamf Protect、Jamf Security Cloud 代管與維護。
+          content: Jamf Pro、Jamf Protect、Jamf Security Cloud 協作管理與地端版本 Jamf Pro 維護。
     - title: 客製需求
       items:
         - title: 客製化系統開發
@@ -167,20 +167,20 @@ contact-section:
     - 讓我們為您設計最適合的 IT 解決方案 – 歡迎聯繫我們！
   form-url: https://n8n.walks.cloud/form/51e5978c-2914-43ad-8118-811faff3b82a
 form:
-  submit: 送出
-  enter: 請輸入{field}
-  company_name: 公司名稱
-  company_number: 公司統編
-  name: 聯絡人
+  submit: Submit
+  enter: Please Input {field}
+  company_name: Company Name
+  company_number: Company Tax Number
+  name: Contact
   email: Email
-  phone: 聯絡電話
-  requirements: 需要服務需求
-  terms: 個資聲明+個資同意
+  phone: Contact Phone
+  requirements: Service Requirements
+  terms: Personal Data Statement & Consent
 error:
-  required: 此欄位為必填。
-  email: Email 格式錯誤。
-  checked: 請勾選同意。
-success: 成功
-failed: 失敗
-sent-successful: 我們會盡快回覆，謝謝。
-sent-failed: 請再次檢查表單。
+  required: This field is required
+  email: Wrong Email format
+  checked: Please Accept with checked
+success: Success
+failed: Failed
+sent-successful: We will response in soon.
+sent-failed: Please check the form again.
