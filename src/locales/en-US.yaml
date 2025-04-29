@@ -10,7 +10,7 @@ nav-links:
   services: Services
   team: Team
   partners: Partners
-  #contact: Contact
+  contact: Contact
 locales:
   en: English
   tw: 繁體中文
@@ -165,6 +165,7 @@ contact-section:
   intro:
     - 想客製討論最適合您的需求，
     - 讓我們為您設計最適合的 IT 解決方案 – 歡迎聯繫我們！
+  form-url: https://n8n.walks.cloud/form/51e5978c-2914-43ad-8118-811faff3b82a
 form:
   submit: 送出
   enter: 請輸入{field}
