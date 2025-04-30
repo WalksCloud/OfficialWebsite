@@ -139,15 +139,15 @@ team-section:
     - 不論是管理系統、網路建置、活動直播，皆可滿足您的需求
   members:
     - name: Pennyken Huang
-      image: "/Pennyken-Huang.jpeg"
+      image: "/pic/Pennyken-Huang.jpg"
       website_url: ""
       intro: 網路佈線架構規劃十年以上經驗，曾協助大型研討會、萬人以上活動、辦公室的網路設計及執行需求，確保網路在各種情境下能順暢使用。
     - name: Haraguroicha Hsu
-      image: "/Haraguroicha-Hsu.jpeg"
+      image: "/pic/Haraguroicha-Hsu.jpg"
       website_url: https://haraguroicha.work/
       intro: IT 基礎架構與網路技術專家，精通虛擬化技術、資安管理與企業 IT 營運最佳化，擁有超過十年的企業級 IT 規劃與建置經驗。
     - name: Jimmy Pan
-      image: "/Jimmy-Pan.jpeg"
+      image: "/pic/Jimmy-Pan.jpg"
       website_url: https://ptc.work/
       intro: IT 戰略顧問，專注於 IT 代管、數位轉型及自動化 IT 管理，曾協助多家企業提升 IT 管理效率，推動 IT 營運現代化。
 partners-section:
@@ -155,7 +155,7 @@ partners-section:
     - 我們與頂尖 IT 企業及技術夥伴緊密合作，提供最專業的 IT 服務與技術支援，讓您獲得穩定、安全、高效的 IT 環境。
   partners:
     - name: 節省工具箱有限公司
-      image: "/jason-tools.png"
+      image: "/partner/jason-tools.png"
       image-class:
         - py-2
         - px-4
