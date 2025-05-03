@@ -12,7 +12,7 @@ const setLocale = (event) => {
 }
 const setLocaleDirect = (newLocale) => {
 	locale.value = newLocale
-	setLocale({ target: { value: newLocale } }) 
+	setLocale({ target: { value: newLocale } })
 }
 const handleScroll = () => {
 	const buffer = 100
@@ -45,7 +45,7 @@ const closeMenu = () => {
 </script>
 
 <template>
-	<header class="bg-white/85 dark:bg-[#222831]/85 shadow fixed top-0 left-0 w-full z-50">
+	<header class="bg-white/85 dark:bg-[#222831]/85 shadow fixed top-0 left-0 w-full z-50 backdrop-blur-sm">
 		<nav class="px-3 lg:px-6 py-3 lg:py-4 flex justify-between items-center">
 			<div>
 				<img class="rounded-[50%] w-[28px] lg:w-[50px] inline-block" src="/logo-gradual.svg">
