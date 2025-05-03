@@ -59,7 +59,7 @@ const closeMenu = () => {
 
 			<!-- Desktop Menu -->
 			<div class="space-x-4 hidden lg:flex">
-				<a v-bind:key="key" v-for="(name, key) in $tm('nav-links')" :class="{ 'text-primary': activeSection === key }" class="hover:text-primary dark:text-white" :href="`#${key}`">{{ name }}</a>
+				<a v-bind:key="key" v-for="(name, key) in $tm('nav-links')" :class="{ 'text-primary': activeSection === key, 'dark:text-white': activeSection !== key }" class="hover:text-primary" :href="`#${key}`">{{ name }}</a>
 
 				<div class="ms-2 locale-changer inline-block">
 					<select v-model="$i18n.locale" @change="setLocale($event)" class=" text-gray-700 dark:bg-[#222831] dark:text-white">
@@ -71,7 +71,7 @@ const closeMenu = () => {
 
 		<!-- Mobile Menu -->
 		<div v-if="isOpen" class="lg:hidden bg-white/85 dark:bg-[#222831]/85 py-6 text-center flex flex-col space-y-4">
-			<a v-bind:key="key" v-for="(name, key) in $tm('nav-links')" @click="closeMenu" :class="{ 'text-primary': activeSection === key }" class="hover:text-primary dark:text-white" :href="`#${key}`">{{ name }}</a>
+			<a v-bind:key="key" v-for="(name, key) in $tm('nav-links')" @click="closeMenu" :class="{ 'text-primary': activeSection === key, 'dark:text-white': activeSection !== key }" class="hover:text-primary" :href="`#${key}`">{{ name }}</a>
 
 			<div class="mt-2 locale-changer">
 				<div class="inline-flex rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600">
