@@ -41,7 +41,7 @@ jobs:
           node-version: ${{ matrix.node }}
 
       - name: Checkout 🛎
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
 #      - name: Download Production Artifact
 #        uses: actions/download-artifact@v4
