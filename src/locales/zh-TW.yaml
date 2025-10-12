@@ -154,7 +154,7 @@ partners-section:
   intro:
     - 我們與頂尖 IT 企業及技術夥伴緊密合作，提供最專業的 IT 服務與技術支援，讓您獲得穩定、安全、高效的 IT 環境。
   partners:
-    - name: 節省工具箱有限公司
+    - name: 節省工具箱有限公司 - Jason Tools
       image: "/partner/jason-tools.webp"
       image-class:
         - py-2

@@ -24,15 +24,15 @@ footer:
   privacy-policy: Privacy Policy
   privacy-policy_url: https://dev.auth.select/privacy-policy
 about-section:
-  title: Get Everything Works Great - 讓行雲成為您的 IT 夥伴
+  title: Get Everything Works Great - Make WalksCloud as your IT Partner
   intro:
-    - 提供您最完善的 MIS 服務，滿足軟硬體和網路維運需求
-    - 您專注公司發展，資訊管理及營運交給我們，
-    - 為您節省現有人工流程 60% 以上的工時，共同創造最大價值
+    - We provide comprehensive MIS services to meet your hardware, software, and network maintenance needs.
+    - Focus on your company's development while we handle information management and operations.
+    - We can save you over 60% of your current manual processes, creating maximum value together.
   about-items:
-    - title: 全面 IT / MIS 代管 – 讓您專注核心業務
+    - title: Comprehensive IT/MIS Hosting - 讓您專注核心業務
       content: 專業 IT 代管與外包、專業顧問服務，涵蓋 MIS 營運、網路架構、設備管理、帳號管理及系統維運，幫助企業降低 IT 維護成本
-    - title: 資安管理 – 全面守護您的營運安全
+    - title: Information security management – 全面守護您的營運安全
       content: 為企業提供多重安全機制，防止惡意攻擊、資料外洩及未授權存取
     - title: 設備管理數位化 – 協助管理並即時監控設惡意軟體入侵
       content: 幫助企業有效管理硬體與軟體資產，確保軟硬體與裝置安全性
@@ -77,7 +77,7 @@ about-section:
     message: 無論您的企業面臨何種 IT 挑戰，我們都能提供適合的解決方案，幫助您順利營運與成長！
 services-section:
   services:
-    - title: 全面 IT / MIS 代管 - 辦公室網路
+    - title: Comprehensive IT/MIS Hosting - Office Network
       items:
         - title: IT / MIS 外包與技術支援
           content: 提供全方位 IT 服務，確保企業 IT 環境穩定運作。
@@ -91,7 +91,7 @@ services-section:
           content: 提供企業級網路存取控制，提升安全性與管理效率。
         - title: VPN 及遠端安全解決方案
           content: 提供 OpenVPN、WireGuard 確保遠端存取安全。
-    - title: 全面 IT / MIS 代管 - 機房網路
+    - title: Comprehensive IT/MIS Hosting - Data Center Network
       items:
         - title: IDC 機房建置與維運
           content: 專業機房規劃、建置與代管，包含遠端操作 (Remote Hand) 服務。
@@ -103,7 +103,7 @@ services-section:
           content: 部署 Zabbix、LibreNMS、Grafana、Graylog 監控系統，確保 IT 環境穩定。
         - title: 容器化技術與 DevOps
           content: 建置企業級容器平台，提升開發與部署效率。
-    - title: 資安管理
+    - title: Information security management
       items:
         - title: 企業備份與安全方案
           content: 提供 Proxmox Backup Server、Proxmox Mail Gateway 及資安監控方案，保護企業重要數據。
@@ -111,23 +111,23 @@ services-section:
           content: 提供企業級網路存取控制，提升安全性與管理效率。
         - title: VPN 及遠端安全解決方案
           content: 提供 OpenVPN、WireGuard 確保遠端存取安全。
-    - title: 資產管理
+    - title: Asset management
       items:
         - title: Jamf 企業級 Apple 設備管理
           content: Jamf Pro、Jamf Protect、Jamf Security Cloud 協作管理與地端版本 Jamf Pro 維護。
-    - title: 客製需求
+    - title: Customized product development
       items:
         - title: 客製化系統開發
           content: 根據所有服務項目及企業需求設計與開發專屬 IT 解決方案。
   else: 其他項目
   flows:
-    - title: 01 確認需求
+    - title: 01 Confirm Requirement
       content: 需求訪談、規格確認
-    - title: 02 系統建置
+    - title: 02 System Deployment
       content: 根據需求建置客戶所需服務
-    - title: 03 驗收測試
+    - title: 03 Acceptance Testing
       content: 驗收測試
-    - title: 04 系統上線
+    - title: 04 System Production
       content: 系統上線、教育訓練、後續維護
 team-section:
   intro:
@@ -141,20 +141,29 @@ team-section:
     - name: Pennyken Huang
       image: "/pic/Pennyken-Huang.webp"
       website_url: ""
-      intro: 網路佈線架構規劃十年以上經驗，曾協助大型研討會、萬人以上活動、辦公室的網路設計及執行需求，確保網路在各種情境下能順暢使用。
+      intro: |
+        With over ten years of experience in network cabling architecture planning,
+        he has assisted with network design and implementation requirements for large-scale seminars,
+        events with over 10,000 people, and offices, ensuring smooth network operation in various scenarios.
     - name: Haraguroicha Hsu
       image: "/pic/Haraguroicha-Hsu.webp"
       website_url: https://haraguroicha.work/
-      intro: IT 基礎架構與網路技術專家，精通虛擬化技術、資安管理與企業 IT 營運最佳化，擁有超過十年的企業級 IT 規劃與建置經驗。
+      intro: |
+        An IT infrastructure and network technology expert,
+        he is proficient in virtualization technology,
+        information security management, and enterprise IT operations optimization.
+        He has over ten years of experience in enterprise-level IT planning and implementation.
     - name: Jimmy Pan
       image: "/pic/Jimmy-Pan.webp"
       website_url: https://ptc.work/
-      intro: IT 戰略顧問，專注於 IT 代管、數位轉型及自動化 IT 管理，曾協助多家企業提升 IT 管理效率，推動 IT 營運現代化。
+      intro: |
+        An IT strategy consultant specializing in IT hosting, digital transformation, and automated IT management.
+        He has helped many companies improve IT management efficiency and promote the modernization of IT operations.
 partners-section:
   intro:
     - 我們與頂尖 IT 企業及技術夥伴緊密合作，提供最專業的 IT 服務與技術支援，讓您獲得穩定、安全、高效的 IT 環境。
   partners:
-    - name: 節省工具箱有限公司
+    - name: Jason Tools - 節省工具箱有限公司
       image: "/partner/jason-tools.webp"
       image-class:
         - py-2
