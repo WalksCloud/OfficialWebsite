@@ -68,7 +68,7 @@ jobs:
         run: bun run --bun build --outDir .output
 
       - name: Upload Production Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: .output
           path: .output
