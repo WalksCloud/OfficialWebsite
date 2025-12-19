@@ -17,7 +17,7 @@
     "@vuelidate/validators": "^2.0.4",
     "pinia": "^3.0.2",
     "tailwindcss": "^4.1.16",
-    "vue": "^3.5.22",
+    "vue": "^3.5.26",
     "vue-i18n": "^11.1.12"
   },
   "devDependencies": {
