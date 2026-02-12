@@ -84,7 +84,7 @@ services-section:
         - title: 辦公室網路建置與維運
           content: 設備規劃、網路建置、設備維護，支援 Cisco、Juniper、Palo Alto、FortiGate、VyOS 等品牌。
         - title: IT 監控與管理系統
-          content: 部署 Zabbix、LibreNMS、Grafana 監控系統，確保 IT 環境穩定。
+          content: 部署 Zabbix、LibreNMS、Grafana、Graylog、Wazuh 監控系統，確保 IT 環境穩定。
         - title: 容器化技術與 DevOps
           content: 建置企業級容器平台，提升開發與部署效率。
         - title: 802.1X 驗證系統建置維護
@@ -100,7 +100,7 @@ services-section:
         - title: 網站與伺服器代管營運
           content: 提供安全可靠的代管與維運服務。
         - title: IT 監控與管理系統
-          content: 部署 Zabbix、LibreNMS、Grafana、Graylog 監控系統，確保 IT 環境穩定。
+          content: 部署 Zabbix、LibreNMS、Grafana、Graylog、Wazuh 監控系統，確保 IT 環境穩定。
         - title: 容器化技術與 DevOps
           content: 建置企業級容器平台，提升開發與部署效率。
     - title: 資安管理
@@ -160,7 +160,7 @@ partners-section:
         - py-2
         - px-4
       url: https://jason.tools/
-      intro: Proxmox, Zimbra, Graylog, LibreNMS
+      intro: Proxmox, Zimbra, Graylog, LibreNMS, Wazuh
 contact-section:
   intro:
     - 想客製討論最適合您的需求，
