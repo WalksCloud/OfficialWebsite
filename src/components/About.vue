@@ -1,12 +1,20 @@
 <script setup>
-import { ref, reactive, onMounted } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
-const { t, tm } = useI18n()
+const { t, tm, locale } = useI18n()
 
-let items = tm('about-section.questions-block.items')
-items.forEach((row) => {
-	row.showTooltip = false
-});
+const items = ref([])
+const hydrateItems = () => {
+	const rows = tm('about-section.questions-block.items') || []
+	items.value = rows.map((row) => ({
+		...row,
+		showTooltip: false,
+	}))
+}
+hydrateItems()
+watch(locale, () => {
+	hydrateItems()
+})
 
 const isMobile = ref(false)
 onMounted(() => {
@@ -15,17 +23,17 @@ onMounted(() => {
 
 const handleHover = (index) => {
 	if (!isMobile.value) {
-		items[index].showTooltip = true
+		items.value[index].showTooltip = true
 	}
 }
 const handleLeave = (index) => {
 	if (!isMobile.value) {
-		items[index].showTooltip = false
+		items.value[index].showTooltip = false
 	}
 }
 const handleClick = (index) => {
 	if (isMobile.value) {
-		items[index].showTooltip = !items[index].showTooltip
+		items.value[index].showTooltip = !items.value[index].showTooltip
 	}
 }
 </script>
