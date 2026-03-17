@@ -19,7 +19,7 @@ loading: 載入中...
 footer:
   facebook_url: https://www.facebook.com/WalksCloud
   linkedin_url: https://www.linkedin.com/company/walkscloud/
-  term-of-use: Term of Use
+  term-of-use: Terms of Use
   term-of-use_url: https://dev.auth.select/term-of-use
   privacy-policy: Privacy Policy
   privacy-policy_url: https://dev.auth.select/privacy-policy
@@ -37,8 +37,10 @@ about-section:
     - title: 設備管理數位化 – 協助管理並即時監控設惡意軟體入侵
       content: 幫助企業有效管理硬體與軟體資產，確保軟硬體與裝置安全性
   questions-block:
-    title: 我們能為您解決的問題跟情境
-    intro: 您身為 HR、行政管理、IT 人員，可能正在面臨：
+    title: |
+      我們能為您解決的問題跟情境
+    intro: |
+      您身為 HR、行政管理、IT 人員，可能正在面臨：
     items:
       - icon: security
         title: 遠端辦公環境安全性不足，擔心未授權存取？
@@ -68,8 +70,10 @@ about-section:
         title: 企業郵件與伺服器容易受到惡意攻擊？
         content: 我們的資安解決方案涵蓋郵件安全閘道、防火牆與 EDR 端點防護，確保企業資料安全。
   services-block:
-    desktop-title: 我們能提供業界 CP 值最高的服務：
-    mobile-title: 我們能提供<br>業界 CP 值最高的服務：
+    desktop-title: |
+      我們能提供業界 CP 值最高的服務：
+    mobile-title: |
+      我們能提供<br>業界 CP 值最高的服務：
     intro:
       - 簡單自動化的管理系統，縮短現行流程工時至少 60% 以上
       - 系統客製化高，能符合客戶不同需求

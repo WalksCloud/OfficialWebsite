@@ -1,16 +1,16 @@
 brand-name: WalksCloud
 about: About
 services: Services
-services_flows: Services Flows
-team: Team
+services_flows: Service Process
+team: Our Team
 partners: Partners
-contact: Contact
+contact: Contact Us
 nav-links:
   about: About
   services: Services
-  team: Team
+  team: Our Team
   partners: Partners
-  contact: Contact
+  contact: Contact Us
 locales:
   en: English
   tw: 繁體中文
@@ -19,149 +19,152 @@ loading: Loading...
 footer:
   facebook_url: https://www.facebook.com/WalksCloud
   linkedin_url: https://www.linkedin.com/company/walkscloud/
-  term-of-use: Term of Use
+  term-of-use: Terms of Use
   term-of-use_url: https://dev.auth.select/term-of-use
   privacy-policy: Privacy Policy
   privacy-policy_url: https://dev.auth.select/privacy-policy
 about-section:
-  title: Get Everything Works Great - Make WalksCloud as your IT Partner
+  title: Get Everything Works Great – Let WalksCloud Be Your IT Partner
   intro:
-    - We provide comprehensive MIS services to meet your hardware, software, and network maintenance needs.
-    - Focus on your company's development while we handle information management and operations.
-    - We can save you over 60% of your current manual processes, creating maximum value together.
+    - We deliver comprehensive MIS services that fulfill hardware, software, and network operations needs.
+    - Focus on expanding your business while we take care of information management and daily operations.
+    - Save more than 60% of existing manual processes so we can create maximum value together.
   about-items:
-    - title: Comprehensive IT/MIS Hosting - 讓您專注核心業務
-      content: 專業 IT 代管與外包、專業顧問服務，涵蓋 MIS 營運、網路架構、設備管理、帳號管理及系統維運，幫助企業降低 IT 維護成本
-    - title: Information security management – 全面守護您的營運安全
-      content: 為企業提供多重安全機制，防止惡意攻擊、資料外洩及未授權存取
-    - title: 設備管理數位化 – 協助管理並即時監控設惡意軟體入侵
-      content: 幫助企業有效管理硬體與軟體資產，確保軟硬體與裝置安全性
+    - title: Comprehensive IT/MIS Hosting - Focus on Your Core Business
+      content: Professional IT hosting, outsourcing, and consulting that cover MIS operations, network architecture, equipment management, account management, and system maintenance to reduce IT upkeep costs.
+    - title: Information Security Management - Safeguard Your Operations
+      content: Provide multi-layered protections that block malicious attacks, data leaks, and unauthorized access.
+    - title: Digital Device Management - Monitor Assets and Block Malware in Real Time
+      content: Help you manage hardware and software assets effectively to secure every device and application.
   questions-block:
-    title: 我們能為您解決的問題跟情境
-    intro: 您身為 HR、行政管理、IT 人員，可能正在面臨：
+    title: |
+      Problems and Scenarios We Can Solve
+    intro: |
+      As HR, administrative, or IT staff, you may be facing:
     items:
       - icon: security
-        title: 遠端辦公環境安全性不足，擔心未授權存取？
-        content: 我們提供企業級 VPN 方案，確保遠端存取的安全性，提升混合辦公模式的可靠度。
+        title: Worried about the security of your remote work environment and unauthorized access?
+        content: We deliver enterprise-grade VPN solutions that secure remote connections and reinforce hybrid work reliability.
       - icon: engineering
-        title: 沒有 IT 人員，遇到技術問題不知如何解決？
-        content: 我們提供 IT 代管與技術支援，確保企業 IT 環境穩定運作，降低管理成本。
+        title: No in-house IT staff and unsure how to resolve technical issues?
+        content: We provide IT hosting and technical support to keep your IT environment stable while lowering management costs.
       - icon: build
-        title: IT 環境維護複雜，影響企業運行效率？
-        content: 我們提供 IT 監控、自動化管理與雲端虛擬化技術，簡化 IT 維護流程，提升企業 IT 營運效率。
+        title: Complex IT maintenance is reducing overall business efficiency?
+        content: We offer IT monitoring, automated management, and cloud virtualization to simplify maintenance and boost IT operations.
       - icon: laptop_chromebook
-        title: 到職離職開通或關閉帳號太繁瑣，新進、離職員工資產不清？
-        content: 我們提供設備管理系統，協助管理並即時監控設惡意軟體入侵，幫助企業有效管理硬體與軟體資產
+        title: Onboarding or offboarding accounts is tedious, and employee assets stay unclear?
+        content: Our device management system centralizes assets and monitors for malware intrusions so you can manage hardware and software in real time.
       - icon: passkey
-        title: 設備與資產管理混亂，帳號權限難以控管？
-        content: 透過企業資產管理與 IAM 系統，自動化設備與帳號權限管理，減少人為錯誤與資產遺失風險。
+        title: Asset and account permissions are messy and difficult to control?
+        content: Enterprise asset management and IAM systems automate device and account permissions, reducing human error and lost assets.
       - icon: modeling
-        title: 數位轉型進度緩慢，IT 架構無法支撐業務擴展？
-        content: 透過雲端虛擬化與自動化 IT 管理系統，幫助企業加速數位轉型，靈活應對市場變化。
+        title: Digital transformation is slow and the IT architecture cannot support business growth?
+        content: Cloud virtualization and automated IT management accelerate digital transformation so you can respond to market changes.
       - icon: terminal
-        title: 沒有足夠預算聘請 MIS 或使用超貴的系統，HR 身兼多職？
-        content: 我們提供專業 IT 代管與外包、專業顧問服務，幫助企業IT相關業務皆正常運作
+        title: No budget to hire MIS talent or pay for expensive systems, leaving HR to do everything?
+        content: Our professional IT hosting, outsourcing, and consulting services keep every IT-related task running smoothly.
       - icon: wifi_off
-        title: 網路連線不穩定，影響工作效率與業務運營？
-        content: 我們提供專業的網路建置與維運服務，確保企業網路環境穩定，提升運作效率。
+        title: Unstable network connections hurt productivity and operations?
+        content: We provide professional network deployment and maintenance to keep enterprise connectivity stable and efficient.
       - icon: mail
-        title: 企業郵件與伺服器容易受到惡意攻擊？
-        content: 我們的資安解決方案涵蓋郵件安全閘道、防火牆與 EDR 端點防護，確保企業資料安全。
+        title: Corporate email and servers are vulnerable to malicious attacks?
+        content: Our security solutions include email security gateways, firewalls, and EDR endpoint protection to safeguard your data.
   services-block:
-    desktop-title: 我們能提供業界 CP 值最高的服務：
-    mobile-title: 我們能提供<br>業界 CP 值最高的服務：
+    desktop-title: |
+      We Deliver the Industry's Best Cost-Performance Services.
+    mobile-title: |
+      We Deliver<br>the Industry's Best<br>Cost-Performance Services.
     intro:
-      - 簡單自動化的管理系統，縮短現行流程工時至少 60% 以上
-      - 系統客製化高，能符合客戶不同需求
-      - 為您妥善營運所有 MIS 工作範疇，我們可即時得知網路障礙，確保網路時時暢通
-    message: 無論您的企業面臨何種 IT 挑戰，我們都能提供適合的解決方案，幫助您順利營運與成長！
+      - Simple automated management systems cut at least 60% of current process time.
+      - Highly customizable systems adapt to every client's needs.
+      - We operate the full MIS scope for you, detect network issues immediately, and keep connectivity smooth.
+    message: Whatever IT challenge you face, we can recommend the right solution to keep you operating and growing smoothly.
 services-section:
   services:
-    - title: Comprehensive IT/MIS Hosting - Office Network
+    - title: Comprehensive IT/MIS Hosting - Office Networks
       items:
-        - title: IT / MIS 外包與技術支援
-          content: 提供全方位 IT 服務，確保企業 IT 環境穩定運作。
-        - title: 辦公室網路建置與維運
-          content: 設備規劃、網路建置、設備維護，支援 Cisco、Juniper、Palo Alto、FortiGate、VyOS 等品牌。
-        - title: IT 監控與管理系統
-          content: 部署 Zabbix、LibreNMS、Grafana、Graylog、Wazuh 監控系統，確保 IT 環境穩定。
-        - title: 容器化技術與 DevOps
-          content: 建置企業級容器平台，提升開發與部署效率。
-        - title: 802.1X 驗證系統建置維護
-          content: 提供企業級網路存取控制，提升安全性與管理效率。
-        - title: VPN 及遠端安全解決方案
-          content: 提供 OpenVPN、WireGuard 確保遠端存取安全。
-    - title: Comprehensive IT/MIS Hosting - Data Center Network
+        - title: IT/MIS Outsourcing and Technical Support
+          content: Provide end-to-end IT services to keep your IT environment stable.
+        - title: Office Network Deployment and Maintenance
+          content: Handle planning, build, and upkeep for Cisco, Juniper, Palo Alto, FortiGate, VyOS, and more.
+        - title: IT Monitoring and Management Systems
+          content: Deploy Zabbix, LibreNMS, Grafana, Graylog, and Wazuh to ensure a stable IT environment.
+        - title: Containerization and DevOps
+          content: Build enterprise container platforms to improve development and deployment efficiency.
+        - title: 802.1X Authentication Deployment and Maintenance
+          content: Deliver enterprise network access control to improve security and management efficiency.
+        - title: VPN and Remote Security Solutions
+          content: Provide OpenVPN and WireGuard to keep remote access secure.
+    - title: Comprehensive IT/MIS Hosting - Data Center Networks
       items:
-        - title: IDC 機房建置與維運
-          content: 專業機房規劃、建置與代管，包含遠端操作 (Remote Hand) 服務。
-        - title: 虛擬化與雲端解決方案
-          content: 協助企業轉移至 Proxmox VE 平台、建置虛擬化叢集、NVIDIA vGPU 運算叢集。
-        - title: 網站與伺服器代管營運
-          content: 提供安全可靠的代管與維運服務。
-        - title: IT 監控與管理系統
-          content: 部署 Zabbix、LibreNMS、Grafana、Graylog、Wazuh 監控系統，確保 IT 環境穩定。
-        - title: 容器化技術與 DevOps
-          content: 建置企業級容器平台，提升開發與部署效率。
-    - title: Information security management
+        - title: IDC Data Center Deployment and Maintenance
+          content: Offer professional planning, implementation, and managed services, including remote-hands support.
+        - title: Virtualization and Cloud Solutions
+          content: Migrate workloads to Proxmox VE, build virtualization clusters, and enable NVIDIA vGPU compute clusters.
+        - title: Website and Server Hosting Operations
+          content: Deliver secure and reliable hosting and managed services.
+        - title: IT Monitoring and Management Systems
+          content: Deploy Zabbix, LibreNMS, Grafana, Graylog, and Wazuh to ensure a stable IT environment.
+        - title: Containerization and DevOps
+          content: Build enterprise container platforms to improve development and deployment efficiency.
+    - title: Information Security Management
       items:
-        - title: 企業備份與安全方案
-          content: 提供 Proxmox Backup Server、Proxmox Mail Gateway 及資安監控方案，保護企業重要數據。
-        - title: 802.1X 驗證系統建置維護
-          content: 提供企業級網路存取控制，提升安全性與管理效率。
-        - title: VPN 及遠端安全解決方案
-          content: 提供 OpenVPN、WireGuard 確保遠端存取安全。
-    - title: Asset management
+        - title: Enterprise Backup and Security Solutions
+          content: Provide Proxmox Backup Server, Proxmox Mail Gateway, and security monitoring solutions to protect critical data.
+        - title: 802.1X Authentication Deployment and Maintenance
+          content: Deliver enterprise network access control to improve security and management efficiency.
+        - title: VPN and Remote Security Solutions
+          content: Provide OpenVPN and WireGuard to keep remote access secure.
+    - title: Asset Management
       items:
-        - title: Jamf 企業級 Apple 設備管理
-          content: Jamf Pro、Jamf Protect、Jamf Security Cloud 協作管理與地端版本 Jamf Pro 維護。
-    - title: Customized product development
+        - title: Jamf Enterprise Apple Device Management
+          content: Manage Jamf Pro, Jamf Protect, Jamf Security Cloud, and on-prem Jamf Pro deployments.
+    - title: Customized Product Development
       items:
-        - title: 客製化系統開發
-          content: 根據所有服務項目及企業需求設計與開發專屬 IT 解決方案。
-  else: 其他項目
+        - title: Custom System Development
+          content: Design and develop tailored IT solutions based on your services and business needs.
+  else: Other Services
   flows:
-    - title: 01 Confirm Requirement
-      content: 需求訪談、規格確認
+    - title: 01 Requirement Confirmation
+      content: Requirement discovery and specification confirmation
     - title: 02 System Deployment
-      content: 根據需求建置客戶所需服務
+      content: Build the services you need based on agreed requirements
     - title: 03 Acceptance Testing
-      content: 驗收測試
-    - title: 04 System Production
-      content: 系統上線、教育訓練、後續維護
+      content: Acceptance testing
+    - title: 04 System Launch
+      content: Launch, training, and ongoing maintenance
 team-section:
   intro:
-    - 團隊擁有豐富開發及 IT / MIS 管理及專案經驗，
-    - 包括大型企業 IT 架構設計、雲端遷移、虛擬化技術導入及企業級網路安全方案。
-    - 專注於企業 IT 基礎架構、資安防護、網路架構與 IT 系統開發。
-    - 熟知公司營運所有 MIS knowhow 及痛點，
-    - 曾設定可容納 500 至 1,500 名以上與會者研討會無線網絡，及資產管理系統開發
-    - 不論是管理系統、網路建置、活動直播，皆可滿足您的需求
+    - Our team has extensive experience across development, IT/MIS management, and project delivery.
+    - We have designed large-scale enterprise IT architectures, led cloud migrations, rolled out virtualization, and implemented enterprise security.
+    - We focus on enterprise IT infrastructure, cybersecurity, network architecture, and IT system development.
+    - We know every MIS pain point across business operations.
+    - We have built wireless networks for seminars hosting 500 to 1,500+ attendees and developed asset management systems.
+    - Whether you need management systems, network deployment, or live event streaming, we can deliver.
   members:
     - name: Pennyken Huang
       image: "/pic/Pennyken-Huang.webp"
       website_url: ""
       intro: |
-        With over ten years of experience in network cabling architecture planning,
-        he has assisted with network design and implementation requirements for large-scale seminars,
-        events with over 10,000 people, and offices, ensuring smooth network operation in various scenarios.
+        With more than ten years of network cabling and architecture experience,
+        he has supported large seminars, events with over ten thousand attendees,
+        and offices with network design and implementation to keep every scenario running smoothly.
     - name: Haraguroicha Hsu
       image: "/pic/Haraguroicha-Hsu.webp"
       website_url: https://haraguroicha.work/
       intro: |
-        An IT infrastructure and network technology expert,
-        he is proficient in virtualization technology,
-        information security management, and enterprise IT operations optimization.
-        He has over ten years of experience in enterprise-level IT planning and implementation.
+        An expert in IT infrastructure and networking,
+        proficient in virtualization, information security management, and enterprise IT optimization,
+        with more than a decade of enterprise IT planning and implementation experience.
     - name: Jimmy Pan
       image: "/pic/Jimmy-Pan.webp"
       website_url: https://ptc.work/
       intro: |
-        An IT strategy consultant specializing in IT hosting, digital transformation, and automated IT management.
-        He has helped many companies improve IT management efficiency and promote the modernization of IT operations.
+        An IT strategy consultant focused on IT hosting, digital transformation, and automated IT management,
+        who has helped many companies improve IT efficiency and modernize IT operations.
 partners-section:
   intro:
-    - 我們與頂尖 IT 企業及技術夥伴緊密合作，提供最專業的 IT 服務與技術支援，讓您獲得穩定、安全、高效的 IT 環境。
+    - We work closely with top IT companies and technology partners to provide professional services and support so you enjoy a stable, secure, and efficient IT environment.
   partners:
     - name: Jason Tools - 節省工具箱有限公司
       image: "/partner/jason-tools.webp"
@@ -172,24 +175,24 @@ partners-section:
       intro: Proxmox, Zimbra, Graylog, LibreNMS, Wazuh
 contact-section:
   intro:
-    - 想客製討論最適合您的需求，
-    - 讓我們為您設計最適合的 IT 解決方案 – 歡迎聯繫我們！
+    - Want to discuss the solution that fits you best?
+    - Let us craft the ideal IT solution for you—contact us anytime
   form-url: https://n8n.walks.cloud/form/51e5978c-2914-43ad-8118-811faff3b82a
 form:
   submit: Submit
-  enter: Please Input {field}
+  enter: Please enter {field}
   company_name: Company Name
   company_number: Company Tax Number
-  name: Contact
+  name: Contact Name
   email: Email
   phone: Contact Phone
-  requirements: Service Requirements
+  requirements: Requested Services
   terms: Personal Data Statement & Consent
 error:
-  required: This field is required
-  email: Wrong Email format
-  checked: Please Accept with checked
+  required: This field is required.
+  email: Invalid email format.
+  checked: Please agree by checking the box.
 success: Success
 failed: Failed
-sent-successful: We will response in soon.
+sent-successful: We will reply as soon as possible.
 sent-failed: Please check the form again.
