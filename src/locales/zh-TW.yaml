@@ -159,7 +159,7 @@ partners-section:
       image-class:
         - py-2
         - px-4
-      url: https://jason.tools/
+      url: https://www.jason.tools/
       intro: Proxmox, Zimbra, Graylog, LibreNMS, Wazuh
 contact-section:
   intro:
