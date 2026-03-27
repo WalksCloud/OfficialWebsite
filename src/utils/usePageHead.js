@@ -39,15 +39,28 @@ const buildBreadcrumbs = (pageKey, locale) => {
   return crumbs
 }
 
+const toAbsolute = (path) => {
+  if (!path) return undefined
+  const base = site.baseUrl?.replace(/\/+$/, '') || ''
+  return path.startsWith('http') ? path : `${base}${path}`
+}
+
+const toBcpLocale = (locale) => {
+  const map = site.og?.localeMap || {}
+  const val = map[locale] || locale
+  return val.replace('_', '-')
+}
+
 const buildJsonLd = (pageKey, locale, title, description, canonicalUrl) => {
   const page = getPageConfig(pageKey)
   const base = site.baseUrl
+  const lang = toBcpLocale(locale)
   const org = {
     '@type': 'Organization',
     '@id': `${base}/#organization`,
     name: site.companyNameEn,
     url: base,
-    logo: site.org?.logo,
+    logo: toAbsolute(site.org?.logo),
     sameAs: site.org?.sameAs || [],
   }
   const website = {
@@ -56,7 +69,7 @@ const buildJsonLd = (pageKey, locale, title, description, canonicalUrl) => {
     url: base,
     name: site.brandName,
     publisher: { '@id': `${base}/#organization` },
-    inLanguage: locale,
+    inLanguage: lang,
   }
   const webpage = {
     '@type': 'WebPage',
@@ -65,7 +78,7 @@ const buildJsonLd = (pageKey, locale, title, description, canonicalUrl) => {
     name: title,
     description,
     isPartOf: { '@id': `${base}/#website` },
-    inLanguage: locale,
+    inLanguage: lang,
     breadcrumb: {
       '@type': 'BreadcrumbList',
       itemListElement: buildBreadcrumbs(pageKey, locale),
@@ -137,6 +150,15 @@ export const usePageHead = (route) => {
   const jsonLd = computed(() =>
     buildJsonLd(pageKey.value, currentLocale.value, title.value, description.value, canonicalUrl.value)
   )
+  const jsonLdScripts = computed(() => {
+    if (!jsonLd.value || !jsonLd.value['@graph']) {
+      return []
+    }
+    return jsonLd.value['@graph'].map((entry) => ({
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify({ '@context': 'https://schema.org', ...entry }),
+    }))
+  })
 
   useHead({
     htmlAttrs: {
@@ -169,11 +191,6 @@ export const usePageHead = (route) => {
       { rel: 'canonical', href: () => canonicalUrl.value },
       ...hreflangs.value,
     ],
-    script: [
-      {
-        type: 'application/ld+json',
-        children: JSON.stringify(jsonLd.value),
-      },
-    ],
+    script: () => jsonLdScripts.value,
   })
 }
