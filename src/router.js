@@ -7,14 +7,12 @@ import { buildNonPrefixedPath, buildPrefixedPath, getPageConfigs, getSiteConfig 
 
 const site = getSiteConfig()
 
-const componentMap = {
-  home: HomePage,
-  service: MarkdownPage,
-  case: MarkdownPage,
-  'not-found': NotFoundPage,
+const resolveComponent = (page) => {
+  if (page.pageKey === 'home' || page.type === 'home') return HomePage
+  if (page.pageKey === 'not-found' || page.type === 'not-found') return NotFoundPage
+  if (page.type === 'service' || page.type === 'case' || page.type === 'page') return MarkdownPage
+  return PlaceholderPage
 }
-
-const defaultComponent = PlaceholderPage
 
 const normalizePath = (path) => {
   if (!path) return '/'
@@ -27,10 +25,11 @@ const generateRoutes = () => {
   pages.forEach((page) => {
     site.locales.forEach((locale) => {
       const prefixedPath = normalizePath(buildPrefixedPath(page.pageKey, locale))
+      const component = resolveComponent(page)
       routes.push({
         path: prefixedPath,
         name: `${page.pageKey}-${locale}-prefixed`,
-        component: componentMap[page.type] || defaultComponent,
+        component,
         meta: {
           pageKey: page.pageKey,
           locale,
@@ -43,7 +42,7 @@ const generateRoutes = () => {
       routes.push({
         path: nonPrefixedPath,
         name: `${page.pageKey}-nonprefixed`,
-        component: componentMap[page.type] || defaultComponent,
+        component,
         meta: {
           pageKey: page.pageKey,
           locale: null, // resolved at runtime (from initialState/header mapping)

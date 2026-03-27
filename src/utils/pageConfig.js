@@ -1,5 +1,6 @@
 import siteConfig from '../../config/site.yaml'
-import pagesConfig from '../../config/pages.yaml'
+import basePagesConfig from '../../config/pages.yaml'
+import { getAllPageData } from './pageData'
 
 const normalizeSlug = (slug = '') => {
   if (!slug) return ''
@@ -7,11 +8,20 @@ const normalizeSlug = (slug = '') => {
   return value.replace(/^\/+/, '').replace(/\/+$/, '')
 }
 
+const mergedPages = (() => {
+  const dynamicPages = getAllPageData()
+  const merged = new Map()
+  ;[...basePagesConfig, ...dynamicPages].forEach((page) => {
+    merged.set(page.pageKey, page)
+  })
+  return Array.from(merged.values())
+})()
+
 export const getSiteConfig = () => siteConfig
 
-export const getPageConfigs = () => pagesConfig
+export const getPageConfigs = () => mergedPages
 
-export const getPageConfig = (pageKey) => pagesConfig.find((page) => page.pageKey === pageKey)
+export const getPageConfig = (pageKey) => mergedPages.find((page) => page.pageKey === pageKey)
 
 export const getSlugForLocale = (pageKey, locale) => {
   const page = getPageConfig(pageKey)

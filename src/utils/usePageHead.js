@@ -104,7 +104,8 @@ const buildJsonLd = (pageKey, locale, title, description, canonicalUrl) => {
   }
 }
 
-export const usePageHead = (route) => {
+export const usePageHead = (route, options = {}) => {
+  const overrideTitle = options.overrideTitle
   const { locale } = useI18n()
   const pageKey = computed(() => route.meta.pageKey || 'home')
   const currentLocale = computed(() => route.meta.locale || locale.value || site.defaultLocale)
@@ -121,12 +122,19 @@ export const usePageHead = (route) => {
   })
 
   const canonicalUrl = computed(() => buildCanonicalUrl(pageKey.value, currentLocale.value))
-  const title = computed(
+  const baseTitle = computed(
     () =>
+      (overrideTitle?.value) ||
       route.meta?.contentTitle ||
       page.value?.titles?.[currentLocale.value] ||
       site.brandName
   )
+  const title = computed(() => {
+    const base = baseTitle.value || ''
+    const suffix = ` | ${site.brandName}`
+    if (!base) return site.brandName
+    return base.includes(site.brandName) ? base : `${base}${suffix}`
+  })
   const description = computed(() => page.value?.descriptions?.[currentLocale.value] || '')
   const robots = computed(() =>
     page.value?.index === false ? 'noindex,nofollow' : site.robots?.policy || 'index,follow'

@@ -12,7 +12,7 @@ const route = useRoute()
 const router = useRouter()
 const site = getSiteConfig()
 const localeOptions = site.locales || []
-const isNotFound = computed(() => { console.log(route.name); return route.name === 'not-found' })
+const isNotFound = computed(() => { console.log(route.name); return route.name.match(/^(not-found|not-found-nonprefixed)$/) !== null })
 
 const setLocale = (event) => {
 	const newLocale = event.target.value

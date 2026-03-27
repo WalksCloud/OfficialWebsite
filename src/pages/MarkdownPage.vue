@@ -6,13 +6,15 @@ import { usePageHead } from '@/utils/usePageHead'
 import { getContentFilePath, getSiteConfig } from '@/utils/pageConfig'
 import MarkdownIt from 'markdown-it'
 import YAML from 'yaml'
+import { ref } from 'vue'
 
 const md = new MarkdownIt({ html: true, linkify: true, breaks: true })
 const site = getSiteConfig()
 
 const route = useRoute()
 const { locale, t } = useI18n()
-usePageHead(route)
+const contentTitle = ref('')
+usePageHead(route, { overrideTitle: contentTitle })
 
 const modules = import.meta.glob('../content/**/*.md', {
   eager: true,
@@ -71,7 +73,7 @@ const rendered = computed(() => {
   const block = parseSingleLocaleMd(raw, filenameLocale)
   const renderedBlock = renderBlock(block, currentLocale.value)
   if (renderedBlock?.title) {
-    route.meta.contentTitle = renderedBlock.title
+    contentTitle.value = renderedBlock.title
   }
   return renderedBlock
 })
