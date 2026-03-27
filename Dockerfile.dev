@@ -1,5 +1,6 @@
 # syntax=docker/dockerfile:1.6
 FROM oven/bun:1
+ENV TZ=Asia/Taipei
 WORKDIR /app
 COPY package.json bun.lock* package-lock.json* ./
 RUN bun install --frozen-lockfile
