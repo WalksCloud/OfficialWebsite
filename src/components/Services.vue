@@ -37,8 +37,21 @@ const serviceGroups = computed(() => {
             <h3 class="text-xl lg:font-bold mb-2 lg:mb-4 block-title">{{ row.title }}</h3>
             <div v-bind:key="item.title" v-for="item in row.items" class="mb-2 lg:mb-4">
               <p class="font-bold">
-                <a v-if="item.href" :href="item.href" class="hover:text-primary dark:hover:text-primary">
-                  {{ item.title }}
+                <a
+                  v-if="item.href"
+                  :href="item.href"
+                  class="group inline-flex items-center gap-2 text-white hover:text-primary transition-colors dark:text-white"
+                >
+                  <span aria-hidden="true" class="material-symbols-outlined text-base transition duration-200 group-hover:text-primary chevron-wiggle">
+                    chevron_right
+                  </span>
+                  <span>{{ item.title }}</span>
+                  <span
+                    aria-hidden="true"
+                    class="material-symbols-outlined text-base opacity-0 -translate-x-1 transition duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-primary"
+                  >
+                    arrow_forward
+                  </span>
                 </a>
                 <span v-else>{{ item.title }}</span>
               </p>
@@ -66,3 +79,27 @@ const serviceGroups = computed(() => {
     </div>
   </section>
 </template>
+
+<style scoped>
+@keyframes chevron-wiggle {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(4px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.chevron-wiggle {
+  animation: chevron-wiggle 1s ease-in-out infinite;
+}
+
+@media (min-width: 1024px) {
+  .chevron-wiggle {
+    animation: none;
+  }
+}
+</style>

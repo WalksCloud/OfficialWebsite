@@ -1,6 +1,10 @@
 import YAML from 'yaml'
 
-const contentModules = import.meta.glob('../content/**/*.md', { eager: true, as: 'raw' })
+const contentModules = import.meta.glob('../content/**/*.md', {
+  eager: true,
+  import: 'default',
+  query: '?raw',
+})
 const moduleKeys = Object.keys(contentModules)
 
 const localeFromFilename = (path) => {
