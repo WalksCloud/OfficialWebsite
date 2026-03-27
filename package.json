@@ -36,6 +36,6 @@
     "sass-embedded": "^1.98.0",
     "vite-plugin-md": "^0.22.5",
     "yaml": "^2.6.1",
-    "vite": "^8.0.0"
+    "vite": "^8.0.3"
   }
 }
