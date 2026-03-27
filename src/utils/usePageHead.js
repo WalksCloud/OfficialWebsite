@@ -106,6 +106,8 @@ const buildJsonLd = (pageKey, locale, title, description, canonicalUrl) => {
 
 export const usePageHead = (route, options = {}) => {
   const overrideTitle = options.overrideTitle
+  const minify = options.minify === true
+  const formatJson = (obj) => (minify ? JSON.stringify(obj) : `\n${JSON.stringify(obj, null, 2)}\n`)
   const { locale } = useI18n()
   const pageKey = computed(() => route.meta.pageKey || 'home')
   const currentLocale = computed(() => route.meta.locale || locale.value || site.defaultLocale)
@@ -169,7 +171,7 @@ export const usePageHead = (route, options = {}) => {
     }
     return jsonLd.value['@graph'].map((entry) => ({
       type: 'application/ld+json',
-      innerHTML: JSON.stringify({ '@context': 'https://schema.org', ...entry }),
+      innerHTML: formatJson({ '@context': 'https://schema.org', ...entry }),
     }))
   })
 

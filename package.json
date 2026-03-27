@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "build:ssg": "vite-ssg build && node scripts/generate-meta.js",
+    "build:ssg": "vite-ssg build && node scripts/generate-meta.js && node scripts/format-dist.js",
     "build:ssg:watch": "chokidar \"src/**/*\" \"public/**/*\" \"config/**/*\" \"scripts/**/*\" --initial -c \"bun run build:ssg\"",
     "preview:nginx:reload": "chokidar \"deploy/*.conf\" --initial -c \"zsh -lic 'docker compose -f docker-compose.preview.yml up --force-recreate || true'\"",
     "preview": "concurrently -k \"bun run build:ssg:watch\" \"bun run preview:nginx:reload\" \"zsh -lic 'docker compose -f docker-compose.preview.yml up --force-recreate'\""
@@ -34,6 +34,7 @@
     "concurrently": "^9.0.0",
     "git-rev-sync": "^3.0.2",
     "luxon": "^3.6.1",
+    "prettier": "^3.3.3",
     "sass-embedded": "^1.98.0",
     "vite-plugin-md": "^0.22.5",
     "yaml": "^2.6.1",
