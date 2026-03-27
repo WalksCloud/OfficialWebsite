@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
+import Markdown from 'vite-plugin-md'
 import path from 'path'
 import { DateTime } from "luxon";
 import git from 'git-rev-sync'
@@ -15,7 +16,10 @@ export default defineConfig(({ mode }) => {
       'import.meta.env.__APP_ENV__': JSON.stringify(env.APP_ENV),
     },
     plugins: [
-      vue(),
+      vue({
+        include: [/\.vue$/, /\.md$/],
+      }),
+      Markdown(),
       tailwindcss(),
       ViteYaml(),
     ],

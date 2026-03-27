@@ -13,7 +13,7 @@ nav-links:
   contact: Contact Us
 locales:
   en: English
-  tw: 繁體中文
+  zh-tw: 繁體中文
 close: Close
 loading: Loading...
 footer:
@@ -196,3 +196,9 @@ success: Success
 failed: Failed
 sent-successful: We will reply as soon as possible.
 sent-failed: Please check the form again.
+placeholder:
+  message: Content coming soon. We will update it shortly.
+not-found:
+  title: Page not found
+  description: The page you are looking for does not exist or has been moved.
+  back-home: Back to homepage

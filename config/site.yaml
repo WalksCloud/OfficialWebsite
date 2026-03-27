@@ -1,0 +1,37 @@
+brandName: WalksCloud
+companyNameEn: Walks Cloud Inc.
+companyNameZh: 行雲資訊有限公司
+baseUrl: https://walks.cloud
+canonicalHost: walks.cloud
+defaultLocale: zh-tw
+locales:
+  - zh-tw
+  - en
+localeFallbacks:
+  zh:
+    - zh-tw
+    - en
+  en: []
+robots:
+  policy: index,follow
+socialImage: /og_image.webp
+social:
+  fbAppId: "2122887114805377"
+  fbPages: "106051241536627"
+og:
+  imageType: image/webp
+  imageWidth: 420
+  imageHeight: 420
+  siteName: "Walks Cloud Inc. 行雲資訊有限公司"
+  localeMap:
+    zh-tw: zh_TW
+    en: en_US
+org:
+  url: https://walks.cloud
+  logo: /logo-gradual.svg
+  sameAs:
+    - https://www.facebook.com/WalksCloud
+    - https://www.linkedin.com/company/walkscloud/
+  contactPoint:
+    - telephone: ""
+      contactType: customer support

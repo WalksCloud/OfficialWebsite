@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/bun.lockb
+    environment:
+      - HOST=0.0.0.0
+      - PORT=5173
+    command: ["bun", "run", "dev", "--host", "0.0.0.0", "--port", "5173"]

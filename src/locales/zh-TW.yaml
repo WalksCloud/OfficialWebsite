@@ -13,7 +13,7 @@ nav-links:
   contact: 聯絡我們
 locales:
   en: English
-  tw: 繁體中文
+  zh-tw: 繁體中文
 close: 關閉
 loading: 載入中...
 footer:
@@ -188,3 +188,9 @@ success: 成功
 failed: 失敗
 sent-successful: 我們會盡快回覆，謝謝。
 sent-failed: 請再次檢查表單。
+placeholder:
+  message: 內容更新中，敬請期待。
+not-found:
+  title: 找不到頁面
+  description: 您要找的頁面不存在或已移動，請返回首頁。
+  back-home: 返回首頁

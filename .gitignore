@@ -12,6 +12,7 @@ public/sw.js
 dist
 dist-ssr
 *.local
+.output
 
 # Editor directories and files
 .vscode/*

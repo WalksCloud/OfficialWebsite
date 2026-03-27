@@ -1,23 +1,40 @@
 # OfficialWebsite
 
-## Build Setup
+## Requirements
+- Bun 1.x
+- Node 18+ (tooling only)
 
+## Install
 ```bash
-# install dependencies
-$ bun install
-
-# serve with hot reload at localhost:5173
-$ bun run dev
-
-# generate static project
-$ bun run build
-
-# launch server to preview static project
-$ bun run preview
+bun install --frozen-lockfile
 ```
 
-For detailed explanation on how things work, check out [Vite docs](https://vuejs.org).
+## Dev
+```bash
+# Local
+bun run dev -- --host 0.0.0.0 --port 5173
+# Docker hot reload
+docker-compose -f docker-compose.dev.yml up --build
+```
 
-The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Build (SSG)
+```bash
+bun run build:ssg
+```
+Outputs to `dist/` with prefixed/non-prefix pages plus `sitemap.xml` / `robots.txt`.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## Preview (nginx + auto rebuild)
+```bash
+bun run preview
+```
+Rebuilds on changes and serves `dist/` via nginx (`docker-compose.preview.yml`, `deploy/nginx.conf`); editing `deploy/*.conf` auto-restarts the container.
+
+## Content & Meta
+- Config-driven: `config/site.yaml` (brand, social/OG/fb meta, baseUrl, locales), `config/pages.yaml` (routes/slugs, titles/descriptions, sitemap/JSON-LD).
+- Locales: `src/locales/*.yaml`.
+- Markdown: `src/content/services/*.md`, `src/content/cases/*.md` (multi-locale per file via frontmatter).
+- Head/meta/hreflang/canonical/JSON-LD generated at build.
+
+## Deploy
+- Dockerfile builds SSG with Bun, serves via nginx (Accept-Language negotiation).
+- Fly.io config: `deploy/fly.toml`; GitHub Actions in `.github/workflows/*` (needs `FLY_API_TOKEN`).
