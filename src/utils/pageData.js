@@ -31,12 +31,14 @@ export const getAllPageData = () => {
     const base = baseFromPath(path) // e.g., content/services/proxmox
     const segments = base.split('/').slice(1) // drop "content"
     const inferredSlug = normalizeSlug(segments.join('/'))
-
-    const pageKey = inferredSlug
-      ? inferredSlug.replace(/\//g, '-')
-      : (meta.pageKey || '')
+    const hasMetaSlug = Object.prototype.hasOwnProperty.call(meta, 'slug')
+    let canonicalSlug = normalizeSlug(hasMetaSlug ? meta.slug : inferredSlug)
+    if (!hasMetaSlug && canonicalSlug.endsWith('/index')) {
+      canonicalSlug = canonicalSlug.replace(/\/index$/, '')
+    }
+    const pageKey = canonicalSlug ? canonicalSlug.replace(/\//g, '-') : (meta.pageKey || '')
     const type = meta.type || 'page'
-    const slug = normalizeSlug(meta.slug || inferredSlug)
+    const slug = canonicalSlug
     const title = meta.title || ''
     const description = meta.description || ''
     const ogType = meta.ogType
