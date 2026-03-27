@@ -81,20 +81,18 @@ about-section:
     message: Whatever IT challenge you face, we can recommend the right solution to keep you operating and growing smoothly.
 services-section:
   services:
+    - title: Comprehensive IT/MIS Hosting
+      items:
+        - title: IT Monitoring and Management Systems
+          content: Deploy Zabbix, LibreNMS, Grafana, Graylog, and Wazuh to ensure a stable IT environment.
+        - title: Containerization and DevOps
+          content: Build enterprise container platforms to improve development and deployment efficiency.
     - title: Comprehensive IT/MIS Hosting - Office Networks
       items:
         - title: IT/MIS Outsourcing and Technical Support
           content: Provide end-to-end IT services to keep your IT environment stable.
         - title: Office Network Deployment and Maintenance
           content: Handle planning, build, and upkeep for Cisco, Juniper, Palo Alto, FortiGate, VyOS, and more.
-        - title: IT Monitoring and Management Systems
-          content: Deploy Zabbix, LibreNMS, Grafana, Graylog, and Wazuh to ensure a stable IT environment.
-        - title: Containerization and DevOps
-          content: Build enterprise container platforms to improve development and deployment efficiency.
-        - title: 802.1X Authentication Deployment and Maintenance
-          content: Deliver enterprise network access control to improve security and management efficiency.
-        - title: VPN and Remote Security Solutions
-          content: Provide OpenVPN and WireGuard to keep remote access secure.
     - title: Comprehensive IT/MIS Hosting - Data Center Networks
       items:
         - title: IDC Data Center Deployment and Maintenance
@@ -103,20 +101,24 @@ services-section:
           content: Migrate workloads to Proxmox VE, build virtualization clusters, and enable NVIDIA vGPU compute clusters.
         - title: Website and Server Hosting Operations
           content: Deliver secure and reliable hosting and managed services.
-        - title: IT Monitoring and Management Systems
-          content: Deploy Zabbix, LibreNMS, Grafana, Graylog, and Wazuh to ensure a stable IT environment.
-        - title: Containerization and DevOps
-          content: Build enterprise container platforms to improve development and deployment efficiency.
     - title: Information Security Management
       items:
+        - title: Wazuh SIEM Deployment and Operations
+          content: Implement and manage Wazuh SIEM to centralize log collection, detect threats, and streamline incident response.
+        - title: Zero Trust Architecture Enablement
+          content: Offer standalone Zero Trust options, including Jamf Security Cloud for Apple fleets, Cloudflare Zero Trust for secure access, and on-prem NetBird overlays for self-hosted environments.
         - title: Enterprise Backup and Security Solutions
           content: Provide Proxmox Backup Server, Proxmox Mail Gateway, and security monitoring solutions to protect critical data.
         - title: 802.1X Authentication Deployment and Maintenance
           content: Deliver enterprise network access control to improve security and management efficiency.
         - title: VPN and Remote Security Solutions
           content: Provide OpenVPN and WireGuard to keep remote access secure.
+        - title: Identity and Access Management with ZITADEL
+          content: Design and roll out ZITADEL-based IAM services, unifying SSO, MFA, and fine-grained access control across cloud and on-prem systems.
     - title: Asset Management
       items:
+        - title: Wazuh Asset Visibility
+          content: Use Wazuh agents to inventory devices, monitor software changes, and ensure endpoint compliance.
         - title: Jamf Enterprise Apple Device Management
           content: Manage Jamf Pro, Jamf Protect, Jamf Security Cloud, and on-prem Jamf Pro deployments.
     - title: Customized Product Development
