@@ -42,31 +42,34 @@ about-section:
     intro: |
       As HR, administrative, or IT staff, you may be facing:
     items:
-      - icon: security
+      - icon: material-symbols:mobile-lock-portrait
+        title: Too many device types and volumes to manage consistently?
+        content: Rolling out an enterprise MDM centralizes macOS, iOS, and Windows fleets so you can inventory devices, push policies, and enforce security from one console.
+      - icon: lucide:brick-wall-shield
         title: Worried about the security of your remote work environment and unauthorized access?
         content: We deliver enterprise-grade VPN solutions that secure remote connections and reinforce hybrid work reliability.
-      - icon: engineering
+      - icon: material-symbols:engineering
         title: No in-house IT staff and unsure how to resolve technical issues?
         content: We provide IT hosting and technical support to keep your IT environment stable while lowering management costs.
-      - icon: build
+      - icon: material-symbols:build
         title: Complex IT maintenance is reducing overall business efficiency?
         content: We offer IT monitoring, automated management, and cloud virtualization to simplify maintenance and boost IT operations.
-      - icon: laptop_chromebook
+      - icon: lucide:laptop
         title: Onboarding or offboarding accounts is tedious, and employee assets stay unclear?
         content: Our device management system centralizes assets and monitors for malware intrusions so you can manage hardware and software in real time.
-      - icon: passkey
+      - icon: material-symbols:passkey
         title: Asset and account permissions are messy and difficult to control?
         content: Enterprise asset management and IAM systems automate device and account permissions, reducing human error and lost assets.
-      - icon: modeling
+      - icon: material-symbols:modeling
         title: Digital transformation is slow and the IT architecture cannot support business growth?
         content: Cloud virtualization and automated IT management accelerate digital transformation so you can respond to market changes.
-      - icon: terminal
+      - icon: lucide:terminal
         title: No budget to hire MIS talent or pay for expensive systems, leaving HR to do everything?
         content: Our professional IT hosting, outsourcing, and consulting services keep every IT-related task running smoothly.
-      - icon: wifi_off
+      - icon: lucide:wifi-off
         title: Unstable network connections hurt productivity and operations?
         content: We provide professional network deployment and maintenance to keep enterprise connectivity stable and efficient.
-      - icon: mail
+      - icon: lucide:mail
         title: Corporate email and servers are vulnerable to malicious attacks?
         content: Our security solutions include email security gateways, firewalls, and EDR endpoint protection to safeguard your data.
   services-block:

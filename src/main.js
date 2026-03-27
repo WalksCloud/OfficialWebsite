@@ -10,6 +10,7 @@ import { getSiteConfig, buildPrefixedPath, buildNonPrefixedPath } from './utils/
 import en from './locales/en-US.yaml'
 import tw from './locales/zh-TW.yaml'
 import './style.css'
+import ui from '@nuxt/ui/vue-plugin'
 import App from './App.vue'
 
 const site = getSiteConfig()
@@ -33,6 +34,7 @@ export const createApp = ViteSSG(
     app.use(head)
     app.use(pinia)
     app.use(i18n)
+    app.use(ui)
     app.component('font-awesome-icon', FontAwesomeIcon)
 
     // Persist locale for client navigation only

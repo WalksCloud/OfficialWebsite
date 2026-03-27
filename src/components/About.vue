@@ -1,41 +1,25 @@
 <script setup>
-import { ref, onMounted, watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
+import UChatTool from '@nuxt/ui/components/ChatTool.vue'
+
 const { t, tm, locale } = useI18n()
+const chatToolUi = {
+	label: 'text-lg text-left whitespace-normal overflow-visible text-pretty',
+	root: 'rounded-md ring ring-default overflow-hidden border border-gray-400/70 dark:border-white/30',
+	leading: 'size-16',
+	leadingIcon: 'size-16',
+	body: 'text-lg text-dimmed whitespace-pre-wrap text-white border-t p-2 max-h-[200px] overflow-y-auto border-gray-400/70 dark:border-white/30',
+}
 
 const items = ref([])
 const hydrateItems = () => {
 	const rows = tm('about-section.questions-block.items') || []
-	items.value = rows.map((row) => ({
-		...row,
-		showTooltip: false,
-	}))
+	items.value = rows.map((row) => ({ ...row }))
 }
+
 hydrateItems()
-watch(locale, () => {
-	hydrateItems()
-})
-
-const isMobile = ref(false)
-onMounted(() => {
-	isMobile.value = window.innerWidth < 1024
-})
-
-const handleHover = (index) => {
-	if (!isMobile.value) {
-		items.value[index].showTooltip = true
-	}
-}
-const handleLeave = (index) => {
-	if (!isMobile.value) {
-		items.value[index].showTooltip = false
-	}
-}
-const handleClick = (index) => {
-	if (isMobile.value) {
-		items.value[index].showTooltip = !items.value[index].showTooltip
-	}
-}
+watch(locale, hydrateItems)
 </script>
 
 <template>
@@ -69,17 +53,20 @@ const handleClick = (index) => {
 	<div class="py-8 lg:py-18"><div class="w-5/6 lg:w-3/4 mx-auto text-center">
 		<p class="text-2xl lg:text-3xl font-bold">{{ $t('about-section.questions-block.title') }}</p>
 		<p class="mt-2 mb-8">{{ $t('about-section.questions-block.intro') }}</p>
-		<div class="grid lg:grid-cols-3 gap-4 lg:gap-6">
-			<div v-bind:key="index" v-for="(item, index) in items" @mouseenter="handleHover(index)" @mouseleave="handleLeave(index)" @click="handleClick(index)" class="rounded-sm shadow-md p-4 lg:p-6 border border-gray-200 relative  dark:bg-[#4e535d] dark:text-gray-200 dark:border-transparent backdrop-blur-sm" :class="[index % 2 === 0 ? 'bg-[#efefef] text-gray-700' : 'bg-white text-black']">
-				<div class="text-left lg:text-center">
-					<div class="flex lg:block">
-						<span class="icon-element material-symbols-outlined">{{ item.icon }}</span>
-						<p class="ms-3 lg:ms-0">{{ item.title }}</p>
-					</div>
-					<transition name="fade">
-						<div v-if="item.showTooltip" class="p-4 flex flex-col justify-center absolute top-0 left-0 w-full h-full text-sm dark:bg-[#4e535d] dark:text-white" :class="[index % 2 === 0 ? 'bg-[#efefef] text-gray-700' : 'bg-white text-black']">{{ item.content }}</div>
-					</transition>
-				</div>
+		<div class="grid lg:grid-cols-2 gap-4 lg:gap-6">
+			<div class="text-left"
+				v-bind:key="index"
+				v-for="(item, index) in items">
+				<UChatTool
+					streaming
+					:text="item.title"
+					:icon="item.icon"
+					variant="card"
+					chevron="trailing"
+					:ui="chatToolUi"
+				>
+					{{ item.content }}
+				</UChatTool>
 			</div>
 		</div>
 
@@ -92,14 +79,3 @@ const handleClick = (index) => {
 	</div></div>
 </section>
 </template>
-
-<style scoped>
-.fade-enter-active,
-.fade-leave-active {
-	transition: opacity 0.2s ease;
-}
-.fade-enter-from,
-.fade-leave-to {
-	opacity: 0;
-}
-</style>

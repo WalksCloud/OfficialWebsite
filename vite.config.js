@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
+import ui from '@nuxt/ui/vite'
 import Markdown from 'vite-plugin-md'
 import path from 'path'
 import { DateTime } from "luxon";
@@ -18,6 +19,10 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue({
         include: [/\.vue$/, /\.md$/],
+      }),
+      ui({
+        autoImport: false,
+        components: false,
       }),
       Markdown(),
       tailwindcss(),

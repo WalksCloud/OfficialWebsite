@@ -1,4 +1,6 @@
 @import "tailwindcss";
+@import "@nuxt/ui";
+
 @theme {
   --color-primary: #1e90ff;
 }
@@ -14,7 +16,9 @@
   scroll-behavior: smooth;
 }
 
-
+iframe {
+  color-scheme: normal !important;
+}
 
 .font-barlow {
   font-family: "Barlow", sans-serif;
