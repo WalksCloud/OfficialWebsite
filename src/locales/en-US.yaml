@@ -85,46 +85,62 @@ services-section:
       items:
         - title: IT Monitoring and Management Systems
           content: Deploy Zabbix, LibreNMS, Grafana, Graylog, and Wazuh to ensure a stable IT environment.
+          pageKey: services-it-monitoring
         - title: Containerization and DevOps
           content: Build enterprise container platforms to improve development and deployment efficiency.
+          pageKey: services-container-devops
     - title: Comprehensive IT/MIS Hosting - Office Networks
       items:
         - title: IT/MIS Outsourcing and Technical Support
           content: Provide end-to-end IT services to keep your IT environment stable.
+          pageKey: services-it-outsourcing
         - title: Office Network Deployment and Maintenance
           content: Handle planning, build, and upkeep for Cisco, Juniper, Palo Alto, FortiGate, VyOS, and more.
+          pageKey: services-office-network
     - title: Comprehensive IT/MIS Hosting - Data Center Networks
       items:
         - title: IDC Data Center Deployment and Maintenance
           content: Offer professional planning, implementation, and managed services, including remote-hands support.
+          pageKey: services-idc-deployment
         - title: Virtualization and Cloud Solutions
           content: Migrate workloads to Proxmox VE, build virtualization clusters, and enable NVIDIA vGPU compute clusters.
+          pageKey: services-virtualization-cloud
         - title: Website and Server Hosting Operations
           content: Deliver secure and reliable hosting and managed services.
+          pageKey: services-hosting-operations
     - title: Information Security Management
       items:
         - title: Wazuh SIEM Deployment and Operations
           content: Implement and manage Wazuh SIEM to centralize log collection, detect threats, and streamline incident response.
+          pageKey: services-wazuh-siem
         - title: Zero Trust Architecture Enablement
           content: Offer standalone Zero Trust options, including Jamf Security Cloud for Apple fleets, Cloudflare Zero Trust for secure access, and on-prem NetBird overlays for self-hosted environments.
+          pageKey: services-zero-trust
         - title: Enterprise Backup and Security Solutions
           content: Provide Proxmox Backup Server, Proxmox Mail Gateway, and security monitoring solutions to protect critical data.
+          pageKey: services-backup-security
         - title: 802.1X Authentication Deployment and Maintenance
           content: Deliver enterprise network access control to improve security and management efficiency.
+          pageKey: services-8021x
         - title: VPN and Remote Security Solutions
           content: Provide OpenVPN and WireGuard to keep remote access secure.
+          pageKey: services-vpn-remote
         - title: Identity and Access Management with ZITADEL
           content: Design and roll out ZITADEL-based IAM services, unifying SSO, MFA, and fine-grained access control across cloud and on-prem systems.
+          pageKey: services-iam-zitadel
     - title: Asset Management
       items:
         - title: Wazuh Asset Visibility
           content: Use Wazuh agents to inventory devices, monitor software changes, and ensure endpoint compliance.
+          pageKey: services-wazuh-asset
         - title: Jamf Enterprise Apple Device Management
           content: Manage Jamf Pro, Jamf Protect, Jamf Security Cloud, and on-prem Jamf Pro deployments.
+          pageKey: services-jamf
     - title: Customized Product Development
       items:
         - title: Custom System Development
           content: Design and develop tailored IT solutions based on your services and business needs.
+          pageKey: services-custom-dev
   else: Other Services
   flows:
     - title: 01 Requirement Confirmation

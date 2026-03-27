@@ -85,46 +85,62 @@ services-section:
       items:
         - title: IT 監控與管理系統
           content: 部署 Zabbix、LibreNMS、Grafana、Graylog、Wazuh 監控系統，確保 IT 環境穩定。
+          pageKey: services-it-monitoring
         - title: 容器化技術與 DevOps
           content: 建置企業級容器平台，提升開發與部署效率。
+          pageKey: services-container-devops
     - title: 全面 IT / MIS 代管 - 辦公室網路
       items:
         - title: IT / MIS 外包與技術支援
           content: 提供全方位 IT 服務，確保企業 IT 環境穩定運作。
+          pageKey: services-it-outsourcing
         - title: 辦公室網路建置與維運
           content: 設備規劃、網路建置、設備維護，支援 Cisco、Juniper、Palo Alto、FortiGate、VyOS 等品牌。
+          pageKey: services-office-network
     - title: 全面 IT / MIS 代管 - 機房網路
       items:
         - title: IDC 機房建置與維運
           content: 專業機房規劃、建置與代管，包含遠端操作 (Remote Hand) 服務。
+          pageKey: services-idc-deployment
         - title: 虛擬化與雲端解決方案
           content: 協助企業轉移至 Proxmox VE 平台、建置虛擬化叢集、NVIDIA vGPU 運算叢集。
+          pageKey: services-virtualization-cloud
         - title: 網站與伺服器代管營運
           content: 提供安全可靠的代管與維運服務。
+          pageKey: services-hosting-operations
     - title: 資安管理
       items:
         - title: Wazuh SIEM 部署與維運
           content: 部署與維運 Wazuh SIEM，集中日誌蒐集、威脅偵測與事件回應流程。
+          pageKey: services-wazuh-siem
         - title: Zero Trust 安全架構導入
           content: 提供獨立的 Zero Trust 選項，例如 Jamf Security Cloud 導入、Cloudflare Zero Trust 佈署，或建置 NetBird 等地端 Overlays，供客戶自由選擇。
+          pageKey: services-zero-trust
         - title: 企業備份與安全方案
           content: 提供 Proxmox Backup Server、Proxmox Mail Gateway 及資安監控方案，保護企業重要數據。
+          pageKey: services-backup-security
         - title: 802.1X 驗證系統建置維護
           content: 提供企業級網路存取控制，提升安全性與管理效率。
+          pageKey: services-8021x
         - title: VPN 及遠端安全解決方案
           content: 提供 OpenVPN、WireGuard 確保遠端存取安全。
+          pageKey: services-vpn-remote
         - title: ZITADEL 身分與存取管理服務
           content: 設計並導入 ZITADEL IAM 平台，整合 SSO、MFA 與細緻權限控管，串接雲端與地端系統。
+          pageKey: services-iam-zitadel
     - title: 資產管理
       items:
         - title: Wazuh 資產可視化
           content: 透過 Wazuh Agent 即時盤點設備、監控軟體變更並確保端點合規。
+          pageKey: services-wazuh-asset
         - title: Jamf 企業級 Apple 設備管理
           content: Jamf Pro、Jamf Protect、Jamf Security Cloud 協作管理與地端版本 Jamf Pro 維護。
+          pageKey: services-jamf
     - title: 客製需求
       items:
         - title: 客製化系統開發
           content: 根據所有服務項目及企業需求設計與開發專屬 IT 解決方案。
+          pageKey: services-custom-dev
   else: 其他項目
   flows:
     - title: 01 確認需求

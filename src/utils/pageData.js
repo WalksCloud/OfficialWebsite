@@ -45,6 +45,7 @@ export const getAllPageData = () => {
     const index = meta.index !== false
     const sitemap = meta.sitemap || {}
     const jsonld = meta.jsonld || {}
+    const deploy = meta.deploy === true
 
     const existing = pagesMap.get(pageKey) || {
       pageKey,
@@ -56,6 +57,7 @@ export const getAllPageData = () => {
       index,
       sitemap,
       jsonld,
+      deploy: false,
     }
 
     existing.type = type
@@ -66,6 +68,7 @@ export const getAllPageData = () => {
     existing.index = index
     existing.sitemap = sitemap
     existing.jsonld = jsonld
+    existing.deploy = existing.deploy || deploy
 
     pagesMap.set(pageKey, existing)
   })
