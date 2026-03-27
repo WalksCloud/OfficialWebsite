@@ -158,6 +158,27 @@
     kind: Service
     serviceType: Network Integration
 
+- pageKey: services
+  type: service
+  slugs:
+    zh-tw: services
+    en: services
+  titles:
+    zh-tw: "服務項目 | WalksCloud"
+    en: "Services | WalksCloud"
+  descriptions:
+    zh-tw: "行雲資訊提供的服務總覽。"
+    en: "Overview of services provided by WalksCloud."
+  og:
+    type: website
+  index: true
+  sitemap:
+    priority: 0.9
+    changefreq: weekly
+    lastmod: build
+  jsonld:
+    kind: WebPage
+
 - pageKey: cases
   type: case
   slugs:

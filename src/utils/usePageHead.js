@@ -121,7 +121,12 @@ export const usePageHead = (route) => {
   })
 
   const canonicalUrl = computed(() => buildCanonicalUrl(pageKey.value, currentLocale.value))
-  const title = computed(() => page.value?.titles?.[currentLocale.value] || site.brandName)
+  const title = computed(
+    () =>
+      route.meta?.contentTitle ||
+      page.value?.titles?.[currentLocale.value] ||
+      site.brandName
+  )
   const description = computed(() => page.value?.descriptions?.[currentLocale.value] || '')
   const robots = computed(() =>
     page.value?.index === false ? 'noindex,nofollow' : site.robots?.policy || 'index,follow'

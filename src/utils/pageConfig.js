@@ -30,13 +30,13 @@ export const getContentFilePath = (pageKey, locale) => {
   const section = segments[0]
   const rest = segments.slice(1).join('/') || 'index'
   if (section === 'services') {
-    return `../content/services/${rest}.md`
+    return `../content/services/${rest}`
   }
   if (section === 'cases') {
-    return `../content/cases/${rest}.md`
+    return `../content/cases/${rest}`
   }
   // fallback generic path
-  return `../content/${slug}.md`
+  return `../content/${slug}`
 }
 
 export const buildPrefixedPath = (pageKey, locale) => {

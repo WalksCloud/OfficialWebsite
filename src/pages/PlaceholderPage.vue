@@ -16,7 +16,7 @@ const displayName = computed(() => title.value || route.meta.pageKey)
 </script>
 
 <template>
-  <section class="py-12 lg:py-18 w-5/6 lg:w-2/3 mx-auto text-center">
+  <section class="pt-[120px] pb-12 lg:pb-18 w-5/6 lg:w-2/3 mx-auto text-center">
     <h1 class="text-3xl lg:text-4xl font-bold mb-4">{{ displayName }}</h1>
     <p class="text-gray-600 dark:text-gray-300 mb-6" v-if="description">{{ description }}</p>
     <p class="text-gray-500 dark:text-gray-400">{{ t('placeholder.message') }}</p>
