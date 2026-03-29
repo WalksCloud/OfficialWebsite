@@ -3,9 +3,9 @@ import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import ui from '@nuxt/ui/vite'
 import path from 'path'
-import { DateTime } from "luxon";
+import { DateTime } from 'luxon'
 import git from 'git-rev-sync'
-import ViteYaml from '@modyfi/vite-plugin-yaml';
+import YAML from 'yaml'
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
@@ -22,7 +22,17 @@ export default defineConfig(({ mode }) => {
         components: false,
       }),
       tailwindcss(),
-      ViteYaml(),
+      {
+        name: 'yaml',
+        transform(src, id) {
+          if (!id.endsWith('.yaml')) return null
+          const parsed = YAML.parse(src)
+          return {
+            code: `export default ${JSON.stringify(parsed)};`,
+            map: null,
+          }
+        },
+      },
     ],
     resolve: {
       alias: {
