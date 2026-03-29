@@ -2,7 +2,7 @@
 type: service
 slug: services/jamf
 title: Jamf 企業級 Apple 設備管理
-description: 規劃、部署與維運 Jamf Pro、Jamf Protect、Jamf Security Cloud，全面管理 Apple 設備。
+description: 行雲資訊協助企業設計並代管 Jamf Pro、Jamf Protect、Jamf Security Cloud，讓 Apple 裝置從註冊、設定、修補到退役都可視且可稽核。
 ogType: article
 index: true
 deploy: false
@@ -17,14 +17,22 @@ jsonld:
 
 # Jamf 企業級 Apple 設備管理
 
-Jamf 是管理 Apple 裝置的最佳平台。我們協助企業設計 Jamf 架構，兼顧使用者體驗與資安控管，涵蓋 macOS、iOS、iPadOS 與 tvOS 全面需求。
+行雲資訊協助企業設計並代管 Jamf Pro、Jamf Protect、Jamf Security Cloud，讓 Apple 裝置從註冊、設定、修補到退役都可視且可稽核。
 
-## 服務內容
-- 新建或接手現有 Jamf Pro、Jamf Protect、Jamf Security Cloud 租戶。
-- 自動化註冊、設定檔、修補政策與軟體發佈流程。
-- 建立安全態勢監控、條件式存取整合與 24/7 維運支援。
+## 案例洞察：本地多據點的 Apple 管理轉型
+某以 Mac 為主力的企業原本靠手動設定與腳本管理。拓展多個辦公據點後爆出：
+- 新人等三天才收到設定完成的 Mac，影響上線速度。
+- 沒有一致政策，導致代理商裝置缺乏硬碟加密與修補。
+- 客戶要求提供資安合規證據時，完全沒有報表。
 
-## 可預期成果
-- 以零接觸部署加速員工到職並維持一致配置。
-- 透過持續合規監控與快速修補提升資安。
-- 利用腳本與 API 降低管理成本並保有完整文件。
+## 內部摸索的風險
+- **部署不一致**：不同人寫的腳本互相衝突，一次版本更新就讓大量 Mac 無法正常開機。
+- **資安盲點**：沒有 Jamf Protect 或條件式存取，遺失裝置無法即時鎖定，資料外洩風險上升。
+- **運營成本**：IT 團隊必須花上大半時間處理設定與修補，核心專案被迫延後。
+
+## 行雲資訊的導入流程
+1. **架構設計**：分析組織結構與政策，規劃 Jamf Pro/Protect/Security Cloud 租戶、群組與權限，並建立零接觸註冊流程。
+2. **自動化與安全**：設計設定檔、套件與 Patch Policy，整合 IdP、條件式存取、MFA、資安告警，並以 API/腳本處理特定場景。
+3. **營運交接**：提供儀表板、報告與 Runbook，建立到離職流程、修補節奏與教育訓練，可選擇行雲資訊代管或與內部共維。
+
+藉由這些步驟，我們證明 Jamf 不只是工具，而是 Apple 管理必要的作業鏈。企業專注於員工體驗，行雲資訊確保政策與安全落地，形成真正的雙贏。

@@ -2,7 +2,7 @@
 type: service
 slug: services/jamf
 title: Jamf Enterprise Apple Device Management
-description: Design, deploy, and operate Jamf Pro, Jamf Protect, and Jamf Security Cloud for secure Apple fleets.
+description: WalksCloud designs and manages Jamf Pro, Jamf Protect, and Jamf Security Cloud so every Apple device—from enrollment through retirement—remains visible, compliant, and user-friendly.
 ogType: article
 index: true
 deploy: false
@@ -17,14 +17,22 @@ jsonld:
 
 # Jamf Enterprise Apple Device Management
 
-Apple-first organizations trust Jamf to automate provisioning, configuration, and endpoint security. We architect Jamf environments that balance user experience, compliance, and platform security across macOS, iOS, iPadOS, and tvOS.
+WalksCloud designs and manages Jamf Pro, Jamf Protect, and Jamf Security Cloud so every Apple device—from enrollment through retirement—remains visible, compliant, and user-friendly.
 
-## What We Deliver
-- Greenfield or takeover projects covering Jamf Pro, Jamf Protect, and Jamf Security Cloud tenants.
-- Automated enrollment, configuration profiles, patch policies, and software deployment pipelines.
-- Security posture monitoring, conditional access integrations, and 24/7 operations support.
+## Case Insight: Multi-site Apple Deployments Without Consistency
+A Mac-centric company relied on manual scripts. After opening additional offices they ran into:
+- New hires waiting days for provisioned Macs.
+- Inconsistent policies leaving partner-managed devices without disk encryption or patching.
+- Zero evidence when customers asked for compliance reports.
 
-## Outcomes
-- Faster onboarding with zero-touch deployment and consistent configurations.
-- Improved security through continuous compliance monitoring and rapid remediation.
-- Lower management overhead thanks to scripting, APIs, and detailed documentation.
+## Risks of Rolling Your Own
+- **Inconsistent builds**: Conflicting scripts meant a single update could brick dozens of Macs.
+- **Security blind spots**: No Jamf Protect or conditional access left lost devices unmanaged and data exposed.
+- **Resource drain**: IT spent most of its time on setups and patching instead of strategic projects.
+
+## WalksCloud’s Jamf Playbook
+1. **Architecture design**: Map organizational structure to Jamf tenants, groups, and permissions, and establish zero-touch enrollment flows.
+2. **Automation and security**: Deliver configuration profiles, patch policies, software catalogs, IdP and conditional access integrations, and automation via scripts/APIs.
+3. **Operations handover**: Provide dashboards, reports, Runbooks, and training, with options for WalksCloud-managed or co-managed support.
+
+With WalksCloud running Jamf, enterprises focus on employee experience while we enforce policy and security, turning Apple fleets into a predictable, auditable asset.

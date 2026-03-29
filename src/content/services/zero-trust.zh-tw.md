@@ -2,7 +2,7 @@
 type: service
 slug: services/zero-trust
 title: Zero Trust 安全架構導入
-description: 依需求導入 Jamf Security Cloud、Cloudflare Zero Trust 或 NetBird，打造零信任的存取控管。
+description: 行雲資訊以 Jamf Security Cloud、Cloudflare Zero Trust、NetBird 等組合落實零信任，將身分、裝置、應用與資料重新定義信任邊界。
 ogType: article
 index: true
 deploy: false
@@ -17,14 +17,22 @@ jsonld:
 
 # Zero Trust 安全架構導入
 
-我們將零信任概念落實到您的既有環境，無論是 Apple 裝置防護、遠端存取控管或自建 Overlay，皆能選用 Jamf Security Cloud、Cloudflare Zero Trust 或 NetBird 等方案，以最合適的組合封鎖每個潛在風險。
+行雲資訊以 Jamf Security Cloud、Cloudflare Zero Trust、NetBird 等組合落實零信任，將身分、裝置、應用與資料重新定義信任邊界。
 
-## 服務內容
-- 透過工作坊釐清信任邊界、身分來源與應用分段目標。
-- 依選定平台 (Jamf Security Cloud、Cloudflare Zero Trust、NetBird) 進行部署、策略模板與自動化設計。
-- 串接既有 IdP、日誌平台與 VPN/防火牆策略，確保使用體驗一致。
+## 案例洞察：本地多據點團隊的邊界失守
+某個多辦公據點協作的企業，VPN 與內網一旦被入侵就無任何分段，因此：
+- 攻擊者利用 VPN 帳密入侵後迅速橫向移動。
+- SaaS 與自建系統登錄體驗不一致，使用者抱怨多因子流程冗長。
+- 稽核要求裝置健康證明，IT 卻無任何資料可提供。
 
-## 可預期成果
-- 裝置、地點與 SaaS 服務間皆能維持一致的存取策略。
-- 透過應用層分段與裝置態勢檢查降低側向移動風險。
-- 集中化策略管理加速人員進出流程。
+## 內部摸索的挑戰
+- **點狀部署**：只裝了新的 VPN 或 SWG（Secure Web Gateway，安全網頁閘道），卻沒有策略，造成管理複雜。
+- **轉型卡關**：缺乏部門間溝通，變更流程與到離職機制無法配合。
+- **成本外溢**：購買多套工具卻沒有整合，資安預算被消耗殆盡。
+
+## 行雲資訊的導入路線
+1. **策略與盤點**：透過工作坊釐清身分來源、應用分類、資料價值與存取場景，定義階段目標與成功指標。
+2. **平台與整合**：根據需求選擇 Jamf Security Cloud、Cloudflare Zero Trust、NetBird 等解決方案，部署身分、裝置態勢、應用 Proxy 與零客戶端網路，並串接 IdP、SIEM、SD-WAN/VPN。
+3. **營運與自動化**：建立政策模板、Playbook、稽核報表與教育訓練，將到離職流程、異常回應與設備修補自動化，確保策略能持續演進。
+
+零信任是必要的安全升級，並非單點產品。行雲資訊以可執行的步驟協助企業逐步落地，讓策略、工具與流程緊密連結，避免無謂投資並確保風險受控。

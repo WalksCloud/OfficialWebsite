@@ -2,7 +2,7 @@
 type: service
 slug: services/zero-trust
 title: Zero Trust Architecture Enablement
-description: Design Zero Trust controls leveraging Jamf Security Cloud, Cloudflare Zero Trust, or self-hosted NetBird overlays based on your needs.
+description: WalksCloud turns zero-trust principles into practical rollouts by selecting the right mix of Jamf Security Cloud, Cloudflare Zero Trust, NetBird, and identity tooling.
 ogType: article
 index: true
 deploy: false
@@ -17,14 +17,22 @@ jsonld:
 
 # Zero Trust Architecture Enablement
 
-We translate Zero Trust principles into pragmatic deployments that match your existing stack. Whether you need Apple fleet protections, secure remote access, or self-hosted overlays, we select the right combination of Jamf Security Cloud, Cloudflare Zero Trust, or NetBird to close every gap.
+WalksCloud turns zero-trust principles into practical rollouts by selecting the right mix of Jamf Security Cloud, Cloudflare Zero Trust, NetBird, and identity tooling.
 
-## What We Deliver
-- Workshops to define trust boundaries, identity sources, and application segmentation goals.
-- Deployment of the chosen platform (Jamf Security Cloud, Cloudflare Zero Trust, or NetBird) with policy templates and automation.
-- Integration with IdPs, logging platforms, and existing VPN or firewall policies for a seamless user experience.
+## Case Insight: Multi-office Teams Without Segmentation
+A local multi-office company relied on VPN and flat networks. Once credentials leaked, attackers moved laterally because:
+- VPN accounts provided broad access with no internal segmentation.
+- SaaS and custom apps had inconsistent login experiences, frustrating users.
+- Auditors demanded device health evidence the IT team couldn’t provide.
 
-## Outcomes
-- Consistent access policies across devices, locations, and SaaS services.
-- Reduced lateral movement risk through application-level segmentation and device posture checks.
-- Faster onboarding/offboarding thanks to centralized policy management.
+## Challenges of DIY Zero Trust
+- **Point-solution sprawl**: Buying isolated tools without a strategy created complex management overhead.
+- **Change friction**: Without cross-team alignment, onboarding/offboarding flows never matched new policies.
+- **Budget leakage**: Security spending ballooned while gaps remained.
+
+## WalksCloud’s Implementation Path
+1. **Strategy and discovery**: Workshops clarify identity sources, application tiers, data flows, and success metrics.
+2. **Platform deployment**: We configure Jamf Security Cloud, Cloudflare Zero Trust, or NetBird (or a combination) with posture checks, app proxies, and zero-client networks wired into IdPs, SIEM, and SD-WAN/VPN.
+3. **Operations and automation**: Policy templates, Playbooks, audit-ready reports, and training connect zero trust with onboarding, exception handling, and incident response.
+
+Zero trust is an ongoing posture, not a single product. WalksCloud orchestrates the people, processes, and platforms so the journey moves forward without derailing productivity.

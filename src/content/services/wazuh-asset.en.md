@@ -2,7 +2,7 @@
 type: service
 slug: services/wazuh-asset
 title: Wazuh Asset Visibility
-description: Use Wazuh agents to inventory devices, track software drift, and enforce endpoint compliance policies.
+description: WalksCloud adapts Wazuh for asset intelligence by deploying agents and policies that surface real-time hardware, software, and configuration data.
 ogType: article
 index: true
 deploy: false
@@ -17,14 +17,22 @@ jsonld:
 
 # Wazuh Asset Visibility
 
-We extend Wazuh beyond SIEM use cases to power asset intelligence. By deploying agents and crafting policies, we give IT teams accurate inventory data, vulnerability insights, and compliance evidence across every endpoint.
+WalksCloud adapts Wazuh for asset intelligence by deploying agents and policies that surface real-time hardware, software, and configuration data.
 
-## What We Deliver
-- Agent rollout plans covering desktops, servers, and cloud workloads with minimal performance impact.
-- Custom decoders and rules that track software changes, configuration drift, and unauthorized applications.
-- Dashboards and exports that feed CMDB, vulnerability scanners, or governance reports.
+## Case Insight: Audits Without Reliable Inventories
+A company facing annual audits ran on spreadsheets and manual reporting, leading to:
+- Software versions mismatching production reality, causing audit rejections.
+- No visibility into unauthorized applications or config drift.
+- Weeks needed to identify assets impacted by a high-risk CVE.
 
-## Outcomes
-- Real-time understanding of hardware and software estates for audits or license management.
-- Early detection of risky changes before they evolve into incidents.
-- Streamlined compliance reporting with automated evidence collection.
+## Challenges of Building Internally
+- **Data silos**: CMDB, scanners, and EDR tools each held partial truth, and integrating them was costly.
+- **Reporting grind**: Compiling evidence required multiple staff for an entire week.
+- **Slow response**: Without realtime alerts, incidents escalated before IT knew which systems were affected.
+
+## WalksCloud’s Delivery Model
+1. **Deployment and policy**: Plan agent coverage across desktops, servers, and cloud workloads while balancing performance and visibility.
+2. **Rules and dashboards**: Build decoders and correlation to track installs, configuration changes, and unauthorized software; surface insights via dashboards and exports.
+3. **Workflow integration**: Feed data into CMDB, vulnerability management, ITSM, or GRC systems with automated tickets, audit packages, and training.
+
+With WalksCloud maintaining the platform, organizations enjoy on-demand asset truth and can prove compliance or remediate vulnerabilities without guesswork.

@@ -2,7 +2,8 @@
 type: service
 slug: services
 title: Services
-description: Overview of managed IT, security, and development services provided by WalksCloud.
+description: |
+  WalksCloud guides organizations through the PACE method—Plan, Assemble, Control, Enhance—to tackle IT and security work: we start by clarifying strategy, assemble the right technologies, run day-to-day control loops, and continuously enhance the stack so infrastructure, workplace networks, security governance, asset management, and custom apps progress alongside the business.
 ogType: website
 index: true
 deploy: false
@@ -16,7 +17,7 @@ jsonld:
 
 # Services
 
-WalksCloud delivers end-to-end IT operations, cybersecurity, asset management, and custom development. Every engagement combines architecture design, deployment, documentation, and ongoing optimization so your team can focus on business outcomes.
+WalksCloud guides organizations through the PACE method—Plan, Assemble, Control, Enhance—to tackle IT and security work: we start by clarifying strategy, assemble the right technologies, run day-to-day control loops, and continuously enhance the stack so infrastructure, workplace networks, security governance, asset management, and custom apps progress alongside the business.
 
 ## Catalog Highlights
 - **Comprehensive IT/MIS Hosting**: IT monitoring platforms, containerization and DevOps, managed outsourcing, and campus network projects.

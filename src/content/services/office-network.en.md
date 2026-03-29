@@ -2,7 +2,7 @@
 type: service
 slug: services/office-network
 title: Office Network Deployment and Maintenance
-description: Design and maintain secure campus and branch networks across wired, wireless, and SD-WAN infrastructure.
+description: WalksCloud plans and operates office Wi-Fi, LAN, SD-WAN, VPN, and Internet edge environments so hybrid workplaces keep both performance and security in check.
 ogType: article
 index: true
 deploy: false
@@ -17,14 +17,22 @@ jsonld:
 
 # Office Network Deployment and Maintenance
 
-We plan, build, and operate office networks that keep employees connected whether they are on Wi-Fi, wired access, or remote VPN. Our engineers cover capacity planning, security policies, and vendor management so your network scales without surprises.
+WalksCloud plans and operates office Wi-Fi, LAN, SD-WAN, VPN, and Internet edge environments so hybrid workplaces keep both performance and security in check.
 
-## What We Deliver
-- Site surveys, topology design, and equipment selection for Cisco, Juniper, Palo Alto, Fortinet, VyOS, and more.
-- Implementation of Wi-Fi, LAN, SD-WAN, and Internet edge services with redundancy and QoS tuned to your workloads.
-- Lifecycle support including configuration backups, firmware management, incident response, and documentation.
+## Case Insight: Local Multi-site Network Challenges
+A multi-office organization reused aging gear when relocating, leading to:
+- Wi-Fi dead zones and interference disrupting video calls.
+- VLAN and firewall policies mixed up, causing guest and internal networks to overlap.
+- No documentation, so every change depended on one engineer.
 
-## Outcomes
-- Reliable connectivity for hybrid work with predictable performance.
-- Reduced operational risk thanks to hardened configs and proactive monitoring.
-- A networking roadmap aligned with workspace expansion or relocation plans.
+## Internal Planning Pain Points
+- **Delayed openings**: Underestimating cabling and electrical needs meant rework that pushed move-in dates back by weeks.
+- **Security gaps**: Without NAC/VPN integration or posture checks, zero-trust promises went unfulfilled.
+- **Cost overruns**: Ad-hoc hardware purchases created vendor sprawl and expensive inventories.
+
+## WalksCloud’s Solution Path
+1. **Assessment and topology**: Onsite surveys, heatmaps, and spectrum analysis inform AP, switch, and SD-WAN placement plus power and redundancy planning.
+2. **Build and policy design**: Deploy Cisco, Juniper, Palo Alto, Fortinet, or VyOS equipment; implement VLANs, QoS, zero-trust policies, guest access, and NAC/VPN integration.
+3. **Operations and documentation**: Deliver monitoring, firmware management, incident response, and comprehensive Runbooks so expansions or moves reuse proven templates.
+
+This blueprint gives companies a repeatable network playbook, keeping office connectivity aligned with business growth.
