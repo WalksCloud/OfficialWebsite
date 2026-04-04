@@ -2,7 +2,7 @@
 type: service
 slug: services/backup-security
 title: 企業備份與安全方案
-description: 行雲資訊以 Proxmox Backup Server、Mail Gateway、不可變儲存與多層資安控管，打造可驗證的資料韌性，避免勒索與人為操作造成停擺。
+description: 行雲資訊以 Proxmox Backup Server、不可變儲存與多層資安控管，打造可驗證的資料韌性，避免勒索與人為操作造成停擺。
 ogType: article
 index: true
 deploy: false
@@ -17,7 +17,7 @@ jsonld:
 
 # 企業備份與安全方案
 
-行雲資訊以 Proxmox Backup Server、Mail Gateway、不可變儲存與多層資安控管，打造可驗證的資料韌性，避免勒索與人為操作造成停擺。
+行雲資訊以 Proxmox Backup Server、不可變儲存與多層資安控管，打造可驗證的資料韌性，避免勒索與人為操作造成停擺。
 
 ## 案例洞察：旺季前夕的備援缺口
 一間正準備重大行銷檔期的企業使用單一 NAS 備份，且郵件閘道僅靠雲端服務預設規則。在活動前夕遭釣魚郵件入侵導致勒索軟體加密主機，才發現：
@@ -32,7 +32,6 @@ jsonld:
 
 ## 行雲資訊如何逐點解決
 1. **層級化備份策略**：盤點系統優先級，規劃 Proxmox Backup Server + 不可變儲存 + 離線複本，並制定 RPO/RTO（Recovery Point/Time Objective，資料可接受的恢復點與恢復時間目標）。
-2. **郵件入口防護**：部署 Mail Gateway 與 DMARC/SPF/DKIM 政策，搭配沙箱與 URL 重寫，降低釣魚風險。
-3. **演練與可視化**：建立還原演練 Runbook、監控儀表板與證據蒐集流程，定期輸出報告讓稽核可驗證。
+2. **演練與可視化**：建立還原演練 Runbook、監控儀表板與證據蒐集流程，定期輸出報告讓稽核可驗證。
 
 行雲資訊與企業共享同一組韌性指標：備份可還原、郵件可追蹤、事件可回報。交由我們維護這套架構，能避免重複投入硬體卻得不到結果，也凸顯備份/資安是不可缺少的底線。
