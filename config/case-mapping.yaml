@@ -1,0 +1,248 @@
+- case: /cases/uia-remote-network
+  services:
+    - /services/office-network
+  faq:
+    - /faq/remote-ops-with-shared-wifi-password
+    - /faq/shared-office-vlan-dns-isolation
+  tech:
+    - /tech/wifi-controller-firmware-schedule
+    - /tech/passive-inspection-report-workflow
+- case: /cases/ttw-remote-network
+  services:
+    - /services/office-network
+    - /services/mdm
+    - /services/8021x
+    - /services/vpn-remote
+  faq:
+    - /faq/shared-office-vlan-dns-isolation
+    - /faq/restricted-vpn-camera-access
+    - /faq/vpn-radius-certificate-lifecycle
+  tech:
+    - /tech/shared-dns-radius-isolation
+    - /tech/jamf-trust-vpn-control
+    - /tech/vpn-radius-certificate-lifecycle
+- case: /cases/tgw-remote-network
+  services:
+    - /services/office-network
+    - /services/mdm
+    - /services/zero-trust
+    - /services/8021x
+    - /services/vpn-remote
+  faq:
+    - /faq/restricted-vpn-camera-access
+    - /faq/vpn-radius-certificate-lifecycle
+  tech:
+    - /tech/jamf-trust-vpn-control
+    - /tech/vpn-radius-certificate-lifecycle
+- case: /cases/cay-machine-room
+  services:
+    - /services/idc-deployment
+    - /services/virtualization-cloud
+    - /services/office-network
+    - /services/8021x
+    - /services/it-monitoring
+  faq:
+    - /faq/day-one-onboarding-account-flow
+    - /faq/datacenter-move-ups-plan
+  tech:
+    - /tech/onboarding-account-automation
+    - /tech/datacenter-move-ups-improvement
+- case: /cases/jal-pa
+  services:
+    - /services/office-network
+    - /services/zero-trust
+  faq:
+    - /faq/license-expired-new-partner-checklist
+    - /faq/controlled-ap-dual-network-data
+  tech:
+    - /tech/network-license-takeover-checklist
+    - /tech/controlled-ap-dual-path
+- case: /cases/cpa-jjp-network-audit
+  services:
+    - /services/office-network
+  faq:
+    - /faq/restore-network-admin-access
+    - /faq/network-audit-report-fields
+  tech:
+    - /tech/it-inventory-recovery-manual
+    - /tech/network-audit-template-delivery
+- case: /cases/klm-aua-erp
+  services:
+    - /services/virtualization-cloud
+    - /services/backup-security
+  faq:
+    - /faq/pve-pbs-multiple-backups-impact
+    - /faq/pve-pbs-quarterly-report-metrics
+  tech:
+    - /tech/pve-pbs-backup-schedule-validation
+    - /tech/pve-quarterly-report-template
+- case: /cases/lgl-csa-vpn
+  services:
+    - /services/custom-dev
+    - /services/zero-trust
+  faq:
+    - /faq/custom-app-delivery-without-apple-account
+    - /faq/custom-app-ownership-transfer
+  tech:
+    - /tech/custom-app-review-transfer
+    - /tech/app-ownership-transfer-process
+- case: /cases/lgl-hda-openvz-pve-eval
+  services:
+    - /services/virtualization-cloud
+  faq:
+    - /faq/closed-hypervisor-migration-plan
+  tech:
+    - /tech/closed-hypervisor-migration-validation
+    - /tech/multi-stage-migration-checklist
+- case: /cases/lgl-awe-pve-vgpu-jamf
+  services:
+    - /services/virtualization-cloud
+    - /services/mdm
+  faq:
+    - /faq/pve-vgpu-training-plan
+    - /faq/jamf-connect-oidc-vendor-verification
+  tech:
+    - /tech/pve-vgpu-rollout-training
+    - /tech/jamf-audit-cross-team
+- case: /cases/wzz-network-controller
+  services:
+    - /services/office-network
+    - /services/hosting-operations
+    - /services/vpn-remote
+  faq:
+    - /faq/budget-nas-refresh-plan
+    - /faq/backup-schedule-collision-risks
+  tech:
+    - /tech/unifi-controller-migration-light-ops
+    - /tech/budget-nas-refresh-plan
+- case: /cases/lgl-tax-pve-io-wait
+  services:
+    - /services/virtualization-cloud
+  faq:
+    - /faq/pve-io-wait-diagnostics
+    - /faq/pve-pbs-multiple-backups-impact
+  tech:
+    - /tech/pve-io-wait-diagnostics-workflow
+    - /tech/pve-backup-schedule-tuning-guide
+- case: /cases/lgl-cal-jamf-oidc
+  services:
+    - /services/mdm
+    - /services/iam-zitadel
+  faq:
+    - /faq/jamf-connect-oidc-vendor-verification
+    - /faq/remote-ops-transparency-without-monitoring
+  tech:
+    - /tech/zitadel-jamf-connect-validation-lab
+    - /tech/oidc-test-logs-communication
+- case: /cases/lgl-nax-gpu-passthrough
+  services:
+    - /services/virtualization-cloud
+    - /services/it-outsourcing
+  faq:
+    - /faq/offline-gpu-passthrough-logs
+    - /faq/offline-troubleshooting-kits
+  tech:
+    - /tech/offline-pve-gpu-passthrough
+    - /tech/on-site-troubleshooting-handbook
+- case: /cases/ana-unifi-controller
+  services:
+    - /services/office-network
+    - /services/it-outsourcing
+    - /services/vpn-remote
+  faq:
+    - /faq/unifi-controller-cloud-to-onprem-move
+    - /faq/unifi-controller-lite-managed-support
+  tech:
+    - /tech/unifi-controller-migration-light-ops
+    - /tech/budget-nas-refresh-plan
+- case: /cases/cay-server-farm
+  services:
+    - /services/idc-deployment
+    - /services/container-devops
+    - /services/it-monitoring
+  faq:
+    - /faq/backup-schedule-collision-risks
+    - /faq/it-refresh-minimize-downtime
+  tech:
+    - /tech/operations-handover-package
+    - /tech/it-refresh-migration-blueprint
+- case: /cases/cay-dns-filter
+  services:
+    - /services/office-network
+    - /services/zero-trust
+  faq:
+    - /faq/shared-office-vlan-dns-isolation
+    - /faq/remote-ops-transparency-without-monitoring
+  tech:
+    - /tech/shared-dns-radius-isolation
+    - /tech/remote-inspection-reporting
+- case: /cases/cay-ldap-onboarding
+  services:
+    - /services/office-network
+    - /services/iam-zitadel
+  faq:
+    - /faq/day-one-onboarding-account-flow
+    - /faq/remote-ops-handover-docs
+    - /faq/vpn-radius-certificate-lifecycle
+  tech:
+    - /tech/onboarding-account-automation
+    - /tech/operations-handover-package
+    - /tech/vpn-radius-certificate-lifecycle
+- case: /cases/cay-azure-erp
+  services:
+    - /services/virtualization-cloud
+    - /services/backup-security
+  faq:
+    - /faq/pve-pbs-multiple-backups-impact
+    - /faq/pve-pbs-quarterly-report-metrics
+  tech:
+    - /tech/pve-pbs-backup-schedule-validation
+    - /tech/pve-quarterly-report-template
+- case: /cases/ttw-mdm
+  services:
+    - /services/mdm
+  faq:
+    - /faq/jamf-audit-training-plan
+    - /faq/remote-ops-transparency-without-monitoring
+  tech:
+    - /tech/jamf-audit-cross-team
+    - /tech/jamf-trust-vpn-control
+- case: /cases/tgw-mdm
+  services:
+    - /services/mdm
+  faq:
+    - /faq/jamf-audit-training-plan
+    - /faq/remote-ops-transparency-without-monitoring
+  tech:
+    - /tech/jamf-audit-cross-team
+    - /tech/jamf-trust-vpn-control
+- case: /cases/tgw-zero-trust-monitoring
+  services:
+    - /services/zero-trust
+    - /services/it-monitoring
+  faq:
+    - /faq/restricted-vpn-camera-access
+    - /faq/remote-ops-transparency-without-monitoring
+  tech:
+    - /tech/jamf-trust-vpn-control
+    - /tech/remote-inspection-reporting
+- case: /cases/wzz-nas-migration
+  services:
+    - /services/hosting-operations
+    - /services/backup-security
+  faq:
+    - /faq/budget-nas-refresh-plan
+    - /faq/backup-schedule-collision-risks
+  tech:
+    - /tech/budget-nas-refresh-plan
+    - /tech/pve-backup-schedule-tuning-guide
+- case: /cases/wzz-contract-strategy
+  services:
+    - /services/it-outsourcing
+    - /services/office-network
+  faq:
+    - /faq/remote-ops-handover-docs
+    - /faq/it-refresh-minimize-downtime
+  tech:
+    - /tech/operations-handover-package
+    - /tech/it-refresh-migration-blueprint
