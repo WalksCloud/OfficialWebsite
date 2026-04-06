@@ -10,7 +10,7 @@ const site = getSiteConfig()
 const resolveComponent = (page) => {
   if (page.pageKey === 'home' || page.type === 'home') return HomePage
   if (page.pageKey === 'not-found' || page.type === 'not-found') return NotFoundPage
-  if (page.type === 'service' || page.type === 'case' || page.type === 'page') return MarkdownPage
+  if (page.type === 'service' || page.type === 'case' || page.type === 'page' || page.type === 'tech') return MarkdownPage
   return PlaceholderPage
 }
 

@@ -7,6 +7,7 @@ import { getContentFilePath, getSiteConfig } from '@/utils/pageConfig'
 import MarkdownIt from 'markdown-it'
 import YAML from 'yaml'
 import { ref } from 'vue'
+import RelationShipArticleList from '@/components/RelationShipArticleList.vue'
 import Contact from '@/components/Contact.vue'
 
 const md = new MarkdownIt({ html: true, linkify: true, breaks: true })
@@ -83,11 +84,12 @@ const rendered = computed(() => {
 </script>
 
 <template>
-  <section class="pt-[120px] pb-12 lg:pb-18 w-5/6 lg:w-2/3 mx-auto">
+  <section class="pt-[120px] pb-12 lg:pb-18 w-5/6 lg:w-2/3 mx-auto space-y-10">
     <div v-if="rendered" class="markdown-content" v-html="rendered.html"></div>
     <p v-else class="text-center text-gray-600 dark:text-gray-300">
       {{ t('placeholder.message') }}
     </p>
+    <RelationShipArticleList />
   </section>
   <Contact />
 </template>

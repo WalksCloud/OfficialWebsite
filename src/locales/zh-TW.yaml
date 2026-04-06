@@ -15,6 +15,11 @@ locales:
   zh-tw: 繁體中文
 close: 關閉
 loading: 載入中...
+relationship:
+  messages:
+    noRelation: "此語系沒有相關文章。"
+    availableLocalesNotice: "可用語言版本：{locales}"
+    fallbackNotice: "以下為 {locale} 版本。"
 footer:
   facebook_url: https://www.facebook.com/WalksCloud
   linkedin_url: https://www.linkedin.com/company/walkscloud/
