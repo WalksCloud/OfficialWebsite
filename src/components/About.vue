@@ -23,7 +23,7 @@ watch(locale, hydrateItems)
 </script>
 
 <template>
-<section id="about" class="pt-[53px] lg:pt-[82px]">
+<section id="about" class="section-anchor pt-[53px] lg:pt-[82px]">
 	<div class="home-bg h-[85vh] lg:h-screen relative">
 		<div class="w-full absolute bottom-25 lg:bottom-5">
 			<div class="w-5/6 lg:w-3/4 mx-auto text-center text-white shadow-dark">

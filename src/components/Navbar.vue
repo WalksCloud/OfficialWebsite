@@ -1,9 +1,8 @@
 <script setup>
-import { ref, onMounted, onBeforeUnmount } from 'vue'
+import { ref, onMounted, onBeforeUnmount, watch, computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { buildNonPrefixedPath, buildPrefixedPath, getSiteConfig } from '@/utils/pageConfig'
-import { computed } from 'vue'
 const { locale, t, tm } = useI18n()
 
 const navlinks = tm('nav-links')
@@ -38,19 +37,28 @@ const switchLocale = (targetLocale) => {
 	const targetPath = useNonPrefix ? nonPrefixedPath : prefixedPath
 	router.push(targetPath)
 }
+const computeBuffer = () => {
+	if (typeof window === 'undefined') return 100
+	const rootStyles = getComputedStyle(document.documentElement)
+	const offset = parseFloat(rootStyles.getPropertyValue('--header-offset')) || 90
+	return offset
+}
+
 const handleScroll = () => {
-	const buffer = 100
+	const buffer = computeBuffer()
+	let matched = false
 
 	for (const link in navlinks) {
 		const el = document.getElementById(link)
-		if (el) {
-			const rect = el.getBoundingClientRect()
-			if (rect.top < buffer && rect.bottom > buffer) {
-				activeSection.value = link
-				break
-			}
+		if (!el) continue
+		const rect = el.getBoundingClientRect()
+		if (rect.top <= buffer && rect.bottom >= buffer) {
+			activeSection.value = link
+			matched = true
+			break
 		}
 	}
+	if (!matched) activeSection.value = null
 }
 
 onMounted(() => {
@@ -66,12 +74,54 @@ const isOpen = ref(false)
 const closeMenu = () => {
 	isOpen.value = false
 }
-const linkHref = (sectionKey) => {
-	const currentLocale = route.meta.locale || site.defaultLocale
-	const basePath = route.meta.prefixed === false
-		? buildNonPrefixedPath('home', currentLocale)
-		: buildPrefixedPath('home', currentLocale)
-	return `${basePath}#${sectionKey}`
+const currentLocale = computed(() => route.meta.locale || site.defaultLocale)
+const baseHomePath = computed(() =>
+	route.meta.prefixed === false
+		? buildNonPrefixedPath('home', currentLocale.value)
+		: buildPrefixedPath('home', currentLocale.value),
+)
+
+watch(
+	() => route.meta.pageKey,
+	(pageKey) => {
+		if (pageKey !== 'home') {
+			activeSection.value = null
+			return
+		}
+		requestAnimationFrame(() => handleScroll())
+	},
+{ immediate: true })
+
+watch(
+	() => route.fullPath,
+	() => {
+		if (route.meta.pageKey !== 'home') return
+		requestAnimationFrame(() => handleScroll())
+	},
+)
+
+const linkHref = (sectionKey) => `${baseHomePath.value}#${sectionKey}`
+
+const navigate = (target) => {
+	if (!target) return Promise.resolve()
+	return router.push(target).catch(() => {})
+}
+
+const handleHomeClick = (event) => {
+	event?.preventDefault()
+	activeSection.value = null
+	navigate(baseHomePath.value).finally(() => {
+		requestAnimationFrame(() => {
+			window.scrollTo({ top: 0, behavior: 'smooth' })
+		})
+	})
+}
+
+const handleSectionClick = (event, key) => {
+	event?.preventDefault()
+	activeSection.value = key
+	closeMenu()
+	navigate(linkHref(key))
 }
 </script>
 
@@ -79,7 +129,7 @@ const linkHref = (sectionKey) => {
 	<header class="bg-white/85 dark:bg-[#222831]/85 shadow fixed top-0 left-0 w-full z-50 backdrop-blur-sm">
 		<nav class="px-3 lg:px-6 py-3 lg:py-4 flex justify-between items-center">
 			<div>
-				<a :href="route.meta.prefixed === false ? buildNonPrefixedPath('home', route.meta.locale || site.defaultLocale) : buildPrefixedPath('home', route.meta.locale || site.defaultLocale)" aria-label="Home">
+				<a :href="baseHomePath" aria-label="Home" @click.prevent="handleHomeClick">
 					<img class="rounded-[50%] w-[28px] lg:w-[50px] inline-block" src="/logo-gradual.svg">
 					<h2 class="text-xl lg:text-2xl ms-2 inline-block align-middle font-barlow font-bold text-primary dark:text-white">{{ $t('brand-name') }}</h2>
 				</a>
@@ -92,7 +142,7 @@ const linkHref = (sectionKey) => {
 
 			<!-- Desktop Menu -->
 				<div v-if="!isNotFound" class="space-x-4 hidden lg:flex">
-					<a v-bind:key="key" v-for="(name, key) in $tm('nav-links')" :class="{ 'text-primary': activeSection === key, 'dark:text-white': activeSection !== key }" class="hover:text-primary" :href="linkHref(key)">{{ name }}</a>
+					<a v-bind:key="key" v-for="(name, key) in $tm('nav-links')" :class="{ 'text-primary': activeSection === key, 'dark:text-white': activeSection !== key }" class="hover:text-primary" :href="linkHref(key)" @click.prevent="handleSectionClick($event, key)">{{ name }}</a>
 
 				<div class="ms-2 locale-changer inline-block">
 					<select v-model="$i18n.locale" @change="setLocale($event)" class="text-gray-700 dark:text-white outline-none">
@@ -104,7 +154,7 @@ const linkHref = (sectionKey) => {
 
 		<!-- Mobile Menu -->
 			<div v-if="isOpen && !isNotFound" class="lg:hidden bg-white/85 dark:bg-[#222831]/85 py-6 text-center flex flex-col space-y-4">
-				<a v-bind:key="key" v-for="(name, key) in $tm('nav-links')" @click="closeMenu" :class="{ 'text-primary': activeSection === key, 'dark:text-white': activeSection !== key }" class="hover:text-primary" :href="linkHref(key)">{{ name }}</a>
+				<a v-bind:key="key" v-for="(name, key) in $tm('nav-links')" :class="{ 'text-primary': activeSection === key, 'dark:text-white': activeSection !== key }" class="hover:text-primary" :href="linkHref(key)" @click.prevent="handleSectionClick($event, key)">{{ name }}</a>
 
 				<div class="mt-2 locale-changer">
 					<div class="inline-flex rounded-lg overflow-hidden border border-gray-300 dark:border-gray-600">

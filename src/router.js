@@ -88,7 +88,13 @@ export default routes
 export function scrollBehavior(to, from, savedPosition) {
   if (savedPosition) return savedPosition
   if (to.hash) {
+    if (typeof window !== 'undefined') {
+      window.__wcLastRouterScroll = Date.now()
+    }
     return { el: to.hash, behavior: 'smooth' }
   }
-  return { top: 0 }
+  if (typeof window !== 'undefined') {
+    window.__wcLastRouterScroll = Date.now()
+  }
+  return false
 }

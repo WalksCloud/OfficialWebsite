@@ -14,6 +14,24 @@
 :root {
   font-family: "Noto Sans TC", sans-serif;
   scroll-behavior: smooth;
+  --header-offset: 100px;
+  --header-offset-lg: 140px;
+  --header-offset-bottom: 180px;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --header-offset: var(--header-offset-lg);
+    --header-offset-bottom: calc(var(--header-offset-lg) + 40px);
+  }
+}
+
+.section-anchor {
+  scroll-margin-top: var(--header-offset);
+}
+
+.section-anchor-bottom {
+  scroll-margin-top: var(--header-offset-bottom);
 }
 
 iframe {

@@ -61,7 +61,7 @@ const submit = async () => {
 </script>
 
 <template>
-  <section class="py-8 lg:py-18 scroll-mt-[50px] lg:scroll-mt-[80px]" id="contact">
+  <section class="section-anchor-bottom pt-8 lg:pt-18 pb-24 lg:pb-40" id="contact">
     <div class="w-5/6 lg:w-3/4 mx-auto text-center">
       <!--
       <h2 class="text-2xl lg:text-4xl mb-0 lg:mb-6 font-bold">{{ $t('contact') }}</h2>

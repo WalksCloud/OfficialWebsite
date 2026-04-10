@@ -45,6 +45,49 @@ export const createApp = ViteSSG(
       }
     }
 
+    if (isClient) {
+      const buildScrollKey = () => {
+        const { pathname, search } = window.location
+        return `scroll-position:${pathname}${search}`
+      }
+
+      const shouldHandleScroll = () => {
+        const routerScrolledRecently =
+          typeof window !== 'undefined' &&
+          typeof window.__wcLastRouterScroll === 'number' &&
+          Date.now() - window.__wcLastRouterScroll < 500
+        return !window.location.hash && !routerScrolledRecently
+      }
+
+      const restoreScrollPosition = () => {
+        if (!shouldHandleScroll()) return
+        const key = buildScrollKey()
+        const stored = sessionStorage.getItem(key)
+        if (stored) {
+          requestAnimationFrame(() => {
+            window.scrollTo({ top: Number(stored) || 0, behavior: 'auto' })
+            sessionStorage.removeItem(key)
+          })
+        }
+      }
+
+      const navigationEntries = performance?.getEntriesByType
+        ? performance.getEntriesByType('navigation')
+        : null
+      const navType = navigationEntries && navigationEntries.length
+        ? navigationEntries[0].type
+        : performance?.navigation?.type
+
+      if (navType === 'reload' || navType === performance?.navigation?.TYPE_RELOAD) {
+        restoreScrollPosition()
+      }
+
+      window.addEventListener('beforeunload', () => {
+        if (!shouldHandleScroll()) return
+        sessionStorage.setItem(buildScrollKey(), String(window.scrollY || 0))
+      })
+    }
+
     const normalizePath = (p) => {
       const v = (p || '').replace(/\/+$/, '')
       return v || '/'
