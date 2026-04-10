@@ -1,26 +1,22 @@
 <script setup>
 import { computed } from 'vue'
-import { RouterLink, useRoute } from 'vue-router'
+import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import YAML from 'yaml'
 import FaqArticleCard from './FaqArticleCard.vue'
+import ArticlePreview from './ArticlePreview.vue'
 import mappingRaw from '../../config/case-mapping.yaml?raw'
 import { getSiteConfig } from '@/utils/pageConfig'
+import { resolveContentInfo, buildLocalizedPath } from '@/utils/contentIndex'
+import { useFallbackNotice } from '@/composables/useFallbackNotice'
 
-const NuxtLink = RouterLink
 const siteConfig = getSiteConfig()
-const localeFallbackMap = siteConfig.localeFallbacks || {}
 const relationDefaultLocale = siteConfig.defaultLocale || 'zh-tw'
 const caseMappings = YAML.parse(mappingRaw) || []
 
-const contentModules = import.meta.glob('../content/**/*.md', {
-	eager: true,
-	import: 'default',
-	query: '?raw',
-})
-
-const { locale, availableLocales, t, fallbackLocale } = useI18n()
+const { locale, availableLocales, fallbackLocale } = useI18n()
 const supportedLocales = computed(() => availableLocales || [])
+const { buildFallbackNotice } = useFallbackNotice()
 
 const toArray = (value) => {
 	if (!value) return []
@@ -32,139 +28,10 @@ const toArray = (value) => {
 	return []
 }
 
-const translateRelationMessage = (key, params = {}) => {
-	const translationKey = `relationship.messages.${key}`
-	const result = t(translationKey, params)
-	return typeof result === 'string' ? result : ''
-}
-
-const translateLocaleLabel = (localeCode) => {
-	if (!localeCode) return ''
-	const translationKey = `locales.${localeCode}`
-	const translated = t(translationKey)
-	return typeof translated === 'string' && translated !== translationKey ? translated : localeCode
-}
-
-const localeFromFilename = (path = '') => {
-	const m = path.match(/\.([a-z-]+)\.md$/i)
-	return m ? m[1] : 'zh-tw'
-}
-
-const normalizeSlug = (slug = '') => {
-	const value = slug.replace(/^\/+/, '').replace(/\/+$/, '')
-	return value ? `/${value}` : '/'
-}
-
-const baseFromPath = (path = '') => path.replace(/\.([a-z-]+)\.md$/i, '').replace(/^..\//, '')
-
-const parseFrontmatter = (raw = '') => {
-	const content = typeof raw === 'string' ? raw : String(raw || '')
-	const fmMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/)
-	if (!fmMatch) return { meta: {}, body: content }
-	const meta = YAML.parse(fmMatch[1]) || {}
-	const body = content.slice(fmMatch[0].length)
-	return { meta, body }
-}
-
-const slugIndex = new Map()
-Object.entries(contentModules).forEach(([path, raw]) => {
-	const { meta, body } = parseFrontmatter(raw)
-	const locale = localeFromFilename(path)
-	const base = baseFromPath(path)
-	const inferredSlug = normalizeSlug(
-		meta.slug ? String(meta.slug) : base.split('/').slice(1).join('/'),
-	)
-	const entry = slugIndex.get(inferredSlug) || { locales: {}, type: meta.type || 'page' }
-	entry.locales[locale] = {
-		title: meta.title || '',
-		description: meta.description || '',
-		body,
-	}
-	entry.type = meta.type || entry.type
-	slugIndex.set(inferredSlug, entry)
-})
-
 const unique = (arr) => [...new Set(arr)]
 
-const getFallbackCandidates = (requestedLocale, availableLocalesList) => {
-	const configuredFallbacks = Array.isArray(localeFallbackMap[requestedLocale])
-		? localeFallbackMap[requestedLocale]
-		: []
-	const i18nFallbacks = toArray(fallbackLocale?.value)
-	return unique([
-		...configuredFallbacks,
-		...i18nFallbacks,
-		relationDefaultLocale,
-		...availableLocalesList,
-	]).filter((loc) => loc && loc !== requestedLocale)
-}
-
-const formatLocalesList = (list = []) =>
-	list
-		.map((code) => translateLocaleLabel(code))
-		.filter(Boolean)
-		.join(', ')
-
-const buildFallbackNotice = (requestedLocale, fallbackLocaleCode, availableLocalesList = []) => {
-	if (!fallbackLocaleCode) return ''
-	const parts = []
-	const noRelation = translateRelationMessage('noRelation')
-	if (noRelation) {
-		parts.push(noRelation)
-	}
-	const localesList = formatLocalesList(availableLocalesList)
-	if (localesList) {
-		const availableNotice = translateRelationMessage('availableLocalesNotice', { locales: localesList })
-		if (availableNotice) {
-			parts.push(availableNotice)
-		}
-	}
-	const fallbackLocaleName = translateLocaleLabel(fallbackLocaleCode)
-	const fallbackNotice = translateRelationMessage('fallbackNotice', { locale: fallbackLocaleName })
-	if (fallbackNotice) {
-		parts.push(fallbackNotice)
-	}
-	return parts.join(' ')
-}
-
-const resolvePageInfo = (slug, requestedLocaleInput) => {
-	const entry = slugIndex.get(slug)
-	if (!entry) return null
-	const locales = entry.locales || {}
-	const availableLocales = Object.keys(locales)
-	if (!availableLocales.length) return null
-	const requestedLocale = requestedLocaleInput || relationDefaultLocale
-	const currentData = locales[requestedLocale]
-	if (currentData) {
-		return {
-			title: currentData.title || '',
-			description: currentData.description || '',
-			body: currentData.body || '',
-			type: entry.type,
-			locale: requestedLocale,
-			requestedLocale,
-			availableLocales,
-			isFallback: false,
-		}
-	}
-	const fallbackCandidates = getFallbackCandidates(requestedLocale, availableLocales)
-	const fallbackLocaleCode = fallbackCandidates.find((localeValue) => locales[localeValue])
-	if (!fallbackLocaleCode) return null
-	const fallbackData = locales[fallbackLocaleCode]
-	return {
-		title: fallbackData.title || '',
-		description: fallbackData.description || '',
-		body: fallbackData.body || '',
-		type: entry.type,
-		locale: fallbackLocaleCode,
-		requestedLocale,
-		availableLocales,
-		isFallback: fallbackLocaleCode !== requestedLocale,
-	}
-}
-
 const buildFaqItem = (slug, localeValue) => {
-	const info = resolvePageInfo(slug, localeValue)
+	const info = resolveContentInfo(slug, localeValue, { fallbackLocales: toArray(fallbackLocale?.value) })
 	if (!info) return null
 	const content = (info.body || '').replace(/^#\s+[^\n]+\n+/i, '').trim()
 	const notice = info.isFallback
@@ -179,19 +46,8 @@ const buildFaqItem = (slug, localeValue) => {
 	}
 }
 
-const buildLocalizedPath = (slug = '', localeValue) => {
-	if (!slug) return '/'
-	const hasLeadingSlash = slug.startsWith('/')
-	const cleaned = hasLeadingSlash ? slug : `/${slug}`
-	const normalized = cleaned.endsWith('/') ? cleaned : `${cleaned}/`
-	if (!localeValue || localeValue === relationDefaultLocale) {
-		return normalized
-	}
-	return `/${localeValue}${normalized}`
-}
-
 const buildArticleItem = (slug, localeValue) => {
-	const info = resolvePageInfo(slug, localeValue)
+	const info = resolveContentInfo(slug, localeValue, { fallbackLocales: toArray(fallbackLocale?.value) })
 	if (!info) return null
 	const notice = info.isFallback
 		? buildFallbackNotice(info.requestedLocale, info.locale, info.availableLocales)
@@ -202,6 +58,7 @@ const buildArticleItem = (slug, localeValue) => {
 		description: info.description || '',
 		path: buildLocalizedPath(slug, info.locale),
 		notice,
+		date: info.date ? new Date(info.date) : null,
 	}
 }
 
@@ -306,39 +163,21 @@ const hasRelations = computed(
 		<div v-if="relatedData.services.length">
 			<h3 class="text-2xl font-bold mb-4">相關服務</h3>
 			<ul class="space-y-3">
-				<li v-for="item in relatedData.services" :key="item.slug" class="border rounded-md p-4">
-					<NuxtLink :to="item.path" class="font-semibold text-primary hover:underline">{{
-						item.title
-					}}</NuxtLink>
-					<p v-if="item.description" class="text-sm text-muted mt-1">{{ item.description }}</p>
-					<p v-if="item.notice" class="text-xs text-muted mt-2 italic">{{ item.notice }}</p>
-				</li>
+				<ArticlePreview v-for="item in relatedData.services" :key="item.slug" :item="item" />
 			</ul>
 		</div>
 
 		<div v-if="relatedData.cases.length">
 			<h3 class="text-2xl font-bold mb-4">相關案例</h3>
 			<ul class="space-y-3">
-				<li v-for="item in relatedData.cases" :key="item.slug" class="border rounded-md p-4">
-					<NuxtLink :to="item.path" class="font-semibold text-primary hover:underline">{{
-						item.title
-					}}</NuxtLink>
-					<p v-if="item.description" class="text-sm text-muted mt-1">{{ item.description }}</p>
-					<p v-if="item.notice" class="text-xs text-muted mt-2 italic">{{ item.notice }}</p>
-				</li>
+				<ArticlePreview v-for="item in relatedData.cases" :key="item.slug" :item="item" />
 			</ul>
 		</div>
 
 		<div v-if="relatedData.tech.length">
 			<h3 class="text-2xl font-bold mb-4">相關技術文章</h3>
 			<ul class="space-y-3">
-				<li v-for="item in relatedData.tech" :key="item.slug" class="border rounded-md p-4">
-					<NuxtLink :to="item.path" class="font-semibold text-primary hover:underline">{{
-						item.title
-					}}</NuxtLink>
-					<p v-if="item.description" class="text-sm text-muted mt-1">{{ item.description }}</p>
-					<p v-if="item.notice" class="text-xs text-muted mt-2 italic">{{ item.notice }}</p>
-				</li>
+				<ArticlePreview v-for="item in relatedData.tech" :key="item.slug" :item="item" />
 			</ul>
 		</div>
 

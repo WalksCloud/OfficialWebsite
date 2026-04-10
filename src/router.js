@@ -4,12 +4,14 @@ import { buildNonPrefixedPath, buildPrefixedPath, getPageConfigs, getSiteConfig 
 const site = getSiteConfig()
 const loadHomePage = () => import('./pages/HomePage.vue')
 const loadPlaceholderPage = () => import('./pages/PlaceholderPage.vue')
+const loadArticleIndexPage = () => import('./pages/ArticleIndexPage.vue')
 const loadMarkdownPage = () => import('./pages/MarkdownPage.vue')
 const loadNotFoundPage = () => import('./pages/NotFoundPage.vue')
 
 const resolveComponent = (page) => {
   if (page.pageKey === 'home' || page.type === 'home') return loadHomePage
   if (page.pageKey === 'not-found' || page.type === 'not-found') return loadNotFoundPage
+  if (page.type === 'article-index') return loadArticleIndexPage
   if (page.type === 'service' || page.type === 'case' || page.type === 'page' || page.type === 'tech') return loadMarkdownPage
   return loadPlaceholderPage
 }

@@ -4,8 +4,11 @@ import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import MarkdownIt from 'markdown-it'
 import YAML from 'yaml'
+import UBadge from '@nuxt/ui/components/Badge.vue'
 import { usePageHead } from '@/utils/usePageHead'
-import { getContentFilePath, getSiteConfig } from '@/utils/pageConfig'
+import { getContentFilePath, getSiteConfig, getSlugForLocale } from '@/utils/pageConfig'
+import { resolveContentInfo } from '@/utils/contentIndex'
+import { getArticleCategoryTags } from '@/utils/articleTags'
 import RelationShipArticleList from '@/components/RelationShipArticleList.vue'
 import Contact from '@/components/Contact.vue'
 
@@ -15,6 +18,7 @@ const site = getSiteConfig()
 const route = useRoute()
 const { locale, t } = useI18n()
 const contentTitle = ref('')
+const contentLocale = ref(locale.value)
 usePageHead(route, { overrideTitle: contentTitle })
 
 const modules = import.meta.glob('../content/**/*.md', {
@@ -50,12 +54,10 @@ const renderBlock = (block) => {
   const titleText = typeof block.meta?.title === 'string' ? block.meta.title : ''
   const descriptionText = typeof block.meta?.description === 'string' ? block.meta.description : ''
   const content = (block.body || '').trim()
-  const hasH1 = /^#\s+/m.test(content)
-  const source = hasH1 ? content : `# ${titleText || ''}\n\n${descriptionText}\n\n${content}`
   return {
     title: titleText,
     description: descriptionText,
-    html: md.render(source),
+    html: md.render(content),
   }
 }
 
@@ -76,6 +78,7 @@ const resolveContent = () => {
   if (!raw) return null
   const filenameLocale = contentPath.match(/\.([a-z-]+)\.md$/i)?.[1]
   const block = parseSingleLocaleMd(raw, filenameLocale)
+  contentLocale.value = block.meta?.lang || currentLocale.value
   return renderBlock(block)
 }
 
@@ -95,14 +98,77 @@ watch(
     loadContent()
   },
 )
+const normalizedSlug = computed(() => {
+  const slug = getSlugForLocale(pageKey.value, currentLocale.value)
+  if (!slug) return '/'
+  return `/${slug.replace(/^\/+/, '')}`
+})
+
+const contentInfo = computed(() => {
+  const slug = normalizedSlug.value
+  if (!slug) return null
+  return resolveContentInfo(slug, contentLocale.value || currentLocale.value)
+})
+
+const lastUpdatedDate = computed(() => contentInfo.value?.date ?? null)
+
+const lastUpdatedLabel = computed(() => {
+  const dateValue = lastUpdatedDate.value
+  if (!dateValue) return ''
+  const date = dateValue instanceof Date ? dateValue : new Date(dateValue)
+  if (Number.isNaN(date.valueOf())) return ''
+  const intlLocale = contentLocale.value || locale.value
+  let formatted
+  try {
+    formatted = new Intl.DateTimeFormat(intlLocale, {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    }).format(date)
+  } catch (err) {
+    formatted = date.toISOString().split('T')[0]
+  }
+  const translation = t('article.last-updated', { date: formatted })
+  return typeof translation === 'string' ? translation : formatted
+})
+
+const articleTags = computed(() => {
+  const slug = normalizedSlug.value
+  if (!slug) return []
+  const localeValue = contentLocale.value || currentLocale.value
+  return getArticleCategoryTags(slug, localeValue)
+})
 </script>
 
 <template>
   <section class="pt-[120px] pb-12 lg:pb-18 w-5/6 lg:w-2/3 mx-auto space-y-10">
-    <div v-if="rendered" class="markdown-content" v-html="rendered.html"></div>
+    <div v-if="rendered" class="markdown-content space-y-2">
+      <h1>
+        <div class="flex flex-wrap gap-2 pt-4">
+          <div>{{ rendered.title }}</div>
+          <div class="flex-end">
+            <UBadge
+              v-for="tag in articleTags"
+              :key="tag.id"
+              :label="tag.label"
+              color="neutral"
+              variant="soft"
+              class="font-bold rounded-full border border-transparent h-6"
+              :style="tag.style"
+            />
+          </div>
+          <div v-if="lastUpdatedLabel" class="markdown-last-updated flex-end ml-auto">
+            {{ lastUpdatedLabel }}
+          </div>
+        </div>
+      </h1>
+      <p v-if="rendered.description">{{ rendered.description }}</p>
+      <div v-html="rendered.html"></div>
+    </div>
     <p v-else class="text-center text-gray-600 dark:text-gray-300">
       {{ t('placeholder.message') }}
     </p>
+    <hr />
     <RelationShipArticleList />
   </section>
   <Contact />
@@ -159,5 +225,13 @@ watch(
 :deep(.markdown-content a) {
   color: var(--color-primary, #1e90ff);
   text-decoration: underline;
+}
+.markdown-last-updated {
+  font-size: 0.85rem;
+  color: #6b7280;
+  font-style: italic;
+}
+.flex-end {
+  align-content: flex-end;
 }
 </style>

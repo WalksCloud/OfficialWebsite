@@ -20,6 +20,12 @@ relationship:
     noRelation: "No related article in this language."
     availableLocalesNotice: "Available locales: {locales}"
     fallbackNotice: "Showing {locale} version."
+article:
+  last-updated: "Updated: {date}"
+  view-all: "View the full list"
+  index:
+    cases-description: "Browse every case study organized under WalksCloud’s service lines."
+    tech-description: "Explore every technical deep dive and troubleshooting note from our team."
 footer:
   facebook_url: https://www.facebook.com/WalksCloud
   linkedin_url: https://www.linkedin.com/company/walkscloud/

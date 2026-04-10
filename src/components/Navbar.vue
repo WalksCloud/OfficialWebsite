@@ -70,6 +70,15 @@ onBeforeUnmount(() => {
 	window.removeEventListener('scroll', handleScroll)
 })
 
+const runAfterFrame = (cb) => {
+	if (typeof window === 'undefined') return
+	if (typeof window.requestAnimationFrame === 'function') {
+		window.requestAnimationFrame(cb)
+		return
+	}
+	setTimeout(cb, 0)
+}
+
 const isOpen = ref(false)
 const closeMenu = () => {
 	isOpen.value = false
@@ -88,7 +97,7 @@ watch(
 			activeSection.value = null
 			return
 		}
-		requestAnimationFrame(() => handleScroll())
+		runAfterFrame(() => handleScroll())
 	},
 { immediate: true })
 
@@ -96,7 +105,7 @@ watch(
 	() => route.fullPath,
 	() => {
 		if (route.meta.pageKey !== 'home') return
-		requestAnimationFrame(() => handleScroll())
+		runAfterFrame(() => handleScroll())
 	},
 )
 
@@ -111,7 +120,7 @@ const handleHomeClick = (event) => {
 	event?.preventDefault()
 	activeSection.value = null
 	navigate(baseHomePath.value).finally(() => {
-		requestAnimationFrame(() => {
+		runAfterFrame(() => {
 			window.scrollTo({ top: 0, behavior: 'smooth' })
 		})
 	})

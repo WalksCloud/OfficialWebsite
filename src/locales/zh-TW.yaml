@@ -20,6 +20,12 @@ relationship:
     noRelation: "此語系沒有相關文章。"
     availableLocalesNotice: "可用語言版本：{locales}"
     fallbackNotice: "以下為 {locale} 版本。"
+article:
+  last-updated: "更新：{date}"
+  view-all: "檢視完整清單"
+  index:
+    cases-description: "快速瀏覽所有案例，依行雲資訊的服務主題整理。"
+    tech-description: "一次檢視所有技術文章與排障筆記，隨時掌握最新更新。"
 footer:
   facebook_url: https://www.facebook.com/WalksCloud
   linkedin_url: https://www.linkedin.com/company/walkscloud/

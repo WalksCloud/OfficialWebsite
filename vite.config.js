@@ -6,6 +6,7 @@ import path from 'path'
 import { DateTime } from 'luxon'
 import git from 'git-rev-sync'
 import YAML from 'yaml'
+import { collectContentLastmod } from './scripts/utils/contentLastmod.js'
 
 const projectSrc = path.resolve(__dirname, 'src')
 const projectSrcPosix = projectSrc.replace(/\\/g, '/')
@@ -92,6 +93,32 @@ const codeSplittingGroups = [
   },
 ]
 
+const contentLastmodPlugin = () => {
+  const virtualId = 'virtual:content-lastmod.yaml'
+  return {
+    name: 'virtual-content-lastmod',
+    resolveId(id) {
+      if (id === virtualId) return virtualId
+      return null
+    },
+    load(id) {
+      if (id === virtualId) {
+        const data = collectContentLastmod()
+        return YAML.stringify(data)
+      }
+      return null
+    },
+    handleHotUpdate(ctx) {
+      const normalized = ctx.file.replace(/\\/g, '/')
+      if (!normalized.includes('/src/content/')) return
+      const mod = ctx.server.moduleGraph.getModuleById(virtualId)
+      if (mod) {
+        ctx.server.moduleGraph.invalidateModule(mod)
+      }
+    },
+  }
+}
+
 const walksCloudUiColors = {
   primary: 'blue',
   secondary: 'cyan',
@@ -121,6 +148,7 @@ export default defineConfig(({ mode }) => {
         },
       }),
       tailwindcss(),
+      contentLastmodPlugin(),
       {
         name: 'yaml',
         transform(src, id) {

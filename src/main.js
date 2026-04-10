@@ -64,7 +64,11 @@ export const createApp = ViteSSG(
         const key = buildScrollKey()
         const stored = sessionStorage.getItem(key)
         if (stored) {
-          requestAnimationFrame(() => {
+          const raf =
+            typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function'
+              ? window.requestAnimationFrame.bind(window)
+              : (cb) => setTimeout(cb, 0)
+          raf(() => {
             window.scrollTo({ top: Number(stored) || 0, behavior: 'auto' })
             sessionStorage.removeItem(key)
           })

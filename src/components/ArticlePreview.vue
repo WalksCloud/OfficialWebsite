@@ -1,7 +1,9 @@
 <script setup>
 import { computed } from 'vue'
 import UPageCard from '@nuxt/ui/components/PageCard.vue'
+import UBadge from '@nuxt/ui/components/Badge.vue'
 import { useI18n } from 'vue-i18n'
+import { getArticleCategoryTags } from '@/utils/articleTags'
 
 const props = defineProps({
   item: {
@@ -32,8 +34,14 @@ const formattedDate = computed(() => {
 const lastUpdatedText = computed(() => {
   const dateString = formattedDate.value
   if (!dateString) return ''
-  const translated = t('article-preview.last-updated', { date: dateString })
+  const translated = t('article.last-updated', { date: dateString })
   return typeof translated === 'string' ? translated : dateString
+})
+
+const articleTags = computed(() => {
+  const slug = props.item?.slug || ''
+  if (!slug) return []
+  return getArticleCategoryTags(slug, locale.value)
 })
 </script>
 
@@ -44,13 +52,24 @@ const lastUpdatedText = computed(() => {
       :description="props.item.description"
       :to="props.item.path"
       spotlight
-      class="wc-glass-card transition-shadow duration-300 hover:shadow-lg"
+      class="wc-glass-card wc-card-spotlight transition-shadow duration-300 hover:shadow-lg"
       :ui="{
         root: 'bg-transparent',
         spotlight: 'bg-transparent'
       }"
     >
-      <div class="flex flex-col gap-1 text-xs text-muted">
+      <div class="flex flex-col gap-2 text-xs text-muted">
+        <div v-if="articleTags.length" class="flex flex-wrap gap-1.5">
+          <UBadge
+            v-for="tag in articleTags"
+            :key="tag.id"
+            :label="tag.label"
+            color="neutral"
+            variant="soft"
+            class="font-bold rounded-full border border-transparent"
+            :style="tag.style"
+          />
+        </div>
         <span v-if="lastUpdatedText">{{ lastUpdatedText }}</span>
         <span v-if="props.item.notice" class="italic">{{ props.item.notice }}</span>
       </div>
