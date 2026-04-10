@@ -7,6 +7,16 @@ import { DateTime } from 'luxon'
 import git from 'git-rev-sync'
 import YAML from 'yaml'
 
+const walksCloudUiColors = {
+  primary: 'blue',
+  secondary: 'cyan',
+  success: 'emerald',
+  info: 'blue',
+  warning: 'amber',
+  error: 'rose',
+  neutral: 'zinc',
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
@@ -20,6 +30,10 @@ export default defineConfig(({ mode }) => {
       ui({
         autoImport: false,
         components: false,
+        ui: {
+          prefix: 'wc',
+          colors: walksCloudUiColors,
+        },
       }),
       tailwindcss(),
       {

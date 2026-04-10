@@ -1,7 +1,6 @@
-brand-name: WalksCloud
+brand-name: WalksCloud 行雲資訊
 about: 關於行雲
 services: 服務項目
-services_flows: 服務流程
 team: 團隊介紹
 partners: 合作夥伴
 contact: 聯絡我們
@@ -144,16 +143,6 @@ services-section:
         - title: 客製化系統開發
           content: 根據所有服務項目及企業需求設計與開發專屬 IT 解決方案。
           pageKey: services-custom-dev
-  else: 其他項目
-  flows:
-    - title: 01 確認需求
-      content: 需求訪談、規格確認
-    - title: 02 系統建置
-      content: 根據需求建置客戶所需服務
-    - title: 03 驗收測試
-      content: 驗收測試
-    - title: 04 系統上線
-      content: 系統上線、教育訓練、後續維護
 team-section:
   intro:
     - 團隊擁有豐富開發及 IT / MIS 管理及專案經驗，

@@ -1,12 +1,11 @@
-brand-name: WalksCloud
-about: About
+brand-name: WalksCloud 行雲資訊
+about: About Us
 services: Services
-services_flows: Service Process
 team: Our Team
 partners: Partners
 contact: Contact Us
 nav-links:
-  about: About
+  about: About Us
   services: Services
   team: Our Team
   partners: Partners
@@ -144,16 +143,6 @@ services-section:
         - title: Custom System Development
           content: Design and develop tailored IT solutions based on your services and business needs.
           pageKey: services-custom-dev
-  else: Other Services
-  flows:
-    - title: 01 Requirement Confirmation
-      content: Requirement discovery and specification confirmation
-    - title: 02 System Deployment
-      content: Build the services you need based on agreed requirements
-    - title: 03 Acceptance Testing
-      content: Acceptance testing
-    - title: 04 System Launch
-      content: Launch, training, and ongoing maintenance
 team-section:
   intro:
     - Our team has extensive experience across development, IT/MIS management, and project delivery.

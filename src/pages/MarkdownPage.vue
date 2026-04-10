@@ -7,6 +7,7 @@ import { getContentFilePath, getSiteConfig } from '@/utils/pageConfig'
 import MarkdownIt from 'markdown-it'
 import YAML from 'yaml'
 import { ref } from 'vue'
+import Contact from '@/components/Contact.vue'
 
 const md = new MarkdownIt({ html: true, linkify: true, breaks: true })
 const site = getSiteConfig()
@@ -88,6 +89,7 @@ const rendered = computed(() => {
       {{ t('placeholder.message') }}
     </p>
   </section>
+  <Contact />
 </template>
 
 <style scoped>

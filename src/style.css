@@ -2,7 +2,47 @@
 @import "@nuxt/ui";
 
 @theme {
-  --color-primary: #1e90ff;
+  --wc-color-50: #eef7ff;
+  --wc-color-100: #d7ecff;
+  --wc-color-200: #afd9ff;
+  --wc-color-300: #87c6ff;
+  --wc-color-400: #5fb2ff;
+  --wc-color-500: #1e90ff;
+  --wc-color-600: #1874d7;
+  --wc-color-700: #1359ad;
+  --wc-color-800: #0d3f7e;
+  --wc-color-900: #082754;
+  --wc-color-950: #041532;
+  --color-primary: var(--wc-color-500, #1e90ff);
+}
+
+@layer components {
+  .wc-glass-card {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.88), rgba(255, 255, 255, 0.76));
+    border-radius: 0.75rem;
+    border: 1px solid rgba(148, 163, 184, 0.35);
+    box-shadow: 0 20px 40px rgba(15, 23, 42, 0.12);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+  .wc-glass-card:hover {
+    box-shadow: 0 30px 60px rgba(15, 23, 42, 0.25);
+    transform: translateY(-2px);
+  }
+  :is(.dark .wc-glass-card) {
+    background: linear-gradient(135deg, rgba(28, 31, 38, 0.88), rgba(18, 21, 29, 0.78));
+    border: 1px solid rgba(148, 163, 184, 0.2);
+    color: #e5e7eb;
+  }
+
+  .wc-card-spotlight::before {
+    opacity: 0.2 !important;
+  }
+
+  :is(.dark .wc-card-spotlight)::before {
+    opacity: 0.28 !important;
+  }
 }
 
 @layer utilities {

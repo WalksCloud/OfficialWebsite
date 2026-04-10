@@ -4,7 +4,7 @@
     zh-tw: ""
     en: ""
   titles:
-    zh-tw: "行雲資訊有限公司 - 提供您最完善的 MIS 服務 | WalksCloud"
+    zh-tw: "行雲資訊有限公司 - 提供您最完善的 MIS 服務"
     en: "WalksCloud - Get Everything Works Great"
   descriptions:
     zh-tw: "行雲資訊有限公司提供您最完善的 MIS 服務，滿足軟硬體和網路維運需求，您專注公司發展，資訊管理及營運交給我們。"
@@ -26,8 +26,8 @@
     zh-tw: 404
     en: 404
   titles:
-    zh-tw: "找不到頁面 | WalksCloud"
-    en: "Page Not Found | WalksCloud"
+    zh-tw: "找不到頁面"
+    en: "Page Not Found"
   descriptions:
     zh-tw: "您要找的頁面不存在，請返回首頁。"
     en: "The page you are looking for does not exist. Please return to the homepage."
@@ -40,3 +40,43 @@
     lastmod: build
   jsonld:
     kind: WebPage
+
+- pageKey: cases-index
+  type: article-index
+  slugs:
+    zh-tw: cases
+    en: cases
+  titles:
+    zh-tw: "案例分享"
+    en: "Case Studies"
+  descriptions:
+    zh-tw: "完整收錄行雲資訊的案例文章。"
+    en: "Browse every published WalksCloud case study."
+  articleIndex:
+    baseSlug: /cases
+    titleKey: about-section.case-section-title
+    descriptionKey: article.index.cases-description
+  sitemap:
+    priority: 0.7
+    changefreq: weekly
+    lastmod: build
+
+- pageKey: tech-index
+  type: article-index
+  slugs:
+    zh-tw: tech
+    en: tech
+  titles:
+    zh-tw: "技術文章"
+    en: "Tech Articles"
+  descriptions:
+    zh-tw: "完整收錄行雲資訊的技術筆記與排障分享。"
+    en: "Explore WalksCloud’s full archive of technical notes."
+  articleIndex:
+    baseSlug: /tech
+    titleKey: about-section.tech-section-title
+    descriptionKey: article.index.tech-description
+  sitemap:
+    priority: 0.7
+    changefreq: weekly
+    lastmod: build
