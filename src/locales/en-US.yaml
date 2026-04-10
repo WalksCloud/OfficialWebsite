@@ -86,6 +86,8 @@ about-section:
       - Highly customizable systems adapt to every client's needs.
       - We operate the full MIS scope for you, detect network issues immediately, and keep connectivity smooth.
     message: Whatever IT challenge you face, we can recommend the right solution to keep you operating and growing smoothly.
+  case-section-title: Case Studies
+  tech-section-title: Tech Articles
 services-section:
   services:
     - title: Comprehensive IT/MIS Hosting

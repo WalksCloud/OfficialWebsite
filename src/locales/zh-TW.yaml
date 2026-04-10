@@ -86,6 +86,8 @@ about-section:
       - 系統客製化高，能符合客戶不同需求
       - 為您妥善營運所有 MIS 工作範疇，我們可即時得知網路障礙，確保網路時時暢通
     message: 無論您的企業面臨何種 IT 挑戰，我們都能提供適合的解決方案，幫助您順利營運與成長！
+  case-section-title: 案例分享
+  tech-section-title: 技術文章
 services-section:
   services:
     - title: 全面 IT / MIS 代管
