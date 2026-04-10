@@ -1,17 +1,17 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomePage from './pages/HomePage.vue'
-import PlaceholderPage from './pages/PlaceholderPage.vue'
-import MarkdownPage from './pages/MarkdownPage.vue'
-import NotFoundPage from './pages/NotFoundPage.vue'
 import { buildNonPrefixedPath, buildPrefixedPath, getPageConfigs, getSiteConfig } from './utils/pageConfig'
 
 const site = getSiteConfig()
+const loadHomePage = () => import('./pages/HomePage.vue')
+const loadPlaceholderPage = () => import('./pages/PlaceholderPage.vue')
+const loadMarkdownPage = () => import('./pages/MarkdownPage.vue')
+const loadNotFoundPage = () => import('./pages/NotFoundPage.vue')
 
 const resolveComponent = (page) => {
-  if (page.pageKey === 'home' || page.type === 'home') return HomePage
-  if (page.pageKey === 'not-found' || page.type === 'not-found') return NotFoundPage
-  if (page.type === 'service' || page.type === 'case' || page.type === 'page' || page.type === 'tech') return MarkdownPage
-  return PlaceholderPage
+  if (page.pageKey === 'home' || page.type === 'home') return loadHomePage
+  if (page.pageKey === 'not-found' || page.type === 'not-found') return loadNotFoundPage
+  if (page.type === 'service' || page.type === 'case' || page.type === 'page' || page.type === 'tech') return loadMarkdownPage
+  return loadPlaceholderPage
 }
 
 const normalizePath = (path) => {
@@ -68,7 +68,7 @@ const routes = generateRoutes()
 routes.push({
   path: '/:pathMatch(.*)*',
   name: 'not-found',
-  component: NotFoundPage,
+  component: loadNotFoundPage,
   meta: {
     pageKey: 'not-found',
     locale: site.defaultLocale,

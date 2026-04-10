@@ -87,7 +87,9 @@ const processInlineTokens = (inlineTokens = [], parentChildren) => {
 			case 'link_open': {
 				const href = token.attrGet?.('href') || ''
 				const title = token.attrGet?.('title')
-				const attrs = {}
+				const attrs = {
+					class: "font-semibold text-primary hover:underline",
+				}
 				if (title) attrs.title = title
 				if (!href) {
 					pushNode('span', attrs)

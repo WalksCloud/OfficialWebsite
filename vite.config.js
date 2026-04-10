@@ -7,6 +7,91 @@ import { DateTime } from 'luxon'
 import git from 'git-rev-sync'
 import YAML from 'yaml'
 
+const projectSrc = path.resolve(__dirname, 'src')
+const projectSrcPosix = projectSrc.replace(/\\/g, '/')
+
+const sanitizeChunkName = (name = '') =>
+  name
+    .replace(/[@]/g, '')
+    .replace(/[\\/]/g, '-')
+    .replace(/\s+/g, '-')
+    .replace(/^-+/, '')
+    .toLowerCase()
+
+const normalizeId = (id = '') => id.replace(/\\/g, '/')
+
+const stripFileExtension = (value = '') => value.replace(/\.(mjs|js|ts|cjs|jsx|tsx)$/i, '')
+
+const normalizeViteDepsName = (raw = '') => {
+  const clean = stripFileExtension(raw)
+  if (!clean) return null
+  if (clean.startsWith('@')) {
+    const [scope, rest = ''] = clean.split('_', 2)
+    if (!rest) return scope.replace(/_/g, '/')
+    const pkg = rest.split('_')[0] || ''
+    return `${scope.replace(/_/g, '/')}/${pkg}`
+  }
+  return clean.split('_')[0] || clean
+}
+
+const extractVendorChunkName = (() => {
+  const cache = new Map()
+  return (id = '') => {
+    if (cache.has(id)) return cache.get(id)
+    const normalizedId = normalizeId(id)
+    let packageName = null
+    const nodeModulesMatch =
+      normalizedId.match(/node_modules\/(@?[^/]+)(?:\/([^/]+))?/) || null
+    if (nodeModulesMatch) {
+      const [, pkg, subPkg] = nodeModulesMatch
+      packageName = pkg?.startsWith('@') && subPkg ? `${pkg}/${subPkg}` : pkg
+    } else {
+      const viteDepsMatch = normalizedId.match(/\.vite\/deps\/([^/?]+)/)
+      if (viteDepsMatch) {
+        packageName = normalizeViteDepsName(viteDepsMatch[1])
+      }
+    }
+    const result = packageName ? `vendor-${sanitizeChunkName(packageName)}` : null
+    cache.set(id, result)
+    return result
+  }
+})()
+
+const extractAppChunkName = (() => {
+  const cache = new Map()
+  return (id = '') => {
+    if (cache.has(id)) return cache.get(id)
+    const normalizedId = normalizeId(id)
+    if (!normalizedId.startsWith(projectSrcPosix)) {
+      cache.set(id, null)
+      return null
+    }
+    const relativePath = path.posix.relative(projectSrcPosix, normalizedId)
+    if (!relativePath) {
+      cache.set(id, null)
+      return null
+    }
+    const sanitized = relativePath.replace(/\.(vue|js|ts|mjs|jsx|tsx)$/, '')
+    const result = `app-${sanitizeChunkName(sanitized)}`
+    cache.set(id, result)
+    return result
+  }
+})()
+
+const resolveManualChunk = (id = '') => extractVendorChunkName(id) || extractAppChunkName(id)
+
+const codeSplittingGroups = [
+  {
+    name: (id) => extractVendorChunkName(id),
+    test: (id) => Boolean(extractVendorChunkName(id)),
+    minShareCount: 1,
+  },
+  {
+    name: (id) => extractAppChunkName(id),
+    test: (id) => Boolean(extractAppChunkName(id)),
+  },
+]
+
 const walksCloudUiColors = {
   primary: 'blue',
   secondary: 'cyan',
@@ -52,6 +137,21 @@ export default defineConfig(({ mode }) => {
       alias: {
         '@': path.resolve(__dirname, 'src')
       }
-    }
+    },
+    build: {
+      rolldownOptions: {
+        output: {
+          codeSplitting: {
+            includeDependenciesRecursively: true,
+            groups: codeSplittingGroups,
+          },
+        },
+      },
+      rollupOptions: {
+        output: {
+          manualChunks: resolveManualChunk,
+        },
+      },
+    },
   }
 })

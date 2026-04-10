@@ -18,7 +18,7 @@ const parseFrontmatter = (filePath) => {
 }
 
 const loadContentPages = () => {
-  const contentDirs = ['services', 'cases']
+  const contentDirs = ['services', 'cases', 'tech']
   const entries = new Map()
   contentDirs.forEach((dir) => {
     const dirPath = path.resolve(root, 'src/content', dir)

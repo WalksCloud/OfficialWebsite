@@ -1,12 +1,11 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import { usePageHead } from '@/utils/usePageHead'
-import { getContentFilePath, getSiteConfig } from '@/utils/pageConfig'
 import MarkdownIt from 'markdown-it'
 import YAML from 'yaml'
-import { ref } from 'vue'
+import { usePageHead } from '@/utils/usePageHead'
+import { getContentFilePath, getSiteConfig } from '@/utils/pageConfig'
 import RelationShipArticleList from '@/components/RelationShipArticleList.vue'
 import Contact from '@/components/Contact.vue'
 
@@ -19,9 +18,9 @@ const contentTitle = ref('')
 usePageHead(route, { overrideTitle: contentTitle })
 
 const modules = import.meta.glob('../content/**/*.md', {
-  eager: true,
   as: 'raw',
   query: '?raw',
+  eager: true,
 })
 const moduleKeys = Object.keys(modules)
 
@@ -47,7 +46,7 @@ const parseSingleLocaleMd = (raw = '', filenameLocale) => {
   return { meta: { ...meta, lang }, body }
 }
 
-const renderBlock = (block, targetLocale) => {
+const renderBlock = (block) => {
   const titleText = typeof block.meta?.title === 'string' ? block.meta.title : ''
   const descriptionText = typeof block.meta?.description === 'string' ? block.meta.description : ''
   const content = (block.body || '').trim()
@@ -60,27 +59,42 @@ const renderBlock = (block, targetLocale) => {
   }
 }
 
-const rendered = computed(() => {
+const rendered = ref(null)
+
+const resolveRaw = (entry) => {
+  if (typeof entry === 'string') return entry
+  if (entry && typeof entry.default === 'string') return entry.default
+  return ''
+}
+
+const resolveContent = () => {
   const basePath = getContentFilePath(pageKey.value, currentLocale.value)
   if (!basePath) return null
   const contentPath = findContentPath(basePath, currentLocale.value)
   if (!contentPath) return null
-  const mod = modules[contentPath]
-  const raw =
-    typeof mod === 'string'
-      ? mod
-      : typeof mod?.default === 'string'
-        ? mod.default
-        : ''
+  const raw = resolveRaw(modules[contentPath])
   if (!raw) return null
   const filenameLocale = contentPath.match(/\.([a-z-]+)\.md$/i)?.[1]
   const block = parseSingleLocaleMd(raw, filenameLocale)
-  const renderedBlock = renderBlock(block, currentLocale.value)
-  if (renderedBlock?.title) {
-    contentTitle.value = renderedBlock.title
+  return renderBlock(block)
+}
+
+const loadContent = () => {
+  const block = resolveContent()
+  if (block?.title) {
+    contentTitle.value = block.title
   }
-  return renderedBlock
-})
+  rendered.value = block
+}
+
+loadContent()
+
+watch(
+  () => [pageKey.value, currentLocale.value],
+  () => {
+    loadContent()
+  },
+)
 </script>
 
 <template>
