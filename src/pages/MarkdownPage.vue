@@ -47,11 +47,13 @@ const parseSingleLocaleMd = (raw = '', filenameLocale) => {
 
 const renderBlock = (block, targetLocale) => {
   const titleText = typeof block.meta?.title === 'string' ? block.meta.title : ''
+  const descriptionText = typeof block.meta?.description === 'string' ? block.meta.description : ''
   const content = (block.body || '').trim()
   const hasH1 = /^#\s+/m.test(content)
-  const source = hasH1 ? content : `# ${titleText || ''}\n\n${content}`
+  const source = hasH1 ? content : `# ${titleText || ''}\n\n${descriptionText}\n\n${content}`
   return {
     title: titleText,
+    description: descriptionText,
     html: md.render(source),
   }
 }
