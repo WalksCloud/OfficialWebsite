@@ -29,10 +29,10 @@ A Mac-centric company relied on manual scripts. After opening additional offices
 - **Security blind spots**: No Jamf Protect or conditional access left lost devices unmanaged and data exposed.
 - **Resource drain**: IT spent most of its time on setups and patching instead of strategic projects.
 
-## WalksCloud’s Jamf Playbook
+## WalksCloud’s Delivery Approach
 
 1. **Architecture design**: Map organizational structure to Jamf tenants, groups, and permissions, and establish zero-touch enrollment flows.
-2. **Automation and security**: Deliver configuration profiles, patch policies, software catalogs, IdP and conditional access integrations, and automation via scripts/APIs.
-3. **Operations handover**: Provide dashboards, reports, Runbooks, and training, with options for WalksCloud-managed or co-managed support.
+2. **Configuration and security**: Deliver configuration profiles, patch policies, software catalogs, IdP and conditional access integrations, and targeted API or script support where needed.
+3. **Operations handover**: Provide dashboards, reports, operations guides, and training, with options for WalksCloud-managed or co-managed support.
 
 With WalksCloud running Jamf, enterprises focus on employee experience while we enforce policy and security, turning Apple fleets into a predictable, auditable asset.

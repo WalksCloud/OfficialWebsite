@@ -32,7 +32,7 @@ A product-focused company leaned on a single engineer for IT. During office move
 ## WalksCloud’s Managed Flow
 
 1. **Service activation**: We inventory assets, accounts, and policies; define SLAs and escalation matrices; and configure help desk tooling plus knowledge bases.
-2. **Daily operations**: Remote and onsite support, patch and backup checks, capacity planning, and automated onboarding/offboarding keep environments consistent.
+2. **Daily operations**: Remote and onsite support, patch and backup checks, capacity planning, asset and license management, and structured onboarding/offboarding workflows keep environments consistent.
 3. **Governance and reporting**: Monthly summaries cover incidents, improvements, and forward-looking budgets, with training or co-management options for gradual insourcing.
 
 WalksCloud keeps accountability for IT execution while clients retain strategic control, ensuring essential services run smoothly without building an internal department overnight.

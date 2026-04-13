@@ -29,10 +29,10 @@ An organization serving multiple customer tenants had to manage service staff, p
 - **Risk exposure**: Lacking MFA and conditional access raised customer concerns and blocked deals.
 - **Audit stress**: Every review required manually compiling reports, forcing legal and IT to work overnight.
 
-## WalksCloud’s ZITADEL Playbook
+## WalksCloud’s ZITADEL Delivery Approach
 
 1. **Identity strategy design**: Workshops define tenant layers, roles, delegation, and approval flows.
 2. **Deployment and integration**: We implement ZITADEL in your preferred environment, federate with AD/LDAP, SAML, or SCIM sources, and wire SSO/MFA into apps and APIs.
-3. **Operations and governance**: Automated provisioning/deprovisioning, approval workflows, reporting templates, Runbooks, and training keep IAM growing with the business.
+3. **Operations and governance**: Account activation/deactivation flows, approval workflows, reporting templates, operations guides, and training keep IAM growing with the business.
 
 With WalksCloud managing the platform, clients focus on business logic while we guarantee consistent identity, access, and compliance outcomes—without the hidden cost of rolling their own IAM.

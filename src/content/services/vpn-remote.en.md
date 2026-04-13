@@ -33,6 +33,6 @@ A growing team continued relying on a single VPN appliance and ran into:
 
 1. **Needs assessment**: Analyze user personas, applications, bandwidth, and geography to define concurrency targets, SLAs, and zero-trust boundaries.
 2. **Architecture build**: Deploy redundant OpenVPN/WireGuard/clientless gateways, integrate IdPs, MFA, device posture, and fine-grained segmentation.
-3. **Operations and visibility**: Automate certificate rotation, deliver self-service portals, enable monitoring and audit reports, and provide Runbooks or managed services.
+3. **Operations and visibility**: Establish certificate rotation, self-service portals, monitoring, and audit reports, and provide operating guides, training, or managed services.
 
 WalksCloud ensures remote access is both easy and safe, freeing teams to focus on collaboration while we keep the edge hardened.

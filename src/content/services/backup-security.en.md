@@ -33,6 +33,6 @@ One organization gearing up for a major campaign relied on a single NAS plus def
 
 1. **Layered backup strategy**: We classify workloads, deploy Proxmox Backup Server with immutable storage and offline copies, and define RPO/RTO targets.
 2. **Hardened mail ingress**: Mail Gateway plus DMARC/SPF/DKIM enforcement, detonation sandboxes, and URL rewriting shrink the phishing surface.
-3. **Exercises and evidence**: Restoration Runbooks, monitoring dashboards, and automated evidence collection power recurring reports for audits.
+3. **Exercises and evidence**: Restoration guides, monitoring dashboards, and evidence collection workflows support recurring reports for audits.
 
 By sharing resilience KPIs—recoverable backups, traceable email events, defensible incident reports—WalksCloud lets organizations focus on revenue while we guarantee the backup and security stack delivers when it matters.

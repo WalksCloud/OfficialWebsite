@@ -17,7 +17,7 @@ jsonld:
 
 ## Case Insight: Cross-cloud Operations Without Guardrails
 
-A company managing multiple brands split workloads between cloud and colocation with no unified runbook. Within six months they experienced:
+A company managing multiple brands split workloads between cloud and colocation with no unified operating documentation. Within six months they experienced:
 
 - Certificates expiring and breaking payment flows for extended windows.
 - Discovering too late that databases lacked failover, so emergency scaling created even more latency.
@@ -27,9 +27,9 @@ A company managing multiple brands split workloads between cloud and colocation 
 
 - **Pager fatigue**: Developers cycled through on-call rotations, slowing product delivery.
 - **Runaway spend**: Without capacity planning, cloud bills climbed while performance flatlined.
-- **Audit setbacks**: Missing Runbooks and reports caused customer security reviews to be rejected, delaying revenue.
+- **Audit setbacks**: Missing operations documentation and reports caused customer security reviews to be rejected, delaying revenue.
 
-## WalksCloud’s Managed Runbook
+## WalksCloud’s Managed Approach
 
 1. **Health assessment**: Review architecture, capacity, deployment pipelines, and security posture to prioritize fixes.
 2. **Operational rigor**: Implement monitoring, alerting, patching, backups, and rehearsed incident workflows with documented change control.

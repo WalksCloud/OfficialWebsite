@@ -2,7 +2,7 @@
 type: service
 slug: services/wazuh-siem
 title: Wazuh SIEM Deployment and Operations
-description: WalksCloud deploys and operates Wazuh SIEM to consolidate endpoint, server, cloud, and SaaS logs with MITRE-aligned automation so analysts focus on real threats.
+description: WalksCloud deploys and operates Wazuh SIEM to consolidate endpoint, server, cloud, and SaaS logs with MITRE-aligned alert handling workflows so analysts focus on real threats.
 ogType: article
 index: true
 deploy: true
@@ -32,7 +32,7 @@ A multi-site enterprise adopted Wazuh but lacked operational experience, leading
 ## WalksCloud’s Delivery Steps
 
 1. **Architecture planning**: Design manager/indexer/agent topology with high availability, capacity buffers, and backup strategies.
-2. **Rules and visualization**: Tune detections, ingest threat intel, and build MITRE ATT&CK dashboards while integrating SOAR/ITSM so alerts become actionable tasks.
-3. **Operations and enablement**: Handle upgrades, backup/restore drills, performance monitoring, Runbooks, training, or managed services to keep the stack healthy.
+2. **Rules and visualization**: Tune detections, ingest threat intel, and build MITRE ATT&CK dashboards while integrating SOAR or ITSM systems when needed so alerts become actionable tasks.
+3. **Operations and enablement**: Handle upgrades, backup/restore drills, performance monitoring, handling guides, training, or managed services to keep the stack healthy.
 
 With WalksCloud managing the platform, organizations can stop worrying about the SIEM itself and instead shorten detection and response cycles while trusting Wazuh as a dependable security backbone.

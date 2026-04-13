@@ -31,7 +31,7 @@ A fast-scaling engineering group rushed to launch multiple regional versions and
 
 ## How WalksCloud Lands It
 
-1. **Architecture reset with IaC**: Using Terraform/Ansible we inventory resources, rebuild clusters, networks, storage, and quotas into reproducible templates.
+1. **Architecture reset with IaC**: Using Terraform, we inventory and organize resources, then rebuild clusters, networks, storage, and quotas into more consistent environment templates.
 2. **CI/CD plus GitOps**: We design GitHub Actions, GitLab CI, or other pipelines with container scanning and dynamic tests, then enforce deployment consistency through Argo CD or Flux.
 3. **Observability and governance**: Prometheus, Grafana, Loki, and Wazuh are unified with SLO/SLA definitions, alert flows, RBAC, secret management, and audit reporting tied to zero-trust expectations.
 

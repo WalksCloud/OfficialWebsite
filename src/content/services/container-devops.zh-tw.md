@@ -31,7 +31,7 @@ jsonld:
 
 ## 行雲資訊如何逐點落地
 
-1. **架構重整與 IaC（Infrastructure as Code）**：以 Terraform/Ansible 盤點資源，重建叢集、網路、儲存與配額，建立可複製的環境模板。
+1. **架構重整與 IaC（Infrastructure as Code，基礎設施程式化）**：以 Terraform 盤點與整理資源，重建叢集、網路、儲存與配額，建立較一致的環境模板。
 2. **CI/CD + GitOps**：針對 GitHub Actions、GitLab CI 等工具設計多階段管線，導入容器掃描、動態測試，再以 Argo CD/Flux 強化部署一致性。
 3. **觀測與安全治理**：整合 Prometheus、Grafana、Loki、Wazuh，定義 SLO/SLA（Service Level Objective/Agreement，服務層級目標與協議）與告警流程，搭配 RBAC、密鑰管理、審核報告，確保符合客戶與內控需求。
 

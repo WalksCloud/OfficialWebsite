@@ -32,7 +32,7 @@ An enterprise left with expensive legacy virtualization licenses wanted to switc
 ## WalksCloud’s Execution Path
 
 1. **Assessment and blueprint**: Analyze workloads, capacity, SLA requirements, and dependencies; design migration waves and test PoC performance.
-2. **Platform build**: Deploy Proxmox VE, Ceph, SDN, and GPU nodes with HA, replication, and IaC-driven consistency.
-3. **Migration and operations**: Perform P2V/V2V moves, configure hybrid links, backups, and DR workflows, and deliver monitoring plus Runbooks—offering managed operations if needed.
+2. **Platform build**: Deploy Proxmox VE, Ceph, SDN, and GPU nodes with HA, replication, and, where appropriate, Terraform-managed infrastructure settings to reduce environment drift.
+3. **Migration and operations**: Perform P2V/V2V moves, configure hybrid links, backups, and DR workflows, and deliver monitoring, reporting processes, and operations documentation—offering managed operations if needed.
 
 This three-phase approach lets businesses retire legacy platforms quickly and support future workloads without sacrificing reliability.

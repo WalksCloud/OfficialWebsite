@@ -2,7 +2,7 @@
 type: service
 slug: services/wazuh-siem
 title: Wazuh SIEM 部署與維運
-description: 行雲資訊協助部署與維運 Wazuh SIEM，整合端點、伺服器、雲端與 SaaS 日誌，提供 MITRE 對應與自動化流程，讓安全團隊專注威脅分析。
+description: 行雲資訊協助部署與維運 Wazuh SIEM，整合端點、伺服器、雲端與 SaaS 日誌，提供 MITRE 對應與告警處理流程，讓安全團隊專注威脅分析。
 ogType: article
 index: true
 deploy: true
@@ -32,7 +32,7 @@ jsonld:
 ## 行雲資訊的實作步驟
 
 1. **架構規劃**：設計管理節點、索引與 Agent 佈署拓樸，確保高可用與容量彈性，並建立備援策略。
-2. **規則與可視化**：調校規則、匯入威脅情資、建立 MITRE ATT&CK 儀表板，串接 SOAR（Security Orchestration, Automation and Response，安全協調自動化回應）/ITSM（IT Service Management，IT 服務管理），將告警轉為可執行任務。
-3. **營運與訓練**：提供版本升級、備份還原、效能監控與 Runbook，並安排教育訓練或代管，確保平台長期健康。
+2. **規則與可視化**：調校規則、匯入威脅情資、建立 MITRE ATT&CK 儀表板，視需求串接 SOAR（Security Orchestration, Automation and Response）或 ITSM（IT Service Management，IT 服務管理）系統，將告警整理為可執行任務。
+3. **營運與訓練**：提供版本升級、備份還原、效能監控與處理手冊，並安排教育訓練或代管，確保平台長期健康。
 
 透過行雲資訊的協助，企業無需再為 SIEM 平台本身煩惱，而能專注在縮短偵測與回應時間，讓 Wazuh 成為必要且可靠的安全底座。

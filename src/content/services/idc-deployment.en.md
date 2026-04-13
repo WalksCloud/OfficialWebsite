@@ -33,6 +33,6 @@ An organization needed a colo-based DR environment but lacked data center expert
 
 1. **Planning and coordination**: Assess capacity, redundancy, circuit needs, and compliance, then produce power/cooling/cabling plans while aligning carriers, integrators, and low-voltage vendors.
 2. **Build and acceptance**: Deploy core/aggregation switches, firewalls, load balancers, and out-of-band consoles with standardized labeling and asset tracking, and support acceptance tests.
-3. **Remote operations**: Provide remote-hands playbooks, change management, documentation updates, and routine inspections to keep SLA and audit requirements satisfied.
+3. **Remote operations**: Provide remote-hands support, change records, documentation updates, and routine inspections to keep SLA and audit requirements satisfied.
 
 IDC footprints exist to guarantee continuity. Partnering with WalksCloud transfers the build and run risk to an experienced team so your colocation environment delivers the resilience it was meant to provide.

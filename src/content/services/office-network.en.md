@@ -33,6 +33,6 @@ A multi-office organization reused aging gear when relocating, leading to:
 
 1. **Assessment and topology**: Onsite surveys, heatmaps, and spectrum analysis inform AP, switch, and SD-WAN placement plus power and redundancy planning.
 2. **Build and policy design**: Deploy Cisco, Juniper, Palo Alto, Fortinet, or VyOS equipment; implement VLANs, QoS, zero-trust policies, guest access, and NAC/VPN integration.
-3. **Operations and documentation**: Deliver monitoring, firmware management, incident response, and comprehensive Runbooks so expansions or moves reuse proven templates.
+3. **Operations and documentation**: Deliver monitoring, firmware management, incident handling, and complete documentation so expansions or moves can reuse proven templates.
 
-This blueprint gives companies a repeatable network playbook, keeping office connectivity aligned with business growth.
+This blueprint gives companies a repeatable network foundation, keeping office connectivity aligned with business growth.

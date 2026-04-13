@@ -33,6 +33,6 @@ A local multi-office company relied on VPN and flat networks. Once credentials l
 
 1. **Strategy and discovery**: Workshops clarify identity sources, application tiers, data flows, and success metrics.
 2. **Platform deployment**: We configure Jamf Security Cloud, Cloudflare Zero Trust, or NetBird (or a combination) with posture checks, app proxies, and zero-client networks wired into IdPs, SIEM, and SD-WAN/VPN.
-3. **Operations and automation**: Policy templates, Playbooks, audit-ready reports, and training connect zero trust with onboarding, exception handling, and incident response.
+3. **Operations and governance**: Policy templates, handling guides, audit-ready reports, and training connect zero trust with onboarding, exception handling, and patching rhythms.
 
 Zero trust is an ongoing posture, not a single product. WalksCloud orchestrates the people, processes, and platforms so the journey moves forward without derailing productivity.

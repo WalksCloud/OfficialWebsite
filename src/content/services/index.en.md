@@ -15,15 +15,26 @@ jsonld:
   kind: WebPage
 ---
 
-## Catalog Highlights
+## Common Scenarios
 
-- **Comprehensive IT/MIS Hosting**: IT monitoring platforms, containerization and DevOps, managed outsourcing, and campus network projects.
-- **Data Center & Cloud**: IDC build-outs, virtualization & Proxmox clusters, and website or application hosting operations.
-- **Security Management**: Wazuh SIEM, Zero Trust enablement, backup and email security, 802.1X NAC, VPN and remote access, plus IAM with ZITADEL.
-- **Asset Management**: Wazuh-powered asset intelligence and Jamf enterprise Apple device management.
-- **Custom Development**: Tailor-made systems that digitize your workflows and integrate with the rest of your stack.
+- A business is growing quickly, but the IT/MIS team is too lean to cover networking, monitoring, and security at the same time.
+- A traditional industry team is moving through digital transformation, yet legacy systems cannot be integrated cleanly and audit requirements block progress.
+- Overseas customers or enterprise reviews require stronger backup, identity management, and zero trust controls.
 
-Browse each service detail page to see how we approach scoping, delivery, and measurable outcomes.
+## Hidden Costs of DIY
+
+- **Tools without integration**: Different departments buy separate products, leaving IT to spend excessive time coordinating and stitching them together.
+- **No one maintains the stack**: After delivery, updates, patches, and documentation are neglected until the project is abandoned.
+- **Compliance becomes a bottleneck**: Outages or data exposure erode customer trust when teams cannot meet audit expectations.
+
+## WalksCloud Service Scope and Solution Areas
+
+1. **Operational resilience**: Backup security, IDC deployment, virtualization, and hosting operations help organizations build verifiable resilience, recovery readiness, and service continuity.
+2. **Delivery efficiency**: Container DevOps, custom development, and IT monitoring give engineering, IT, and operations teams a more consistent delivery model and stronger observability.
+3. **Security governance**: 802.1X, VPN, zero trust, Wazuh SIEM, and IAM with ZITADEL reduce risk across network access, identity governance, and security visibility.
+4. **Assets and networks**: Office networking, Jamf, and IT outsourcing keep endpoints, accounts, and workplace environments healthy on a daily basis.
+
+We define success metrics together with clients, then match a single service or a broader solution set to the actual need. Documentation, training, and reporting make sure each investment solves a real operational problem. If you already know which category is causing the most friction, start with the related service page below to find the most relevant direction faster.
 
 ---
 
