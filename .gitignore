@@ -13,6 +13,7 @@ dist
 dist-ssr
 *.local
 .output
+.vite-ssg-temp
 
 # Editor directories and files
 .vscode/*
@@ -24,3 +25,9 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+notes
+
+/*.txt
+/*.md
+!README.md
