@@ -30,7 +30,7 @@ bun run preview
 Rebuilds on changes and serves `dist/` via nginx (`docker-compose.preview.yml`, `deploy/nginx.conf`); editing `deploy/*.conf` auto-restarts the container.
 
 ## Content & Meta
-- Config-driven: `config/site.yaml` (brand, social/OG/fb meta, baseUrl, locales), `config/pages.yaml` (routes/slugs, titles/descriptions, sitemap/JSON-LD).
+- Config-driven: `config/site-info.yaml` (brand, social/OG/fb meta, baseUrl, locales), `config/pages.yaml` (routes/slugs, titles/descriptions, sitemap/JSON-LD).
 - Locales: `src/locales/*.yaml`.
 - Markdown: `src/content/services/*.md`, `src/content/cases/*.md` (multi-locale per file via frontmatter).
 - Head/meta/hreflang/canonical/JSON-LD generated at build.

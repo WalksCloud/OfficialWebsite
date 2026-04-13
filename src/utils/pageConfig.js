@@ -1,4 +1,4 @@
-import siteConfig from '../../config/site.yaml'
+import siteConfig from '../../config/site-info.yaml'
 import basePagesConfig from '../../config/pages.yaml'
 import { getAllPageData } from './pageData'
 
@@ -39,14 +39,13 @@ export const getContentFilePath = (pageKey, locale) => {
   const segments = slug.split('/')
   const section = segments[0]
   const rest = segments.slice(1).join('/') || 'index'
-  if (section === 'services') {
-    return `../content/services/${rest}`
+  switch (section) {
+    case 'services'||'cases'||'tech':
+      return `../content/${section}/${rest}`
+    default:
+      // fallback generic path
+      return `../content/${slug}`
   }
-  if (section === 'cases') {
-    return `../content/cases/${rest}`
-  }
-  // fallback generic path
-  return `../content/${slug}`
 }
 
 export const buildPrefixedPath = (pageKey, locale) => {

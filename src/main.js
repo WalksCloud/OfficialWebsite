@@ -6,16 +6,16 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSquareFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import routes, { scrollBehavior } from './router'
 import { getSiteConfig, buildPrefixedPath, buildNonPrefixedPath } from './utils/pageConfig'
+import { getLocaleFallbackChain, getLocaleMessages } from './utils/localeBundles'
 import { registerGlobalComponents } from './registerGlobalComponents'
 
-import en from './locales/en-US.yaml'
-import tw from './locales/zh-TW.yaml'
 import './style.css'
 import ui from '@nuxt/ui/vue-plugin'
 import App from './App.vue'
 
 const site = getSiteConfig()
-const messages = { en, 'zh-tw': tw, zh: tw }
+const messages = getLocaleMessages()
+const fallbackLocale = getLocaleFallbackChain(site)
 
 library.add(faSquareFacebook, faLinkedin)
 
@@ -27,7 +27,7 @@ export const createApp = ViteSSG(
     const i18n = createI18n({
       legacy: false,
       locale: site.defaultLocale || 'zh-tw',
-      fallbackLocale: ['zh-tw', 'zh', 'en'],
+      fallbackLocale,
       warnHtmlMessage: false,
       messages,
     })

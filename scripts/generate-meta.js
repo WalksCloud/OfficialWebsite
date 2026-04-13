@@ -8,7 +8,7 @@ const root = process.cwd()
 const distDir = path.resolve(root, 'dist')
 
 const readYaml = (filePath) => yaml.parse(fs.readFileSync(path.resolve(root, filePath), 'utf8'))
-const site = readYaml('config/site.yaml')
+const site = readYaml('config/site-info.yaml')
 
 const contentPages = loadContentPages()
 const pages = [...readYaml('config/pages.yaml'), ...contentPages]
