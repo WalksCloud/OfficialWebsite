@@ -162,9 +162,16 @@ export default defineConfig(({ mode }) => {
       },
     ],
     resolve: {
-      alias: {
-        '@': path.resolve(__dirname, 'src')
-      }
+      alias: [
+        {
+          find: /^vue$/,
+          replacement: path.resolve(__dirname, 'node_modules/vue/dist/vue.esm-bundler.js'),
+        },
+        {
+          find: '@',
+          replacement: path.resolve(__dirname, 'src'),
+        },
+      ]
     },
     build: {
       rolldownOptions: {

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSquareFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import routes, { scrollBehavior } from './router'
 import { getSiteConfig, buildPrefixedPath, buildNonPrefixedPath } from './utils/pageConfig'
+import { registerGlobalComponents } from './registerGlobalComponents'
 
 import en from './locales/en-US.yaml'
 import tw from './locales/zh-TW.yaml'
@@ -35,6 +36,7 @@ export const createApp = ViteSSG(
     app.use(pinia)
     app.use(i18n)
     app.use(ui)
+    registerGlobalComponents(app)
     app.component('font-awesome-icon', FontAwesomeIcon)
 
     // Persist locale for client navigation only

@@ -24,3 +24,7 @@ jsonld:
 - **Custom Development**: Tailor-made systems that digitize your workflows and integrate with the rest of your stack.
 
 Browse each service detail page to see how we approach scoping, delivery, and measurable outcomes.
+
+---
+
+<ServicesGrid />

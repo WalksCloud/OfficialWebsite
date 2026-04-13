@@ -2,17 +2,18 @@
 import { computed, ref, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import MarkdownIt from 'markdown-it'
 import YAML from 'yaml'
 import UBadge from '@nuxt/ui/components/Badge.vue'
 import { usePageHead } from '@/utils/usePageHead'
 import { getContentFilePath, getSiteConfig, getSlugForLocale } from '@/utils/pageConfig'
 import { resolveContentInfo } from '@/utils/contentIndex'
 import { getArticleCategoryTags } from '@/utils/articleTags'
+import MarkdownRuntimeContent from '@/components/MarkdownRuntimeContent.vue'
 import RelationShipArticleList from '@/components/RelationShipArticleList.vue'
 import Contact from '@/components/Contact.vue'
+import { createMarkdownRenderer } from '@/utils/markdown'
 
-const md = new MarkdownIt({ html: true, linkify: true, breaks: true })
+const md = createMarkdownRenderer({ html: true, linkify: true, breaks: true })
 const site = getSiteConfig()
 
 const route = useRoute()
@@ -163,12 +164,11 @@ const articleTags = computed(() => {
         </div>
       </h1>
       <p v-if="rendered.description">{{ rendered.description }}</p>
-      <div v-html="rendered.html"></div>
+      <MarkdownRuntimeContent :source="rendered.html" />
     </div>
     <p v-else class="text-center text-gray-600 dark:text-gray-300">
       {{ t('placeholder.message') }}
     </p>
-    <hr />
     <RelationShipArticleList />
   </section>
   <Contact />
@@ -179,50 +179,53 @@ const articleTags = computed(() => {
   color: inherit;
   line-height: 1.6;
 }
-:deep(.markdown-content h1) {
+:deep(.markdown-content [data-markdown-embedded]) {
+  padding: 1rem 0 1rem;
+}
+:deep(.markdown-content h1:not([data-markdown-embedded] *)) {
   font-size: 2rem;
   font-weight: 700;
   margin: 1.25rem 0 0.75rem;
 }
-:deep(.markdown-content h2) {
+:deep(.markdown-content h2:not([data-markdown-embedded] *)) {
   font-size: 1.6rem;
   font-weight: 700;
   margin: 1rem 0 0.6rem;
 }
-:deep(.markdown-content h3) {
+:deep(.markdown-content h3:not([data-markdown-embedded] *)) {
   font-size: 1.35rem;
   font-weight: 700;
   margin: 0.85rem 0 0.5rem;
 }
-:deep(.markdown-content h4) {
+:deep(.markdown-content h4:not([data-markdown-embedded] *)) {
   font-size: 1.15rem;
   font-weight: 700;
   margin: 0.75rem 0 0.4rem;
 }
-:deep(.markdown-content p) {
+:deep(.markdown-content p:not([data-markdown-embedded] *)) {
   margin: 0.5rem 0 0.75rem;
 }
-:deep(.markdown-content ul),
-:deep(.markdown-content ol) {
+:deep(.markdown-content ul:not([data-markdown-embedded] *)),
+:deep(.markdown-content ol:not([data-markdown-embedded] *)) {
   margin: 0.5rem 0 0.75rem 1.5rem;
   padding: 0;
 }
-:deep(.markdown-content ul) {
+:deep(.markdown-content ul:not([data-markdown-embedded] *)) {
   list-style-type: disc;
 }
-:deep(.markdown-content ol) {
+:deep(.markdown-content ol:not([data-markdown-embedded] *)) {
   list-style-type: decimal;
 }
-:deep(.markdown-content li + li) {
+:deep(.markdown-content li:not([data-markdown-embedded] *) + li:not([data-markdown-embedded] *)) {
   margin-top: 0.25rem;
 }
-:deep(.markdown-content strong) {
+:deep(.markdown-content strong:not([data-markdown-embedded] *)) {
   font-weight: 700;
 }
-:deep(.markdown-content em) {
+:deep(.markdown-content em:not([data-markdown-embedded] *)) {
   font-style: italic;
 }
-:deep(.markdown-content a) {
+:deep(.markdown-content a:not([data-markdown-embedded] *)) {
   color: var(--color-primary, #1e90ff);
   text-decoration: underline;
 }
@@ -233,5 +236,8 @@ const articleTags = computed(() => {
 }
 .flex-end {
   align-content: flex-end;
+}
+:deep(hr) {
+  margin: calc(var(--spacing) * 12) 0 calc(var(--spacing) * 12);
 }
 </style>

@@ -6,12 +6,9 @@ import YAML from 'yaml'
 import FaqArticleCard from './FaqArticleCard.vue'
 import ArticlePreview from './ArticlePreview.vue'
 import mappingRaw from '../../config/case-mapping.yaml?raw'
-import { getSiteConfig } from '@/utils/pageConfig'
 import { resolveContentInfo, buildLocalizedPath } from '@/utils/contentIndex'
 import { useFallbackNotice } from '@/composables/useFallbackNotice'
 
-const siteConfig = getSiteConfig()
-const relationDefaultLocale = siteConfig.defaultLocale || 'zh-tw'
 const caseMappings = YAML.parse(mappingRaw) || []
 
 const { locale, availableLocales, fallbackLocale } = useI18n()
@@ -101,23 +98,29 @@ const relatedData = computed(() => {
 	let techSlugs = []
 	let faqSlugs = []
 
-	if (type === 'service') {
-		const cases = findCasesByService(slug)
-		caseSlugs = cases.map((entry) => entry.case)
-		faqSlugs = cases.flatMap((entry) => entry.faq || [])
-		techSlugs = cases.flatMap((entry) => entry.tech || [])
-	} else if (type === 'case') {
-		const entry = findCaseEntry(slug)
-		if (entry) {
-			serviceSlugs = entry.services || []
-			faqSlugs = entry.faq || []
-			techSlugs = entry.tech || []
-		}
-	} else if (type === 'tech') {
-		const cases = findCasesByTech(slug)
-		caseSlugs = cases.map((entry) => entry.case)
-		serviceSlugs = cases.flatMap((entry) => entry.services || [])
-		faqSlugs = cases.flatMap((entry) => entry.faq || [])
+	switch (type) {
+		case 'service':
+			const serviceEntry = findCasesByService(slug)
+			caseSlugs = serviceEntry.map((entry) => entry.case)
+			faqSlugs = serviceEntry.flatMap((entry) => entry.faq || [])
+			techSlugs = serviceEntry.flatMap((entry) => entry.tech || [])
+			break;
+		case 'case':
+			const caseEntry = findCaseEntry(slug)
+			if (caseEntry) {
+				serviceSlugs = caseEntry.services || []
+				faqSlugs = caseEntry.faq || []
+				techSlugs = caseEntry.tech || []
+			}
+			break;
+		case 'tech':
+			const techEntry = findCasesByTech(slug)
+			caseSlugs = techEntry.map((entry) => entry.case)
+			serviceSlugs = techEntry.flatMap((entry) => entry.services || [])
+			faqSlugs = techEntry.flatMap((entry) => entry.faq || [])
+			break;
+		default:
+			break;
 	}
 
 	caseSlugs = unique(caseSlugs)
@@ -160,6 +163,7 @@ const hasRelations = computed(
 
 <template>
 	<section v-if="hasRelations" class="my-10 space-y-10">
+		<hr />
 		<div v-if="relatedData.services.length">
 			<h3 class="text-2xl font-bold mb-4">相關服務</h3>
 			<ul class="space-y-3">
@@ -187,5 +191,6 @@ const hasRelations = computed(
 				<FaqArticleCard v-for="item in relatedData.faq" :key="item.slug" :item="item" />
 			</div>
 		</div>
+		<hr />
 	</section>
 </template>
