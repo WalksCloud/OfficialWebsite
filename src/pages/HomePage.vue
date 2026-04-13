@@ -14,12 +14,14 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <section class="sr-only">
-    <h1>{{ t('about-section.title') }}</h1>
-  </section>
-  <About />
-  <Services />
-  <Team />
-  <Partners />
-  <Contact />
+  <main class="wc-homepage">
+    <div class="sr-only">
+      <h1>{{ t('about-section.title') }}</h1>
+    </div>
+    <About />
+    <Services />
+    <Team />
+    <Partners />
+    <Contact />
+  </main>
 </template>

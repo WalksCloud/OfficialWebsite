@@ -37,11 +37,11 @@
   }
 
   .wc-card-spotlight::before {
-    opacity: 0.2 !important;
+    opacity: 0.6 !important;
   }
 
   :is(.dark .wc-card-spotlight)::before {
-    opacity: 0.28 !important;
+    opacity: 0.3 !important;
   }
 }
 
@@ -72,6 +72,14 @@
 
 .section-anchor-bottom {
   scroll-margin-top: var(--header-offset-bottom);
+}
+
+.wc-homepage > section:nth-of-type(even) {
+  background-color: #efefef;
+}
+
+:is(.dark .wc-homepage > section:nth-of-type(even)) {
+  background-color: #4e535d;
 }
 
 iframe {

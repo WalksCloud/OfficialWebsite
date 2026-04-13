@@ -36,7 +36,7 @@ const serviceGroups = computed(() => {
           <a
             v-if="item.href"
             :href="item.href"
-            class="group inline-flex items-center gap-2 text-white dark:text-white hover:text-primary transition-colors"
+            class="group inline-flex items-center gap-2 text-slate-900 dark:text-white hover:text-primary transition-colors"
           >
             <span aria-hidden="true" class="material-symbols-outlined text-base transition duration-200 group-hover:text-primary chevron-wiggle">
               chevron_right
