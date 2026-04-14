@@ -286,16 +286,18 @@ const handleSectionClick = (event, key) => {
 			color="warning"
 			icon="i-lucide-languages"
 			:ui="{
-				container: 'h-8 min-h-0 py-0.5',
-				center: 'min-h-0 gap-1.5',
+				container: 'h-16 min-h-16 py-1 sm:h-8 sm:min-h-0 sm:py-0.5',
+				center: 'min-h-0 items-center gap-1.5',
 				title: 'text-sm leading-4 text-gray-600 dark:text-gray-300',
 				icon: 'size-3.5 text-gray-600 dark:text-gray-300',
 			}"
 			class="border-t border-amber-300/60 bg-amber-200/70 shadow-sm backdrop-blur-sm dark:border-amber-400/55 dark:bg-amber-400/30"
 		>
 			<template #title>
-				<span class="font-semibold">{{ localeBanner.title }}</span>
-				<span class="ml-2 font-normal">{{ localeBanner.message }}</span>
+				<span class="flex flex-col leading-4 whitespace-normal break-words sm:block">
+					<span class="font-semibold block sm:inline">{{ localeBanner.title }}</span>
+					<span class="font-normal block break-words sm:inline sm:ml-2">{{ localeBanner.message }}</span>
+				</span>
 			</template>
 		</UBanner>
 

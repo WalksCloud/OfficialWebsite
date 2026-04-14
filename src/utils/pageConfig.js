@@ -23,14 +23,19 @@ export const getPageConfigs = () => mergedPages
 
 export const getPageConfig = (pageKey) => mergedPages.find((page) => page.pageKey === pageKey)
 
-export const getSlugForLocale = (pageKey, locale) => {
-  const page = getPageConfig(pageKey)
+const resolveSlugForLocale = (page, locale) => {
   if (!page) return ''
   const slug =
     normalizeSlug(page.slugs?.[locale]) ||
     normalizeSlug(page.slugs?.[siteConfig.defaultLocale]) ||
-    normalizeSlug(page.slugs?.en)
+    Object.values(page.slugs || {}).map((value) => normalizeSlug(value)).find(Boolean) ||
+    ''
   return slug
+}
+
+export const getSlugForLocale = (pageKey, locale) => {
+  const page = getPageConfig(pageKey)
+  return resolveSlugForLocale(page, locale)
 }
 
 export const getContentFilePath = (pageKey, locale) => {
@@ -51,7 +56,7 @@ export const getContentFilePath = (pageKey, locale) => {
 export const buildPrefixedPath = (pageKey, locale) => {
   const page = getPageConfig(pageKey)
   if (!page) return '/'
-  const slug = normalizeSlug(page.slugs?.[locale] ?? '')
+  const slug = resolveSlugForLocale(page, locale)
   const path = slug ? `/${locale}/${slug}/` : `/${locale}/`
   return path
 }
@@ -59,7 +64,7 @@ export const buildPrefixedPath = (pageKey, locale) => {
 export const buildNonPrefixedPath = (pageKey, locale) => {
   const page = getPageConfig(pageKey)
   if (!page) return '/'
-  const slug = normalizeSlug(page.slugs?.[locale] ?? '')
+  const slug = resolveSlugForLocale(page, locale)
   return slug ? `/${slug}/` : '/'
 }
 
