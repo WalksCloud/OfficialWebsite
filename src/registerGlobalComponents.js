@@ -1,7 +1,9 @@
 import UBadge from '@nuxt/ui/components/Badge.vue'
+import UBanner from '@nuxt/ui/components/Banner.vue'
 import UChatTool from '@nuxt/ui/components/ChatTool.vue'
 import UPageCard from '@nuxt/ui/components/PageCard.vue'
 import UPageColumns from '@nuxt/ui/components/PageColumns.vue'
+import ULocaleSelect from '@nuxt/ui/components/locale/LocaleSelect.vue'
 
 const localComponentModules = import.meta.glob('./components/**/*.vue', {
   eager: true,
@@ -10,9 +12,11 @@ const localComponentModules = import.meta.glob('./components/**/*.vue', {
 
 const nuxtUiComponents = {
   UBadge,
+  UBanner,
   UChatTool,
   UPageCard,
   UPageColumns,
+  ULocaleSelect,
 }
 
 const getComponentNameFromPath = (filePath = '') =>

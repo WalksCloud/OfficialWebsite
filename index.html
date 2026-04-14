@@ -24,7 +24,550 @@
     <title>WalksCloud</title>
   </head>
   <body>
+    <div id="wc-loader" aria-hidden="true">
+      <canvas id="wc-loader-gl"></canvas>
+      <canvas id="wc-loader-particles"></canvas>
+    </div>
     <div id="app"></div>
+    <script>
+      (() => {
+        let resolveBootGate = () => {}
+        if (typeof window !== 'undefined') {
+          window.__wcBootGate = new Promise((resolve) => {
+            resolveBootGate = resolve
+          })
+        }
+
+        const loaderRoot = document.getElementById('wc-loader')
+        const glCanvas = document.getElementById('wc-loader-gl')
+        const particleCanvas = document.getElementById('wc-loader-particles')
+
+        if (!loaderRoot || !glCanvas || !particleCanvas) {
+          return
+        }
+
+        const style = document.createElement('style')
+        style.textContent = `
+          html, body {
+            background: #050813;
+          }
+
+          #wc-loader {
+            position: fixed;
+            inset: 0;
+            z-index: 2147483647;
+            overflow: hidden;
+            pointer-events: none;
+            background: #050813;
+          }
+
+          #wc-loader canvas {
+            position: absolute;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            display: block;
+          }
+        `
+        document.head.appendChild(style)
+
+        const CFG = {
+          speed: 0.29,
+          tailSpan: 1.83,
+          particleCount: 72,
+          spawnRate: 16,
+          lifeMin: 0.72,
+          lifeMax: 0.94,
+          exitDuration: 1.5,
+          minBootDelay: 0.5,
+        }
+
+        const gl = glCanvas.getContext('webgl', {
+          antialias: true,
+          alpha: true,
+          premultipliedAlpha: false,
+        })
+        const ctx = particleCanvas.getContext('2d')
+
+        if (!gl || !ctx) {
+          loaderRoot.remove()
+          style.remove()
+          resolveBootGate()
+          return
+        }
+
+        const VS = `
+          attribute vec2 position;
+          void main() { gl_Position = vec4(position, 0.0, 1.0); }
+        `
+
+        const FS = `
+          precision highp float;
+          uniform vec2 resolution;
+          uniform float time;
+          uniform float exitProgress;
+
+          #define TAU 6.28318530718
+          #define CURVE_SAMPLES 96
+          #define TAIL_SAMPLES 56
+          #define STAR_COUNT 18
+
+          float hash(float n) { return fract(sin(n) * 43758.5453123); }
+          float noise(vec2 p) {
+            vec2 i = floor(p);
+            vec2 f = fract(p);
+            float a = hash(i.x + i.y * 57.0);
+            float b = hash(i.x + 1.0 + i.y * 57.0);
+            float c = hash(i.x + (i.y + 1.0) * 57.0);
+            float d = hash(i.x + 1.0 + (i.y + 1.0) * 57.0);
+            vec2 u = f * f * (3.0 - 2.0 * f);
+            return mix(mix(a, b, u.x), mix(c, d, u.x), u.y);
+          }
+          float fbm(vec2 p) {
+            float value = 0.0;
+            float amp = 0.5;
+            for (int i = 0; i < 4; i++) {
+              value += noise(p) * amp;
+              p = p * 2.03 + vec2(9.2, -4.7);
+              amp *= 0.5;
+            }
+            return value;
+          }
+          vec2 infPt(float a) { float s = sin(a), c = cos(a); return vec2(s, 0.62 * s * c) * 0.235; }
+
+          float segDist(vec2 p, vec2 a, vec2 b) {
+            vec2 pa = p - a, ba = b - a;
+            float t = clamp(dot(pa, ba) / max(dot(ba, ba), 1e-6), 0.0, 1.0);
+            return length(pa - ba * t);
+          }
+
+          vec3 bg(vec2 uv) {
+            float d = length(uv);
+            vec3 c = vec3(0.02, 0.03, 0.08);
+            c += 0.06 * vec3(0.18, 0.22, 0.48) * exp(-3.6 * d);
+            c += 0.04 * vec3(0.24, 0.14, 0.44) * exp(-5.5 * length(uv - vec2(0.0, 0.02)));
+            return c;
+          }
+
+          void main() {
+            vec2 uv = (gl_FragCoord.xy - 0.5 * resolution) / min(resolution.x, resolution.y);
+            uv *= vec2(2.2, 2.0);
+            float exitEase = smoothstep(0.0, 1.0, exitProgress);
+            vec2 smokeUv = uv;
+            smokeUv.y += exitEase * 0.22;
+            smokeUv.x += (fbm(uv * 2.4 + vec2(0.0, time * 0.12)) - 0.5) * exitEase * 0.24;
+
+            vec3 color = bg(smokeUv);
+            float cometA = mod(time * 0.29 * TAU, TAU);
+            vec2 comet = infPt(cometA);
+
+            float minD = 10.0;
+            vec2 prev = infPt(0.0);
+            for (int i = 1; i < CURVE_SAMPLES; i++) {
+              vec2 cur = infPt(TAU * float(i) / float(CURVE_SAMPLES - 1));
+              minD = min(minD, segDist(uv, prev, cur));
+              prev = cur;
+            }
+            float core = smoothstep(0.060, 0.016, minD);
+            float soft = smoothstep(0.098, 0.030, minD);
+            float tube = smoothstep(0.040, 0.010, minD);
+            vec3 loopCol = vec3(0.34, 0.345, 0.365) + vec3(0.075, 0.078, 0.086) * soft + vec3(0.11, 0.115, 0.125) * tube;
+            color = mix(color, loopCol, core * 0.90);
+            color += 0.024 * soft * vec3(0.96, 0.97, 1.0);
+
+            vec3 glow = vec3(0.0), white = vec3(0.0);
+            for (int i = 0; i < TAIL_SAMPLES; i++) {
+              float k = float(i) / float(TAIL_SAMPLES - 1);
+              vec2 p = infPt(cometA - k * 1.83);
+              float d = length(uv - p);
+              float cut = smoothstep(0.10, 0.22, k);
+              float haloR = mix(0.070, 0.010, k);
+              float whiteR = mix(0.014, 0.0028, k);
+              vec3 tint = mix(vec3(0.52, 0.33, 1.0), vec3(0.28, 0.58, 1.0), k * 0.9);
+              glow += tint * exp(-pow(d / haloR, 2.0)) * mix(0.52, 0.06, k) * cut;
+              white += vec3(1.0) * exp(-pow(d / whiteR, 2.0)) * mix(1.22, 0.035, k) * cut;
+            }
+
+            vec2 lc = vec2(-0.235, 0.0), rc = vec2(0.235, 0.0);
+            vec2 lv = uv - lc, rv = uv - rc;
+            float lr = length(lv), rr = length(rv);
+            float la = atan(lv.y, lv.x), ra = atan(rv.y, rv.x);
+            float nearL = exp(-pow(length(comet - lc) / 0.18, 2.0));
+            float nearR = exp(-pow(length(comet - rc) / 0.18, 2.0));
+            float dirL = pow(max(0.0, cos(la - 3.14159265359)), 2.0);
+            float dirR = pow(max(0.0, cos(ra)), 2.0);
+            float fan = clamp(
+              (exp(-pow((lr - 0.34) / 0.14, 2.0)) * 1.15 + exp(-pow((lr - 0.58) / 0.24, 2.0)) * 0.85 + exp(-pow((lr - 0.78) / 0.34, 2.0)) * 0.42) * dirL * nearL +
+              (exp(-pow((rr - 0.34) / 0.14, 2.0)) * 1.15 + exp(-pow((rr - 0.58) / 0.24, 2.0)) * 0.85 + exp(-pow((rr - 0.78) / 0.34, 2.0)) * 0.42) * dirR * nearR,
+              0.0, 1.0
+            );
+            float boost = 1.0 + fan * 1.9;
+
+            float gd = length(uv - comet);
+            float gFall = 1.0 / (1.0 + gd * 4.8 + gd * gd * 15.0);
+            color += mix(vec3(0.5, 0.34, 1.0), vec3(0.35, 0.68, 1.0), 0.55) * exp(-pow(gd / 0.76, 2.0)) * 0.20 * gFall * boost;
+            color += vec3(1.0) * exp(-pow(gd / 0.34, 2.0)) * 0.04 * gFall * boost;
+
+            vec2 rp1 = vec2(comet.x * 0.9, comet.y * 0.6 + 0.04);
+            vec2 dv1 = uv - rp1;
+            float rd1 = length(vec2(dv1.x / 1.20, dv1.y / 0.84));
+            float rf1 = 1.0 / (1.0 + rd1 * 1.6 + rd1 * rd1 * 0.9);
+            float r1 = exp(-pow(dv1.x / 1.20, 2.0) - pow(dv1.y / 0.84, 2.0));
+            color += mix(vec3(0.48, 0.32, 1.0), vec3(0.32, 0.65, 1.0), 0.6) * r1 * 0.18 * rf1 * boost;
+            color += vec3(1.0) * r1 * 0.025 * rf1 * boost;
+
+            vec2 rp2 = vec2(comet.x * 0.82, comet.y * 0.48 + 0.02);
+            vec2 dv2 = uv - rp2;
+            float rd2 = length(vec2(dv2.x / 1.44, dv2.y / 1.00));
+            float rf2 = 1.0 / (1.0 + rd2 * 1.4 + rd2 * rd2 * 0.8);
+            float r2 = exp(-pow(dv2.x / 1.44, 2.0) - pow(dv2.y / 1.00, 2.0));
+            color += mix(vec3(0.42, 0.28, 0.96), vec3(0.28, 0.58, 0.96), 0.6) * r2 * 0.09 * rf2 * boost;
+
+            color -= vec3(0.02, 0.024, 0.03) * exp(-pow(length(uv - comet) / 0.22, 2.0)) * 0.12;
+            color += glow + white;
+
+            for (int i = 0; i < STAR_COUNT; i++) {
+              float fi = float(i);
+              vec2 sp = (vec2(hash(fi * 13.7), hash(fi * 29.1)) - 0.5) * vec2(2.7, 1.7);
+              float pulse = 0.65 + 0.35 * sin(time * (0.8 + hash(fi * 3.1)) + fi * 4.3);
+              color += vec3(0.8, 0.86, 1.0) * exp(-pow(length(uv - sp) / 0.0035, 2.0)) * 0.22 * pulse;
+            }
+
+            color = 1.0 - exp(-color * 1.18);
+            color = pow(color, vec3(0.92));
+
+            float nebulaA = fbm(smokeUv * 3.0 + vec2(time * 0.08, -time * 0.03));
+            float nebulaB = fbm(smokeUv * 6.6 - vec2(time * 0.04, time * 0.09));
+            float nebulaMask = smoothstep(0.28, 0.92, nebulaA * 0.7 + nebulaB * 0.55 + smokeUv.y * 0.18 + exitEase * 0.24);
+            float starDust = pow(max(0.0, noise(smokeUv * 18.0 + vec2(time * 0.24, -time * 0.18)) - 0.78), 2.0) * 7.0;
+            float alpha = 1.0 - exitEase;
+            alpha *= 1.0 - nebulaMask * exitEase * 0.92;
+            alpha = clamp(alpha, 0.0, 1.0);
+
+            vec3 nebulaTint =
+              vec3(0.18, 0.12, 0.34) * nebulaA +
+              vec3(0.10, 0.22, 0.42) * nebulaB +
+              vec3(0.42, 0.52, 0.9) * starDust;
+            nebulaTint *= exitEase * (0.75 + nebulaMask * 0.6);
+            color = mix(color, nebulaTint, exitEase * 0.78);
+            color += starDust * vec3(0.45, 0.56, 0.95) * exitEase * 0.55;
+            color *= 1.0 - exitEase * 0.18;
+
+            gl_FragColor = vec4(color * alpha, alpha);
+          }
+        `
+
+        const makeShader = (type, source) => {
+          const shader = gl.createShader(type)
+          gl.shaderSource(shader, source)
+          gl.compileShader(shader)
+          if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            throw new Error(gl.getShaderInfoLog(shader) || 'Shader compile failed')
+          }
+          return shader
+        }
+
+        const makeProgram = (vertexSource, fragmentSource) => {
+          const program = gl.createProgram()
+          gl.attachShader(program, makeShader(gl.VERTEX_SHADER, vertexSource))
+          gl.attachShader(program, makeShader(gl.FRAGMENT_SHADER, fragmentSource))
+          gl.linkProgram(program)
+          if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+            throw new Error(gl.getProgramInfoLog(program) || 'Program link failed')
+          }
+          return program
+        }
+
+        const program = makeProgram(VS, FS)
+        gl.useProgram(program)
+
+        const quad = gl.createBuffer()
+        gl.bindBuffer(gl.ARRAY_BUFFER, quad)
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, -1, 1, 1, -1, 1, 1]), gl.STATIC_DRAW)
+        const positionLoc = gl.getAttribLocation(program, 'position')
+        gl.enableVertexAttribArray(positionLoc)
+        gl.vertexAttribPointer(positionLoc, 2, gl.FLOAT, false, 0, 0)
+
+        const uResolution = gl.getUniformLocation(program, 'resolution')
+        const uTime = gl.getUniformLocation(program, 'time')
+        const uExitProgress = gl.getUniformLocation(program, 'exitProgress')
+
+        const infinityPoint = (angle) => {
+          const s = Math.sin(angle)
+          const c = Math.cos(angle)
+          return { x: s * 0.235, y: 0.62 * s * c * 0.235 }
+        }
+
+        const infinityTangent = (angle) => {
+          const s = Math.sin(angle)
+          const c = Math.cos(angle)
+          const x = c * 0.235
+          const y = 0.62 * (c * c - s * s) * 0.235
+          const len = Math.hypot(x, y) || 1
+          return { x: x / len, y: y / len }
+        }
+
+        const uvToPixels = (u, v) => {
+          const scale = Math.min(particleCanvas.width, particleCanvas.height)
+          return {
+            x: particleCanvas.width * 0.5 + (u * scale) / 2.2,
+            y: particleCanvas.height * 0.5 - (v * scale) / 2.0,
+          }
+        }
+
+        const particles = Array.from({ length: CFG.particleCount }, () => ({
+          x: 0,
+          y: 0,
+          anchorA: 0,
+          follow: 0.5,
+          side: 1,
+          ox: 0,
+          oy: 0,
+          ovx: 0,
+          ovy: 0,
+          oax: 0,
+          oay: 0,
+          life: 0,
+          maxLife: 0,
+          size: 0,
+          active: false,
+        }))
+
+        let particleCursor = 0
+        let spawnAccumulator = 0
+        let rafId = 0
+        let stopped = false
+        let exiting = false
+        let exitStartedAt = 0
+        let firstFrameAt = 0
+        let bootGateResolved = false
+        let start = performance.now()
+        let previous = start
+
+        const releaseBootGate = () => {
+          if (bootGateResolved) {
+            return
+          }
+
+          bootGateResolved = true
+          resolveBootGate()
+        }
+
+        const scheduleBootGate = (now) => {
+          if (bootGateResolved || !firstFrameAt) {
+            return
+          }
+
+          const elapsed = (now - firstFrameAt) * 0.001
+          if (elapsed >= CFG.minBootDelay) {
+            releaseBootGate()
+            return
+          }
+
+          window.setTimeout(releaseBootGate, Math.max(0, (CFG.minBootDelay - elapsed) * 1000))
+        }
+
+        const spawnParticle = (time) => {
+          const cometA = time * CFG.speed * Math.PI * 2
+          const emitA = cometA - (CFG.tailSpan * 0.30 + Math.random() * (CFG.tailSpan * 0.12))
+          const pos = uvToPixels(...Object.values(infinityPoint(emitA)))
+          const tan = infinityTangent(emitA)
+          const normal = { x: -tan.y, y: tan.x }
+          const particle = particles[particleCursor]
+          particleCursor = (particleCursor + 1) % particles.length
+
+          const side = Math.random() < 0.5 ? -1 : 1
+          const spread = 10 + Math.random() * 12
+          const tangentCarry = 18 + Math.random() * 8
+          const outward = 28 + Math.random() * 14
+          const jitter = (Math.random() - 0.5) * 3.5
+
+          particle.anchorA = emitA
+          particle.follow = 0.5
+          particle.side = side
+          particle.ox = normal.x * spread * side
+          particle.oy = normal.y * spread * side
+          particle.ovx = -tan.x * tangentCarry + normal.x * outward * side + jitter
+          particle.ovy = -tan.y * tangentCarry + normal.y * outward * side + jitter * 0.6
+          particle.oax = -particle.ovx * 1.8
+          particle.oay = -particle.ovy * 1.8
+          particle.x = pos.x + particle.ox
+          particle.y = pos.y + particle.oy
+          particle.life = 0
+          particle.maxLife = CFG.lifeMin + Math.random() * (CFG.lifeMax - CFG.lifeMin)
+          particle.size = 3.2 + Math.random() * 2.6
+          particle.active = true
+        }
+
+        const updateParticles = (dt, time) => {
+          ctx.clearRect(0, 0, particleCanvas.width, particleCanvas.height)
+          ctx.globalCompositeOperation = 'lighter'
+          const exitProgress = exiting
+            ? Math.min((performance.now() - exitStartedAt) / (CFG.exitDuration * 1000), 1)
+            : 0
+
+          spawnAccumulator += dt * CFG.spawnRate * (1 - exitProgress)
+          while (spawnAccumulator >= 1) {
+            spawnParticle(time)
+            spawnAccumulator -= 1
+          }
+
+          for (const particle of particles) {
+            if (!particle.active) {
+              continue
+            }
+
+            particle.life += dt
+            const k = particle.life / particle.maxLife
+            if (k >= 1) {
+              particle.active = false
+              continue
+            }
+
+            const fade = 1 - k
+            particle.anchorA -= Math.PI * 2 * CFG.speed * particle.follow * dt
+            const anchorPos = uvToPixels(...Object.values(infinityPoint(particle.anchorA)))
+            const anchorTan = infinityTangent(particle.anchorA)
+            const anchorNormal = { x: -anchorTan.y, y: anchorTan.x }
+            const smokeLift = exitProgress * (16 + 34 * k)
+
+            particle.ovx += particle.oax * dt
+            particle.ovy += particle.oay * dt
+            particle.ovy -= smokeLift * dt
+            particle.ovx *= Math.pow(0.90, dt * 60)
+            particle.ovy *= Math.pow(0.88, dt * 60)
+            particle.ox += particle.ovx * dt
+            particle.oy += particle.ovy * dt
+
+            const sideOffset = 10 + 16 * fade
+            particle.x = anchorPos.x + anchorNormal.x * sideOffset * particle.side + particle.ox * 0.30
+            particle.y = anchorPos.y + anchorNormal.y * sideOffset * particle.side + particle.oy * 0.30 - smokeLift * 0.38
+
+            const alpha = fade * fade * (1 - exitProgress)
+            const nebulaAlpha = alpha * (0.55 + exitProgress * 0.45)
+            ctx.save()
+            ctx.shadowBlur = (18 + exitProgress * 26) * nebulaAlpha
+            ctx.shadowColor = `rgba(120,108,255,${(0.22 + exitProgress * 0.2) * nebulaAlpha})`
+            ctx.fillStyle = `rgba(170,195,255,${0.24 * nebulaAlpha})`
+            ctx.beginPath()
+            ctx.ellipse(
+              particle.x,
+              particle.y,
+              particle.size * (1.5 + exitProgress * 0.95),
+              particle.size * (0.82 + exitProgress * 0.62),
+              particle.ovx * 0.01,
+              0,
+              Math.PI * 2,
+            )
+            ctx.fill()
+
+            ctx.shadowBlur = (10 + exitProgress * 18) * nebulaAlpha
+            ctx.shadowColor = `rgba(86,150,255,${0.18 * nebulaAlpha})`
+            ctx.fillStyle = `rgba(132,144,255,${0.18 * nebulaAlpha})`
+            ctx.beginPath()
+            ctx.ellipse(
+              particle.x - particle.ovx * 0.018,
+              particle.y + particle.ovy * 0.01,
+              particle.size * (0.95 + exitProgress * 0.75),
+              particle.size * (0.38 + exitProgress * 0.32),
+              particle.ovx * 0.012,
+              0,
+              Math.PI * 2,
+            )
+            ctx.fill()
+
+            ctx.shadowBlur = (6 + exitProgress * 8) * alpha
+            ctx.shadowColor = `rgba(180,220,255,${0.28 * alpha})`
+            ctx.fillStyle = `rgba(255,255,255,${0.82 * alpha})`
+            ctx.beginPath()
+            ctx.arc(particle.x + particle.ovx * 0.01, particle.y - particle.ovy * 0.015, particle.size * 0.16, 0, Math.PI * 2)
+            ctx.fill()
+            ctx.restore()
+          }
+        }
+
+        const resize = () => {
+          const dpr = Math.min(window.devicePixelRatio || 1, 2)
+          const width = Math.floor(window.innerWidth * dpr)
+          const height = Math.floor(window.innerHeight * dpr)
+
+          if (glCanvas.width !== width || glCanvas.height !== height) {
+            glCanvas.width = width
+            glCanvas.height = height
+            gl.viewport(0, 0, width, height)
+          }
+
+          if (particleCanvas.width !== width || particleCanvas.height !== height) {
+            particleCanvas.width = width
+            particleCanvas.height = height
+          }
+        }
+
+        const cleanup = () => {
+          if (stopped) {
+            return
+          }
+
+          stopped = true
+          window.cancelAnimationFrame(rafId)
+          window.removeEventListener('resize', resize)
+          window.removeEventListener('walkscloud:app-ready', startExit)
+          loaderRoot.remove()
+          style.remove()
+
+          const loseContext = gl.getExtension('WEBGL_lose_context')
+          if (loseContext) {
+            loseContext.loseContext()
+          }
+        }
+
+        const startExit = () => {
+          if (stopped || exiting) {
+            return
+          }
+
+          exiting = true
+          exitStartedAt = performance.now()
+          loaderRoot.style.background = 'transparent'
+        }
+
+        const frame = (now) => {
+          if (stopped) {
+            return
+          }
+
+          if (!firstFrameAt) {
+            firstFrameAt = now
+            scheduleBootGate(now)
+          }
+
+          resize()
+          const time = (now - start) * 0.001
+          const dt = Math.min((now - previous) * 0.001, 0.05)
+          const exitProgress = exiting
+            ? Math.min((now - exitStartedAt) / (CFG.exitDuration * 1000), 1)
+            : 0
+          previous = now
+
+          if (exitProgress >= 1) {
+            cleanup()
+            return
+          }
+
+          gl.uniform2f(uResolution, glCanvas.width, glCanvas.height)
+          gl.uniform1f(uTime, time)
+          gl.uniform1f(uExitProgress, exitProgress)
+          gl.drawArrays(gl.TRIANGLES, 0, 6)
+          updateParticles(dt, time)
+          rafId = window.requestAnimationFrame(frame)
+        }
+
+        window.__wcRemoveLoader = startExit
+        window.addEventListener('resize', resize, { passive: true })
+        window.addEventListener('walkscloud:app-ready', startExit, { once: true })
+        rafId = window.requestAnimationFrame(frame)
+      })()
+    </script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

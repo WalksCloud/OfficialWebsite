@@ -13,6 +13,10 @@ nav-links:
 locales:
   en: English
   zh-tw: 繁體中文
+locale-switch:
+  unavailable:
+    title: 找不到要求的語言版本
+    message: 此頁面沒有 {requested} 版本，現在改為提供 {fallback} 版本。
 close: 關閉
 loading: 載入中...
 relationship:

@@ -89,14 +89,32 @@ export default routes
 
 export function scrollBehavior(to, from, savedPosition) {
   if (savedPosition) return savedPosition
-  if (to.hash) {
+  const hashOnlyChanged =
+    to.path === from.path &&
+    JSON.stringify(to.query || {}) === JSON.stringify(from.query || {}) &&
+    to.hash &&
+    to.hash !== from.hash
+
+  if (hashOnlyChanged) {
     if (typeof window !== 'undefined') {
       window.__wcLastRouterScroll = Date.now()
     }
     return { el: to.hash, behavior: 'smooth' }
   }
+
+  const localeOnlyChanged =
+    to.meta?.pageKey &&
+    to.meta?.pageKey === from.meta?.pageKey &&
+    to.meta?.locale &&
+    from.meta?.locale &&
+    to.meta.locale !== from.meta.locale
+
+  if (localeOnlyChanged) {
+    return false
+  }
+
   if (typeof window !== 'undefined') {
     window.__wcLastRouterScroll = Date.now()
   }
-  return false
+  return { left: 0, top: 0, behavior: 'auto' }
 }

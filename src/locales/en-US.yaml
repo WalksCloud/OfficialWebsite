@@ -13,6 +13,10 @@ nav-links:
 locales:
   en: English
   zh-tw: 繁體中文
+locale-switch:
+  unavailable:
+    title: Requested language version is unavailable
+    message: This page does not have a {requested} version. Showing the {fallback} version instead.
 close: Close
 loading: Loading...
 relationship:

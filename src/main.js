@@ -5,13 +5,17 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faSquareFacebook, faLinkedin } from '@fortawesome/free-brands-svg-icons'
 import routes, { scrollBehavior } from './router'
-import { getSiteConfig, buildPrefixedPath, buildNonPrefixedPath } from './utils/pageConfig'
+import { getSiteConfig, buildPrefixedPath, buildNonPrefixedPath, getPageConfig } from './utils/pageConfig'
 import { getLocaleFallbackChain, getLocaleMessages } from './utils/localeBundles'
 import { registerGlobalComponents } from './registerGlobalComponents'
 
 import './style.css'
 import ui from '@nuxt/ui/vue-plugin'
 import App from './App.vue'
+
+if (!import.meta.env.SSR && typeof window !== 'undefined' && window.__wcBootGate) {
+  await window.__wcBootGate
+}
 
 const site = getSiteConfig()
 const messages = getLocaleMessages()
@@ -99,13 +103,19 @@ export const createApp = ViteSSG(
       return v || '/'
     }
 
+    const hasLocaleVersion = (pageKey, locale) => {
+      if (!locale) return false
+      const page = getPageConfig(pageKey)
+      return Object.prototype.hasOwnProperty.call(page?.slugs || {}, locale)
+    }
+
     // During build, store locale in initialState for hydration under non-prefix paths
     router.beforeEach((to, from, next) => {
       const storedLocale = isClient ? localStorage.getItem('locale') : null
       const initialLocale = initialState?.locale
       const targetLocale =
-        to.meta.locale ||
         storedLocale ||
+        to.meta.locale ||
         initialLocale ||
         site.defaultLocale ||
         'zh-tw'
@@ -114,7 +124,7 @@ export const createApp = ViteSSG(
         const pageKey = to.meta.pageKey || 'home'
         const currentPath = normalizePath(to.path)
 
-        if (storedLocale === site.defaultLocale) {
+        if (storedLocale === site.defaultLocale && hasLocaleVersion(pageKey, storedLocale)) {
           // Default locale prefers non-prefixed URL
           const nonPrefixedPath = normalizePath(buildNonPrefixedPath(pageKey, storedLocale))
           if (to.meta.prefixed === true && currentPath !== nonPrefixedPath) {
@@ -123,7 +133,7 @@ export const createApp = ViteSSG(
             setLocale(storedLocale)
             return next(nonPrefixedPath)
           }
-        } else {
+        } else if (hasLocaleVersion(pageKey, storedLocale)) {
           // Non-default locale prefers prefixed URL
           if (to.meta.prefixed !== true) {
             const prefixedPath = normalizePath(buildPrefixedPath(pageKey, storedLocale))

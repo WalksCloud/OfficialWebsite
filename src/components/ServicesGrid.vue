@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { buildNonPrefixedPath, buildPrefixedPath, getPageConfig } from '@/utils/pageConfig'
 
@@ -33,9 +33,9 @@ const serviceGroups = computed(() => {
       <h3 class="text-xl lg:font-bold mb-2 lg:mb-4 block-title">{{ row.title }}</h3>
       <div v-bind:key="item.title" v-for="item in row.items" class="mb-2 lg:mb-4">
         <p class="font-bold">
-          <a
+          <RouterLink
             v-if="item.href"
-            :href="item.href"
+            :to="item.href"
             class="group inline-flex items-center gap-2 text-slate-900 dark:text-white hover:text-primary transition-colors"
           >
             <span aria-hidden="true" class="material-symbols-outlined text-base transition duration-200 group-hover:text-primary chevron-wiggle">
@@ -48,7 +48,7 @@ const serviceGroups = computed(() => {
             >
               arrow_forward
             </span>
-          </a>
+          </RouterLink>
           <span v-else>{{ item.title }}</span>
         </p>
         <p class="text-gray-600 dark:text-gray-300">{{ item.content }}</p>
