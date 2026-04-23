@@ -152,9 +152,9 @@ services-section:
         - title: Wazuh Asset Visibility
           content: Use Wazuh agents to inventory devices, monitor software changes, and ensure endpoint compliance.
           pageKey: services-wazuh-asset
-        - title: Jamf Enterprise Apple Device Management
-          content: Manage Jamf Pro, Jamf Protect, Jamf Security Cloud, and on-prem Jamf Pro deployments.
-          pageKey: services-jamf
+        - title: MDM and Enterprise Device Management
+          content: Plan and manage MDM platforms such as Jamf and Mosyle, covering enrollment, lock and lost-device handling, app deployment, and employee device handoff.
+          pageKey: services-mdm
     - title: Customized Product Development
       items:
         - title: Custom System Development

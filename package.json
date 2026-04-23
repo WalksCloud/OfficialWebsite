@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "bun run preview",
     "build": "bun run build:ssg",
-    "build:ssg": "vite-ssg build && node scripts/generate-meta.js && node scripts/format-dist.js",
+    "build:ssg": "vite-ssg build && node scripts/generate-meta.js && node scripts/generate-redirects.js && node scripts/format-dist.js",
     "build:ssg:watch": "chokidar \"src/**/*\" \"public/**/*\" \"config/**/*\" \"scripts/**/*\" --initial -c \"bun run build:ssg\"",
     "preview:nginx:reload": "chokidar \"deploy/*.conf\" --initial -c \"zsh -lic 'docker compose -f docker-compose.preview.yml up --force-recreate || true'\"",
     "preview": "concurrently -k \"bun run build:ssg:watch\" \"bun run preview:nginx:reload\" \"zsh -lic 'docker compose -f docker-compose.preview.yml up --force-recreate'\""

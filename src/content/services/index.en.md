@@ -32,7 +32,7 @@ jsonld:
 1. **Operational resilience**: Backup security, IDC deployment, virtualization, and hosting operations help organizations build verifiable resilience, recovery readiness, and service continuity.
 2. **Delivery efficiency**: Container DevOps, custom development, and IT monitoring give engineering, IT, and operations teams a more consistent delivery model and stronger observability.
 3. **Security governance**: 802.1X, VPN, zero trust, Wazuh SIEM, and IAM with ZITADEL reduce risk across network access, identity governance, and security visibility.
-4. **Assets and networks**: Office networking, Jamf, and IT outsourcing keep endpoints, accounts, and workplace environments healthy on a daily basis.
+4. **Assets and networks**: Office networking, MDM, and IT outsourcing keep endpoints, accounts, and workplace environments healthy on a daily basis.
 
 We define success metrics together with clients, then match a single service or a broader solution set to the actual need. Documentation, training, and reporting make sure each investment solves a real operational problem. If you already know which category is causing the most friction, start with the related service page below to find the most relevant direction faster.
 

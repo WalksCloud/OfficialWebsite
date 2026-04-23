@@ -152,9 +152,9 @@ services-section:
         - title: Wazuh 資產可視化
           content: 透過 Wazuh Agent 即時盤點設備、監控軟體變更並確保端點合規。
           pageKey: services-wazuh-asset
-        - title: Jamf 企業級 Apple 設備管理
-          content: Jamf Pro、Jamf Protect、Jamf Security Cloud 協作管理與地端版本 Jamf Pro 維護。
-          pageKey: services-jamf
+        - title: MDM 與企業裝置管理
+          content: 規劃與代管 Jamf、Mosyle 等 MDM 平台，串接裝置註冊、鎖定、遺失處理、應用部署與到離職收發流程。
+          pageKey: services-mdm
     - title: 客製需求
       items:
         - title: 客製化系統開發
