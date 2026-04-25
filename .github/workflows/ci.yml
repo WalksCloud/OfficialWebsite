@@ -46,8 +46,8 @@ jobs:
 #      - name: Download Production Artifact
 #        uses: actions/download-artifact@v4
 #        with:
-#          name: .output
-#          path: .output
+#          name: dist
+#          path: dist
 #          merge-multiple: true
 
       - name: Cache node_modules 📦
@@ -65,13 +65,13 @@ jobs:
         run: bun install --trust --no-save
 
       - name: Build
-        run: bun run --bun build --outDir .output
+        run: bun run --bun build
 
       - name: Upload Production Artifact
         uses: actions/upload-artifact@v7
         with:
-          name: .output
-          path: .output
+          name: dist
+          path: dist
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -79,5 +79,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           cname: official-website.walks.cloud
-          publish_dir: ./.output
+          publish_dir: ./dist
           force_orphan: true

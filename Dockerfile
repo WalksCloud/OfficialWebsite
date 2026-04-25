@@ -12,10 +12,11 @@ git describe --tags --long --dirty --always
 bun run build:ssg
 SH
 
-FROM nginx:1.27-alpine AS runner
+FROM nginx:1-alpine-slim AS runner
 ENV TZ=Asia/Taipei
 WORKDIR /usr/share/nginx/html
+COPY deploy/entrypoint.sh /entrypoint.sh
 COPY deploy/nginx.conf /etc/nginx/nginx.conf
 COPY --from=builder /app/dist /usr/share/nginx/html
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["/entrypoint.sh"]
