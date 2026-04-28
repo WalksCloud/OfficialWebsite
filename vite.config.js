@@ -2,6 +2,7 @@ import { defineConfig, loadEnv } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import ui from '@nuxt/ui/vite'
+import { renderSSRHead } from '@unhead/vue/server'
 import path from 'path'
 import { DateTime } from 'luxon'
 import git from 'git-rev-sync'
@@ -129,6 +130,83 @@ const walksCloudUiColors = {
   neutral: 'zinc',
 }
 
+const FAQ_OUTPUT_PATH_PATTERN = /^\/(?:[a-z-]+\/)?faq(?:\/|$)/i
+
+const SEO_HEAD_TAG_PATTERNS = [
+  /<title\b[^>]*>[\s\S]*?<\/title>/gi,
+  /<meta\b[^>]*(?:name|property)\s*=\s*["'](?:description|robots|twitter:[^"']+|og:[^"']+|fb:[^"']+)["'][^>]*>/gi,
+  /<link\b[^>]*\brel\s*=\s*["'](?:canonical|alternate)["'][^>]*>/gi,
+  /<script\b[^>]*\btype\s*=\s*["']application\/ld\+json["'][^>]*>[\s\S]*?<\/script>/gi,
+]
+
+const parseTagAttributes = (raw = '') => {
+  const attrs = new Map()
+  const pattern = /([^\s=/>]+)(?:\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'=<>`]+)))?/g
+  let match
+  while ((match = pattern.exec(raw)) !== null) {
+    const key = match[1]
+    if (!key || key === '/') continue
+    const value = match[2] ?? match[3] ?? match[4] ?? true
+    attrs.set(key, value)
+  }
+  return attrs
+}
+
+const escapeAttributeValue = (value) =>
+  String(value)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+
+const stringifyTagAttributes = (attrs) =>
+  Array.from(attrs.entries())
+    .map(([key, value]) => (value === true ? ` ${key}` : ` ${key}="${escapeAttributeValue(value)}"`))
+    .join('')
+
+const mergeTagAttributes = (existingRaw = '', incomingRaw = '') => {
+  const merged = parseTagAttributes(existingRaw)
+  for (const [key, value] of parseTagAttributes(incomingRaw).entries()) {
+    merged.set(key, value)
+  }
+  return stringifyTagAttributes(merged)
+}
+
+const applyTagAttributes = (html, tagName, incomingRaw = '') => {
+  if (!incomingRaw || !incomingRaw.trim()) return html
+  const matcher = new RegExp(`<${tagName}\\b([^>]*)>`, 'i')
+  return html.replace(matcher, (_match, existingRaw = '') => `<${tagName}${mergeTagAttributes(existingRaw, incomingRaw)}>`)
+}
+
+const stripSeoHeadTags = (rawHead = '') => {
+  let cleaned = rawHead
+  SEO_HEAD_TAG_PATTERNS.forEach((pattern) => {
+    cleaned = cleaned.replace(pattern, '')
+  })
+  return cleaned.trim()
+}
+
+const applyRenderedHead = (html, renderedHead) => {
+  if (!renderedHead) return html
+  let next = html
+  next = applyTagAttributes(next, 'html', renderedHead.htmlAttrs || '')
+  next = applyTagAttributes(next, 'body', renderedHead.bodyAttrs || '')
+
+  if (renderedHead.bodyTagsOpen) {
+    next = next.replace(/<body\b[^>]*>/i, (match) => `${match}\n${renderedHead.bodyTagsOpen}`)
+  }
+  if (renderedHead.bodyTags) {
+    next = next.replace(/<\/body>/i, `${renderedHead.bodyTags}\n</body>`)
+  }
+  if (!renderedHead.headTags) {
+    return next
+  }
+
+  return next.replace(/<head\b([^>]*)>([\s\S]*?)<\/head>/i, (_match, attrs = '', rawHead = '') => {
+    const cleaned = stripSeoHeadTags(rawHead)
+    const merged = [cleaned, renderedHead.headTags].filter(Boolean).join('\n')
+    return `<head${attrs}>\n${merged}\n</head>`
+  })
+}
+
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
   return {
@@ -172,6 +250,16 @@ export default defineConfig(({ mode }) => {
           replacement: path.resolve(__dirname, 'src'),
         },
       ]
+    },
+    ssgOptions: {
+      includedRoutes: (paths = []) => paths.filter((routePath) => !FAQ_OUTPUT_PATH_PATTERN.test(routePath)),
+      onPageRendered: async (_route, renderedHTML, appCtx) => {
+        if (!appCtx?.head) {
+          return renderedHTML
+        }
+        const renderedHead = await renderSSRHead(appCtx.head)
+        return applyRenderedHead(renderedHTML, renderedHead)
+      },
     },
     build: {
       rolldownOptions: {

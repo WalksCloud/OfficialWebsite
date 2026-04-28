@@ -37,6 +37,7 @@ export const createApp = ViteSSG(
     })
 
     app.use(head)
+    app.provide('wc:ssg-head', head)
     app.use(pinia)
     app.use(i18n)
     app.use(ui)

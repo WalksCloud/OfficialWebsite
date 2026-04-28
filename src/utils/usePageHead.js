@@ -1,4 +1,4 @@
-import { computed } from 'vue'
+import { computed, inject, onScopeDispose, watchEffect } from 'vue'
 import { useHead } from '@unhead/vue'
 import { useI18n } from 'vue-i18n'
 import {
@@ -48,6 +48,18 @@ const toBcpLocale = (locale) => {
   const map = site.og?.localeMap || {}
   const val = map[locale] || locale
   return val.replace('_', '-')
+}
+
+const resolveLocalizedValue = (localizedMap, locale) => {
+  if (!localizedMap || typeof localizedMap !== 'object') return ''
+  const currentValue = localizedMap[locale]
+  if (typeof currentValue === 'string' && currentValue.trim()) return currentValue
+  const defaultValue = localizedMap[site.defaultLocale]
+  if (typeof defaultValue === 'string' && defaultValue.trim()) return defaultValue
+  const firstAvailable = Object.values(localizedMap).find(
+    (value) => typeof value === 'string' && value.trim(),
+  )
+  return typeof firstAvailable === 'string' ? firstAvailable : ''
 }
 
 const buildJsonLd = (pageKey, locale, title, description, canonicalUrl) => {
@@ -106,6 +118,7 @@ const buildJsonLd = (pageKey, locale, title, description, canonicalUrl) => {
 export const usePageHead = (route, options = {}) => {
   const overrideTitle = options.overrideTitle
   const minify = options.minify === true
+  const resolvedHead = inject('wc:ssg-head', null)
   const formatJson = (obj) => (minify ? JSON.stringify(obj) : `\n${JSON.stringify(obj, null, 2)}\n`)
   const { locale } = useI18n()
   const pageKey = computed(() => route.meta.pageKey || 'home')
@@ -127,7 +140,7 @@ export const usePageHead = (route, options = {}) => {
     () =>
       (overrideTitle?.value) ||
       route.meta?.contentTitle ||
-      page.value?.titles?.[currentLocale.value] ||
+      resolveLocalizedValue(page.value?.titles, currentLocale.value) ||
       site.brandName
   )
   const title = computed(() => {
@@ -136,7 +149,7 @@ export const usePageHead = (route, options = {}) => {
     if (!base) return site.brandName
     return base.includes(site.brandName) ? base : `${base}${suffix}`
   })
-  const description = computed(() => page.value?.descriptions?.[currentLocale.value] || '')
+  const description = computed(() => resolveLocalizedValue(page.value?.descriptions, currentLocale.value))
   const robots = computed(() =>
     page.value?.index === false ? 'noindex,nofollow' : site.robots?.policy || 'index,follow'
   )
@@ -173,25 +186,24 @@ export const usePageHead = (route, options = {}) => {
       innerHTML: formatJson({ '@context': 'https://schema.org', ...entry }),
     }))
   })
-
-  useHead({
+  const createHeadPayload = () => ({
     htmlAttrs: {
-      lang: () => currentLocale.value,
+      lang: currentLocale.value,
     },
-    title,
+    title: title.value,
     meta: [
-      { name: 'description', content: () => description.value },
-      { name: 'robots', content: () => robots.value },
-      { property: 'og:title', content: () => title.value },
-      { property: 'og:description', content: () => description.value },
-      { property: 'og:type', content: () => ogType.value },
-      { property: 'og:url', content: () => canonicalUrl.value },
-      { property: 'og:image', content: () => ogImage.value },
+      { name: 'description', content: description.value },
+      { name: 'robots', content: robots.value },
+      { property: 'og:title', content: title.value },
+      { property: 'og:description', content: description.value },
+      { property: 'og:type', content: ogType.value },
+      { property: 'og:url', content: canonicalUrl.value },
+      { property: 'og:image', content: ogImage.value },
       { property: 'og:image:type', content: site.og?.imageType || undefined },
       { property: 'og:image:width', content: site.og?.imageWidth || undefined },
       { property: 'og:image:height', content: site.og?.imageHeight || undefined },
-      { property: 'og:site_name', content: () => ogSiteName.value },
-      { property: 'og:locale', content: () => ogLocale.value },
+      { property: 'og:site_name', content: ogSiteName.value },
+      { property: 'og:locale', content: ogLocale.value },
       ...ogAlternateLocales.value.map((lng) => ({
         property: 'og:locale:alternate',
         content: lng,
@@ -199,12 +211,30 @@ export const usePageHead = (route, options = {}) => {
       { property: 'fb:app_id', content: site.social?.fbAppId || undefined },
       { property: 'fb:pages', content: site.social?.fbPages || undefined },
       { name: 'twitter:card', content: 'summary_large_image' },
-      { name: 'twitter:image', content: () => ogImage.value },
+      { name: 'twitter:image', content: ogImage.value },
     ],
     link: [
-      { rel: 'canonical', href: () => canonicalUrl.value },
+      { rel: 'canonical', href: canonicalUrl.value },
       ...hreflangs.value,
     ],
-    script: () => jsonLdScripts.value,
+    script: jsonLdScripts.value,
   })
+
+  if (resolvedHead && typeof resolvedHead.push === 'function') {
+    let entry
+    watchEffect(() => {
+      const payload = createHeadPayload()
+      if (entry) {
+        entry.patch(payload)
+      } else {
+        entry = resolvedHead.push(payload)
+      }
+    })
+    onScopeDispose(() => {
+      entry?.dispose?.()
+    })
+    return
+  }
+
+  useHead(createHeadPayload())
 }
