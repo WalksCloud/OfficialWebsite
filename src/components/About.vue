@@ -24,7 +24,7 @@ watch(locale, hydrateItems)
 </script>
 
 <template>
-  <section id="about" class="section-anchor pt-[53px] lg:pt-[82px]">
+  <section id="about" class="section-anchor pt-13.25 lg:pt-20.5">
     <div class="home-bg h-[85vh] lg:h-screen relative">
       <div class="w-full absolute bottom-25 lg:bottom-5">
         <div class="w-5/6 lg:w-3/4 mx-auto text-center text-white shadow-dark">
@@ -47,7 +47,7 @@ watch(locale, hydrateItems)
       </div>
     </div>
     <!-- mobile -->
-    <div class="lg:hidden w-5/6 mx-auto grid gap-4 relative mt-[-60px]">
+    <div class="lg:hidden w-5/6 mx-auto grid gap-4 relative -mt-15">
       <UPageCard v-for="(row, index) in $tm('about-section.about-items')" :key="`about-mobile-${index}`" class="wc-glass-card wc-card-spotlight shadow p-4 text-gray-800 dark:text-gray-100"
         :ui="{ root: 'bg-transparent', spotlight: 'bg-transparent' }" spotlight>
         <template #default>

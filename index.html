@@ -1,5 +1,5 @@
 <!doctype html>
-<html>
+<html lang="_">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -32,8 +32,8 @@
     <script>
       (() => {
         let resolveBootGate = () => {}
-        if (typeof window !== 'undefined') {
-          window.__wcBootGate = new Promise((resolve) => {
+        if (globalThis.window !== undefined) {
+          globalThis.window.__wcBootGate = new Promise((resolve) => {
             resolveBootGate = resolve
           })
         }
@@ -311,7 +311,7 @@
           const scale = Math.min(particleCanvas.width, particleCanvas.height)
           return {
             x: particleCanvas.width * 0.5 + (u * scale) / 2.2,
-            y: particleCanvas.height * 0.5 - (v * scale) / 2.0,
+            y: particleCanvas.height * 0.5 - (v * scale) / 2,
           }
         }
 
@@ -364,12 +364,12 @@
             return
           }
 
-          window.setTimeout(releaseBootGate, Math.max(0, (CFG.minBootDelay - elapsed) * 1000))
+          globalThis.window.setTimeout(releaseBootGate, Math.max(0, (CFG.minBootDelay - elapsed) * 1000))
         }
 
         const spawnParticle = (time) => {
           const cometA = time * CFG.speed * Math.PI * 2
-          const emitA = cometA - (CFG.tailSpan * 0.30 + Math.random() * (CFG.tailSpan * 0.12))
+          const emitA = cometA - (CFG.tailSpan * 0.3 + Math.random() * (CFG.tailSpan * 0.12))
           const pos = uvToPixels(...Object.values(infinityPoint(emitA)))
           const tan = infinityTangent(emitA)
           const normal = { x: -tan.y, y: tan.x }
@@ -434,14 +434,14 @@
             particle.ovx += particle.oax * dt
             particle.ovy += particle.oay * dt
             particle.ovy -= smokeLift * dt
-            particle.ovx *= Math.pow(0.90, dt * 60)
+            particle.ovx *= Math.pow(0.9, dt * 60)
             particle.ovy *= Math.pow(0.88, dt * 60)
             particle.ox += particle.ovx * dt
             particle.oy += particle.ovy * dt
 
             const sideOffset = 10 + 16 * fade
-            particle.x = anchorPos.x + anchorNormal.x * sideOffset * particle.side + particle.ox * 0.30
-            particle.y = anchorPos.y + anchorNormal.y * sideOffset * particle.side + particle.oy * 0.30 - smokeLift * 0.38
+            particle.x = anchorPos.x + anchorNormal.x * sideOffset * particle.side + particle.ox * 0.3
+            particle.y = anchorPos.y + anchorNormal.y * sideOffset * particle.side + particle.oy * 0.3 - smokeLift * 0.38
 
             const alpha = fade * fade * (1 - exitProgress)
             const nebulaAlpha = alpha * (0.55 + exitProgress * 0.45)
@@ -509,9 +509,9 @@
           }
 
           stopped = true
-          window.cancelAnimationFrame(rafId)
-          window.removeEventListener('resize', resize)
-          window.removeEventListener('walkscloud:app-ready', startExit)
+          globalThis.window.cancelAnimationFrame(rafId)
+          globalThis.window.removeEventListener('resize', resize)
+          globalThis.window.removeEventListener('walkscloud:app-ready', startExit)
           loaderRoot.remove()
           style.remove()
 
@@ -559,13 +559,13 @@
           gl.uniform1f(uExitProgress, exitProgress)
           gl.drawArrays(gl.TRIANGLES, 0, 6)
           updateParticles(dt, time)
-          rafId = window.requestAnimationFrame(frame)
+          rafId = globalThis.window.requestAnimationFrame(frame)
         }
 
-        window.__wcRemoveLoader = startExit
-        window.addEventListener('resize', resize, { passive: true })
-        window.addEventListener('walkscloud:app-ready', startExit, { once: true })
-        rafId = window.requestAnimationFrame(frame)
+        globalThis.window.__wcRemoveLoader = startExit
+        globalThis.window.addEventListener('resize', resize, { passive: true })
+        globalThis.window.addEventListener('walkscloud:app-ready', startExit, { once: true })
+        rafId = globalThis.window.requestAnimationFrame(frame)
       })()
     </script>
     <script type="module" src="/src/main.js"></script>

@@ -3,7 +3,6 @@ import { useHead } from '@unhead/vue'
 import { useI18n } from 'vue-i18n'
 import {
   buildCanonicalUrl,
-  buildPrefixedPath,
   getLocales,
   getPageConfig,
   getSiteConfig,
@@ -166,7 +165,7 @@ export const usePageHead = (route, options = {}) => {
     buildJsonLd(pageKey.value, currentLocale.value, title.value, description.value, canonicalUrl.value)
   )
   const jsonLdScripts = computed(() => {
-    if (!jsonLd.value || !jsonLd.value['@graph']) {
+    if (!jsonLd?.value['@graph']) {
       return []
     }
     return jsonLd.value['@graph'].map((entry) => ({

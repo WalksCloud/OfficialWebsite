@@ -45,7 +45,11 @@ export const getContentFilePath = (pageKey, locale) => {
   const section = segments[0]
   const rest = segments.slice(1).join('/') || 'index'
   switch (section) {
-    case 'services'||'cases'||'tech':
+    case 'services':
+      return `../content/${section}/${rest}`
+    case 'cases':
+      return `../content/${section}/${rest}`
+    case 'tech':
       return `../content/${section}/${rest}`
     default:
       // fallback generic path

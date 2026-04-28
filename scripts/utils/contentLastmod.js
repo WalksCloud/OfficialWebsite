@@ -1,6 +1,6 @@
-import fs from 'fs'
-import path from 'path'
-import { execSync } from 'child_process'
+import fs from 'node:fs'
+import path from 'node:path'
+import { execSync } from 'node:child_process'
 import { loadContentPages } from './contentPages.js'
 
 const root = process.cwd()
@@ -58,7 +58,7 @@ const getFileSystemTimestamp = (filePath) => {
   if (fsTimestampCache.has(absolute)) return fsTimestampCache.get(absolute)
   try {
     const date = new Date(fs.statSync(absolute).mtime)
-    const valid = !Number.isNaN(date.valueOf()) ? date : null
+    const valid = Number.isNaN(date.valueOf()) ? null : date
     fsTimestampCache.set(absolute, valid)
     return valid
   } catch (err) {

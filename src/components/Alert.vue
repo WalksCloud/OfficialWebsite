@@ -8,7 +8,7 @@ const { clear } = store
 </script>
 <template>
 	<!-- alert -->
-	<div v-if="alert.title" class="relative z-[200]">
+	<div v-if="alert.title" class="relative z-200">
 		<div class="fixed inset-0 bg-gray-500/75 transition-opacity duration-300" aria-hidden="true"></div>
 		<div class="fixed inset-0 z-10 w-screen overflow-y-auto">
 			<div class="flex min-h-[50vh] md:min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -21,7 +21,7 @@ const { clear } = store
 							</div>
 						</div>
 						<div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
-							<button @click="clear" type="button" class="text-white bg-primary border-1 hover:border-primary hover:bg-white hover:text-primary dark:border-transparent dark:hover:bg-[#222831] rounded-lg text-sm px-3 lg:px-5 py-1.5 lg:py-2.5">{{ $t('close') }}</button>
+							<button @click="clear" type="button" class="text-white bg-primary border hover:border-primary hover:bg-white hover:text-primary dark:border-transparent dark:hover:bg-[#222831] rounded-lg text-sm px-3 lg:px-5 py-1.5 lg:py-2.5">{{ $t('close') }}</button>
 						</div>
 					</div>
 				</transition>

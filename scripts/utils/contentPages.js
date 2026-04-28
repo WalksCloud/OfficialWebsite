@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import yaml from 'yaml'
 
 const root = process.cwd()
@@ -26,12 +26,12 @@ export const loadContentPages = () => {
       const locale = localeMatch[1]
       const filePath = path.join(dirPath, file)
       const fm = parseFrontmatter(filePath)
-      if (!fm || fm.deploy !== true) return
+      if (fm?.deploy !== true) return
       const slug = fm.slug || ''
       const key = `${dir}:${slug}`
       if (!entries.has(key)) {
         entries.set(key, {
-          index: fm.index !== undefined ? fm.index : true,
+          index: fm?.index === undefined ? true : fm.index,
           sitemap: fm.sitemap || {},
           slugs: {},
           contentFiles: {},

@@ -46,7 +46,7 @@ const articleTags = computed(() => {
 </script>
 
 <template>
-  <li>
+  <div>
     <UPageCard
       :title="props.item.title"
       :description="props.item.description"
@@ -74,5 +74,5 @@ const articleTags = computed(() => {
         <span v-if="props.item.notice" class="italic">{{ props.item.notice }}</span>
       </div>
     </UPageCard>
-  </li>
+  </div>
 </template>

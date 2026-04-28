@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import yaml from 'yaml'
 
 const root = process.cwd()
@@ -49,7 +49,7 @@ const validateRedirect = ({ from, to, source }) => {
     throw new Error(`${source} cannot redirect the site root.`)
   }
   if (normalizePath(from, 'from') === normalizePath(to, 'to')) {
-    throw new Error(`${source} contains a redirect loop for ${from}.`)
+    throw new TypeError(`${source} contains a redirect loop for ${from}.`)
   }
 }
 
@@ -72,19 +72,19 @@ const loadBaseRedirects = () => {
   const parsed = readYaml(redirectsFile)
   const entries = Array.isArray(parsed) ? parsed : parsed?.redirects
   if (!Array.isArray(entries)) {
-    throw new Error('config/redirects.yaml must contain a redirect array.')
+    throw new TypeError('config/redirects.yaml must contain a redirect array.')
   }
 
   const redirects = []
 
   entries.forEach((entry, index) => {
     if (!entry || typeof entry !== 'object') {
-      throw new Error(`config/redirects.yaml entry ${index + 1} must be an object.`)
+      throw new TypeError(`config/redirects.yaml entry ${index + 1} must be an object.`)
     }
     const from = normalizePath(entry.from, 'from')
     const to = normalizePath(entry.to, 'to', { preserveTrailingSlash: true })
     if (hasLocalePrefix(from) || hasLocalePrefix(to)) {
-      throw new Error('config/redirects.yaml should only contain non-locale redirects; locale-prefixed redirects are generated automatically.')
+      throw new TypeError('config/redirects.yaml should only contain non-locale redirects; locale-prefixed redirects are generated automatically.')
     }
     redirects.push({
       from,
@@ -108,7 +108,7 @@ const expandLocaleRedirects = (redirects) =>
 
 const run = async () => {
   if (!fs.existsSync(distDir)) {
-    throw new Error('dist not found. Run the SSG build before generating redirects.')
+    throw new TypeError('dist not found. Run the SSG build before generating redirects.')
   }
 
   const redirects = expandLocaleRedirects(loadBaseRedirects())
@@ -118,7 +118,7 @@ const run = async () => {
 
   redirects.forEach((redirect) => {
     if (seen.has(redirect.from)) {
-      throw new Error(`Duplicate redirect from ${redirect.from} in ${redirect.source}.`)
+      throw new TypeError(`Duplicate redirect from ${redirect.from} in ${redirect.source}.`)
     }
     seen.set(redirect.from, redirect)
     validateRedirect(redirect)
@@ -127,7 +127,7 @@ const run = async () => {
   redirects.forEach((redirect) => {
     mapPaths(redirect).forEach(([from, to]) => {
       if (mapSources.has(from)) {
-        throw new Error(`Duplicate generated redirect from ${from}.`)
+        throw new TypeError(`Duplicate generated redirect from ${from}.`)
       }
       mapSources.set(from, redirect)
       mapEntries.push(`${quoteNginxValue(from)} ${quoteNginxValue(to)};`)
@@ -144,7 +144,7 @@ const run = async () => {
   console.log(`Generated ${mapEntries.length} nginx redirect map entr${mapEntries.length === 1 ? 'y' : 'ies'}.`)
 }
 
-run().catch((err) => {
+await run().catch((err) => {
   console.error(err)
   process.exit(1)
 })

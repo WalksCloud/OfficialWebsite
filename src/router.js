@@ -96,8 +96,8 @@ export function scrollBehavior(to, from, savedPosition) {
     to.hash !== from.hash
 
   if (hashOnlyChanged) {
-    if (typeof window !== 'undefined') {
-      window.__wcLastRouterScroll = Date.now()
+    if (globalThis.window !== undefined) {
+      globalThis.window.__wcLastRouterScroll = Date.now()
     }
     return { el: to.hash, behavior: 'smooth' }
   }
@@ -113,8 +113,8 @@ export function scrollBehavior(to, from, savedPosition) {
     return false
   }
 
-  if (typeof window !== 'undefined') {
-    window.__wcLastRouterScroll = Date.now()
+  if (globalThis.window !== undefined) {
+    globalThis.window.__wcLastRouterScroll = Date.now()
   }
   return { left: 0, top: 0, behavior: 'auto' }
 }

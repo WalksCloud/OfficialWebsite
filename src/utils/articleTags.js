@@ -63,7 +63,7 @@ const hashString = (value = '') => {
   const input = typeof value === 'string' ? value : String(value || '')
   let hash = 0
   for (let i = 0; i < input.length; i += 1) {
-    hash = (hash * 33 + input.charCodeAt(i)) & 0xfffffff
+    hash = (hash * 33 + input.codePointAt(i)) & 0xfffffff
   }
   return hash
 }

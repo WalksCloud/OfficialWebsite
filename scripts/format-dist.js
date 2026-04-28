@@ -1,5 +1,5 @@
-import fs from 'fs'
-import path from 'path'
+import fs from 'node:fs'
+import path from 'node:path'
 import { globby } from 'globby'
 import prettier from 'prettier'
 
@@ -32,7 +32,7 @@ const run = async () => {
   }
 }
 
-run().catch((err) => {
+await run().catch((err) => {
   console.error(err)
   process.exit(1)
 })

@@ -35,7 +35,7 @@ export const getAllPageData = () => {
     const base = baseFromPath(path) // e.g., content/services/proxmox
     const segments = base.split('/').slice(1) // drop "content"
     const inferredSlug = normalizeSlug(segments.join('/'))
-    const hasMetaSlug = Object.prototype.hasOwnProperty.call(meta, 'slug')
+    const hasMetaSlug = Object.hasOwn(meta, 'slug')
     let canonicalSlug = normalizeSlug(hasMetaSlug ? meta.slug : inferredSlug)
     if (!hasMetaSlug && canonicalSlug.endsWith('/index')) {
       canonicalSlug = canonicalSlug.replace(/\/index$/, '')

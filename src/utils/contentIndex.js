@@ -152,7 +152,7 @@ export const resolveContentInfo = (slug, requestedLocale, options = {}) => {
   }
 }
 
-export const buildLocalizedPath = (slug = '', locale) => {
+export const buildLocalizedPath = (slug, locale) => {
   if (!slug) return '/'
   const hasLeadingSlash = slug.startsWith('/')
   const cleaned = hasLeadingSlash ? slug : `/${slug}`

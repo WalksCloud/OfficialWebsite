@@ -7,8 +7,8 @@
 		</div>
 		<div class="grid lg:grid-cols-3 gap-6 lg:gap-12">
 			<div class="flex lg:block" v-bind:key="row" v-for="row in $tm('team-section.members')">
-				<div class="flex-none w-[96px] lg:w-[120px] me-6 lg:m-auto">
-					<img class="rounded-[50%]" :src="row.image">
+				<div class="flex-none w-24 lg:w-30 me-6 lg:m-auto">
+					<img class="rounded-[50%]" alt="team" :src="row.image">
 				</div>
 				<div class="text-left lg:text-center">
 					<p class="font-bold my-2 lg:my-4">

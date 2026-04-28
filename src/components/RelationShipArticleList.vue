@@ -97,16 +97,16 @@ const relatedData = computed(() => {
 	let serviceSlugs = []
 	let techSlugs = []
 	let faqSlugs = []
-
+  const serviceEntry = findCasesByService(slug)
+  const caseEntry = findCaseEntry(slug)
+  const techEntry = findCasesByTech(slug)
 	switch (type) {
 		case 'service':
-			const serviceEntry = findCasesByService(slug)
 			caseSlugs = serviceEntry.map((entry) => entry.case)
 			faqSlugs = serviceEntry.flatMap((entry) => entry.faq || [])
 			techSlugs = serviceEntry.flatMap((entry) => entry.tech || [])
 			break;
 		case 'case':
-			const caseEntry = findCaseEntry(slug)
 			if (caseEntry) {
 				serviceSlugs = caseEntry.services || []
 				faqSlugs = caseEntry.faq || []
@@ -114,7 +114,6 @@ const relatedData = computed(() => {
 			}
 			break;
 		case 'tech':
-			const techEntry = findCasesByTech(slug)
 			caseSlugs = techEntry.map((entry) => entry.case)
 			serviceSlugs = techEntry.flatMap((entry) => entry.services || [])
 			faqSlugs = techEntry.flatMap((entry) => entry.faq || [])

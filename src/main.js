@@ -13,8 +13,8 @@ import './style.css'
 import ui from '@nuxt/ui/vue-plugin'
 import App from './App.vue'
 
-if (!import.meta.env.SSR && typeof window !== 'undefined' && window.__wcBootGate) {
-  await window.__wcBootGate
+if (!import.meta.env.SSR && globalThis.window?.__wcBootGate) {
+  await globalThis.window.__wcBootGate
 }
 
 const site = getSiteConfig()
@@ -26,7 +26,7 @@ library.add(faSquareFacebook, faLinkedin)
 export const createApp = ViteSSG(
   App,
   { routes, scrollBehavior },
-  ({ app, router, isClient, initialState, head }) => {
+  ({ app, router, initialState, head }) => {
     const pinia = createPinia()
     const i18n = createI18n({
       legacy: false,
@@ -46,23 +46,23 @@ export const createApp = ViteSSG(
     // Persist locale for client navigation only
     const setLocale = (value) => {
       i18n.global.locale.value = value
-      if (isClient) {
+      if (!import.meta.env.SSR) {
         localStorage.setItem('locale', value)
       }
     }
 
-    if (isClient) {
+    if (!import.meta.env.SSR) {
       const buildScrollKey = () => {
-        const { pathname, search } = window.location
+        const { pathname, search } = globalThis.window.location
         return `scroll-position:${pathname}${search}`
       }
 
       const shouldHandleScroll = () => {
         const routerScrolledRecently =
-          typeof window !== 'undefined' &&
-          typeof window.__wcLastRouterScroll === 'number' &&
-          Date.now() - window.__wcLastRouterScroll < 500
-        return !window.location.hash && !routerScrolledRecently
+          globalThis.window !== undefined &&
+          typeof globalThis.window.__wcLastRouterScroll === 'number' &&
+          Date.now() - globalThis.window.__wcLastRouterScroll < 500
+        return !globalThis.window.location.hash && !routerScrolledRecently
       }
 
       const restoreScrollPosition = () => {
@@ -71,11 +71,11 @@ export const createApp = ViteSSG(
         const stored = sessionStorage.getItem(key)
         if (stored) {
           const raf =
-            typeof window !== 'undefined' && typeof window.requestAnimationFrame === 'function'
-              ? window.requestAnimationFrame.bind(window)
+            globalThis.window !== undefined && typeof globalThis.window.requestAnimationFrame === 'function'
+              ? globalThis.window.requestAnimationFrame.bind(globalThis.window)
               : (cb) => setTimeout(cb, 0)
           raf(() => {
-            window.scrollTo({ top: Number(stored) || 0, behavior: 'auto' })
+            globalThis.window.scrollTo({ top: Number(stored) || 0, behavior: 'auto' })
             sessionStorage.removeItem(key)
           })
         }
@@ -84,7 +84,7 @@ export const createApp = ViteSSG(
       const navigationEntries = performance?.getEntriesByType
         ? performance.getEntriesByType('navigation')
         : null
-      const navType = navigationEntries && navigationEntries.length
+      const navType = navigationEntries?.length
         ? navigationEntries[0].type
         : performance?.navigation?.type
 
@@ -92,9 +92,9 @@ export const createApp = ViteSSG(
         restoreScrollPosition()
       }
 
-      window.addEventListener('beforeunload', () => {
+      globalThis.window.addEventListener('beforeunload', () => {
         if (!shouldHandleScroll()) return
-        sessionStorage.setItem(buildScrollKey(), String(window.scrollY || 0))
+        sessionStorage.setItem(buildScrollKey(), String(globalThis.window.scrollY || 0))
       })
     }
 
@@ -106,12 +106,42 @@ export const createApp = ViteSSG(
     const hasLocaleVersion = (pageKey, locale) => {
       if (!locale) return false
       const page = getPageConfig(pageKey)
-      return Object.prototype.hasOwnProperty.call(page?.slugs || {}, locale)
+      return Object.hasOwn(page?.slugs || {}, locale)
+    }
+
+    const storeLocale = (to, initialState, storedLocale) => {
+      const pageKey = to.meta.pageKey || 'home'
+      const currentPath = normalizePath(to.path)
+      const haveLocaleVersion = hasLocaleVersion(pageKey, storedLocale);
+      const isDefault = storedLocale === site.defaultLocale;
+      const store = (to, initialState, storedLocale) => {
+        to.meta.locale = storedLocale
+        if (initialState && !initialState.locale) initialState.locale = storedLocale
+        setLocale(storedLocale)
+      }
+      if (haveLocaleVersion) {
+        if (isDefault) {
+          // Default locale prefers non-prefixed URL
+          const nonPrefixedPath = normalizePath(buildNonPrefixedPath(pageKey, storedLocale))
+          if (to.meta.prefixed === true && currentPath !== nonPrefixedPath) {
+            store(to, initialState, storedLocale)
+            return nonPrefixedPath
+          }
+        } else if (to.meta.prefixed !== true) {
+          // Non-default locale prefers prefixed URL
+          const prefixedPath = normalizePath(buildPrefixedPath(pageKey, storedLocale))
+          if (prefixedPath && currentPath !== prefixedPath) {
+            store(to, initialState, storedLocale)
+            return prefixedPath
+          }
+        }
+      }
+      return ""
     }
 
     // During build, store locale in initialState for hydration under non-prefix paths
     router.beforeEach((to, from, next) => {
-      const storedLocale = isClient ? localStorage.getItem('locale') : null
+      const storedLocale = import.meta.env.SSR ? null : localStorage.getItem('locale')
       const initialLocale = initialState?.locale
       const targetLocale =
         storedLocale ||
@@ -120,30 +150,10 @@ export const createApp = ViteSSG(
         site.defaultLocale ||
         'zh-tw'
       // Align URL with stored locale
-      if (isClient && storedLocale) {
-        const pageKey = to.meta.pageKey || 'home'
-        const currentPath = normalizePath(to.path)
-
-        if (storedLocale === site.defaultLocale && hasLocaleVersion(pageKey, storedLocale)) {
-          // Default locale prefers non-prefixed URL
-          const nonPrefixedPath = normalizePath(buildNonPrefixedPath(pageKey, storedLocale))
-          if (to.meta.prefixed === true && currentPath !== nonPrefixedPath) {
-            to.meta.locale = storedLocale
-            if (initialState && !initialState.locale) initialState.locale = storedLocale
-            setLocale(storedLocale)
-            return next(nonPrefixedPath)
-          }
-        } else if (hasLocaleVersion(pageKey, storedLocale)) {
-          // Non-default locale prefers prefixed URL
-          if (to.meta.prefixed !== true) {
-            const prefixedPath = normalizePath(buildPrefixedPath(pageKey, storedLocale))
-            if (prefixedPath && currentPath !== prefixedPath) {
-              to.meta.locale = storedLocale
-              if (initialState && !initialState.locale) initialState.locale = storedLocale
-              setLocale(storedLocale)
-              return next(prefixedPath)
-            }
-          }
+      if (!import.meta.env.SSR && storedLocale) {
+        const store = storeLocale(to, initialState, storedLocale)
+        if (store.length > 0) {
+          return next(store)
         }
       }
       to.meta.locale = targetLocale

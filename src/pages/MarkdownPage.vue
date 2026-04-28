@@ -42,7 +42,7 @@ const findContentPath = (basePath, targetLocale) => {
   return candidates.find((p) => moduleKeys.includes(p)) || null
 }
 
-const parseSingleLocaleMd = (raw = '', filenameLocale) => {
+const parseSingleLocaleMd = (raw, filenameLocale) => {
   const content = typeof raw === 'string' ? raw : String(raw || '')
   const fmMatch = content.match(/^---\s*\n([\s\S]*?)\n---\s*\n?([\s\S]*)$/)
   const meta = fmMatch ? YAML.parse(fmMatch[1]) || {} : {}
@@ -142,7 +142,7 @@ const articleTags = computed(() => {
 </script>
 
 <template>
-  <section class="pt-[120px] pb-12 lg:pb-18 w-5/6 lg:w-2/3 mx-auto space-y-10">
+  <section class="pt-30 pb-12 lg:pb-18 w-5/6 lg:w-2/3 mx-auto space-y-10">
     <div v-if="rendered" class="markdown-content space-y-2">
       <h1>
         <div class="flex flex-wrap gap-2 pt-4">
