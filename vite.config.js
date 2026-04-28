@@ -131,6 +131,7 @@ const walksCloudUiColors = {
 }
 
 const FAQ_OUTPUT_PATH_PATTERN = /^\/(?:[a-z-]+\/)?faq(?:\/|$)/i
+const DYNAMIC_ROUTE_PATH_PATTERN = /:/
 
 const SEO_HEAD_TAG_PATTERNS = [
   /<title\b[^>]*>[\s\S]*?<\/title>/gi,
@@ -252,7 +253,12 @@ export default defineConfig(({ mode }) => {
       ]
     },
     ssgOptions: {
-      includedRoutes: (paths = []) => paths.filter((routePath) => !FAQ_OUTPUT_PATH_PATTERN.test(routePath)),
+      includedRoutes: (paths = []) =>
+        paths.filter(
+          (routePath) =>
+            !FAQ_OUTPUT_PATH_PATTERN.test(routePath) &&
+            !DYNAMIC_ROUTE_PATH_PATTERN.test(routePath),
+        ),
       onPageRendered: async (_route, renderedHTML, appCtx) => {
         if (!appCtx?.head) {
           return renderedHTML
