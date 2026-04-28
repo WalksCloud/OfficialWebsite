@@ -1,0 +1,1 @@
+import{t as e}from"./app-pages-placeholderpage-OGvLU_AK.js";export{e as default};

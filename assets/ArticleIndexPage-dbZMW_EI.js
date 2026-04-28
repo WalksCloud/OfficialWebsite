@@ -1,0 +1,1 @@
+import{t as e}from"./app-pages-articleindexpage-a1NBK18w.js";export{e as default};
