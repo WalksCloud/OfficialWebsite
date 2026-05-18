@@ -7,6 +7,7 @@ import {
   getPageConfig,
   getSiteConfig,
 } from './pageConfig'
+import { renderMarkdownInlineToText } from './markdown'
 
 const site = getSiteConfig()
 
@@ -149,7 +150,10 @@ export const usePageHead = (route, options = {}) => {
     if (!base) return site.brandName
     return base.includes(site.brandName) ? base : `${base}${suffix}`
   })
-  const description = computed(() => resolveLocalizedValue(page.value?.descriptions, currentLocale.value))
+  const description = computed(() => {
+    const raw = resolveLocalizedValue(page.value?.descriptions, currentLocale.value)
+    return renderMarkdownInlineToText(raw, { html: false, linkify: true, breaks: true })
+  })
   const robots = computed(() =>
     page.value?.index === false ? 'noindex,nofollow' : site.robots?.policy || 'index,follow'
   )

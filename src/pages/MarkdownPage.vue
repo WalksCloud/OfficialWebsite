@@ -113,10 +113,12 @@ const rewriteRelativeImagePaths = (body, contentPath) => {
 const renderBlock = (block) => {
   const titleText = typeof block.meta?.title === 'string' ? block.meta.title : ''
   const descriptionText = typeof block.meta?.description === 'string' ? block.meta.description : ''
+  const descriptionHtml = descriptionText ? md.renderInline(descriptionText) : ''
   const content = (block.body || '').trim()
   return {
     title: titleText,
     description: descriptionText,
+    descriptionHtml,
     html: md.render(content),
   }
 }
@@ -223,7 +225,9 @@ const articleTags = computed(() => {
           </div>
         </div>
       </h1>
-      <p v-if="rendered.description">{{ rendered.description }}</p>
+      <div v-if="rendered.descriptionHtml" class="markdown-description">
+        <MarkdownRuntimeContent :source="rendered.descriptionHtml" />
+      </div>
       <MarkdownRuntimeContent :source="rendered.html" />
     </div>
     <p v-else class="text-center text-gray-600 dark:text-gray-300">
@@ -238,6 +242,9 @@ const articleTags = computed(() => {
 .markdown-content {
   color: inherit;
   line-height: 1.6;
+}
+:deep(.markdown-description p) {
+  margin: 0;
 }
 :deep(.markdown-content [data-markdown-embedded]) {
   padding: 1rem 0 1rem;
