@@ -60,6 +60,26 @@ const resolveLastmod = (page, slug, locale) => {
   return finalLastmod
 }
 
+const splitUrlPathSegments = (loc) => {
+  const pathname = new URL(loc).pathname
+  const normalizedPath = pathname.replace(/^\/+/, '').replace(/\/+$/, '')
+  return normalizedPath ? normalizedPath.split('/') : []
+}
+
+const compareLocAsTree = (aLoc, bLoc) => {
+  const aSegments = splitUrlPathSegments(aLoc)
+  const bSegments = splitUrlPathSegments(bLoc)
+  const minLen = Math.min(aSegments.length, bSegments.length)
+
+  for (let i = 0; i < minLen; i += 1) {
+    const segCompare = aSegments[i].localeCompare(bSegments[i], 'en', { numeric: true })
+    if (segCompare !== 0) return segCompare
+  }
+
+  if (aSegments.length !== bSegments.length) return aSegments.length - bSegments.length
+  return aLoc.localeCompare(bLoc, 'en')
+}
+
 const buildSitemap = () => {
   const urlMap = new Map()
 
@@ -94,7 +114,7 @@ const buildSitemap = () => {
     })
   })
 
-  const urls = Array.from(urlMap.values())
+  const urls = Array.from(urlMap.values()).sort((a, b) => compareLocAsTree(a.loc, b.loc))
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
