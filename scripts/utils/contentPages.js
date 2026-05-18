@@ -14,17 +14,31 @@ const parseFrontmatter = (filePath) => {
 
 const contentDirs = ['services', 'cases', 'tech']
 
+const walkMarkdownFiles = (dirPath) => {
+  const files = []
+  fs.readdirSync(dirPath, { withFileTypes: true }).forEach((entry) => {
+    const fullPath = path.join(dirPath, entry.name)
+    if (entry.isDirectory()) {
+      files.push(...walkMarkdownFiles(fullPath))
+      return
+    }
+    if (entry.isFile() && entry.name.endsWith('.md')) {
+      files.push(fullPath)
+    }
+  })
+  return files
+}
+
 export const loadContentPages = () => {
   const entries = new Map()
   contentDirs.forEach((dir) => {
     const dirPath = path.resolve(root, 'src/content', dir)
     if (!fs.existsSync(dirPath)) return
-    fs.readdirSync(dirPath).forEach((file) => {
-      if (!file.endsWith('.md')) return
+    walkMarkdownFiles(dirPath).forEach((filePath) => {
+      const file = path.basename(filePath)
       const localeMatch = file.match(/\.([a-z-]+)\.md$/i)
       if (!localeMatch) return
       const locale = localeMatch[1]
-      const filePath = path.join(dirPath, file)
       const fm = parseFrontmatter(filePath)
       if (fm?.deploy !== true) return
       const slug = fm.slug || ''

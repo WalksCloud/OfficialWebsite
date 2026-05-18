@@ -104,6 +104,40 @@ iframe {
   font-size: 48px;
 }
 
+pre.mermaid {
+  background: transparent;
+  overflow-x: auto;
+  margin: 1rem 0;
+  --mermaid-line-color: #334155;
+}
+
+pre.mermaid svg {
+  max-width: 100%;
+  height: auto;
+}
+
+pre.mermaid svg :is(.edgePath path, .flowchart-link, .marker path, .node :is(rect, circle, ellipse, polygon, path), .cluster rect) {
+  stroke: var(--mermaid-line-color, #334155) !important;
+}
+
+pre.mermaid svg .marker path {
+  fill: var(--mermaid-line-color, #334155) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  pre.mermaid {
+    --mermaid-line-color: #cbd5e1;
+  }
+}
+
+:is(.dark pre.mermaid) {
+  --mermaid-line-color: #cbd5e1;
+}
+
+:is(.light pre.mermaid) {
+  --mermaid-line-color: #334155;
+}
+
 @media (width < 64rem) {
   .icon-element {
     font-size: 32px;

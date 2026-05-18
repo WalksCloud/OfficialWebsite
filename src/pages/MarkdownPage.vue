@@ -28,12 +28,48 @@ const modules = import.meta.glob('../content/**/*.md', {
   eager: true,
 })
 const moduleKeys = Object.keys(modules)
+const contentAssetModules = import.meta.glob(
+  '../content/**/*.{png,jpg,jpeg,gif,webp,avif,svg}',
+  {
+    eager: true,
+    import: 'default',
+  },
+)
+
+const normalizeModulePath = (value = '') => {
+  const segments = []
+  value
+    .replace(/\\/g, '/')
+    .split('/')
+    .forEach((segment) => {
+      if (!segment || segment === '.') return
+      if (segment === '..') {
+        if (segments.length && segments[segments.length - 1] !== '..') {
+          segments.pop()
+          return
+        }
+      }
+      segments.push(segment)
+    })
+  return segments.join('/')
+}
+
+const contentAssetMap = new Map(
+  Object.entries(contentAssetModules).map(([modulePath, assetUrl]) => [
+    normalizeModulePath(modulePath),
+    typeof assetUrl === 'string' ? assetUrl : String(assetUrl || ''),
+  ]),
+)
 
 const pageKey = computed(() => route.meta.pageKey || 'home')
 const currentLocale = computed(() => route.meta.locale || locale.value)
 
 const findContentPath = (basePath, targetLocale) => {
   const candidates = [
+    `${basePath}/index.${targetLocale}.md`,
+    `${basePath}/index.${site.defaultLocale}.md`,
+    `${basePath}/index.en.md`,
+    `${basePath}/index.md`,
     `${basePath}.${targetLocale}.md`,
     `${basePath}.${site.defaultLocale}.md`,
     `${basePath}.en.md`,
@@ -49,6 +85,29 @@ const parseSingleLocaleMd = (raw, filenameLocale) => {
   const body = fmMatch ? fmMatch[2] : content
   const lang = filenameLocale || site.defaultLocale
   return { meta: { ...meta, lang }, body }
+}
+
+const resolveRelativeAssetUrl = (contentPath, assetPath) => {
+  const baseDir = contentPath.slice(0, contentPath.lastIndexOf('/'))
+  const resolvedModulePath = normalizeModulePath(`${baseDir}/${assetPath}`)
+  return contentAssetMap.get(resolvedModulePath) || ''
+}
+
+const rewriteRelativeImagePaths = (body, contentPath) => {
+  if (!body || !contentPath) return body
+  return body.replace(/!\[([^\]]*)\]\(([^)\n]+)\)/g, (full, alt, target) => {
+    const rawTarget = String(target || '')
+    const trimmedTarget = rawTarget.trim()
+    const parsed = trimmedTarget.match(/^<?([^>\s]+)>?(\s+.*)?$/)
+    if (!parsed) return full
+    const [, pathToken, suffix = ''] = parsed
+    if (!(pathToken.startsWith('./') || pathToken.startsWith('../'))) return full
+    const resolvedUrl = resolveRelativeAssetUrl(contentPath, pathToken)
+    if (!resolvedUrl) return full
+    const wrapped = trimmedTarget.startsWith('<') && trimmedTarget.includes('>')
+    const nextTarget = wrapped ? `<${resolvedUrl}>` : resolvedUrl
+    return `![${alt}](${nextTarget}${suffix})`
+  })
 }
 
 const renderBlock = (block) => {
@@ -79,6 +138,7 @@ const resolveContent = () => {
   if (!raw) return null
   const filenameLocale = contentPath.match(/\.([a-z-]+)\.md$/i)?.[1]
   const block = parseSingleLocaleMd(raw, filenameLocale)
+  block.body = rewriteRelativeImagePaths(block.body, contentPath)
   contentLocale.value = block.meta?.lang || currentLocale.value
   return renderBlock(block)
 }

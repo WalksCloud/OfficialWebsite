@@ -11,7 +11,6 @@ export const createMarkdownRenderer = (options = {}) => {
   const defaultLinkClose =
     md.renderer.rules.link_close ||
     ((tokens, idx, _options, _env, self) => self.renderToken(tokens, idx, _options))
-
   md.renderer.rules.link_open = (tokens, idx, renderOptions, env, self) => {
     const token = tokens[idx]
     const href = token.attrGet('href') || ''
@@ -32,6 +31,20 @@ export const createMarkdownRenderer = (options = {}) => {
       return defaultLinkClose(tokens, idx, renderOptions, env, self)
     }
     return '</RouterLink>'
+  }
+
+  md.renderer.rules.fence = (tokens, idx, renderOptions, env, self) => {
+    const token = tokens[idx]
+    const info = (token.info || '').trim().split(/\s+/)[0]?.toLowerCase() || ''
+    if (info !== 'mermaid') {
+      const code = (token.content || '').replace(/\n$/, '')
+      const encodedCode = encodeURIComponent(code)
+      const language = info || 'plain'
+      return `<CodeBlock language="${md.utils.escapeHtml(language)}" code="${md.utils.escapeHtml(encodedCode)}"></CodeBlock>\n`
+    }
+
+    const diagramSource = md.utils.escapeHtml(token.content || '')
+    return `<pre class="mermaid">${diagramSource}</pre>\n`
   }
 
   return md
