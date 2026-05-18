@@ -7,7 +7,7 @@ ogType: article
 index: true
 deploy: true
 sitemap:
-  priority: 0.74
+  priority: 0.9
   changefreq: weekly
   lastmod: build
 jsonld:
