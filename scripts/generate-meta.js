@@ -22,14 +22,28 @@ const ensureDist = () => {
 
 const buildTime = new Date().toISOString()
 const baseUrl = (site.baseUrl || '').replace(/\/+$/, '')
+const normalizeSlug = (slug = '') => String(slug || '').replace(/^\/+/, '').replace(/\/+$/, '')
 
 const buildCanonicalPath = (slug, locale) => {
-  const normalizedSlug = (slug || '').replace(/^\/+/, '').replace(/\/+$/, '')
+  const normalizedSlug = normalizeSlug(slug || '')
   return normalizedSlug ? `/${locale}/${normalizedSlug}/` : `/${locale}/`
 }
 const buildNonPrefixedPath = (slug) => {
-  const normalizedSlug = (slug || '').replace(/^\/+/, '').replace(/\/+$/, '')
+  const normalizedSlug = normalizeSlug(slug || '')
   return normalizedSlug ? `/${normalizedSlug}/` : `/`
+}
+
+const hasDescendantSlug = (topLevelSlug) => {
+  const targetPrefix = `${topLevelSlug}/`
+  return pages.some((page) =>
+    Object.values(page.slugs || {}).some((slug) => normalizeSlug(slug).startsWith(targetPrefix))
+  )
+}
+
+const shouldSkipTopLevelSlug = (slug) => {
+  const normalizedSlug = normalizeSlug(slug)
+  if (!normalizedSlug || normalizedSlug.includes('/')) return false
+  return !hasDescendantSlug(normalizedSlug)
 }
 
 const resolveLastmod = (page, slug, locale) => {
@@ -58,6 +72,9 @@ const buildSitemap = () => {
     if (page.index === false) return
     site.locales.forEach((locale) => {
       const slug = page.slugs?.[locale] ?? ''
+      const normalizedSlug = normalizeSlug(slug)
+      if (normalizedSlug.startsWith('faq/')) return
+      if (shouldSkipTopLevelSlug(normalizedSlug)) return
       const path = buildCanonicalPath(slug, locale)
       const lastmod = resolveLastmod(page, slug, locale)
       pushUrl({
