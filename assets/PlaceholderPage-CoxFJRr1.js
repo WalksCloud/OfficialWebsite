@@ -1,0 +1,1 @@
+import{t as e}from"./app-pages-placeholderpage-De7NIAjz.js";export{e as default};

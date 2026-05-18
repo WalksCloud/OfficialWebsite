@@ -1,0 +1,1 @@
+function e(t,n,r){if(r===`_resolver`)return t;typeof t==`function`&&(!r||r!==`titleTemplate`&&!r.startsWith(`on`))&&(t=t());let i=n?n(r,t):t;if(Array.isArray(i))return i.map(t=>e(t,n));if(i?.constructor===Object){let t={};for(let r in i)r===`__proto__`||r===`constructor`||r===`prototype`||(t[r]=e(i[r],n,r));return t}return i}export{e as t};

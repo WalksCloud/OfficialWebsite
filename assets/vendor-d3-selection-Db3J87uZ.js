@@ -1,0 +1,1 @@
+import{m as e,p as t}from"./vendor-d3-Cpi4wddc.js";function n(n){return typeof n==`string`?new t([[document.querySelector(n)]],[document.documentElement]):new t([[n]],e)}export{n as t};
