@@ -10,10 +10,10 @@
       <img class="hidden dark:inline-block align-bottom ms-2 h-5" alt="" src="/logo-wordmark-company-white.svg" />
     </p>
 
-    <a :href="$t('footer.facebook_url')" target="_black" class="inline-block my-2 me-2">
+    <a :href="$t('footer.facebook_url')" target="_blank" class="inline-block my-2 me-2">
       <font-awesome-icon :icon="['fab', 'square-facebook']" class="text-2xl text-gray-600 dark:text-gray-300" />
     </a>
-    <a :href="$t('footer.linkedin_url')" target="_black" class="inline-block my-2">
+    <a :href="$t('footer.linkedin_url')" target="_blank" class="inline-block my-2">
       <font-awesome-icon :icon="['fab', 'linkedin']" class="text-2xl text-gray-600 dark:text-gray-300" />
     </a>
     <p class="text-sm lg:leading-1">
