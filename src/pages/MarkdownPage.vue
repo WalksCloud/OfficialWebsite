@@ -206,25 +206,23 @@ const articleTags = computed(() => {
 <template>
   <section class="pt-30 pb-12 lg:pb-18 w-5/6 lg:w-2/3 mx-auto space-y-10">
     <div v-if="rendered" class="markdown-content space-y-2">
-      <h1>
-        <div class="flex flex-wrap gap-2 pt-4">
-          <div>{{ rendered.title }}</div>
-          <div class="flex-end">
-            <UBadge
-              v-for="tag in articleTags"
-              :key="tag.id"
-              :label="tag.label"
-              color="neutral"
-              variant="soft"
-              class="font-bold rounded-full border border-transparent h-6"
-              :style="tag.style"
-            />
-          </div>
-          <div v-if="lastUpdatedLabel" class="markdown-last-updated flex-end ml-auto">
-            {{ lastUpdatedLabel }}
-          </div>
+      <div class="flex flex-wrap gap-2 pt-4">
+        <h1>{{ rendered.title }}</h1>
+        <div class="flex-end">
+          <UBadge
+            v-for="tag in articleTags"
+            :key="tag.id"
+            :label="tag.label"
+            color="neutral"
+            variant="soft"
+            class="font-bold rounded-full border border-transparent h-6"
+            :style="tag.style"
+          />
         </div>
-      </h1>
+        <div v-if="lastUpdatedLabel" class="markdown-last-updated flex-end ml-auto">
+          {{ lastUpdatedLabel }}
+        </div>
+      </div>
       <div v-if="rendered.descriptionHtml" class="markdown-description">
         <MarkdownRuntimeContent :source="rendered.descriptionHtml" />
       </div>
@@ -252,7 +250,7 @@ const articleTags = computed(() => {
 :deep(.markdown-content h1:not([data-markdown-embedded] *)) {
   font-size: 2rem;
   font-weight: 700;
-  margin: 1.25rem 0 0.75rem;
+  margin: 1.25rem 0 0;
 }
 :deep(.markdown-content h2:not([data-markdown-embedded] *)) {
   font-size: 1.6rem;
