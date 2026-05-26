@@ -165,22 +165,28 @@ const hasRelations = computed(
 		<hr />
 		<div v-if="relatedData.services.length">
 			<h3 class="text-2xl font-bold mb-4">相關服務</h3>
-			<ul class="space-y-3">
-				<ArticlePreview v-for="item in relatedData.services" :key="item.slug" :item="item" />
+			<ul class="space-y-3 list-none p-0">
+				<li v-for="item in relatedData.services" :key="item.slug">
+					<ArticlePreview :item="item" />
+				</li>
 			</ul>
 		</div>
 
 		<div v-if="relatedData.cases.length">
 			<h3 class="text-2xl font-bold mb-4">相關案例</h3>
-			<ul class="space-y-3">
-				<ArticlePreview v-for="item in relatedData.cases" :key="item.slug" :item="item" />
+			<ul class="space-y-3 list-none p-0">
+				<li v-for="item in relatedData.cases" :key="item.slug">
+					<ArticlePreview :item="item" />
+				</li>
 			</ul>
 		</div>
 
 		<div v-if="relatedData.tech.length">
 			<h3 class="text-2xl font-bold mb-4">相關技術文章</h3>
-			<ul class="space-y-3">
-				<ArticlePreview v-for="item in relatedData.tech" :key="item.slug" :item="item" />
+			<ul class="space-y-3 list-none p-0">
+				<li v-for="item in relatedData.tech" :key="item.slug">
+					<ArticlePreview :item="item" />
+				</li>
 			</ul>
 		</div>
 
