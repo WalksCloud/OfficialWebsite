@@ -23,6 +23,10 @@ const sanitizeChunkName = (name = '') =>
 const normalizeId = (id = '') => id.replace(/\\/g, '/')
 
 const stripFileExtension = (value = '') => value.replace(/\.(mjs|js|ts|cjs|jsx|tsx)$/i, '')
+const getAssetBasename = (value = '') => {
+  const normalized = normalizeId(value).split('?')[0] || ''
+  return path.posix.basename(normalized)
+}
 
 const normalizeViteDepsName = (raw = '') => {
   const clean = stripFileExtension(raw)
@@ -93,6 +97,32 @@ const codeSplittingGroups = [
     test: (id) => Boolean(extractAppChunkName(id)),
   },
 ]
+
+const HEAVY_PRELOAD_CHUNK_PATTERNS = [
+  /^vendor-mermaid-/,
+  /^vendor-cytoscape-/,
+  /^vendor-d3-/,
+  /^vendor-katex-/,
+  /^vendor-markdown-it-/,
+  /^app-pages-markdownpage-/,
+  /^app-components-codeblock-/,
+]
+
+const shouldDropHtmlModulePreload = (dep = '') => {
+  const name = getAssetBasename(dep)
+  if (!name) return false
+  return HEAVY_PRELOAD_CHUNK_PATTERNS.some((pattern) => pattern.test(name))
+}
+
+const filterHtmlModulePreloads = (deps = []) => {
+  const seen = new Set()
+  return deps.filter((dep) => {
+    const key = dep.split('?')[0]
+    if (seen.has(key)) return false
+    seen.add(key)
+    return !shouldDropHtmlModulePreload(dep)
+  })
+}
 
 const contentLastmodPlugin = () => {
   const virtualId = 'virtual:content-lastmod.yaml'
@@ -185,6 +215,20 @@ const stripSeoHeadTags = (rawHead = '') => {
   return cleaned.trim()
 }
 
+const dedupeModulePreloadTags = (headHtml = '') => {
+  const seen = new Set()
+  return headHtml.replace(
+    /<link\b[^>]*\brel\s*=\s*["']modulepreload["'][^>]*\bhref\s*=\s*["']([^"']+)["'][^>]*>/gi,
+    (tag, href = '') => {
+      const key = String(href).trim()
+      if (!key) return tag
+      if (seen.has(key)) return ''
+      seen.add(key)
+      return tag
+    },
+  )
+}
+
 const applyRenderedHead = (html, renderedHead) => {
   if (!renderedHead) return html
   let next = html
@@ -203,7 +247,7 @@ const applyRenderedHead = (html, renderedHead) => {
 
   return next.replace(/<head\b([^>]*)>([\s\S]*?)<\/head>/i, (_match, attrs = '', rawHead = '') => {
     const cleaned = stripSeoHeadTags(rawHead)
-    const merged = [cleaned, renderedHead.headTags].filter(Boolean).join('\n')
+    const merged = dedupeModulePreloadTags([cleaned, renderedHead.headTags].filter(Boolean).join('\n'))
     return `<head${attrs}>\n${merged}\n</head>`
   })
 }
@@ -268,6 +312,12 @@ export default defineConfig(({ mode }) => {
       },
     },
     build: {
+      modulePreload: {
+        resolveDependencies(_url, deps = [], context = {}) {
+          if (context.hostType !== 'html') return deps
+          return filterHtmlModulePreloads(deps)
+        },
+      },
       rolldownOptions: {
         output: {
           codeSplitting: {
