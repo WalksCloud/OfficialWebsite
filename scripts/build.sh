@@ -30,6 +30,7 @@ run_build() {
   bun "$vite_ssg_cli" build
   bun "${DIR}/generate-meta.js"
   bun "${DIR}/generate-redirects.js"
+  bun "${DIR}/generate-bot-home.js"
   bun "${DIR}/format-dist.js"
 }
 
