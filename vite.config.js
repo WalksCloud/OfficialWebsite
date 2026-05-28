@@ -124,7 +124,7 @@ const filterHtmlModulePreloads = (deps = []) => {
   })
 }
 
-const contentLastmodPlugin = () => {
+const contentLastmodPlugin = ({ preferDirtyMtime = false } = {}) => {
   const virtualId = 'virtual:content-lastmod.yaml'
   return {
     name: 'virtual-content-lastmod',
@@ -134,7 +134,7 @@ const contentLastmodPlugin = () => {
     },
     load(id) {
       if (id === virtualId) {
-        const data = collectContentLastmod()
+        const data = collectContentLastmod({ preferDirtyMtime })
         return YAML.stringify(data)
       }
       return null
@@ -254,6 +254,9 @@ const applyRenderedHead = (html, renderedHead) => {
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
+  const preferDirtyMtime = ['1', 'true', 'yes', 'on'].includes(
+    String(process.env.WC_CONTENT_LASTMOD_PREFER_DIRTY_MTIME || '').toLowerCase(),
+  )
   return {
     define: {
       'import.meta.env.buildTime': JSON.stringify(DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss ZZ')),
@@ -271,7 +274,7 @@ export default defineConfig(({ mode }) => {
         },
       }),
       tailwindcss(),
-      contentLastmodPlugin(),
+      contentLastmodPlugin({ preferDirtyMtime }),
       {
         name: 'yaml',
         transform(src, id) {

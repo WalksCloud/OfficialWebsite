@@ -12,7 +12,10 @@ const site = readYaml('config/site-info.yaml')
 
 const contentPages = loadContentPages()
 const pages = [...readYaml('config/pages.yaml'), ...contentPages]
-const slugLastmodMap = collectContentLastmod({ contentPages })
+const preferDirtyMtime = ['1', 'true', 'yes', 'on'].includes(
+  String(process.env.WC_CONTENT_LASTMOD_PREFER_DIRTY_MTIME || '').toLowerCase(),
+)
+const slugLastmodMap = collectContentLastmod({ contentPages, preferDirtyMtime })
 
 const ensureDist = () => {
   if (!fs.existsSync(distDir)) {

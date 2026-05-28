@@ -4,6 +4,7 @@ import { execSync } from 'node:child_process'
 import { loadContentPages } from './contentPages.js'
 
 const root = process.cwd()
+const DIRTY_MTIME_ENV = 'WC_CONTENT_LASTMOD_PREFER_DIRTY_MTIME'
 
 const normalizeSlug = (value = '') => {
   const raw = typeof value === 'string' ? value : String(value || '')
@@ -67,15 +68,26 @@ const getFileSystemTimestamp = (filePath) => {
   }
 }
 
-const resolveTimestamp = (filePath) => {
+const resolvePreferDirtyMtime = (value) => {
+  if (typeof value === 'boolean') return value
+  const raw = process.env[DIRTY_MTIME_ENV]
+  if (!raw) return false
+  return ['1', 'true', 'yes', 'on'].includes(String(raw).toLowerCase())
+}
+
+const resolveTimestamp = (filePath, options = {}) => {
+  const preferDirtyMtime = resolvePreferDirtyMtime(options.preferDirtyMtime)
   if (!filePath) return null
-  if (isFileDirty(filePath)) {
-    return getFileSystemTimestamp(filePath)
+  // In local dev, allow dirty content files to surface immediately via mtime.
+  if (preferDirtyMtime && isFileDirty(filePath)) {
+    return getFileSystemTimestamp(filePath) || getGitTimestamp(filePath)
   }
+  // In build/deploy paths, keep lastmod stable to latest committed updates.
+  // Use filesystem mtime only when git has no history for this file.
   return getGitTimestamp(filePath) || getFileSystemTimestamp(filePath)
 }
 
-export const collectContentLastmod = ({ contentPages } = {}) => {
+export const collectContentLastmod = ({ contentPages, preferDirtyMtime } = {}) => {
   const pages = Array.isArray(contentPages) && contentPages.length ? contentPages : loadContentPages()
   const slugFilesMap = new Map()
   pages.forEach((page) => {
@@ -93,7 +105,7 @@ export const collectContentLastmod = ({ contentPages } = {}) => {
   slugFilesMap.forEach((filePaths, slug) => {
     let latest = null
     filePaths.forEach((filePath) => {
-      const ts = resolveTimestamp(filePath)
+      const ts = resolveTimestamp(filePath, { preferDirtyMtime })
       if (ts && (!latest || ts > latest)) {
         latest = ts
       }
