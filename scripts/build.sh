@@ -27,6 +27,7 @@ terminate_process_group() {
 }
 
 run_build() {
+  bun "${DIR}/warn-faq-index.js"
   bun "$vite_ssg_cli" build
   bun "${DIR}/generate-meta.js"
   bun "${DIR}/generate-redirects.js"
