@@ -38,10 +38,8 @@ article:
 footer:
   facebook_url: https://www.facebook.com/WalksCloud
   linkedin_url: https://www.linkedin.com/company/walkscloud/
-  term-of-use: Terms of Use
-  term-of-use_url: https://dev.auth.select/term-of-use
-  privacy-policy: Privacy Policy
-  privacy-policy_url: https://dev.auth.select/privacy-policy
+  term-of-use: 服務條款
+  privacy-policy: 隱私權政策
 about-section:
   title: Get Everything Works Great - 讓行雲成為您的 IT 夥伴
   intro:

@@ -1,5 +1,18 @@
 <script setup>
-  const env = import.meta.env;
+  import { computed } from 'vue'
+  import { useI18n } from 'vue-i18n'
+  import { buildLocalizedPath } from '@/utils/contentIndex'
+
+  const env = import.meta.env
+  const { locale } = useI18n()
+
+  const termsOfUsePath = computed(() =>
+    buildLocalizedPath('/legal/terms-of-use', locale.value),
+  )
+
+  const privacyPolicyPath = computed(() =>
+    buildLocalizedPath('/legal/privacy-policy', locale.value),
+  )
 </script>
 
 <template>
@@ -18,9 +31,9 @@
     </a>
     <p class="text-sm lg:leading-1">
       <a href="https://github.com/WalksCloud/OfficialWebsite">GitHub Repo</a>
-			(<a :href="`https://github.com/WalksCloud/OfficialWebsite/commit/` + env.buildHash">#{{env.buildHash}}</a> {{env.buildTime}}) |
-      <a :href="$t('footer.term-of-use_url')" target="_blank">{{ $t('footer.term-of-use') }}</a> |
-      <a :href="$t('footer.privacy-policy_url')" target="_blank">{{ $t('footer.privacy-policy') }}</a>
+      (<a :href="`https://github.com/WalksCloud/OfficialWebsite/commit/` + env.buildHash">#{{env.buildHash}}</a> {{env.buildTime}}) |
+      <RouterLink :to="termsOfUsePath">{{ $t('footer.term-of-use') }}</RouterLink> |
+      <RouterLink :to="privacyPolicyPath">{{ $t('footer.privacy-policy') }}</RouterLink>
     </p>
   </footer>
 </template>
