@@ -20,6 +20,11 @@ locale-switch:
 close: Close
 loading: Loading...
 relationship:
+  sections:
+    services: Related Services
+    cases: Related Cases
+    tech: Related Tech Articles
+    faq: Related FAQ
   messages:
     noRelation: "No related article in this language."
     availableLocalesNotice: "Available locales: {locales}"

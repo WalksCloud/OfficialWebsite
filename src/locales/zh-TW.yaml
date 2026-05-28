@@ -20,6 +20,11 @@ locale-switch:
 close: 關閉
 loading: 載入中...
 relationship:
+  sections:
+    services: 相關服務
+    cases: 相關案例
+    tech: 相關技術文章
+    faq: 相關 FAQ
   messages:
     noRelation: "此語系沒有相關文章。"
     availableLocalesNotice: "可用語言版本：{locales}"

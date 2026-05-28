@@ -164,7 +164,7 @@ const hasRelations = computed(
 	<section v-if="hasRelations" class="my-10 space-y-10">
 		<hr />
 		<div v-if="relatedData.services.length">
-			<h3 class="text-2xl font-bold mb-4">相關服務</h3>
+			<h3 class="text-2xl font-bold mb-4">{{ $t('relationship.sections.services') }}</h3>
 			<ul class="space-y-3 list-none p-0">
 				<li v-for="item in relatedData.services" :key="item.slug">
 					<ArticlePreview :item="item" />
@@ -173,7 +173,7 @@ const hasRelations = computed(
 		</div>
 
 		<div v-if="relatedData.cases.length">
-			<h3 class="text-2xl font-bold mb-4">相關案例</h3>
+			<h3 class="text-2xl font-bold mb-4">{{ $t('relationship.sections.cases') }}</h3>
 			<ul class="space-y-3 list-none p-0">
 				<li v-for="item in relatedData.cases" :key="item.slug">
 					<ArticlePreview :item="item" />
@@ -182,7 +182,7 @@ const hasRelations = computed(
 		</div>
 
 		<div v-if="relatedData.tech.length">
-			<h3 class="text-2xl font-bold mb-4">相關技術文章</h3>
+			<h3 class="text-2xl font-bold mb-4">{{ $t('relationship.sections.tech') }}</h3>
 			<ul class="space-y-3 list-none p-0">
 				<li v-for="item in relatedData.tech" :key="item.slug">
 					<ArticlePreview :item="item" />
@@ -191,7 +191,7 @@ const hasRelations = computed(
 		</div>
 
 		<div v-if="relatedData.faq.length">
-			<h3 class="text-2xl font-bold mb-4">相關 FAQ</h3>
+			<h3 class="text-2xl font-bold mb-4">{{ $t('relationship.sections.faq') }}</h3>
 			<div class="grid lg:grid-cols-2 gap-4">
 				<FaqArticleCard v-for="item in relatedData.faq" :key="item.slug" :item="item" />
 			</div>
