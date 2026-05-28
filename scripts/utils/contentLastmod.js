@@ -5,6 +5,7 @@ import { loadContentPages } from './contentPages.js'
 
 const root = process.cwd()
 const DIRTY_MTIME_ENV = 'WC_CONTENT_LASTMOD_PREFER_DIRTY_MTIME'
+const FAIL_ON_SHALLOW_ENV = 'WC_CONTENT_LASTMOD_FAIL_ON_SHALLOW'
 
 const normalizeSlug = (value = '') => {
   const raw = typeof value === 'string' ? value : String(value || '')
@@ -15,6 +16,7 @@ const normalizeSlug = (value = '') => {
 const gitStatusCache = new Map()
 const gitTimestampCache = new Map()
 const fsTimestampCache = new Map()
+let shallowRepositoryCache = null
 
 const resolveAbsolutePath = (filePath = '') => {
   if (!filePath) return null
@@ -75,6 +77,26 @@ const resolvePreferDirtyMtime = (value) => {
   return ['1', 'true', 'yes', 'on'].includes(String(raw).toLowerCase())
 }
 
+const resolveFailOnShallow = () => {
+  const raw = process.env[FAIL_ON_SHALLOW_ENV]
+  if (!raw) return true
+  return ['1', 'true', 'yes', 'on'].includes(String(raw).toLowerCase())
+}
+
+const isShallowRepository = () => {
+  if (typeof shallowRepositoryCache === 'boolean') return shallowRepositoryCache
+  try {
+    const output = execSync('git rev-parse --is-shallow-repository', { cwd: root })
+      .toString()
+      .trim()
+      .toLowerCase()
+    shallowRepositoryCache = output === 'true'
+  } catch (_err) {
+    shallowRepositoryCache = false
+  }
+  return shallowRepositoryCache
+}
+
 const resolveTimestamp = (filePath, options = {}) => {
   const preferDirtyMtime = resolvePreferDirtyMtime(options.preferDirtyMtime)
   if (!filePath) return null
@@ -88,6 +110,13 @@ const resolveTimestamp = (filePath, options = {}) => {
 }
 
 export const collectContentLastmod = ({ contentPages, preferDirtyMtime } = {}) => {
+  const resolvedPreferDirtyMtime = resolvePreferDirtyMtime(preferDirtyMtime)
+  if (!resolvedPreferDirtyMtime && resolveFailOnShallow() && isShallowRepository()) {
+    throw new Error(
+      'Shallow git repository detected. Content lastmod requires full history. Use fetch-depth: 0 (or set WC_CONTENT_LASTMOD_FAIL_ON_SHALLOW=0 to bypass).',
+    )
+  }
+
   const pages = Array.isArray(contentPages) && contentPages.length ? contentPages : loadContentPages()
   const slugFilesMap = new Map()
   pages.forEach((page) => {
@@ -105,7 +134,7 @@ export const collectContentLastmod = ({ contentPages, preferDirtyMtime } = {}) =
   slugFilesMap.forEach((filePaths, slug) => {
     let latest = null
     filePaths.forEach((filePath) => {
-      const ts = resolveTimestamp(filePath, { preferDirtyMtime })
+      const ts = resolveTimestamp(filePath, { preferDirtyMtime: resolvedPreferDirtyMtime })
       if (ts && (!latest || ts > latest)) {
         latest = ts
       }
