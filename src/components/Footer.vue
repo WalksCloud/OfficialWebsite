@@ -5,7 +5,7 @@
 <template>
 	<footer class="text-center px-3 pb-3 lg:py-6 lg:px-0 text-sm lg:text-base">
     <p>
-      © 2025 — Walks Cloud Inc.
+      © {{new Date(env.buildTime).getFullYear()}} — Walks Cloud Inc.
       <img class="inline-block dark:hidden align-bottom ms-2 h-5" alt="" src="/logo-wordmark-company.svg" />
       <img class="hidden dark:inline-block align-bottom ms-2 h-5" alt="" src="/logo-wordmark-company-white.svg" />
     </p>
