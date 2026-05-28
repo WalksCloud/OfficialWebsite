@@ -5,39 +5,13 @@ import {
   buildCanonicalUrl,
   getLocales,
   getPageConfig,
+  getPageConfigs,
   getSiteConfig,
+  getSlugForLocale,
 } from './pageConfig'
 import { renderMarkdownInlineToText } from './markdown'
 
 const site = getSiteConfig()
-
-const buildBreadcrumbs = (pageKey, locale) => {
-  const page = getPageConfig(pageKey)
-  if (!page) return []
-  const rawSlug = page.slugs?.[locale] ?? ''
-  const slugStr = typeof rawSlug === 'string' ? rawSlug : String(rawSlug || '')
-  const segments = slugStr ? slugStr.split('/') : []
-  const crumbs = [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: site.brandName,
-      item: buildCanonicalUrl('home', locale),
-    },
-  ]
-  if (!segments.length) return crumbs
-  let pathAcc = ''
-  segments.forEach((segment, idx) => {
-    pathAcc += `${segment}/`
-    crumbs.push({
-      '@type': 'ListItem',
-      position: idx + 2,
-      name: segment,
-      item: `${site.baseUrl}/${locale}/${pathAcc}`,
-    })
-  })
-  return crumbs
-}
 
 const toAbsolute = (path) => {
   if (!path) return undefined
@@ -63,7 +37,118 @@ const resolveLocalizedValue = (localizedMap, locale) => {
   return typeof firstAvailable === 'string' ? firstAvailable : ''
 }
 
-const buildJsonLd = (pageKey, locale, title, description, canonicalUrl) => {
+const normalizeSlug = (slug = '') =>
+  String(slug || '')
+    .replace(/^\/+/, '')
+    .replace(/\/+$/, '')
+
+const prettifySegmentName = (segment = '') =>
+  String(segment || '')
+    .replace(/[-_]+/g, ' ')
+    .trim()
+
+const resolvePageByLocalizedSlug = (slug, locale) => {
+  const normalizedTarget = normalizeSlug(slug)
+  const pages = getPageConfigs()
+  return (
+    pages.find((page) => normalizeSlug(getSlugForLocale(page.pageKey, locale)) === normalizedTarget) ||
+    null
+  )
+}
+
+const buildBreadcrumbs = (pageKey, locale, options = {}) => {
+  const localizedSlug = normalizeSlug(getSlugForLocale(pageKey, locale))
+  const homeName = options.homeName || site.brandName
+  const crumbs = [
+    {
+      '@type': 'ListItem',
+      position: 1,
+      name: homeName,
+      item: buildCanonicalUrl('home', locale),
+    },
+  ]
+
+  if (!localizedSlug) return crumbs
+
+  const segments = localizedSlug.split('/').filter(Boolean)
+  let accumulated = ''
+  segments.forEach((segment, idx) => {
+    accumulated = accumulated ? `${accumulated}/${segment}` : segment
+    const resolvedPage = resolvePageByLocalizedSlug(accumulated, locale)
+    const resolvedName =
+      resolveLocalizedValue(resolvedPage?.titles, locale) || prettifySegmentName(segment)
+    const resolvedItem = resolvedPage
+      ? buildCanonicalUrl(resolvedPage.pageKey, locale)
+      : `${site.baseUrl}/${locale}/${accumulated}/`
+    crumbs.push({
+      '@type': 'ListItem',
+      position: idx + 2,
+      name: resolvedName,
+      item: resolvedItem,
+    })
+  })
+
+  return crumbs
+}
+
+const resolveJsonLdKind = (page = {}) => {
+  const explicitKind = typeof page?.jsonld?.kind === 'string' ? page.jsonld.kind.trim() : ''
+  if (explicitKind) return explicitKind
+  if (page?.type === 'tech') return 'TechArticle'
+  if (page?.type === 'case') return 'CaseStudy'
+  return ''
+}
+
+const buildContentJsonLdNode = ({ page, kind, title, description, canonicalUrl, lang, base }) => {
+  if (!kind) return null
+  const common = {
+    name: title,
+    description,
+    url: canonicalUrl,
+    inLanguage: lang,
+    isPartOf: { '@id': `${canonicalUrl}#webpage` },
+  }
+
+  if (kind === 'Service') {
+    return {
+      '@type': 'Service',
+      serviceType: page?.jsonld?.serviceType || title,
+      provider: { '@id': `${base}/#organization` },
+      ...common,
+    }
+  }
+
+  if (kind === 'CaseStudy') {
+    return {
+      '@type': 'Article',
+      headline: title,
+      genre: 'Case Study',
+      author: { '@id': `${base}/#organization` },
+      publisher: { '@id': `${base}/#organization` },
+      ...common,
+    }
+  }
+
+  if (kind === 'TechArticle') {
+    return {
+      '@type': 'TechArticle',
+      headline: title,
+      author: { '@id': `${base}/#organization` },
+      publisher: { '@id': `${base}/#organization` },
+      ...common,
+    }
+  }
+
+  return {
+    '@type': 'Article',
+    headline: title,
+    author: { '@id': `${base}/#organization` },
+    publisher: { '@id': `${base}/#organization` },
+    ...common,
+  }
+}
+
+const buildJsonLd = (pageKey, locale, title, description, canonicalUrl, breadcrumbItems = []) => {
   const page = getPageConfig(pageKey)
   const base = site.baseUrl
   const lang = toBcpLocale(locale)
@@ -93,22 +178,22 @@ const buildJsonLd = (pageKey, locale, title, description, canonicalUrl) => {
     inLanguage: lang,
     breadcrumb: {
       '@type': 'BreadcrumbList',
-      itemListElement: buildBreadcrumbs(pageKey, locale),
+      itemListElement: breadcrumbItems,
     },
   }
 
   const graph = [org, website, webpage]
-
-  if (page?.jsonld?.kind === 'Service') {
-    graph.push({
-      '@type': 'Service',
-      serviceType: page.jsonld.serviceType || title,
-      provider: { '@id': `${base}/#organization` },
-      name: title,
-      description,
-      url: canonicalUrl,
-    })
-  }
+  const kind = resolveJsonLdKind(page)
+  const contentNode = buildContentJsonLdNode({
+    page,
+    kind,
+    title,
+    description,
+    canonicalUrl,
+    lang,
+    base,
+  })
+  if (contentNode) graph.push(contentNode)
 
   return {
     '@context': 'https://schema.org',
@@ -121,7 +206,7 @@ export const usePageHead = (route, options = {}) => {
   const minify = options.minify === true
   const resolvedHead = inject('wc:ssg-head', null)
   const formatJson = (obj) => (minify ? JSON.stringify(obj) : `\n${JSON.stringify(obj, null, 2)}\n`)
-  const { locale } = useI18n()
+  const { locale, t } = useI18n()
   const pageKey = computed(() => route.meta.pageKey || 'home')
   const currentLocale = computed(() => route.meta.locale || locale.value || site.defaultLocale)
   const page = computed(() => getPageConfig(pageKey.value))
@@ -150,6 +235,7 @@ export const usePageHead = (route, options = {}) => {
     if (!base) return site.brandName
     return base.includes(site.brandName) ? base : `${base}${suffix}`
   })
+  const structuredDataTitle = computed(() => baseTitle.value || site.brandName)
   const description = computed(() => {
     const raw = resolveLocalizedValue(page.value?.descriptions, currentLocale.value)
     return renderMarkdownInlineToText(raw, { html: false, linkify: true, breaks: true })
@@ -177,9 +263,26 @@ export const usePageHead = (route, options = {}) => {
     })
     return links
   })
+  const homeBreadcrumbName = computed(() => {
+    const translated = t('about-section.title')
+    if (typeof translated === 'string' && translated.trim() && translated !== 'about-section.title') {
+      return translated
+    }
+    return site.brandName
+  })
+  const breadcrumbItems = computed(() =>
+    buildBreadcrumbs(pageKey.value, currentLocale.value, { homeName: homeBreadcrumbName.value }),
+  )
 
   const jsonLd = computed(() =>
-    buildJsonLd(pageKey.value, currentLocale.value, title.value, description.value, canonicalUrl.value)
+    buildJsonLd(
+      pageKey.value,
+      currentLocale.value,
+      structuredDataTitle.value,
+      description.value,
+      canonicalUrl.value,
+      breadcrumbItems.value,
+    )
   )
   const jsonLdScripts = computed(() => {
     if (!jsonLd?.value['@graph']) {
