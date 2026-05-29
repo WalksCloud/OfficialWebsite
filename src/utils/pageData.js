@@ -24,6 +24,7 @@ const parseFrontmatter = (raw = '') => {
 }
 
 const normalizeSlug = (slug = '') => slug.replace(/^\/+/, '').replace(/\/+$/, '')
+const normalizeText = (value) => (typeof value === 'string' ? value.trim() : '')
 
 export const getAllPageData = () => {
   const pagesMap = new Map()
@@ -43,8 +44,8 @@ export const getAllPageData = () => {
     const pageKey = canonicalSlug ? canonicalSlug.replace(/\//g, '-') : (meta.pageKey || '')
     const type = meta.type || 'page'
     const slug = canonicalSlug
-    const title = meta.title || ''
-    const description = meta.description || ''
+    const title = normalizeText(meta.title)
+    const description = normalizeText(meta.description)
     const ogType = meta.ogType
     const index = meta.index !== false
     const sitemap = meta.sitemap || {}

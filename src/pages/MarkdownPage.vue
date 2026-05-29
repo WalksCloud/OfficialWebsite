@@ -111,8 +111,9 @@ const rewriteRelativeImagePaths = (body, contentPath) => {
 }
 
 const renderBlock = (block) => {
-  const titleText = typeof block.meta?.title === 'string' ? block.meta.title : ''
-  const descriptionText = typeof block.meta?.description === 'string' ? block.meta.description : ''
+  const titleText = typeof block.meta?.title === 'string' ? block.meta.title.trim() : ''
+  const descriptionText =
+    typeof block.meta?.description === 'string' ? block.meta.description.trim() : ''
   const descriptionHtml = descriptionText ? md.renderInline(descriptionText) : ''
   const content = (block.body || '').trim()
   return {

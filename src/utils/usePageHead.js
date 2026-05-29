@@ -37,6 +37,12 @@ const resolveLocalizedValue = (localizedMap, locale) => {
   return typeof firstAvailable === 'string' ? firstAvailable : ''
 }
 
+const normalizeInlineText = (value = '') =>
+  String(value || '')
+    .replace(/\r\n/g, '\n')
+    .replace(/\s+/g, ' ')
+    .trim()
+
 const normalizeSlug = (slug = '') =>
   String(slug || '')
     .replace(/^\/+/, '')
@@ -238,7 +244,8 @@ export const usePageHead = (route, options = {}) => {
   const structuredDataTitle = computed(() => baseTitle.value || site.brandName)
   const description = computed(() => {
     const raw = resolveLocalizedValue(page.value?.descriptions, currentLocale.value)
-    return renderMarkdownInlineToText(raw, { html: false, linkify: true, breaks: true })
+    const rendered = renderMarkdownInlineToText(raw, { html: false, linkify: true, breaks: true })
+    return normalizeInlineText(rendered)
   })
   const robots = computed(() =>
     page.value?.index === false ? 'noindex,nofollow' : site.robots?.policy || 'index,follow'

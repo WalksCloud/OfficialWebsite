@@ -10,6 +10,7 @@ const toStringValue = (value) => {
   if (value == null) return ''
   return typeof value === 'string' ? value : String(value)
 }
+const toTrimmedText = (value) => toStringValue(value).trim()
 
 const normalizeSlug = (slug = '') => {
   const value = toStringValue(slug).replace(/^\/+/, '').replace(/\/+$/, '')
@@ -86,8 +87,8 @@ Object.entries(contentModules).forEach(([path, raw]) => {
   const entry = slugIndex.get(inferredSlug) || { locales: {}, type: meta.type || 'page' }
   const lastmodDate = getLastmodDate(inferredSlug)
   entry.locales[locale] = {
-    title: meta.title || '',
-    description: meta.description || '',
+    title: toTrimmedText(meta.title),
+    description: toTrimmedText(meta.description),
     body,
     deploy: meta.deploy !== false,
     __date: lastmodDate || meta.__date || null,
