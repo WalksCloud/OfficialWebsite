@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/hosting-operations
-title: Website and Server Hosting Operations
-description: WalksCloud operates application stacks end-to-end, combining infrastructure hardening, automation, observability, and incident response so cloud, colocation, or on-prem workloads stay resilient.
+title: |
+  Website and Server Hosting Operations
+description: |
+  WalksCloud operates application stacks end-to-end, combining infrastructure hardening, automation, observability, and incident response so cloud, colocation, or on-prem workloads stay resilient.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Hosting Operations
 ---
-
 ## Case Insight: Cross-cloud Operations Without Guardrails
 
 A company managing multiple brands split workloads between cloud and colocation with no unified operating documentation. Within six months they experienced:

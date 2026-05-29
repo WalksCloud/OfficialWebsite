@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/container-devops
-title: 容器化技術與 DevOps
-description: 行雲資訊協助企業從 Kubernetes、CI/CD、GitOps 到觀測與安全建立可複製且可稽核的交付鏈，讓研發與 IT 有共同語言。
+title: |
+  容器化技術與 DevOps
+description: |
+  行雲資訊協助企業從 Kubernetes、CI/CD、GitOps 到觀測與安全建立可複製且可稽核的交付鏈，讓研發與 IT 有共同語言。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Container & DevOps
 ---
-
 ## 案例洞察：多版本同步上線的部署瓶頸
 
 一個成長快速的研發團隊在短時間內要上線多個版本，於是匆促導入 Kubernetes 與 GitLab CI，但因缺乏治理而出現：

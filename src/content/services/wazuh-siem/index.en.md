@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/wazuh-siem
-title: Wazuh SIEM Deployment and Operations
-description: WalksCloud deploys and operates Wazuh SIEM to consolidate endpoint, server, cloud, and SaaS logs with MITRE-aligned alert handling workflows so analysts focus on real threats.
+title: |
+  Wazuh SIEM Deployment and Operations
+description: |
+  WalksCloud deploys and operates Wazuh SIEM to consolidate endpoint, server, cloud, and SaaS logs with MITRE-aligned alert handling workflows so analysts focus on real threats.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Security Operations
 ---
-
 ## Case Insight: Security Team Overwhelmed by Operations
 
 A multi-site enterprise adopted Wazuh but lacked operational experience, leading to:

@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/office-network
-title: Office Network Deployment and Maintenance
-description: WalksCloud plans and operates office Wi-Fi, LAN, SD-WAN, VPN, and Internet edge environments so hybrid workplaces keep both performance and security in check.
+title: |
+  Office Network Deployment and Maintenance
+description: |
+  WalksCloud plans and operates office Wi-Fi, LAN, SD-WAN, VPN, and Internet edge environments so hybrid workplaces keep both performance and security in check.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Office Networking
 ---
-
 ## Case Insight: Local Multi-site Network Challenges
 
 A multi-office organization reused aging gear when relocating, leading to:

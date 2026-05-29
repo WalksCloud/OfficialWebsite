@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/it-monitoring
-title: IT 監控與管理系統
-description: 行雲資訊以 Zabbix、LibreNMS、Grafana、Graylog、Wazuh、Arkime (Moloch)、akvorado、Gatus 等工具打造統一監控平台，提供指標、日誌、告警與處理流程文件，協助企業建立可行動的可觀測性。
+title: |
+  IT 監控與管理系統
+description: |
+  行雲資訊以 Zabbix、LibreNMS、Grafana、Graylog、Wazuh、Arkime (Moloch)、akvorado、Gatus 等工具打造統一監控平台，提供指標、日誌、告警與處理流程文件，協助企業建立可行動的可觀測性。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: IT Monitoring
 ---
-
 ## 案例洞察：多據點營運的監控混亂
 
 某家在多個區域營運的企業僅由小型 IT 團隊支撐。由於各據點採用不同監控方案，導致：

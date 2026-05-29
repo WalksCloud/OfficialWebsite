@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services
-title: 服務項目
-description: 行雲資訊以 PACE（Plan、Assemble、Control、Enhance）方法協助企業處理 IT 與資安課題：從 Plan 明確策略起步，接著 Assemble 組合與建置所需技術，進入 Control 持續監控與治理，最後以 Enhance 精進優化，帶領基礎架構、辦公網路、資安治理、資產管理與客製開發穩步向前、緊貼營運節奏。
+title: |
+  服務項目
+description: |
+  行雲資訊以 PACE（Plan、Assemble、Control、Enhance）方法協助企業處理 IT 與資安課題：從 Plan 明確策略起步，接著 Assemble 組合與建置所需技術，進入 Control 持續監控與治理，最後以 Enhance 精進優化，帶領基礎架構、辦公網路、資安治理、資產管理與客製開發穩步向前、緊貼營運節奏。
 ogType: website
 index: true
 deploy: true
@@ -13,7 +15,6 @@ sitemap:
 jsonld:
   kind: WebPage
 ---
-
 ## 常見情境
 
 - 企業快速成長，IT/MIS 人力不足，需要同時完成網路、監控與資安。

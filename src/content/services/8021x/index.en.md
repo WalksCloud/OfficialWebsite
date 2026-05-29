@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/8021x
-title: 802.1X Authentication Deployment and Maintenance
-description: WalksCloud combines RADIUS, certificate management, and network policy design to turn 802.1X into a reliable network gatekeeper, ensuring every wired or wireless session is verified, logged, and aligned with zero trust requirements.
+title: |
+  802.1X Authentication Deployment and Maintenance
+description: |
+  WalksCloud combines RADIUS, certificate management, and network policy design to turn 802.1X into a reliable network gatekeeper, ensuring every wired or wireless session is verified, logged, and aligned with zero trust requirements.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Network Access Control
 ---
-
 ## Case Insight: Temporary Devices Flood the Network
 
 A project team needed to onboard temporary testers and devices during a product qualification cycle. Although the switches supported 802.1X, the lack of centralized identity and certificate workflows forced the team to fall back to shared passwords, which led to:

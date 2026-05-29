@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/container-devops
-title: Containerization and DevOps
-description: WalksCloud helps enterprises evolve delivery from Kubernetes foundations through CI/CD, GitOps, observability, and security so developers and IT speak the same operational language.
+title: |
+  Containerization and DevOps
+description: |
+  WalksCloud helps enterprises evolve delivery from Kubernetes foundations through CI/CD, GitOps, observability, and security so developers and IT speak the same operational language.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Container & DevOps
 ---
-
 ## Case Insight: Multi-version Releases Without Guardrails
 
 A fast-scaling engineering group rushed to launch multiple regional versions and hastily stood up Kubernetes plus GitLab CI. Without governance they hit:

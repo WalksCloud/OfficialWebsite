@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/8021x
-title: 802.1X 驗證系統建置維護
-description: 行雲資訊透過 RADIUS、憑證管理與網路策略設計打造 802.1X 網路門禁，確保有線與無線連線皆經驗證、記錄並符合零信任政策。
+title: |
+  802.1X 驗證系統建置維護
+description: |
+  行雲資訊透過 RADIUS、憑證管理與網路策略設計打造 802.1X 網路門禁，確保有線與無線連線皆經驗證、記錄並符合零信任政策。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Network Access Control
 ---
-
 ## 案例洞察：臨時裝置大量接入的團隊協作
 
 某專案團隊在產品測試期間需要臨時成員與各種測試設備接入網路，雖然設備支援 802.1X，卻因缺少統一管理而被迫改用共用密碼，結果導致以下狀況：

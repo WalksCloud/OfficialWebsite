@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/it-outsourcing
-title: IT / MIS 外包與技術支援
-description: 行雲資訊以代管方式提供 IT 維運、Help Desk、資產與帳號管理，讓企業在未建立完整 MIS 團隊前仍能享有可度量的服務。
+title: |
+  IT / MIS 外包與技術支援
+description: |
+  行雲資訊以代管方式提供 IT 維運、Help Desk、資產與帳號管理，讓企業在未建立完整 MIS 團隊前仍能享有可度量的服務。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: IT Outsourcing
 ---
-
 ## 案例洞察：快速擴編時的 IT 真空
 
 一間專注研發的企業只由單一工程師兼任 IT。結果辦公室搬遷與大量新進員工期間出現：

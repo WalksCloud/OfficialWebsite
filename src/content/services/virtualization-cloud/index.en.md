@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/virtualization-cloud
-title: Virtualization and Cloud Solutions
-description: WalksCloud merges Proxmox VE, Ceph, SDN, and hybrid network designs to deliver highly available virtualization platforms for general workloads, AI, and VDI while lowering licensing and operational complexity.
+title: |
+  Virtualization and Cloud Solutions
+description: |
+  WalksCloud merges Proxmox VE, Ceph, SDN, and hybrid network designs to deliver highly available virtualization platforms for general workloads, AI, and VDI while lowering licensing and operational complexity.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Virtualization & Cloud
 ---
-
 ## Case Insight: Replacing a Legacy Platform
 
 An enterprise left with expensive legacy virtualization licenses wanted to switch to open platforms but struggled with:

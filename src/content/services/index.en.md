@@ -1,9 +1,10 @@
 ---
 type: service
 slug: services
-title: Services
+title: |
+  Services
 description: |
-  WalksCloud guides organizations through the PACE method—Plan, Assemble, Control, Enhance—to tackle IT and security work: we start by clarifying strategy, assemble the right technologies, run day-to-day control loops, and continuously enhance the stack so infrastructure, workplace networks, security governance, asset management, and custom apps progress alongside the business.
+  WalksCloud guides organizations through the PACE method—Plan, Assemble, Control, Enhance—to tackle IT and security work: by clarifying strategy, assembling the right technologies, running day-to-day control loops, and continuously enhancing the stack so infrastructure, workplace networks, security governance, asset management, and custom apps progress alongside the business.
 ogType: website
 index: true
 deploy: true
@@ -14,7 +15,6 @@ sitemap:
 jsonld:
   kind: WebPage
 ---
-
 ## Common Scenarios
 
 - A business is growing quickly, but the IT/MIS team is too lean to cover networking, monitoring, and security at the same time.

@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/office-network
-title: 辦公室網路建置與維運
-description: 行雲資訊規劃並維運辦公室 Wi-Fi、LAN、SD-WAN、VPN 與 Internet Edge，確保混合辦公環境兼顧效能與資安。
+title: |
+  辦公室網路建置與維運
+description: |
+  行雲資訊規劃並維運辦公室 Wi-Fi、LAN、SD-WAN、VPN 與 Internet Edge，確保混合辦公環境兼顧效能與資安。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Office Networking
 ---
-
 ## 案例洞察：本地多據點辦公的網路挑戰
 
 某個多辦公據點運作的企業沿用舊有設備，搬遷後出現：

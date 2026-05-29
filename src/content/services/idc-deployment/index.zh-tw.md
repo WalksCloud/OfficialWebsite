@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/idc-deployment
-title: IDC 機房建置與維運
-description: 行雲資訊協助企業完成機房進駐、設備布署與遠端代維，確保電力、冷卻、網路、資安與合規一次到位。
+title: |
+  IDC 機房建置與維運
+description: |
+  行雲資訊協助企業完成機房進駐、設備布署與遠端代維，確保電力、冷卻、網路、資安與合規一次到位。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Data Center Networking
 ---
-
 ## 案例洞察：擴建備援環境的挑戰
 
 某企業需要在電信機房部署備援環境，但缺乏經驗，結果形成：

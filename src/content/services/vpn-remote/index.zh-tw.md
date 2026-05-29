@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/vpn-remote
-title: VPN 及遠端安全解決方案
-description: 行雲資訊設計 OpenVPN、WireGuard、零客戶端閘道與條件式存取架構，打造混合辦公需要的安全遠端入口。
+title: |
+  VPN 及遠端安全解決方案
+description: |
+  行雲資訊設計 OpenVPN、WireGuard、零客戶端閘道與條件式存取架構，打造混合辦公需要的安全遠端入口。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Remote Access
 ---
-
 ## 案例洞察：本地多據點協作的併發瓶頸
 
 某個多據點協作團隊在擴張後仍仰賴單一 VPN 伺服器，因此：

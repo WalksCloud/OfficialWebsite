@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/zero-trust
-title: Zero Trust Architecture Enablement
-description: WalksCloud turns zero-trust principles into practical rollouts by selecting the right mix of Jamf Security Cloud, Cloudflare Zero Trust, NetBird, and identity tooling.
+title: |
+  Zero Trust Architecture Enablement
+description: |
+  WalksCloud turns zero-trust principles into practical rollouts by selecting the right mix of Jamf Security Cloud, Cloudflare Zero Trust, NetBird, and identity tooling.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Zero Trust
 ---
-
 ## Case Insight: Multi-office Teams Without Segmentation
 
 A local multi-office company relied on VPN and flat networks. Once credentials leaked, attackers moved laterally because:

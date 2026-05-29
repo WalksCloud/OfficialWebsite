@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/mdm
-title: MDM 與企業裝置管理
-description: 行雲資訊協助企業規劃與代管 MDM，依需求導入 Jamf Pro、Jamf Protect、Jamf Security Cloud、Mosyle 等平台，讓裝置從註冊、設定、修補到退役都可視且可稽核。
+title: |
+  MDM 與企業裝置管理
+description: |
+  行雲資訊協助企業規劃與代管 MDM，依需求導入 Jamf Pro、Jamf Protect、Jamf Security Cloud、Mosyle 等平台，讓裝置從註冊、設定、修補到退役都可視且可稽核。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Mobile Device Management
 ---
-
 ## 案例洞察：多據點裝置管理標準化
 
 某以 Mac、iPhone 與少量共用裝置為主的組織，原本靠手動設定、零散腳本與口頭交接維運。拓展多個辦公據點後，管理問題開始放大：

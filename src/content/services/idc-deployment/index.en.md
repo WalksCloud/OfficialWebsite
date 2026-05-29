@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/idc-deployment
-title: IDC Data Center Deployment and Maintenance
-description: WalksCloud guides enterprises through every step of an IDC rollout—from design and cabling to vendor coordination and remote operations—so power, cooling, networking, security, and compliance are all on track.
+title: |
+  IDC Data Center Deployment and Maintenance
+description: |
+  WalksCloud guides enterprises through every step of an IDC rollout—from design and cabling to vendor coordination and remote operations—so power, cooling, networking, security, and compliance are all on track.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Data Center Networking
 ---
-
 ## Case Insight: Building a DR Site Without Experience
 
 An organization needed a colo-based DR environment but lacked data center expertise. They ran into:

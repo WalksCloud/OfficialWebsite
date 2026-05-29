@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/custom-dev
-title: Custom System Development
-description: WalksCloud brings a product mindset to bespoke system work, owning discovery through operations so the platform truly reflects how your teams get things done.
+title: |
+  Custom System Development
+description: |
+  WalksCloud brings a product mindset to bespoke system work, owning discovery through operations so the platform truly reflects how your teams get things done.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Custom Development
 ---
-
 ## Case Insight: Synchronizing Multiple Internal Systems
 
 One cross-functional organization needed to unite operations, storage, and customer service, but commercial SaaS could not satisfy local compliance and reporting. The fallout:

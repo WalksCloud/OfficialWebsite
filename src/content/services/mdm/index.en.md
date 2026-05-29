@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/mdm
-title: MDM and Enterprise Device Management
-description: WalksCloud plans and manages MDM programs with platforms such as Jamf Pro, Jamf Protect, Jamf Security Cloud, Mosyle, and related tooling so devices stay visible, compliant, and supportable across their lifecycle.
+title: |
+  MDM and Enterprise Device Management
+description: |
+  WalksCloud plans and manages MDM programs with platforms such as Jamf Pro, Jamf Protect, Jamf Security Cloud, Mosyle, and related tooling so devices stay visible, compliant, and supportable across their lifecycle.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Mobile Device Management
 ---
-
 ## Case Insight: Standardizing Device Management Across Sites
 
 A Mac and iPhone-centric organization relied on manual setup, scattered scripts, and informal handover. After opening additional offices, the gaps became visible:

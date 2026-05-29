@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/wazuh-asset
-title: Wazuh Asset Visibility
-description: WalksCloud adapts Wazuh for asset intelligence by deploying agents and policies that surface real-time hardware, software, and configuration data.
+title: |
+  Wazuh Asset Visibility
+description: |
+  WalksCloud adapts Wazuh for asset intelligence by deploying agents and policies that surface real-time hardware, software, and configuration data.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Asset Management
 ---
-
 ## Case Insight: Audits Without Reliable Inventories
 
 A company facing annual audits ran on spreadsheets and manual reporting, leading to:

@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/backup-security
-title: Enterprise Backup and Security Solutions
-description: WalksCloud combines Proxmox Backup Server, immutable storage, and layered security controls to create verifiable data resilience that keeps ransomware and user mistakes from derailing the business.
+title: |
+  Enterprise Backup and Security Solutions
+description: |
+  WalksCloud combines Proxmox Backup Server, immutable storage, and layered security controls to create verifiable data resilience that keeps ransomware and user mistakes from derailing the business.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Backup & Security
 ---
-
 ## Case Insight: Resilience Gap Before Peak Season
 
 One organization gearing up for a major campaign relied on a single NAS backup setup. A ransomware incident right before launch revealed that:

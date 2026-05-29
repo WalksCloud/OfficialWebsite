@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/it-monitoring
-title: IT Monitoring and Management Systems
-description: WalksCloud architects monitoring platforms that merge metrics, logs, alerts, and operational process documentation across servers, networks, and applications so teams gain actionable insight.
+title: |
+  IT Monitoring and Management Systems
+description: |
+  WalksCloud architects monitoring platforms that merge metrics, logs, alerts, and operational process documentation across servers, networks, and applications so teams gain actionable insight.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: IT Monitoring
 ---
-
 ## Case Insight: Distributed Ops with Fragmented Visibility
 
 A multi-site organization staffed by a lean IT crew mixed and matched monitoring tools, leading to:

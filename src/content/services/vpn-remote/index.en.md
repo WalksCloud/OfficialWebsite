@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/vpn-remote
-title: VPN and Remote Security Solutions
-description: WalksCloud designs OpenVPN, WireGuard, clientless gateways, and conditional access architectures that keep hybrid workers connected without weakening the perimeter.
+title: |
+  VPN and Remote Security Solutions
+description: |
+  WalksCloud designs OpenVPN, WireGuard, clientless gateways, and conditional access architectures that keep hybrid workers connected without weakening the perimeter.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Remote Access
 ---
-
 ## Case Insight: Multi-site Collaboration with One VPN Server
 
 A growing team continued relying on a single VPN appliance and ran into:

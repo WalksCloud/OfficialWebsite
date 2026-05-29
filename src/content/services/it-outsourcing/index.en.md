@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/it-outsourcing
-title: IT/MIS Outsourcing and Technical Support
-description: WalksCloud provides managed IT operations, Help Desk, asset, and account workflows so companies without a full MIS team still enjoy measurable service levels.
+title: |
+  IT/MIS Outsourcing and Technical Support
+description: |
+  WalksCloud provides managed IT operations, Help Desk, asset, and account workflows so companies without a full MIS team still enjoy measurable service levels.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: IT Outsourcing
 ---
-
 ## Case Insight: Rapid Growth, No IT Bench
 
 A product-focused company leaned on a single engineer for IT. During office moves and hiring spikes they faced:

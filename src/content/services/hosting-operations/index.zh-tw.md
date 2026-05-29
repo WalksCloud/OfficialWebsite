@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/hosting-operations
-title: 網站與伺服器代管營運
-description: 行雲資訊負責網站、API、ERP 與客製應用的營運，整合架構調校、資安補強、監控告警與 24/7 值班，確保系統穩定與透明。
+title: |
+  網站與伺服器代管營運
+description: |
+  行雲資訊負責網站、API、ERP 與客製應用的營運，整合架構調校、資安補強、監控告警與 24/7 值班，確保系統穩定與透明。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Hosting Operations
 ---
-
 ## 案例洞察：多品牌服務的跨雲環境
 
 某企業同時營運多個品牌，網站部署在雲端與機房混合架構，後端系統則在公司機房。由於缺乏統一維運流程，半年內發生：

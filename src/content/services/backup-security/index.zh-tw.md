@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/backup-security
-title: 企業備份與安全方案
-description: 行雲資訊以 Proxmox Backup Server、不可變儲存與多層資安控管，打造可驗證的資料韌性，避免勒索與人為操作造成停擺。
+title: |
+  企業備份與安全方案
+description: |
+  行雲資訊以 Proxmox Backup Server、不可變儲存與多層資安控管，打造可驗證的資料韌性，避免勒索與人為操作造成停擺。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Backup & Security
 ---
-
 ## 案例洞察：旺季前夕的備援缺口
 
 一間正準備重大行銷檔期的企業使用單一 NAS 備份。在活動前夕遭勒索軟體入侵導致主機加密，才發現：

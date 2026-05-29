@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/wazuh-asset
-title: Wazuh 資產可視化
-description: 行雲資訊將 Wazuh 延伸到資產管理，透過 Agent 與規則設計提供即時的硬體、軟體與設定資料，支援稽核、授權與弱點修補。
+title: |
+  Wazuh 資產可視化
+description: |
+  行雲資訊將 Wazuh 延伸到資產管理，透過 Agent 與規則設計提供即時的硬體、軟體與設定資料，支援稽核、授權與弱點修補。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Asset Management
 ---
-
 ## 案例洞察：稽核壓力下的資產掌控
 
 某需要面對年度稽核的企業擁有大量端點，原本依賴 Excel 與人工回報，結果出現：

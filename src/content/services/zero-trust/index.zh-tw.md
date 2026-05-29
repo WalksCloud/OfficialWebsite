@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/zero-trust
-title: Zero Trust 安全架構導入
-description: 行雲資訊以 Jamf Security Cloud、Cloudflare Zero Trust、NetBird 等組合落實零信任，將身分、裝置、應用與資料重新定義信任邊界。
+title: |
+  Zero Trust 安全架構導入
+description: |
+  行雲資訊以 Jamf Security Cloud、Cloudflare Zero Trust、NetBird 等組合落實零信任，將身分、裝置、應用與資料重新定義信任邊界。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Zero Trust
 ---
-
 ## 案例洞察：本地多據點團隊的邊界失守
 
 某個多辦公據點協作的企業，VPN 與內網一旦被入侵就無任何分段，因此：

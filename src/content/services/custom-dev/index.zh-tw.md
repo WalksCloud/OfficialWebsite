@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/custom-dev
-title: 客製化系統開發
-description: 行雲資訊以產品思維協助企業打造貼合流程的系統，從需求訪談、設計、開發到維運皆由專業團隊承接，確保系統能隨業務成長。
+title: |
+  客製化系統開發
+description: |
+  行雲資訊以產品思維協助企業打造貼合流程的系統，從需求訪談、設計、開發到維運皆由專業團隊承接，確保系統能隨業務成長。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Custom Development
 ---
-
 ## 案例洞察：多系統協作的瓶頸
 
 某跨部門組織需要同時整合營運、倉儲與客服系統，市面解決方案無法符合在地稽核與報表要求，造成：

@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/iam-zitadel
-title: Identity and Access Management with ZITADEL
-description: WalksCloud uses ZITADEL to build centralized IAM so multi-tenant services and third-party teams share a single SSO/MFA, authorization, and audit process without the burden of maintaining a bespoke platform.
+title: |
+  Identity and Access Management with ZITADEL
+description: |
+  WalksCloud uses ZITADEL to build centralized IAM so multi-tenant services and third-party teams share a single SSO/MFA, authorization, and audit process without the burden of maintaining a bespoke platform.
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Identity & Access Management
 ---
-
 ## Case Insight: Multi-tenant Service, Fragmented Accounts
 
 An organization serving multiple customer tenants had to manage service staff, partners, and third-party access in parallel. Manual AD accounts caused:

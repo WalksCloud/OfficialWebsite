@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/iam-zitadel
-title: ZITADEL 身分與存取管理服務
-description: 行雲資訊以 ZITADEL 建立集中式身分平台，將多租戶與第三方帳號納入同一套 SSO/MFA、權限與稽核流程，減輕自建 IAM 維護與合規壓力。
+title: |
+  ZITADEL 身分與存取管理服務
+description: |
+  行雲資訊以 ZITADEL 建立集中式身分平台，將多租戶與第三方帳號納入同一套 SSO/MFA、權限與稽核流程，減輕自建 IAM 維護與合規壓力。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Identity & Access Management
 ---
-
 ## 案例洞察：多租戶服務的合規挑戰
 
 某提供多租戶平台的企業需要同時管控客服、合作夥伴與第三方系統。過去依賴 AD 與手動帳號管理，產生：

@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/virtualization-cloud
-title: 虛擬化與雲端解決方案
-description: 行雲資訊結合 Proxmox VE、Ceph、SDN 與混合雲策略，建立高可用虛擬化平台，支援一般工作負載、AI 與 VDI，降低授權與維運成本。
+title: |
+  虛擬化與雲端解決方案
+description: |
+  行雲資訊結合 Proxmox VE、Ceph、SDN 與混合雲策略，建立高可用虛擬化平台，支援一般工作負載、AI 與 VDI，降低授權與維運成本。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Virtualization & Cloud
 ---
-
 ## 案例洞察：舊平台汰換
 
 某企業因舊虛擬化授權昂貴，決定改用開放式平台，但遇到：

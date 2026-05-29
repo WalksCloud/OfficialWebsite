@@ -1,8 +1,10 @@
 ---
 type: service
 slug: services/wazuh-siem
-title: Wazuh SIEM 部署與維運
-description: 行雲資訊協助部署與維運 Wazuh SIEM，整合端點、伺服器、雲端與 SaaS 日誌，提供 MITRE 對應與告警處理流程，讓安全團隊專注威脅分析。
+title: |
+  Wazuh SIEM 部署與維運
+description: |
+  行雲資訊協助部署與維運 Wazuh SIEM，整合端點、伺服器、雲端與 SaaS 日誌，提供 MITRE 對應與告警處理流程，讓安全團隊專注威脅分析。
 ogType: article
 index: true
 deploy: true
@@ -14,7 +16,6 @@ jsonld:
   kind: Service
   serviceType: Security Operations
 ---
-
 ## 案例洞察：資安團隊的維運瓶頸
 
 某個多據點的企業採用 Wazuh，但因缺乏經驗而面臨：
