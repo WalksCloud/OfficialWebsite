@@ -39,10 +39,16 @@
       <font-awesome-icon :icon="['fab', 'linkedin']" class="text-2xl text-gray-600 dark:text-gray-300" />
     </a>
     <p class="text-sm lg:leading-1">
-      <a href="https://github.com/WalksCloud/OfficialWebsite">GitHub Repo</a>
-      (<a :href="`https://github.com/WalksCloud/OfficialWebsite/commit/` + env.buildHash">#{{env.buildHash}}</a> {{env.buildTime}}) |
-      <RouterLink :to="termsOfUsePath">{{ $t('footer.term-of-use') }}</RouterLink> |
-      <RouterLink :to="privacyPolicyPath">{{ $t('footer.privacy-policy') }}</RouterLink>
+      <span class="block lg:inline">
+        <a href="https://github.com/WalksCloud/OfficialWebsite">GitHub Repo</a>
+        (<a :href="`https://github.com/WalksCloud/OfficialWebsite/commit/` + env.buildHash">#{{env.buildHash}}</a> {{env.buildTime}})
+      </span>
+      <span class="hidden lg:inline"> | </span>
+      <span class="block lg:inline">
+        <RouterLink :to="termsOfUsePath">{{ $t('footer.term-of-use') }}</RouterLink>
+        |
+        <RouterLink :to="privacyPolicyPath">{{ $t('footer.privacy-policy') }}</RouterLink>
+      </span>
     </p>
   </footer>
 </template>
