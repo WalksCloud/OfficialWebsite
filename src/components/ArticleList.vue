@@ -2,7 +2,6 @@
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { RouterLink } from 'vue-router'
-import UPageColumns from '@nuxt/ui/components/PageColumns.vue'
 import { resolveContentInfo, listEntriesByPrefix, buildLocalizedPath } from '@/utils/contentIndex'
 import ArticlePreview from './ArticlePreview.vue'
 import { useFallbackNotice } from '@/composables/useFallbackNotice'
@@ -126,9 +125,9 @@ const moreLabel = computed(() => {
       >
         {{ description }}
       </p>
-      <UPageColumns class="gap-4 list-none p-0">
+      <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <ArticlePreview v-for="item in articles" :key="item.slug" :item="item" />
-      </UPageColumns>
+      </div>
       <div v-if="showMoreLink" class="mt-6 text-center">
         <RouterLink :to="fullListPath" class="inline-flex items-center gap-2 text-primary font-semibold">
           {{ moreLabel }}

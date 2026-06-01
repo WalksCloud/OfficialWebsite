@@ -13,12 +13,21 @@
   const privacyPolicyPath = computed(() =>
     buildLocalizedPath('/legal/privacy-policy', locale.value),
   )
+
+  const buildYear = computed(() => {
+    const rawBuildTime = String(env.buildTime || '')
+    const yearMatch = rawBuildTime.match(/^(\d{4})/)
+    if (yearMatch) return yearMatch[1]
+
+    const parsedYear = new Date(rawBuildTime).getFullYear()
+    return Number.isFinite(parsedYear) ? String(parsedYear) : String(new Date().getFullYear())
+  })
 </script>
 
 <template>
 	<footer class="text-center px-3 pb-3 lg:py-6 lg:px-0 text-sm lg:text-base">
     <p>
-      © {{new Date(env.buildTime).getFullYear()}} — Walks Cloud Inc.
+      © {{ buildYear }} — Walks Cloud Inc.
       <img class="inline-block dark:hidden align-bottom ms-2 h-5" alt="" src="/logo-wordmark-company.svg" />
       <img class="hidden dark:inline-block align-bottom ms-2 h-5" alt="" src="/logo-wordmark-company-white.svg" />
     </p>
