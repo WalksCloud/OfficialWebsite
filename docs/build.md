@@ -9,6 +9,7 @@
 - `INT` / `TERM` traps now clean up the watcher and exit immediately instead of returning to `wait`.
 - Long-lived watcher processes are started in their own process group so cleanup can terminate the whole group, not just the top-level pid.
 - Background process groups are launched with `stdin` redirected from `/dev/null` so they do not block on terminal input.
+- HTML pages are emitted only under locale folders after the bot/normal split. Non-prefixed route HTML is removed from `dist`, and nginx / Cloudflare Pages resolve non-prefixed human requests through the selected locale folder instead.
 - Cloudflare Pages builds are detected by the platform-provided `CF_PAGES=1` environment variable. In that environment, the build writes `dist/_worker.js` so Pages can route extensionless HTML requests to `index.normal.html` or `index.bot.html` by user agent. Local, nginx, and Fly builds do not generate this worker.
 
 `package.json` maps both `build:ssg` and `build:ssg:watch` to this script so the build behavior stays in one place.

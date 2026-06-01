@@ -58,8 +58,10 @@ const stripLocalePrefix = (pathname) => {
   const normalized = normalizePath(pathname)
   const segments = normalized.split('/').filter(Boolean)
   if (!segments.length || !LOCALES.includes(segments[0])) return pathname
+  const preserveTrailingSlash = pathname.endsWith('/') && pathname !== '/'
   const stripped = `/${segments.slice(1).join('/')}`
-  return stripped === '/' ? '/' : stripped
+  if (stripped === '/') return '/'
+  return preserveTrailingSlash ? `${stripped}/` : stripped
 }
 
 const getLocalePrefix = (pathname) => {
@@ -76,8 +78,6 @@ const dedupe = (items) => [...new Set(items.filter(Boolean))]
 
 const buildRootCandidates = (locale, variant) =>
   dedupe([
-    indexCandidate('/', variant),
-    indexCandidate('/', 'normal'),
     indexCandidate(`/${locale}`, variant),
     indexCandidate(`/${locale}`, 'normal'),
   ])
@@ -93,21 +93,16 @@ const buildNonPrefixedCandidates = (pathname, locale, variant) => {
   const normalized = normalizePath(pathname)
   const localizedPath = normalized === '/' ? `/${locale}` : `/${locale}${normalized}`
   return dedupe([
-    pathname,
-    indexCandidate(pathname, variant),
-    indexCandidate(pathname, 'normal'),
     localizedPath,
     indexCandidate(localizedPath, variant),
     indexCandidate(localizedPath, 'normal'),
-    indexCandidate(`/${locale}`, variant),
-    indexCandidate(`/${locale}`, 'normal'),
   ])
 }
 
-const buildNotFoundCandidates = (variant) =>
+const buildNotFoundCandidates = (locale, variant) =>
   dedupe([
-    indexCandidate('/404', variant),
-    indexCandidate('/404', 'normal'),
+    indexCandidate(`/${locale}/404`, variant),
+    indexCandidate(`/${locale}/404`, 'normal'),
     ...LOCALES.flatMap((locale) => [
       indexCandidate(`/${locale}/404`, variant),
       indexCandidate(`/${locale}/404`, 'normal'),
@@ -131,12 +126,12 @@ const fetchFirstAsset = async (request, env, candidates) => {
   return null
 }
 
-const redirectResponse = (url, targetPath) => {
+const redirectResponse = (url, targetPath, status = 301) => {
   const headers = new Headers()
   headers.set('Location', `${targetPath}${url.search}`)
   appendVary(headers, 'Accept-Language')
   return new Response(null, {
-    status: 301,
+    status,
     headers,
   })
 }
@@ -144,8 +139,8 @@ const redirectResponse = (url, targetPath) => {
 const resolveRedirectTarget = (pathname) =>
   REDIRECTS[pathname] || REDIRECTS[normalizePath(pathname)] || ''
 
-const serveNotFound = async (request, env, variant) => {
-  const response = await fetchFirstAsset(request, env, buildNotFoundCandidates(variant))
+const serveNotFound = async (request, env, locale, variant) => {
+  const response = await fetchFirstAsset(request, env, buildNotFoundCandidates(locale, variant))
   if (!response) return new Response('Not found', { status: 404 })
   return withHtmlVary(new Response(response.body, {
     status: 404,
@@ -174,23 +169,24 @@ export default {
 
     const locale = selectLocale(request.headers.get('Accept-Language'))
     const userAgent = request.headers.get('User-Agent') || ''
-    const variant = BOT_USER_AGENT_RE.test(userAgent) ? 'bot' : 'normal'
+    const isBot = BOT_USER_AGENT_RE.test(userAgent)
+    const variant = isBot ? 'bot' : 'normal'
 
     if (pathname === '/') {
       const response = await fetchFirstAsset(request, env, buildRootCandidates(locale, variant))
-      return response ? withHtmlVary(response) : serveNotFound(request, env, variant)
+      return response ? withHtmlVary(response) : serveNotFound(request, env, locale, variant)
     }
 
     if (hasLocalePrefix(pathname)) {
       const prefix = getLocalePrefix(pathname)
-      if (prefix === locale) {
-        return redirectResponse(url, stripLocalePrefix(pathname))
+      if (!isBot && prefix === locale) {
+        return redirectResponse(url, stripLocalePrefix(pathname), 302)
       }
       const response = await fetchFirstAsset(request, env, buildPrefixedCandidates(pathname, variant))
-      return response ? withHtmlVary(response) : serveNotFound(request, env, variant)
+      return response ? withHtmlVary(response) : serveNotFound(request, env, prefix, variant)
     }
 
     const response = await fetchFirstAsset(request, env, buildNonPrefixedCandidates(pathname, locale, variant))
-    return response ? withHtmlVary(response) : serveNotFound(request, env, variant)
+    return response ? withHtmlVary(response) : serveNotFound(request, env, locale, variant)
   },
 }

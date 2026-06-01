@@ -31,10 +31,6 @@ const buildCanonicalPath = (slug, locale) => {
   const normalizedSlug = normalizeSlug(slug || '')
   return normalizedSlug ? `/${locale}/${normalizedSlug}/` : `/${locale}/`
 }
-const buildNonPrefixedPath = (slug) => {
-  const normalizedSlug = normalizeSlug(slug || '')
-  return normalizedSlug ? `/${normalizedSlug}/` : `/`
-}
 
 const hasDescendantSlug = (topLevelSlug) => {
   const targetPrefix = `${topLevelSlug}/`
@@ -102,14 +98,6 @@ const buildSitemap = () => {
       const lastmod = resolveLastmod(page, slug, locale)
       pushUrl({
         loc: `${baseUrl}${path}`,
-        changefreq: page.sitemap?.changefreq || 'weekly',
-        priority: page.sitemap?.priority ?? 0.5,
-        lastmod,
-      })
-
-      const npPath = buildNonPrefixedPath(slug)
-      pushUrl({
-        loc: `${baseUrl}${npPath}`,
         changefreq: page.sitemap?.changefreq || 'weekly',
         priority: page.sitemap?.priority ?? 0.5,
         lastmod,
