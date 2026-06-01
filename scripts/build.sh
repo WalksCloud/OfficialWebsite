@@ -26,6 +26,10 @@ terminate_process_group() {
   wait "$pid" 2>/dev/null || true
 }
 
+is_cloudflare_pages_build() {
+  [ "${CF_PAGES:-}" = "1" ]
+}
+
 run_build() {
   bun "${DIR}/description-single-line.js"
   bun "${DIR}/warn-faq-index.js"
@@ -34,6 +38,9 @@ run_build() {
   bun "${DIR}/generate-redirects.js"
   bun "${DIR}/generate-bot-home.js"
   bun "${DIR}/format-dist.js"
+  if is_cloudflare_pages_build; then
+    bun "${DIR}/generate-cloudflare-pages-worker.js"
+  fi
 }
 
 run_watch() {
