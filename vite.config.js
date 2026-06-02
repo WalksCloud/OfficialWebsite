@@ -3,6 +3,7 @@ import tailwindcss from '@tailwindcss/vite'
 import vue from '@vitejs/plugin-vue'
 import ui from '@nuxt/ui/vite'
 import { renderSSRHead } from '@unhead/vue/server'
+import { execFileSync } from 'node:child_process'
 import path from 'path'
 import { DateTime } from 'luxon'
 import git from 'git-rev-sync'
@@ -11,6 +12,19 @@ import { collectContentLastmod } from './scripts/utils/contentLastmod.js'
 
 const projectSrc = path.resolve(__dirname, 'src')
 const projectSrcPosix = projectSrc.replace(/\\/g, '/')
+
+const isGitWorktreeDirty = () => {
+  execFileSync('git', ['update-index', '-q', '--refresh'], { cwd: __dirname })
+  try {
+    execFileSync('git', ['diff-index', '--quiet', 'HEAD', '--'], { cwd: __dirname })
+    return false
+  } catch (error) {
+    if (typeof error.status === 'number') return true
+    throw error
+  }
+}
+
+const getBuildHash = () => `${git.short('.')}${isGitWorktreeDirty() ? '-dirty' : ''}`
 
 const sanitizeChunkName = (name = '') =>
   name
@@ -260,7 +274,7 @@ export default defineConfig(({ mode }) => {
   return {
     define: {
       'import.meta.env.buildTime': JSON.stringify(DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss ZZ')),
-      'import.meta.env.buildHash': JSON.stringify(git.short(".") + (git.isDirty() ? '-dirty' : '')),
+      'import.meta.env.buildHash': JSON.stringify(getBuildHash()),
       'import.meta.env.__APP_ENV__': JSON.stringify(env.APP_ENV),
     },
     plugins: [

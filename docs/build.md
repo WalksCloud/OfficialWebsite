@@ -4,6 +4,7 @@
 
 - `./scripts/build.sh` runs the full SSG pipeline: `vite-ssg build`, metadata generation, redirect map generation, and `dist` formatting.
 - `./scripts/build.sh watch` runs the same pipeline through `chokidar` and rebuilds when files under `src/`, `public/`, `config/`, or `scripts/` change.
+- Watch mode also observes Git `HEAD` / branch metadata so the footer build hash is regenerated after a commit changes a previously dirty working tree back to clean.
 - The script resolves its own location first, so it can be launched outside the repository root without breaking relative `node` or watcher commands.
 - The script executes the project-local CLI entry files under `node_modules/` via `bun`, avoiding extra package-resolution noise from `bun x`.
 - `INT` / `TERM` traps now clean up the watcher and exit immediately instead of returning to `wait`.

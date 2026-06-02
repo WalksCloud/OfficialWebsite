@@ -62,7 +62,15 @@ run_watch() {
   trap watch_cleanup EXIT
 
   spawned_pid=""
-  spawn_in_process_group bun "$chokidar_cli" "src/**/*" "public/**/*" "config/**/*" "scripts/**/*" --initial --debounce 300 -c "WC_CONTENT_LASTMOD_PREFER_DIRTY_MTIME=1 \"${script_path}\""
+  spawn_in_process_group bun "$chokidar_cli" \
+    "src/**/*" \
+    "public/**/*" \
+    "config/**/*" \
+    "scripts/**/*" \
+    ".git/HEAD" \
+    ".git/logs/HEAD" \
+    ".git/refs/heads/**/*" \
+    --initial --debounce 300 -c "WC_CONTENT_LASTMOD_PREFER_DIRTY_MTIME=1 \"${script_path}\""
   watch_pid=$spawned_pid
 
   wait "$watch_pid"
