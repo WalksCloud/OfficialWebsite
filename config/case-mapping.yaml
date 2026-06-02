@@ -166,6 +166,8 @@
   tech:
     - /tech/operations-handover-package
     - /tech/it-refresh-migration-blueprint
+    - /tech/akvorado-flow-collector-overview
+    - /tech/akvorado-traffic-analysis-workflow
 - case: /cases/cay-dns-filter
   services:
     - /services/office-network
