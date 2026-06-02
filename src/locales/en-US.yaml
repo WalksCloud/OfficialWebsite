@@ -21,6 +21,10 @@ locale-switch:
     message: This page does not have a {requested} version. Showing the {fallback} version instead.
 close: Close
 loading: Loading...
+navigation-recovery:
+  unavailable:
+    title: Connection temporarily interrupted
+    message: We could not complete this navigation right now. Please wait a moment and try again.
 relationship:
   sections:
     services: Related Services

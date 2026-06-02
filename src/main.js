@@ -8,10 +8,28 @@ import routes, { scrollBehavior } from './router'
 import { getSiteConfig, buildPrefixedPath, buildNonPrefixedPath, getPageConfig } from './utils/pageConfig'
 import { getLocaleFallbackChain, getLocaleMessages } from './utils/localeBundles'
 import { registerGlobalComponents } from './registerGlobalComponents'
+import { useAlertStore } from './stores/alert'
 
 import './style.css'
 import ui from '@nuxt/ui/vue-plugin'
 import App from './App.vue'
+
+const isStaleClientAssetError = (error) => {
+  const message = String(error?.message || error || '')
+  return [
+    'Failed to fetch dynamically imported module',
+    'Importing a module script failed',
+    'Unable to preload CSS',
+    'error loading dynamically imported module',
+  ].some((pattern) => message.includes(pattern))
+}
+
+const sleep = (durationMs) => new Promise((resolve) => setTimeout(resolve, durationMs))
+
+const normalizePositiveNumber = (value, fallback) => {
+  const number = Number(value)
+  return Number.isFinite(number) && number > 0 ? number : fallback
+}
 
 if (!import.meta.env.SSR && globalThis.window?.__wcBootGate) {
   await globalThis.window.__wcBootGate
@@ -20,6 +38,15 @@ if (!import.meta.env.SSR && globalThis.window?.__wcBootGate) {
 const site = getSiteConfig()
 const messages = getLocaleMessages()
 const fallbackLocale = getLocaleFallbackChain(site)
+const navigationRecovery = site.clientNavigationRecovery || {}
+const navigationRecoveryTargetTimeoutMs = normalizePositiveNumber(
+  navigationRecovery.targetTimeoutMs,
+  30000,
+)
+const navigationRecoveryRetryIntervalMs = normalizePositiveNumber(
+  navigationRecovery.retryIntervalMs,
+  1000,
+)
 
 library.add(faSquareFacebook, faLinkedin)
 
@@ -43,6 +70,64 @@ export const createApp = ViteSSG(
     app.use(ui)
     registerGlobalComponents(app)
     app.component('font-awesome-icon', FontAwesomeIcon)
+
+    if (!import.meta.env.SSR) {
+      const alertStore = useAlertStore()
+      let recoveringNavigation = false
+
+      const isTargetRouteAvailable = async (targetUrl) => {
+        try {
+          const response = await fetch(targetUrl, {
+            method: 'GET',
+            cache: 'no-store',
+            credentials: 'same-origin',
+            redirect: 'follow',
+          })
+          return response.status === 200
+        } catch {
+          return false
+        }
+      }
+
+      const waitForTargetRoute = async (targetUrl) => {
+        const deadline = Date.now() + navigationRecoveryTargetTimeoutMs
+        while (Date.now() <= deadline) {
+          if (await isTargetRouteAvailable(targetUrl)) return true
+          const remainingMs = deadline - Date.now()
+          if (remainingMs <= 0) break
+          await sleep(Math.min(navigationRecoveryRetryIntervalMs, remainingMs))
+        }
+        return false
+      }
+
+      const recoverTargetNavigation = async (to) => {
+        if (recoveringNavigation || !to?.fullPath) return
+        recoveringNavigation = true
+        const targetUrl = new URL(to.fullPath, globalThis.window.location.href)
+
+        alertStore.clear()
+        alertStore.showLoading()
+        const targetAvailable = await waitForTargetRoute(targetUrl)
+        alertStore.hideLoading()
+
+        if (targetAvailable) {
+          globalThis.window.location.assign(targetUrl.href)
+          return
+        }
+
+        recoveringNavigation = false
+        alertStore.message(
+          i18n.global.t('navigation-recovery.unavailable.title'),
+          i18n.global.t('navigation-recovery.unavailable.message'),
+        )
+      }
+
+      router.onError((error, to) => {
+        if (isStaleClientAssetError(error)) {
+          recoverTargetNavigation(to)
+        }
+      })
+    }
 
     // Persist locale for client navigation only
     const setLocale = (value) => {

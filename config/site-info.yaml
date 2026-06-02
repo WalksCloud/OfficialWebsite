@@ -12,6 +12,12 @@ localeFallbacks:
     - zh-tw
     - en
   en: []
+# Client-side recovery when an already-open tab navigates during a static rebuild.
+clientNavigationRecovery:
+  # Maximum time to wait for the target route HTML to become available.
+  targetTimeoutMs: 10000
+  # Poll interval while the target route is temporarily unavailable.
+  retryIntervalMs: 1000
 robots:
   policy: index,follow
 socialImage: /og_image.webp
