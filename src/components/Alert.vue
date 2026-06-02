@@ -1,10 +1,32 @@
 <script setup>
 import { useAlertStore } from '@/stores/alert'
 import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
 
 const store = useAlertStore()
 const { alert, banner, loading, topProgress } = storeToRefs(store)
 const { clear, clearBanner } = store
+
+const bannerThemes = {
+  error: {
+    color: 'error',
+    icon: 'i-lucide-circle-alert',
+    iconClass: 'size-3.5 text-red-700 dark:text-red-200',
+    containerClass: 'border-red-300/60 bg-red-200/80 dark:border-red-400/55 dark:bg-red-500/30',
+    actionButtonClass: 'bg-red-700 text-white hover:bg-red-800 dark:bg-red-300 dark:text-red-950 dark:hover:bg-red-200',
+    closeButtonClass: 'border-red-300/80 bg-white/60 text-red-800 hover:bg-white dark:border-red-300/50 dark:bg-red-950/30 dark:text-red-100 dark:hover:bg-red-950/50',
+  },
+  warning: {
+    color: 'warning',
+    icon: 'i-lucide-circle-alert',
+    iconClass: 'size-3.5 text-amber-700 dark:text-amber-200',
+    containerClass: 'border-amber-300/60 bg-amber-200/80 dark:border-amber-400/55 dark:bg-amber-400/30',
+    actionButtonClass: 'bg-amber-700 text-white hover:bg-amber-800 dark:bg-amber-300 dark:text-amber-950 dark:hover:bg-amber-200',
+    closeButtonClass: 'border-amber-300/80 bg-white/60 text-amber-800 hover:bg-white dark:border-amber-300/50 dark:bg-amber-950/30 dark:text-amber-100 dark:hover:bg-amber-950/50',
+  },
+}
+
+const bannerTheme = computed(() => bannerThemes[banner.value.color] || bannerThemes.error)
 
 const runBannerAction = () => {
   if (!banner.value.action || typeof window === 'undefined') {
@@ -34,12 +56,12 @@ const dismissBanner = () => {
 
 	<!-- banner -->
 	<transition name="slide-down" appear>
-		<UBanner v-if="banner.title" color="error" icon="i-lucide-circle-alert" :ui="{
+		<UBanner v-if="banner.title" :color="bannerTheme.color" :icon="bannerTheme.icon" :ui="{
 			container: 'h-auto min-h-16 py-2 sm:min-h-8 sm:py-1',
 			center: 'min-h-0 items-center gap-1.5',
 			title: 'w-full text-sm leading-4 text-gray-700 dark:text-gray-100',
-			icon: 'size-3.5 text-red-700 dark:text-red-200',
-		}" class="fixed top-0 left-0 z-[210] w-full border-t border-red-300/60 bg-red-200/80 shadow-sm backdrop-blur-sm dark:border-red-400/55 dark:bg-red-500/30">
+			icon: bannerTheme.iconClass,
+		}" :class="['fixed top-0 left-0 z-[210] w-full border-t shadow-sm backdrop-blur-sm', bannerTheme.containerClass]">
 			<template #title>
 				<span class="flex w-full flex-col gap-2 leading-4 whitespace-normal wrap-break-word sm:flex-row sm:items-center sm:justify-between">
 					<span class="min-w-0">
@@ -51,14 +73,14 @@ const dismissBanner = () => {
 						v-if="banner.action && banner.actionLabel"
 						@click="runBannerAction"
 						type="button"
-						class="rounded-lg bg-red-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-800 dark:bg-red-300 dark:text-red-950 dark:hover:bg-red-200"
+						:class="['rounded-lg px-3 py-1.5 text-xs font-semibold', bannerTheme.actionButtonClass]"
 					>
 						{{ banner.actionLabel }}
 					</button>
 					<button
 						@click="dismissBanner"
 						type="button"
-						class="rounded-lg border border-red-300/80 bg-white/60 px-3 py-1.5 text-xs font-semibold text-red-800 hover:bg-white dark:border-red-300/50 dark:bg-red-950/30 dark:text-red-100 dark:hover:bg-red-950/50"
+						:class="['rounded-lg border px-3 py-1.5 text-xs font-semibold', bannerTheme.closeButtonClass]"
 					>
 						{{ $t('close') }}
 					</button>

@@ -20,6 +20,14 @@ clientNavigationRecovery:
   retryIntervalMs: 1000
   # Time to show a passive notice before background retry resumes automatically.
   backgroundNoticeDurationMs: 5000
+  # Browser service worker used for same-origin page and asset cache fallback.
+  serviceWorkerPath: /wc-sw.js
+  # Runtime cache namespace used by the browser service worker and direct page cache priming.
+  runtimeCachePrefix: walkscloud-runtime-
+  # Internal cache key for the last rendered HTML document fallback.
+  runtimeDocumentFallbackPath: /__wc-runtime-document-fallback__
+  # Maximum time to wait while checking whether the target page is from a newer build.
+  versionCheckTimeoutMs: 3000
 robots:
   policy: index,follow
 socialImage: /og_image.webp

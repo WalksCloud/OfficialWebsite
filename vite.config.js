@@ -26,6 +26,16 @@ const isGitWorktreeDirty = () => {
 
 const getBuildHash = () => `${git.short('.')}${isGitWorktreeDirty() ? '-dirty' : ''}`
 
+const buildHashHtmlPlugin = (buildHash) => ({
+  name: 'walkscloud-build-hash-html',
+  transformIndexHtml(html) {
+    return html.replace(
+      /<\/head>/i,
+      `<meta name="wc-build-hash" content="${escapeAttributeValue(buildHash)}" />\n</head>`,
+    )
+  },
+})
+
 const sanitizeChunkName = (name = '') =>
   name
     .replace(/[@]/g, '')
@@ -268,13 +278,14 @@ const applyRenderedHead = (html, renderedHead) => {
 
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '')
+  const buildHash = getBuildHash()
   const preferDirtyMtime = ['1', 'true', 'yes', 'on'].includes(
     String(process.env.WC_CONTENT_LASTMOD_PREFER_DIRTY_MTIME || '').toLowerCase(),
   )
   return {
     define: {
       'import.meta.env.buildTime': JSON.stringify(DateTime.now().toFormat('yyyy-MM-dd HH:mm:ss ZZ')),
-      'import.meta.env.buildHash': JSON.stringify(getBuildHash()),
+      'import.meta.env.buildHash': JSON.stringify(buildHash),
       'import.meta.env.__APP_ENV__': JSON.stringify(env.APP_ENV),
     },
     plugins: [
@@ -288,6 +299,7 @@ export default defineConfig(({ mode }) => {
         },
       }),
       tailwindcss(),
+      buildHashHtmlPlugin(buildHash),
       contentLastmodPlugin({ preferDirtyMtime }),
       {
         name: 'yaml',

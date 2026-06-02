@@ -26,6 +26,10 @@ navigation-recovery:
     title: Connection temporarily interrupted
     message: We could not complete this navigation right now. Please wait a moment and try again.
     action: Continue retrying
+  version:
+    title: New page version available
+    message: This page has been updated. Continue to open the latest version.
+    action: Continue
 relationship:
   sections:
     services: Related Services

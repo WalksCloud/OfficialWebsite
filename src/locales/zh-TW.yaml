@@ -26,6 +26,10 @@ navigation-recovery:
     title: 連線暫時中斷
     message: 目前無法完成這次頁面切換，請稍候再試一次。
     action: 繼續重試
+  version:
+    title: 已有新版頁面
+    message: 此頁面已有更新版本，請繼續開啟新版頁面。
+    action: 繼續
 relationship:
   sections:
     services: 相關服務
