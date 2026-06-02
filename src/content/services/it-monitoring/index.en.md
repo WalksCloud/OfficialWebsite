@@ -33,7 +33,7 @@ A multi-site organization staffed by a lean IT crew mixed and matched monitoring
 ## WalksCloud’s Implementation Steps
 
 1. **Inventory and KPI design**: Catalog servers, networks, SaaS, and containers, then define KPI/SLO targets plus alert thresholds.
-2. **Platform deployment and integration**: Roll out Zabbix/LibreNMS for infrastructure, Grafana for visualization, Graylog/Wazuh for logs, Arkime or akvorado for packet and flow analysis, and Gatus for API and service availability, then integrate notifications with collaboration tools and ticket flows.
+2. **Platform deployment and integration**: Roll out Zabbix/LibreNMS for infrastructure, Grafana for visualization, Graylog/Wazuh for logs, Arkime or Akvorado for packet and flow analysis, and Gatus for API and service availability, then integrate notifications with collaboration tools and ticket flows.
 3. **Operationalization**: Establish alert tiers, rotations, handling guides, and reporting templates, and provide training or managed services so the stack stays healthy.
 
 With WalksCloud managing the observability backbone, organizations can focus on improving customer experience instead of wiring tools together.

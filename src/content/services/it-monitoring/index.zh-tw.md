@@ -4,7 +4,7 @@ slug: services/it-monitoring
 title: |
   IT 監控與管理系統
 description: |
-  行雲資訊以 Zabbix、LibreNMS、Grafana、Graylog、Wazuh、Arkime (Moloch)、akvorado、Gatus 等工具打造統一監控平台，提供指標、日誌、告警與處理流程文件，協助企業建立可行動的可觀測性。
+  行雲資訊以 Zabbix、LibreNMS、Grafana、Graylog、Wazuh、Arkime (Moloch)、Akvorado、Gatus 等工具打造統一監控平台，提供指標、日誌、告警與處理流程文件，協助企業建立可行動的可觀測性。
 ogType: article
 index: true
 deploy: true
@@ -33,7 +33,7 @@ jsonld:
 ## 行雲資訊的實作步驟
 
 1. **盤點與指標定義**：釐清伺服器、網路、SaaS、容器等資產，建立 KPI/SLO（Service Level Objective，服務層級目標）與告警閾值矩陣。
-2. **平台部署與整合**：導入 Zabbix/LibreNMS 監控設備、Grafana 資料視覺化、Graylog/Wazuh 收集日誌、Arkime (Moloch)/akvorado 進行封包與流量分析、Gatus 監測 API 與關鍵服務可用性，並串接通訊軟體建立告警通知與工單流程。
+2. **平台部署與整合**：導入 Zabbix/LibreNMS 監控設備、Grafana 資料視覺化、Graylog/Wazuh 收集日誌、Arkime (Moloch)/Akvorado 進行封包與流量分析、Gatus 監測 API 與關鍵服務可用性，並串接通訊軟體建立告警通知與工單流程。
 3. **營運流程化**：建立告警分級、值班輪值、處理手冊與報告模板，並提供教育訓練與代管服務，確保監控平台本身也被監控。
 
 有了行雲資訊協作，企業不再需要花時間整合工具，而能專注在改善服務品質。監控系統是必要防線，及早交給專業團隊能避免停機與商機損失。
