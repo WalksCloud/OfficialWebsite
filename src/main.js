@@ -47,7 +47,10 @@ const navigationRecoveryRetryIntervalMs = normalizePositiveNumber(
   navigationRecovery.retryIntervalMs,
   1000,
 )
-
+const navigationRecoveryBackgroundNoticeDurationMs = normalizePositiveNumber(
+  navigationRecovery.backgroundNoticeDurationMs,
+  5000,
+)
 library.add(faSquareFacebook, faLinkedin)
 
 export const createApp = ViteSSG(
@@ -74,6 +77,8 @@ export const createApp = ViteSSG(
     if (!import.meta.env.SSR) {
       const alertStore = useAlertStore()
       let recoveringNavigation = false
+      let backgroundRecoveringNavigation = false
+      let pendingRecoveryTargetUrl = null
 
       const isTargetRouteAvailable = async (targetUrl) => {
         try {
@@ -89,15 +94,38 @@ export const createApp = ViteSSG(
         }
       }
 
-      const waitForTargetRoute = async (targetUrl) => {
+      const showUnavailableBanner = ({ passive = false } = {}) => {
+        alertStore.showBanner({
+          title: i18n.global.t('navigation-recovery.unavailable.title'),
+          content: i18n.global.t('navigation-recovery.unavailable.message'),
+          action: passive ? 'retry-navigation-notice' : 'retry-navigation',
+          actionLabel: passive ? '' : i18n.global.t('navigation-recovery.unavailable.action'),
+        })
+      }
+
+      const waitForTargetRoute = async (targetUrl, shouldContinue = () => true) => {
         const deadline = Date.now() + navigationRecoveryTargetTimeoutMs
-        while (Date.now() <= deadline) {
-          if (await isTargetRouteAvailable(targetUrl)) return true
+        while (shouldContinue() && Date.now() <= deadline) {
+          if (await isTargetRouteAvailable(targetUrl)) return shouldContinue()
           const remainingMs = deadline - Date.now()
           if (remainingMs <= 0) break
           await sleep(Math.min(navigationRecoveryRetryIntervalMs, remainingMs))
         }
         return false
+      }
+
+      const isPendingRecoveryTarget = (targetUrl) => (
+        pendingRecoveryTargetUrl?.href === targetUrl.href
+      )
+
+      const waitForBackgroundNotice = async (targetUrl) => {
+        const deadline = Date.now() + navigationRecoveryBackgroundNoticeDurationMs
+        while (isPendingRecoveryTarget(targetUrl) && Date.now() <= deadline) {
+          const remainingMs = deadline - Date.now()
+          if (remainingMs <= 0) break
+          await sleep(Math.min(navigationRecoveryRetryIntervalMs, remainingMs))
+        }
+        return isPendingRecoveryTarget(targetUrl)
       }
 
       const recoverTargetNavigation = async (to) => {
@@ -116,15 +144,77 @@ export const createApp = ViteSSG(
         }
 
         recoveringNavigation = false
-        alertStore.message(
-          i18n.global.t('navigation-recovery.unavailable.title'),
-          i18n.global.t('navigation-recovery.unavailable.message'),
-        )
+        pendingRecoveryTargetUrl = targetUrl
+        showUnavailableBanner()
+      }
+
+      const retryPendingNavigationInBackground = async () => {
+        if (backgroundRecoveringNavigation || !pendingRecoveryTargetUrl) return
+        backgroundRecoveringNavigation = true
+        const targetUrl = pendingRecoveryTargetUrl
+
+        alertStore.clearBanner()
+        try {
+          while (isPendingRecoveryTarget(targetUrl)) {
+            alertStore.clearBanner()
+            alertStore.showTopProgress()
+
+            const targetAvailable = await waitForTargetRoute(
+              targetUrl,
+              () => isPendingRecoveryTarget(targetUrl),
+            )
+
+            if (!isPendingRecoveryTarget(targetUrl)) break
+
+            if (targetAvailable) {
+              pendingRecoveryTargetUrl = null
+              alertStore.hideTopProgress()
+              globalThis.window.location.assign(targetUrl.href)
+              return
+            }
+
+            alertStore.hideTopProgress()
+            showUnavailableBanner({ passive: true })
+
+            if (await waitForBackgroundNotice(targetUrl)) {
+              alertStore.clearBanner()
+            }
+          }
+        } finally {
+          backgroundRecoveringNavigation = false
+          alertStore.hideTopProgress()
+        }
+      }
+
+      const cancelPendingNavigation = () => {
+        pendingRecoveryTargetUrl = null
+        backgroundRecoveringNavigation = false
+        alertStore.clearBanner()
+        alertStore.hideTopProgress()
       }
 
       router.onError((error, to) => {
         if (isStaleClientAssetError(error)) {
           recoverTargetNavigation(to)
+        }
+      })
+
+      globalThis.window.addEventListener('walkscloud:banner-action', (event) => {
+        const action = event.detail?.action
+        if (action === 'retry-navigation') {
+          retryPendingNavigationInBackground()
+        }
+      })
+
+      globalThis.window.addEventListener('walkscloud:banner-dismiss', (event) => {
+        if (['retry-navigation', 'retry-navigation-notice'].includes(event.detail?.action)) {
+          cancelPendingNavigation()
+        }
+      })
+
+      router.afterEach(() => {
+        if (backgroundRecoveringNavigation) {
+          cancelPendingNavigation()
         }
       })
     }
@@ -247,6 +337,7 @@ export const createApp = ViteSSG(
         initialState.locale = targetLocale
       }
       setLocale(targetLocale)
+
       next()
     })
   }

@@ -18,6 +18,6 @@
 - Background process groups are launched with `stdin` redirected from `/dev/null` so an interactive shell running in the background does not stall waiting on the terminal.
 - The main `docker compose up` path now runs in the foreground interactive shell; only the watcher stays in the background. This avoids background job-control issues with `shell -lic`.
 - `package.json` treats exit code `130` as an expected user interrupt, so `bun run preview` no longer reports it as a script error after `Ctrl+C`.
-- Open browser tabs keep the current page when a route-level dynamic import points at a stale hashed asset. The app shows a loading overlay, polls the target route until it returns `200`, then navigates to that target. If the target is still unavailable after the configured timeout, it shows a retry message.
+- If a route-level dynamic import points at a stale hashed asset, the app shows a loading overlay, polls the target route until it returns `200`, then navigates to that target. If the target is still unavailable after the configured timeout, it shows an error banner; closing the banner cancels the pending target, while continuing retry keeps polling in the background with a non-blocking top progress bar. Background retry reports another passive error banner after each timeout window, waits for the configured notice duration, then resumes retrying automatically.
 
 This keeps only one nginx reload in flight at a time and makes `Ctrl+C` stop the full preview session cleanly.

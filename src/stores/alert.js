@@ -1,33 +1,58 @@
 import { defineStore } from 'pinia'
 
 export const useAlertStore = defineStore('alert', {
-	state: () => ({
-		alert: {
-            title: '',
-            content: ''
-		},
-        loading: false
-	}),
-	actions: {
-		showLoading() {
-            this.loading = true
-        },
-        hideLoading() {
-            this.loading = false
-        },
-        message(title, content, autoClose = false) {
-            this.alert.title = title
-            this.alert.content = content
+  state: () => ({
+    alert: {
+      title: '',
+      content: '',
+    },
+    banner: {
+      title: '',
+      content: '',
+      action: '',
+      actionLabel: '',
+    },
+    topProgress: false,
+    loading: false,
+  }),
+  actions: {
+    showLoading() {
+      this.loading = true
+    },
+    hideLoading() {
+      this.loading = false
+    },
+    showTopProgress() {
+      this.topProgress = true
+    },
+    hideTopProgress() {
+      this.topProgress = false
+    },
+    message(title, content, autoClose = false) {
+      this.alert.title = title
+      this.alert.content = content
 
-            if(autoClose) {
-                setTimeout(() => {
-                  this.clear()
-                }, 5000)
-            }
-        },
-        clear() {
-            this.alert.title = ''
-            this.alert.content = ''
-        }
-    }
-});
+      if (autoClose) {
+        setTimeout(() => {
+          this.clear()
+        }, 5000)
+      }
+    },
+    showBanner({ title, content, action = '', actionLabel = '' }) {
+      this.banner.title = title
+      this.banner.content = content
+      this.banner.action = action
+      this.banner.actionLabel = actionLabel
+    },
+    clearBanner() {
+      this.banner.title = ''
+      this.banner.content = ''
+      this.banner.action = ''
+      this.banner.actionLabel = ''
+    },
+    clear() {
+      this.alert.title = ''
+      this.alert.content = ''
+    },
+  },
+})

@@ -18,6 +18,8 @@ clientNavigationRecovery:
   targetTimeoutMs: 10000
   # Poll interval while the target route is temporarily unavailable.
   retryIntervalMs: 1000
+  # Time to show a passive notice before background retry resumes automatically.
+  backgroundNoticeDurationMs: 5000
 robots:
   policy: index,follow
 socialImage: /og_image.webp

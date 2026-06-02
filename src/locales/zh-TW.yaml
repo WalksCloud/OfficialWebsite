@@ -25,6 +25,7 @@ navigation-recovery:
   unavailable:
     title: 連線暫時中斷
     message: 目前無法完成這次頁面切換，請稍候再試一次。
+    action: 繼續重試
 relationship:
   sections:
     services: 相關服務

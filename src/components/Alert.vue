@@ -3,10 +3,71 @@ import { useAlertStore } from '@/stores/alert'
 import { storeToRefs } from 'pinia'
 
 const store = useAlertStore()
-const { alert, loading } = storeToRefs(store)
-const { clear } = store
+const { alert, banner, loading, topProgress } = storeToRefs(store)
+const { clear, clearBanner } = store
+
+const runBannerAction = () => {
+  if (!banner.value.action || typeof window === 'undefined') {
+    clearBanner()
+    return
+  }
+  window.dispatchEvent(new CustomEvent('walkscloud:banner-action', {
+    detail: { action: banner.value.action },
+  }))
+}
+
+const dismissBanner = () => {
+  const action = banner.value.action
+  clearBanner()
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('walkscloud:banner-dismiss', {
+      detail: { action },
+    }))
+  }
+}
 </script>
 <template>
+	<!-- top progress -->
+	<div v-if="topProgress" class="fixed top-0 left-0 z-[220] h-1 w-full overflow-hidden bg-red-200/70 dark:bg-red-950/60">
+		<div class="wc-top-progress-bar h-full w-1/2 bg-red-600 dark:bg-red-300"></div>
+	</div>
+
+	<!-- banner -->
+	<transition name="slide-down" appear>
+		<UBanner v-if="banner.title" color="error" icon="i-lucide-circle-alert" :ui="{
+			container: 'h-auto min-h-16 py-2 sm:min-h-8 sm:py-1',
+			center: 'min-h-0 items-center gap-1.5',
+			title: 'w-full text-sm leading-4 text-gray-700 dark:text-gray-100',
+			icon: 'size-3.5 text-red-700 dark:text-red-200',
+		}" class="fixed top-0 left-0 z-[210] w-full border-t border-red-300/60 bg-red-200/80 shadow-sm backdrop-blur-sm dark:border-red-400/55 dark:bg-red-500/30">
+			<template #title>
+				<span class="flex w-full flex-col gap-2 leading-4 whitespace-normal wrap-break-word sm:flex-row sm:items-center sm:justify-between">
+					<span class="min-w-0">
+						<span class="font-semibold block sm:inline">{{ banner.title }}</span>
+						<span class="font-normal block wrap-break-word sm:inline sm:ml-2">{{ banner.content }}</span>
+					</span>
+					<span class="flex shrink-0 items-center gap-2">
+					<button
+						v-if="banner.action && banner.actionLabel"
+						@click="runBannerAction"
+						type="button"
+						class="rounded-lg bg-red-700 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-800 dark:bg-red-300 dark:text-red-950 dark:hover:bg-red-200"
+					>
+						{{ banner.actionLabel }}
+					</button>
+					<button
+						@click="dismissBanner"
+						type="button"
+						class="rounded-lg border border-red-300/80 bg-white/60 px-3 py-1.5 text-xs font-semibold text-red-800 hover:bg-white dark:border-red-300/50 dark:bg-red-950/30 dark:text-red-100 dark:hover:bg-red-950/50"
+					>
+						{{ $t('close') }}
+					</button>
+					</span>
+				</span>
+			</template>
+		</UBanner>
+	</transition>
+
 	<!-- alert -->
 	<div v-if="alert.title" class="relative z-200">
 		<div class="fixed inset-0 bg-gray-500/75 transition-opacity duration-300" aria-hidden="true"></div>
@@ -61,5 +122,21 @@ const { clear } = store
 .slide-down-leave-from {
 	opacity: 1;
 	transform: translateY(0);
+}
+
+.wc-top-progress-bar {
+	animation: wc-top-progress 1.25s ease-in-out infinite;
+}
+
+@keyframes wc-top-progress {
+	0% {
+		transform: translateX(-100%);
+	}
+	55% {
+		transform: translateX(50%);
+	}
+	100% {
+		transform: translateX(200%);
+	}
 }
 </style>
