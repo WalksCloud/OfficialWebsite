@@ -42,6 +42,7 @@ run_build() {
   if is_cloudflare_pages_build; then
     bun "${DIR}/generate-cloudflare-pages-worker.js"
   fi
+  bun "${DIR}/generate-precache-manifest.js"
 }
 
 run_watch() {
