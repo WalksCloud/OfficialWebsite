@@ -38,6 +38,7 @@ flowchart LR
   E --> F
 ```
 
+<!-- media-description:for mermaid:1 -->
 Akvorado’s data path can be understood as six roles:
 
 1. **Exporter**: usually a router, L3 switch, firewall, or Linux flow probe that sends NetFlow/IPFIX/sFlow to the Akvorado Inlet.
@@ -46,13 +47,16 @@ Akvorado’s data path can be understood as six roles:
 4. **Outlet**: reads from Kafka, decodes flow fields, adds interface, geography, routing, and classification metadata, then writes to ClickHouse.
 5. **ClickHouse**: stores and queries high-volume flow records. Retention policy, disk capacity, and query load directly affect stability.
 6. **Console**: provides queries, charts, and visualization. Operators usually use it for Top Talkers, traffic direction, ASN/country distribution, and time-series changes.
+<!-- media-description:end -->
 
 ![Akvorado Console showing AS-based stacked traffic visualization](./akvorado-console-as-traffic-visualization-annotated.png)
 
+<!-- media-description:for ./akvorado-console-as-traffic-visualization-annotated.png -->
 The Visualize page can split flow data by source AS, destination AS, interface boundary, or custom filters into comparable time-series views. The markers can be read in order:
 1. **Query controls**: set the time range, dimensions, and filter so the analysis has a clear scope.
 2. **Time-series traffic chart**: shows AS-based stacked traffic for confirming main outbound sources and whether spikes concentrate around specific ASNs.
 3. **Statistics table**: summarizes min, max, average, and 95th percentile values so the data can support capacity decisions.
+<!-- media-description:end -->
 
 ## NetFlow/IPFIX/sFlow differences
 

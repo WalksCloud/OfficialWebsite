@@ -38,6 +38,7 @@ flowchart LR
   E --> F
 ```
 
+<!-- media-description:for mermaid:1 -->
 Akvorado 的資料流可以分成六個角色：
 
 1. **Exporter**：通常是 Router、L3 Switch、防火牆或 Linux flow probe，負責把 NetFlow/IPFIX/sFlow 指向 Akvorado Inlet。
@@ -46,13 +47,16 @@ Akvorado 的資料流可以分成六個角色：
 4. **Outlet**：從 Kafka 讀取資料，解析 flow 欄位，補上介面、地理、路由與分類資訊，再寫入 ClickHouse。
 5. **ClickHouse**：負責大量 flow 資料儲存與查詢。保留策略、磁碟容量與查詢負載會直接影響整體穩定度。
 6. **Console**：提供查詢、圖表與視覺化。使用者通常會在這裡看 Top Talkers、流量方向、ASN/國家分布與時間序變化。
+<!-- media-description:end -->
 
 ![Akvorado Console 以 AS 維度呈現流量堆疊圖](./akvorado-console-as-traffic-visualization-annotated.png)
 
+<!-- media-description:for ./akvorado-console-as-traffic-visualization-annotated.png -->
 Console 的 Visualize 頁面可以把 flow 資料依來源 AS、目的 AS、介面邊界或自訂條件拆成可比較的時間序圖。圖中標示可依序閱讀：
 1. **查詢條件**：包含時間範圍、維度與 filter，用來限定要分析的流量來源與查詢口徑。
 2. **時間序流量圖**：以 AS 維度呈現堆疊流量，適合確認主要對外流量來源，以及尖峰是否集中在特定 ASN。
 3. **統計表**：整理 min、max、average、95th percentile 等數值，用來判斷資料是否足以支撐後續容量規劃。
+<!-- media-description:end -->
 
 ## NetFlow/IPFIX/sFlow 的差異
 

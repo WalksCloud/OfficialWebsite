@@ -44,14 +44,18 @@ flowchart LR
   E --> F
 ```
 
+<!-- media-description:for mermaid:1 -->
 這個流程的重點是不要一開始就鑽進單一 IP。先確認時間窗，再確認總量，接著拆出主要 talkers 與流量方向，最後才把結果與 SNMP、Syslog、NMS 告警對齊。對 [IT 監控與管理系統](/services/it-monitoring/) 而言，flow 分析通常是「解釋為什麼指標異常」的第二層資料，而不是取代原本的告警系統。
+<!-- media-description:end -->
 
 ![Akvorado Console 首頁流量概覽](./akvorado-console-home-traffic-overview-annotated.png)
 
+<!-- media-description:for ./akvorado-console-home-traffic-overview-annotated.png -->
 Console 首頁適合作為第一步檢查點。圖中標示可依序閱讀：
 1. **資料進入狀態**：flows/s 與 exporters 可確認 Inlet 是否正在收到 flow，以及目前有多少 exporter 被辨識。
 2. **流量摘要圖表**：Top source AS、Top destination AS、protocol 分布與時間序圖能快速觀察主要流量來源與尖峰。
 3. **Last flow 欄位**：可回頭檢查 exporter、介面與 enrichment 欄位是否符合預期，避免後續分析建立在錯誤資料上。
+<!-- media-description:end -->
 
 ## Top Talkers 分析
 

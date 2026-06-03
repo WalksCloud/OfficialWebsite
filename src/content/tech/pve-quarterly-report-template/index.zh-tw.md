@@ -39,7 +39,13 @@ sitemap:
 
 1. **在受控 Web UI 條件下執行報表腳本**：`Make Update Report` 按鈕只會在「指定 connector 網域 + 內部 userscript」同時成立時出現，確保腳本僅在受控邊界內使用、避免未授權環境誤觸。此設計不需改動 PVE/PBS 原始安裝，也可降低資料外洩風險。  
    - PVE 介面示例截圖： ![PVE Make Update Report button example](./make-update-report-button-pve.png)
+     <!-- media-description:for ./make-update-report-button-pve.png -->
+     這張 PVE 示例截圖呈現受控的 `Make Update Report` 按鈕位於原生 Documentation、Create VM 與 Create CT 操作旁。這種位置讓維運人員容易辨識報表入口，同時仍限制在指定 connector 網域與內部 userscript 條件下才會出現。
+     <!-- media-description:end -->
    - PBS 介面示例截圖： ![PBS Make Update Report button example](./make-update-report-button-pbs.png)
+     <!-- media-description:for ./make-update-report-button-pbs.png -->
+     這張 PBS 示例截圖呈現相同的受控報表按鈕出現在備份伺服器介面。PVE 與 PBS 採一致入口，可降低季度報表產出時的人工操作差異，也不需要修改原始安裝內容。
+     <!-- media-description:end -->
 2. **在同一操作中完成更新與報表產出**：以固定流程一次產出更新結果與報表欄位，減少人工轉抄錯誤。這可維持跨季度資料口徑一致。
 3. **可休眠 VM 先休眠再更新**：先關閉對應 QEMU process，讓 VM 恢復時載入更新後 binary。此步驟可降低未完成運算或寫入作業被更新中斷而失敗的風險，即使在夜間窗口也保留安全邊界。
 4. **重開機 PVE/PBS 主機使更新生效**：主機重開後套用新 kernel 與套件執行環境。完成後再進入服務恢復與檢核。

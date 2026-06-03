@@ -19,6 +19,9 @@ sitemap:
 - ZITADEL is a suitable controlled OIDC baseline because it can quickly provide standard-compliant apps and test identities for deterministic Jamf Connect checks.
 - A controlled validation lab separates client-side (Jamf Connect) configuration causes from provider-side OIDC implementation causes.
 - Screenshot reference: ![Jamf Connect application example screenshot](./jamf-connect-application-screenshot.png)
+  <!-- media-description:for ./jamf-connect-application-screenshot.png -->
+  This screenshot shows the Jamf Connect application configuration surface used as the client-side reference during OIDC validation. The lab keeps these client parameters fixed while comparing ZITADEL behavior against the target identity provider.
+  <!-- media-description:end -->
 
 ## Pre-lab technical baseline
 

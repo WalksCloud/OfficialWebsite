@@ -24,8 +24,14 @@ sitemap:
 1. Confirm the target GPU model’s last supported vGPU version from official NVIDIA vGPU documentation.
 2. Download the matching **Linux KVM Host Driver** and **Guest Driver** packages from NVIDIA Licensing.
    ![NVIDIA Driver Downloads reference screenshot](./vgpu-guide-driver-download.png)
+   <!-- media-description:for ./vgpu-guide-driver-download.png -->
+   This screenshot points to the NVIDIA driver download area used to select the Linux KVM host driver and the matching guest driver. The key operational point is to keep both packages on the same supported vGPU release before any host or guest installation begins.
+   <!-- media-description:end -->
 3. Download the matching **NLS/DLS License Server for Linux KVM** image.
    ![NVIDIA NLS License Server Downloads reference screenshot](./vgpu-guide-nls-download.png)
+   <!-- media-description:for ./vgpu-guide-nls-download.png -->
+   This screenshot identifies the NVIDIA license service download area for the matching NLS/DLS image. The license server version should be recorded together with the host and guest drivers so operators can reproduce the same rollout state later.
+   <!-- media-description:end -->
 4. Before execution, record host-driver, guest-driver, and license-server versions in one approved change ticket to prevent mixed-version rollout.
 
 ## 1. PVE host setup (IOMMU, `vfio`, required packages)

@@ -36,14 +36,18 @@ flowchart LR
   E --> F
 ```
 
+<!-- media-description:for mermaid:1 -->
 The important rule is not to start with one IP address. Confirm the time window first, check aggregate volume, split talkers and direction, then correlate with SNMP, Syslog, and NMS alerts. For [IT Monitoring and Management Systems](/services/it-monitoring/), flow analysis is usually the second layer of evidence that explains why an indicator is abnormal. It should not replace the alerting system.
+<!-- media-description:end -->
 
 ![Akvorado Console home traffic overview](./akvorado-console-home-traffic-overview-annotated.png)
 
+<!-- media-description:for ./akvorado-console-home-traffic-overview-annotated.png -->
 The Console home view is a useful first checkpoint. The markers can be read in order:
 1. **Ingestion status**: flows/s and exporters confirm whether Inlet is receiving flow data and how many exporters are identified.
 2. **Traffic summary charts**: top source AS, top destination AS, protocol distribution, and time-series spikes show the main traffic sources at a glance.
 3. **Last flow panel**: lets the operator verify exporter, interface, and enrichment fields before deeper analysis starts.
+<!-- media-description:end -->
 
 ## Top Talkers analysis
 

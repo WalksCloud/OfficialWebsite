@@ -37,6 +37,10 @@ flowchart LR
   E --> F[稽核報告包與簽核]
 ```
 
+<!-- media-description:for mermaid:1 -->
+這張圖說明稽核需求應先轉成控制項對照表，再開始收集證據。每項需求都要能連到 Jamf Pro、Jamf Protect、工單與變更管理來源，讓最終稽核報告包能追溯到負責人與資料來源。
+<!-- media-description:end -->
+
 ## 行雲資訊的做法
 
 1. **角色分工**：定義政策撰寫、事件回應、報告匯出的負責部門（例如 MIS、資安、HR）。
@@ -77,6 +81,10 @@ flowchart TD
   E --> F[修復/例外核准]
   F --> G[結案報告與知識庫回填]
 ```
+
+<!-- media-description:for mermaid:2 -->
+這張圖描述 Jamf Protect 告警產生後的事件處理路徑。嚴重度會決定事件進入立即通知或一般工單佇列，但兩條路徑最後都需要完成資安初判、修復或例外核准，以及結案紀錄。
+<!-- media-description:end -->
 
 ### Step 4：版本控管與證據封存
 

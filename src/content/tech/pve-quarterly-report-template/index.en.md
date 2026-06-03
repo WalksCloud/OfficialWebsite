@@ -39,7 +39,13 @@ sitemap:
 
 1. **Run the report script only from the controlled UI boundary**: the `Make Update Report` button appears only when a managed connector domain and internal userscript are both present, so execution stays inside an approved domain+userscript boundary. This preserves base PVE/PBS installations and prevents accidental use in unauthorized contexts.  
    - PVE example: ![PVE Make Update Report button example](./make-update-report-button-pve.png)
+     <!-- media-description:for ./make-update-report-button-pve.png -->
+     This PVE example shows the controlled `Make Update Report` button placed beside the normal documentation and VM/CT operation buttons. The placement makes the report action visible to operators while keeping it limited to the approved connector domain and userscript boundary.
+     <!-- media-description:end -->
    - PBS example: ![PBS Make Update Report button example](./make-update-report-button-pbs.png)
+     <!-- media-description:for ./make-update-report-button-pbs.png -->
+     This PBS example shows the same controlled report button in the backup-server interface. The consistent placement helps generate quarterly evidence with the same operation pattern across PVE and PBS without modifying the base installation.
+     <!-- media-description:end -->
 2. **Generate updates and report output in one operation**: the same controlled action performs package updates and structured report generation. This reduces manual transcription errors and keeps quarter-to-quarter fields comparable.
 3. **Hibernate eligible VMs before host updates**: stop related QEMU processes first so resumed VM state loads against updated binaries. This lowers the chance that in-progress compute or file-write tasks are interrupted by the update cycle.
 4. **Reboot PVE/PBS hosts to apply runtime changes**: reboot activates updated kernels and package runtime state. Then proceed to post-update service checks.

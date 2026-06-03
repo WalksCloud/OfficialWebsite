@@ -24,8 +24,14 @@ sitemap:
 1. 先以 NVIDIA vGPU 官方文件確認目標 GPU 型號「最後支援」的 vGPU 版本。  
 2. 依該版本到 NVIDIA Licensing 下載對應的 **Linux KVM Host Driver** 與 **Guest Driver**。  
   ![NVIDIA Driver Downloads 參考畫面](./vgpu-guide-driver-download.png)
+  <!-- media-description:for ./vgpu-guide-driver-download.png -->
+  這張截圖標示 NVIDIA 驅動下載頁面中用來選取 Linux KVM Host Driver 與對應 Guest Driver 的位置。實務上重點不是單純下載檔案，而是先確認 Host 與 Guest 套件維持在同一個受支援的 vGPU 版本。
+  <!-- media-description:end -->
 3. 下載同版本對應的 **NLS/DLS License Server for Linux KVM** 映像。  
   ![NVIDIA NLS License Server Downloads 參考畫面](./vgpu-guide-nls-download.png)
+  <!-- media-description:for ./vgpu-guide-nls-download.png -->
+  這張截圖標示 NVIDIA 授權服務映像的下載位置，用來取得與 vGPU 版本相符的 NLS/DLS License Server。授權服務版本應與 Host Driver、Guest Driver 一起記錄，方便後續重建或擴充時維持一致。
+  <!-- media-description:end -->
 4. 在執行前，將 Host/Guest/License Server 三個版本一併登錄到同一張已核准變更單，避免中途混版。
 
 ## 1. PVE Host 環境設定（IOMMU / vfio / 套件）

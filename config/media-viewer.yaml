@@ -1,0 +1,10 @@
+# Markdown media viewer zoom controls.
+zoom:
+  # Lower bound for image scaling.
+  minimumScale: 1
+  # Upper bound for image scaling.
+  maximumScale: 4
+  # Multiplier applied to wheel delta when zooming.
+  wheelStep: 0.0015
+  # Scale values at or below this threshold reset pan offsets.
+  resetScaleThreshold: 1.01

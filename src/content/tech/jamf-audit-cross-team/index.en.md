@@ -37,6 +37,10 @@ flowchart LR
   E --> F[Audit Package and Signoff]
 ```
 
+<!-- media-description:for mermaid:1 -->
+This diagram shows how audit requirements should be converted into a control-mapping table before evidence collection starts. Each requirement is tied to Jamf Pro, Jamf Protect, ticketing, and change-management sources so the final audit package can be traced back to a responsible owner and data source.
+<!-- media-description:end -->
+
 ## WalksCloud implementation model
 
 1. **Role ownership**: define responsibility for policy authoring, incident response, and report export across MIS, security, HR, and related teams.
@@ -77,6 +81,10 @@ flowchart TD
   E --> F[Remediation or Exception Approval]
   F --> G[Closure Report and Knowledge Base Update]
 ```
+
+<!-- media-description:for mermaid:2 -->
+This diagram describes the incident-handling path after a Jamf Protect alert is created. Severity determines whether the event enters immediate notification or the standard queue, but both paths still require triage, remediation or exception approval, and a closure record.
+<!-- media-description:end -->
 
 ### Step 4: Versioning and evidence archive controls
 

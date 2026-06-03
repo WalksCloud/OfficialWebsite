@@ -19,6 +19,9 @@ sitemap:
 - ZITADEL 能快速提供可控且符合標準的 OIDC baseline，適合用來驗證 Jamf Connect 設定、token 交換與登入行為。
 - 透過對照可把原因明確分成「客戶端（Jamf Connect）設定問題」與「供應商端 OIDC 實作差異」，避免雙方反覆猜測。
 - 截圖參考： ![Jamf Connect application example screenshot](./jamf-connect-application-screenshot.png)
+  <!-- media-description:for ./jamf-connect-application-screenshot.png -->
+  這張截圖呈現 Jamf Connect 應用程式設定畫面，可作為 OIDC 驗證時的客戶端參數對照。測試實驗室會固定這些 Jamf Connect 參數，再比較 ZITADEL 與目標身分供應商的回應差異。
+  <!-- media-description:end -->
 
 ## 前置技術基準
 

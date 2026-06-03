@@ -214,7 +214,7 @@ const articleTags = computed(() => {
       <div v-if="rendered.descriptionHtml" class="markdown-description">
         <MarkdownRuntimeContent :source="rendered.descriptionHtml" />
       </div>
-      <MarkdownRuntimeContent :source="rendered.html" />
+      <MarkdownRuntimeContent :source="rendered.html" enable-media-viewer />
     </div>
     <p v-else class="text-center text-gray-600 dark:text-gray-300">
       {{ t('placeholder.message') }}
