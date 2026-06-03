@@ -1025,10 +1025,7 @@ const respondWithRuntimeCache = async (request, event) => {
 }
 
 self.addEventListener('install', (event) => {
-  event.waitUntil((async () => {
-    await precacheFullSite()
-    await self.skipWaiting()
-  })())
+  event.waitUntil(self.skipWaiting())
 })
 
 self.addEventListener('activate', (event) => {

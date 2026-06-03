@@ -60,6 +60,14 @@ const navigationRecoveryRuntimeDocumentFallbackPath = (
 const navigationRecoveryPrecacheManifestPath = (
   navigationRecovery.precacheManifestPath || '/wc-precache-manifest.json'
 )
+const navigationRecoveryOfflineCacheStartDelayMs = normalizePositiveNumber(
+  navigationRecovery.offlineCacheStartDelayMs,
+  30000,
+)
+const navigationRecoveryMobileOfflineCacheStartDelayMs = normalizePositiveNumber(
+  navigationRecovery.mobileOfflineCacheStartDelayMs,
+  60000,
+)
 const navigationRecoveryCacheInspectionPatterns = Array.isArray(navigationRecovery.cacheInspectionPatterns)
   ? navigationRecovery.cacheInspectionPatterns.map((pattern) => String(pattern || '').trim()).filter(Boolean)
   : []
@@ -124,6 +132,10 @@ export const createApp = ViteSSG(
       let runtimeCacheRegistrationBuildHash = ''
       let consoleCacheCommandPromise = Promise.resolve()
       let newVersionNavigationTimer = null
+      let offlineCacheStartTimer = null
+      let offlineCacheStartToken = 0
+      let offlineCacheStarted = false
+      let pendingOfflineCacheRoutePath = globalThis.window.location.href
 
       const getLoadedBuildHash = () => String(import.meta.env.buildHash || '').trim()
 
@@ -478,6 +490,16 @@ export const createApp = ViteSSG(
         showOfflineCacheBanner()
       }
 
+      const handleDocumentVisibilityChange = () => {
+        if (
+          document.visibilityState === 'visible' &&
+          !offlineCacheStarted &&
+          !offlineCacheStartTimer
+        ) {
+          scheduleOfflineCacheStart(pendingOfflineCacheRoutePath)
+        }
+      }
+
       const detectOfflineCacheDocument = () => {
         if (globalThis.window.__WC_OFFLINE_CACHE_HIT__) {
           showOfflineCacheBanner()
@@ -528,6 +550,65 @@ export const createApp = ViteSSG(
           cacheCurrentRuntimeDocument(routePath)
           cacheRuntimeUrls(collectCurrentRuntimeCacheUrls(routePath))
         })
+      }
+
+      const isMobileOfflineCacheContext = () => (
+        navigator.userAgentData?.mobile === true ||
+        globalThis.window.matchMedia?.('(pointer: coarse)')?.matches === true
+      )
+
+      const resolveOfflineCacheStartDelayMs = () => (
+        isMobileOfflineCacheContext()
+          ? navigationRecoveryMobileOfflineCacheStartDelayMs
+          : navigationRecoveryOfflineCacheStartDelayMs
+      )
+
+      const clearOfflineCacheStartTimer = () => {
+        if (!offlineCacheStartTimer) return
+        globalThis.window.clearTimeout(offlineCacheStartTimer)
+        offlineCacheStartTimer = null
+      }
+
+      const startOfflineCacheForRoute = async (routePath, token) => {
+        offlineCacheStartTimer = null
+        if (token !== offlineCacheStartToken || offlineCacheStarted) return
+        if (document.visibilityState === 'hidden') {
+          console.log('[WalksCloud cache] automatic offline cache deferred while page is hidden', {
+            routePath,
+          })
+          return
+        }
+
+        offlineCacheStarted = true
+        console.log('[WalksCloud cache] automatic offline cache start', {
+          routePath,
+          delayMs: resolveOfflineCacheStartDelayMs(),
+          mobile: isMobileOfflineCacheContext(),
+        })
+        await registerRuntimeCacheServiceWorker()
+        precacheFullSiteForCurrentVersion()
+        cacheCurrentRuntimeState(routePath)
+      }
+
+      const scheduleOfflineCacheStart = (routePath = globalThis.window.location.href) => {
+        pendingOfflineCacheRoutePath = routePath
+        if (offlineCacheStarted) {
+          cacheCurrentRuntimeState(routePath)
+          return
+        }
+
+        clearOfflineCacheStartTimer()
+        offlineCacheStartToken += 1
+        const token = offlineCacheStartToken
+        const delayMs = resolveOfflineCacheStartDelayMs()
+        console.log('[WalksCloud cache] automatic offline cache scheduled', {
+          routePath,
+          delayMs,
+          mobile: isMobileOfflineCacheContext(),
+        })
+        offlineCacheStartTimer = globalThis.window.setTimeout(() => {
+          void startOfflineCacheForRoute(routePath, token)
+        }, delayMs)
       }
 
       const isTargetRouteAvailable = async (targetUrl) => {
@@ -786,7 +867,7 @@ export const createApp = ViteSSG(
         if (backgroundRecoveringNavigation) {
           cancelPendingNavigation()
         }
-        cacheCurrentRuntimeState(to.fullPath)
+        scheduleOfflineCacheStart(to.fullPath)
       })
 
       navigator.serviceWorker?.addEventListener('message', (event) => {
@@ -802,15 +883,8 @@ export const createApp = ViteSSG(
       }
       globalThis.window.addEventListener('online', handleBrowserOnline)
       globalThis.window.addEventListener('offline', handleBrowserOffline)
-
-      void nextTick().then(() => {
-        cacheCurrentRuntimeDocument()
-      })
-
-      void registerRuntimeCacheServiceWorker().then(() => {
-        precacheFullSiteForCurrentVersion()
-        cacheCurrentRuntimeState()
-      })
+      document.addEventListener('visibilitychange', handleDocumentVisibilityChange)
+      scheduleOfflineCacheStart()
     }
 
     // Persist locale for client navigation only

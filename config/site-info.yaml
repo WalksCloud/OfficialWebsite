@@ -28,6 +28,10 @@ clientNavigationRecovery:
   runtimeDocumentFallbackPath: /__wc-runtime-document-fallback__
   # Build-generated list of same-origin pages and assets to precache for each released version.
   precacheManifestPath: /wc-precache-manifest.json
+  # Desktop wait time before automatic offline cache priming starts on a stable page.
+  offlineCacheStartDelayMs: 30000
+  # Mobile wait time before automatic offline cache priming starts on a stable page.
+  mobileOfflineCacheStartDelayMs: 60000
   # Required generated paths that must be present in the precache manifest and runtime cache reports.
   cacheInspectionPatterns:
     - /assets/app-pages-markdownpage-
