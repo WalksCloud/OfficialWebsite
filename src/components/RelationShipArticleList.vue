@@ -5,11 +5,11 @@ import { useI18n } from 'vue-i18n'
 import YAML from 'yaml'
 import FaqArticleCard from './FaqArticleCard.vue'
 import ArticlePreview from './ArticlePreview.vue'
-import mappingRaw from '../../config/case-mapping.yaml?raw'
+import relationsRaw from '../../config/content-relations.yaml?raw'
 import { resolveContentInfo, buildLocalizedPath } from '@/utils/contentIndex'
 import { useFallbackNotice } from '@/composables/useFallbackNotice'
 
-const caseMappings = YAML.parse(mappingRaw) || []
+const relations = YAML.parse(relationsRaw) || {}
 
 const { locale, availableLocales, fallbackLocale } = useI18n()
 const supportedLocales = computed(() => availableLocales || [])
@@ -79,53 +79,92 @@ const detectPageType = (slug) => {
 	return null
 }
 
-const findCaseEntry = (slug) => caseMappings.find((entry) => entry.case === slug)
+const normalizeRelationEntry = (slug, entry = {}) => ({
+	slug,
+	services: toArray(entry.services),
+	faq: toArray(entry.faq),
+	tech: toArray(entry.tech),
+})
 
-const findCasesByService = (serviceSlug) =>
-	caseMappings.filter((entry) => entry.services?.includes(serviceSlug))
+const relationEntries = Object.entries(relations).map(([slug, entry]) => normalizeRelationEntry(slug, entry))
 
-const findCasesByTech = (techSlug) =>
-	caseMappings.filter((entry) => entry.tech?.includes(techSlug))
+const isCaseSlug = (slug) => slug.startsWith('/cases/')
+const isTechSlug = (slug) => slug.startsWith('/tech/')
+
+const findRelationEntry = (slug) => normalizeRelationEntry(slug, relations[slug])
+
+const findRelationEntriesByService = (serviceSlug) =>
+	relationEntries.filter((entry) => entry.services.includes(serviceSlug))
+
+const findRelationEntriesByTech = (techSlug) =>
+	relationEntries.filter((entry) => entry.tech.includes(techSlug))
+
+const dedupeRelationEntries = (entries) => {
+	const seen = new Set()
+	return entries.filter((entry) => {
+		if (!entry.slug || seen.has(entry.slug)) return false
+		seen.add(entry.slug)
+		return true
+	})
+}
+
+const findTechEntriesByServices = (serviceSlugs) =>
+	dedupeRelationEntries(
+		toArray(serviceSlugs)
+			.flatMap((serviceSlug) => findRelationEntriesByService(serviceSlug))
+			.filter((entry) => isTechSlug(entry.slug)),
+	)
 
 const relatedData = computed(() => {
 	const slug = currentSlug.value
 	const type = detectPageType(slug)
 	const localeValue = locale.value
-	//console.log('[RelationShipArticleList] computing relations for', slug, type, localeValue, caseMappings)
+	//console.log('[RelationShipArticleList] computing relations for', slug, type, localeValue, relations)
 	if (!type) return { cases: [], services: [], tech: [], faq: [] }
 	let caseSlugs = []
 	let serviceSlugs = []
 	let techSlugs = []
 	let faqSlugs = []
-  const serviceEntry = findCasesByService(slug)
-  const caseEntry = findCaseEntry(slug)
-  const techEntry = findCasesByTech(slug)
+	const relationEntry = findRelationEntry(slug)
+	const entriesByService = findRelationEntriesByService(slug)
+	const entriesByTech = findRelationEntriesByTech(slug)
 	switch (type) {
 		case 'service':
-			caseSlugs = serviceEntry.map((entry) => entry.case)
-			faqSlugs = serviceEntry.flatMap((entry) => entry.faq || [])
-			techSlugs = serviceEntry.flatMap((entry) => entry.tech || [])
+			caseSlugs = entriesByService.filter((entry) => isCaseSlug(entry.slug)).map((entry) => entry.slug)
+			faqSlugs = entriesByService.flatMap((entry) => entry.faq)
+			techSlugs = entriesByService.flatMap((entry) =>
+				isTechSlug(entry.slug) ? [entry.slug] : entry.tech,
+			)
 			break;
 		case 'case':
-			if (caseEntry) {
-				serviceSlugs = caseEntry.services || []
-				faqSlugs = caseEntry.faq || []
-				techSlugs = caseEntry.tech || []
-			}
+			serviceSlugs = relationEntry.services
+			faqSlugs = relationEntry.faq
+			techSlugs = relationEntry.tech
+			const serviceTechEntries = findTechEntriesByServices(serviceSlugs)
+			faqSlugs.push(...serviceTechEntries.flatMap((entry) => entry.faq))
+			techSlugs.push(...serviceTechEntries.map((entry) => entry.slug))
 			break;
 		case 'tech':
-			caseSlugs = techEntry.map((entry) => entry.case)
-			serviceSlugs = techEntry.flatMap((entry) => entry.services || [])
-			faqSlugs = techEntry.flatMap((entry) => entry.faq || [])
+			caseSlugs = entriesByTech.filter((entry) => isCaseSlug(entry.slug)).map((entry) => entry.slug)
+			serviceSlugs = entriesByTech
+				.filter((entry) => isCaseSlug(entry.slug))
+				.flatMap((entry) => entry.services)
+			faqSlugs = entriesByTech
+				.filter((entry) => isCaseSlug(entry.slug))
+				.flatMap((entry) => entry.faq)
+			serviceSlugs.push(...relationEntry.services)
+			faqSlugs.push(...relationEntry.faq)
+			techSlugs.push(...relationEntry.tech)
+			techSlugs.push(...entriesByTech.filter((entry) => isTechSlug(entry.slug)).map((entry) => entry.slug))
 			break;
 		default:
 			break;
 	}
 
-	caseSlugs = unique(caseSlugs)
-	serviceSlugs = unique(serviceSlugs)
-	techSlugs = unique(techSlugs)
-	faqSlugs = unique(faqSlugs)
+	caseSlugs = unique(caseSlugs).filter(Boolean)
+	serviceSlugs = unique(serviceSlugs).filter(Boolean)
+	techSlugs = unique(techSlugs).filter(Boolean)
+	faqSlugs = unique(faqSlugs).filter(Boolean)
 
 	//console.log('[RelationShipArticleList] unique relations for', slug, type, localeValue, caseSlugs, serviceSlugs, techSlugs, faqSlugs)
 

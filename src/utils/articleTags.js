@@ -1,5 +1,5 @@
 import YAML from 'yaml'
-import mappingRaw from '../../config/case-mapping.yaml?raw'
+import relationsRaw from '../../config/content-relations.yaml?raw'
 import { getPageConfigs } from './pageConfig'
 import { getServiceGroups } from './serviceCategories'
 
@@ -23,7 +23,12 @@ const pageKeyBySlug = (() => {
   return map
 })()
 
-const mappingEntries = YAML.parse(mappingRaw) || []
+const relations = YAML.parse(relationsRaw) || {}
+const relationEntries = Object.entries(relations).map(([slug, entry = {}]) => ({
+  slug: normalizeSlugValue(slug),
+  services: Array.isArray(entry.services) ? entry.services.map((serviceSlug) => normalizeSlugValue(serviceSlug)) : [],
+  tech: Array.isArray(entry.tech) ? entry.tech.map((techSlug) => normalizeSlugValue(techSlug)) : [],
+}))
 
 const articleServiceMap = new Map()
 
@@ -36,12 +41,10 @@ const attachServices = (slug, services) => {
   services.forEach((serviceSlug) => target.add(serviceSlug))
 }
 
-mappingEntries.forEach((entry) => {
-  const services = new Set((entry.services || []).map((serviceSlug) => normalizeSlugValue(serviceSlug)))
-  if (entry.case) {
-    attachServices(entry.case, services)
-  }
-  ;(entry.tech || []).forEach((techSlug) => {
+relationEntries.forEach((entry) => {
+  const services = new Set(entry.services)
+  attachServices(entry.slug, services)
+  entry.tech.forEach((techSlug) => {
     attachServices(techSlug, services)
   })
 })

@@ -1,4 +1,4 @@
-- case: /cases/uia-remote-network
+"/cases/uia-remote-network":
   services:
     - /services/office-network
   faq:
@@ -7,7 +7,7 @@
   tech:
     - /tech/wifi-controller-firmware-schedule
     - /tech/passive-inspection-report-workflow
-- case: /cases/ttw-remote-network
+"/cases/ttw-remote-network":
   services:
     - /services/office-network
     - /services/mdm
@@ -21,7 +21,7 @@
     - /tech/shared-dns-radius-isolation
     - /tech/jamf-trust-vpn-control
     - /tech/vpn-radius-certificate-lifecycle
-- case: /cases/tgw-remote-network
+"/cases/tgw-remote-network":
   services:
     - /services/office-network
     - /services/mdm
@@ -34,7 +34,7 @@
   tech:
     - /tech/jamf-trust-vpn-control
     - /tech/vpn-radius-certificate-lifecycle
-- case: /cases/cay-machine-room
+"/cases/cay-machine-room":
   services:
     - /services/idc-deployment
     - /services/virtualization-cloud
@@ -47,7 +47,7 @@
   tech:
     - /tech/onboarding-account-automation
     - /tech/datacenter-move-ups-improvement
-- case: /cases/jal-pa
+"/cases/jal-pa":
   services:
     - /services/office-network
     - /services/zero-trust
@@ -57,7 +57,7 @@
   tech:
     - /tech/network-license-takeover-checklist
     - /tech/controlled-ap-dual-path
-- case: /cases/cpa-jjp-network-audit
+"/cases/cpa-jjp-network-audit":
   services:
     - /services/office-network
   faq:
@@ -66,7 +66,7 @@
   tech:
     - /tech/it-inventory-recovery-manual
     - /tech/network-audit-template-delivery
-- case: /cases/klm-aua-erp
+"/cases/klm-aua-erp":
   services:
     - /services/virtualization-cloud
     - /services/backup-security
@@ -76,7 +76,7 @@
   tech:
     - /tech/pve-pbs-backup-schedule-validation
     - /tech/pve-quarterly-report-template
-- case: /cases/lgl-csa-vpn
+"/cases/lgl-csa-vpn":
   services:
     - /services/custom-dev
     - /services/zero-trust
@@ -86,7 +86,7 @@
   tech:
     - /tech/custom-app-review-transfer
     - /tech/app-ownership-transfer-process
-- case: /cases/lgl-hda-openvz-pve-eval
+"/cases/lgl-hda-openvz-pve-eval":
   services:
     - /services/virtualization-cloud
   faq:
@@ -94,7 +94,7 @@
   tech:
     - /tech/closed-hypervisor-migration-validation
     - /tech/multi-stage-migration-checklist
-- case: /cases/lgl-awe-pve-vgpu-jamf
+"/cases/lgl-awe-pve-vgpu-jamf":
   services:
     - /services/virtualization-cloud
     - /services/mdm
@@ -104,7 +104,7 @@
   tech:
     - /tech/pve-vgpu-rollout-training
     - /tech/jamf-audit-cross-team
-- case: /cases/wzz-network-controller
+"/cases/wzz-network-controller":
   services:
     - /services/office-network
     - /services/hosting-operations
@@ -115,7 +115,7 @@
   tech:
     - /tech/unifi-controller-migration-light-ops
     - /tech/budget-nas-refresh-plan
-- case: /cases/lgl-tax-pve-io-wait
+"/cases/lgl-tax-pve-io-wait":
   services:
     - /services/virtualization-cloud
   faq:
@@ -124,7 +124,7 @@
   tech:
     - /tech/pve-io-wait-diagnostics-workflow
     - /tech/pve-backup-schedule-tuning-guide
-- case: /cases/lgl-cal-jamf-oidc
+"/cases/lgl-cal-jamf-oidc":
   services:
     - /services/mdm
     - /services/iam-zitadel
@@ -134,7 +134,7 @@
   tech:
     - /tech/zitadel-jamf-connect-validation-lab
     - /tech/oidc-test-logs-communication
-- case: /cases/lgl-nax-gpu-passthrough
+"/cases/lgl-nax-gpu-passthrough":
   services:
     - /services/virtualization-cloud
     - /services/it-outsourcing
@@ -144,7 +144,7 @@
   tech:
     - /tech/offline-pve-gpu-passthrough
     - /tech/on-site-troubleshooting-handbook
-- case: /cases/ana-unifi-controller
+"/cases/ana-unifi-controller":
   services:
     - /services/office-network
     - /services/it-outsourcing
@@ -155,7 +155,7 @@
   tech:
     - /tech/unifi-controller-migration-light-ops
     - /tech/budget-nas-refresh-plan
-- case: /cases/cay-server-farm
+"/cases/cay-server-farm":
   services:
     - /services/idc-deployment
     - /services/container-devops
@@ -166,9 +166,7 @@
   tech:
     - /tech/operations-handover-package
     - /tech/it-refresh-migration-blueprint
-    - /tech/akvorado-flow-collector-overview
-    - /tech/akvorado-traffic-analysis-workflow
-- case: /cases/cay-dns-filter
+"/cases/cay-dns-filter":
   services:
     - /services/office-network
     - /services/zero-trust
@@ -178,7 +176,7 @@
   tech:
     - /tech/shared-dns-radius-isolation
     - /tech/remote-inspection-reporting
-- case: /cases/cay-ldap-onboarding
+"/cases/cay-ldap-onboarding":
   services:
     - /services/office-network
     - /services/iam-zitadel
@@ -190,7 +188,7 @@
     - /tech/onboarding-account-automation
     - /tech/operations-handover-package
     - /tech/vpn-radius-certificate-lifecycle
-- case: /cases/cay-azure-erp
+"/cases/cay-azure-erp":
   services:
     - /services/virtualization-cloud
     - /services/backup-security
@@ -200,7 +198,7 @@
   tech:
     - /tech/pve-pbs-backup-schedule-validation
     - /tech/pve-quarterly-report-template
-- case: /cases/ttw-mdm
+"/cases/ttw-mdm":
   services:
     - /services/mdm
   faq:
@@ -209,7 +207,7 @@
   tech:
     - /tech/jamf-audit-cross-team
     - /tech/jamf-trust-vpn-control
-- case: /cases/tgw-mdm
+"/cases/tgw-mdm":
   services:
     - /services/mdm
   faq:
@@ -218,7 +216,7 @@
   tech:
     - /tech/jamf-audit-cross-team
     - /tech/jamf-trust-vpn-control
-- case: /cases/tgw-zero-trust-monitoring
+"/cases/tgw-zero-trust-monitoring":
   services:
     - /services/zero-trust
     - /services/it-monitoring
@@ -228,7 +226,7 @@
   tech:
     - /tech/jamf-trust-vpn-control
     - /tech/remote-inspection-reporting
-- case: /cases/wzz-nas-migration
+"/cases/wzz-nas-migration":
   services:
     - /services/hosting-operations
     - /services/backup-security
@@ -238,7 +236,7 @@
   tech:
     - /tech/budget-nas-refresh-plan
     - /tech/pve-backup-schedule-tuning-guide
-- case: /cases/wzz-contract-strategy
+"/cases/wzz-contract-strategy":
   services:
     - /services/it-outsourcing
     - /services/office-network
@@ -248,3 +246,23 @@
   tech:
     - /tech/operations-handover-package
     - /tech/it-refresh-migration-blueprint
+"/tech/akvorado-flow-collector-overview":
+  services:
+    - /services/it-monitoring
+    - /services/office-network
+    - /services/idc-deployment
+  faq:
+    - /faq/akvorado-vs-snmp-monitoring
+    - /faq/akvorado-data-quality-checks
+  tech:
+    - /tech/akvorado-traffic-analysis-workflow
+"/tech/akvorado-traffic-analysis-workflow":
+  services:
+    - /services/it-monitoring
+    - /services/office-network
+    - /services/idc-deployment
+  faq:
+    - /faq/akvorado-vs-snmp-monitoring
+    - /faq/akvorado-data-quality-checks
+  tech:
+    - /tech/akvorado-flow-collector-overview
