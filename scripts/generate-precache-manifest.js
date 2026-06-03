@@ -14,6 +14,18 @@ const cacheInspectionPatterns = Array.isArray(recovery.cacheInspectionPatterns)
   ? recovery.cacheInspectionPatterns.map((pattern) => String(pattern || '').trim()).filter(Boolean)
   : []
 
+const normalizeConfiguredExtension = (value) => {
+  const extension = String(value || '').trim().toLowerCase()
+  if (!extension) return ''
+  return extension.startsWith('.') ? extension : `.${extension}`
+}
+
+const precacheStaticAssetExtensions = new Set(
+  Array.isArray(recovery.precacheStaticAssetExtensions)
+    ? recovery.precacheStaticAssetExtensions.map(normalizeConfiguredExtension).filter(Boolean)
+    : [],
+)
+
 const normalizeManifestPath = (value) => {
   const normalized = String(value || '').trim()
   if (!normalized.startsWith('/')) {
@@ -130,6 +142,7 @@ const manifestEntryForPublicPath = (publicPath) => {
 
 const isIgnoredPublicPath = (publicPath, outputManifestPath) => (
   publicPath === outputManifestPath ||
+  publicPath === '/sw.js' ||
   publicPath === '/wc-sw.js' ||
   publicPath === '/_worker.js' ||
   publicPath.startsWith('/.')
@@ -140,6 +153,16 @@ const isNormalRouteHtmlPath = (publicPath) => publicPath.endsWith(normalHtmlSuff
 const isBotRouteHtmlPath = (publicPath) => publicPath.endsWith(botHtmlSuffix)
 
 const isTextPublicPath = (publicPath) => textFileExtensions.has(path.posix.extname(publicPath).toLowerCase())
+
+const isSourceOnlyImagePublicPath = (publicPath) => /(?:^|\/)[^/]+-orig\.[^/]+$/i.test(publicPath)
+
+const isStaticShellAssetPublicPath = (publicPath, outputManifestPath) => {
+  if (isIgnoredPublicPath(publicPath, outputManifestPath)) return false
+  if (isNormalRouteHtmlPath(publicPath) || isBotRouteHtmlPath(publicPath)) return false
+  if (publicPath === '/index.html' || publicPath.endsWith('.md')) return false
+  if (isSourceOnlyImagePublicPath(publicPath)) return false
+  return precacheStaticAssetExtensions.has(path.posix.extname(publicPath).toLowerCase())
+}
 
 const normalizePublicPath = (value) => {
   const normalized = path.posix.normalize(value.replace(/\\/g, '/'))
@@ -192,7 +215,7 @@ const extractHtmlCssCandidateValues = (content) => {
 
 const extractJsCandidateValues = (content, ownerPublicPath) => {
   const candidates = []
-  const staticImportPattern = /\bimport(?!\s*\()\s*(?:(?:[^"'`;]|\{[^}]*\})*?\s*from\s*)?["'`]([^"'`]+)["'`]/g
+  const staticImportPattern = /\bimport\s*(?!\()\s*(?:[^"'`;]{0,300}?\s*from\s*)?["'`]([^"'`]+)["'`]/g
   const dynamicImportPattern = /\bimport\(\s*["'`]([^"'`]+)["'`]\s*\)/g
   const assetLiteralPattern = /["'`]((?:\/|\.\/|\.\.\/|assets\/|img\/|pic\/|partner\/)[^"'`\s)]*)["'`]/g
 
@@ -405,6 +428,9 @@ const buildManifestPlan = (files, outputManifestPath) => {
     .filter((publicPath) => !isIgnoredPublicPath(publicPath, outputManifestPath))
     .sort()
   const mermaidDependencyPublicPaths = collectMermaidDependencyPublicPaths(routeHtmlPublicPaths, fileByPublicPath)
+  const staticShellAssetPublicPaths = publicPaths
+    .filter((publicPath) => isStaticShellAssetPublicPath(publicPath, outputManifestPath))
+    .sort()
   const selectedPublicPaths = collectReferencedPublicPaths(
     [...routeHtmlPublicPaths, ...mermaidDependencyPublicPaths],
     fileByPublicPath,
@@ -417,20 +443,26 @@ const buildManifestPlan = (files, outputManifestPath) => {
     .filter((publicPath) => !isNormalRouteHtmlPath(publicPath))
     .map(manifestEntryForPublicPath)
     .filter(Boolean)
+  const staticShellAssetEntries = staticShellAssetPublicPaths
+    .map(manifestEntryForPublicPath)
+    .filter(Boolean)
   const entries = dedupeManifestEntries([
     ...routeEntries,
     ...referencedAssetEntries,
+    ...staticShellAssetEntries,
   ])
   const ignoredPublicPaths = publicPaths.filter((publicPath) => isIgnoredPublicPath(publicPath, outputManifestPath))
   const omittedPublicPaths = publicPaths
     .filter((publicPath) => !ignoredPublicPaths.includes(publicPath))
     .filter((publicPath) => !routeHtmlPublicPaths.includes(publicPath))
     .filter((publicPath) => !selectedPublicPaths.has(publicPath))
+    .filter((publicPath) => !staticShellAssetPublicPaths.includes(publicPath))
     .sort()
 
   return {
     entries,
     routeHtmlPublicPaths,
+    staticShellAssetPublicPaths,
     selectedPublicPaths,
     omittedPublicPaths,
   }
@@ -501,7 +533,7 @@ const run = async () => {
   fs.mkdirSync(path.dirname(outputManifestFile), { recursive: true })
   fs.writeFileSync(outputManifestFile, `${JSON.stringify(manifest, null, 2)}\n`, 'utf8')
   verifyManifest(manifest, plan, outputManifestFile)
-  console.log(`Generated and verified precache manifest with ${manifest.entries.length} entries; omitted ${plan.omittedPublicPaths.length} unreferenced files.`)
+  console.log(`Generated and verified precache manifest with ${manifest.entries.length} entries; included ${plan.staticShellAssetPublicPaths.length} static shell assets; omitted ${plan.omittedPublicPaths.length} unreferenced files.`)
 }
 
 await run().catch((err) => {

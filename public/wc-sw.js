@@ -40,6 +40,8 @@ const isRuntimeCacheName = (name = '') => (
   !name.endsWith(precachePendingCacheSuffix)
 )
 
+const isRuntimeCacheStoreName = (name = '') => name.startsWith(runtimeCachePrefix)
+
 const isPhysicalVariantHtmlPath = (pathname = '') => /\/index\.(?:normal|bot)\.html$/i.test(pathname)
 
 const isIgnoredPath = (pathname = '') => (
@@ -189,6 +191,26 @@ const clearAllCachesWithLog = async (reason = 'manual') => {
   }
   cacheLog('clear all caches complete', {
     reason,
+    deletedCacheCount: deletedCaches.filter((entry) => entry.deleted).length,
+    deletedCaches,
+  })
+  return deletedCaches
+}
+
+const cleanupStaleRuntimeCacheStores = async (reason) => {
+  const staleCacheNames = (await caches.keys())
+    .filter(isRuntimeCacheStoreName)
+    .filter((name) => name !== runtimeCacheName)
+
+  const deletedCaches = []
+  for (const cacheName of staleCacheNames) {
+    deletedCaches.push(await deleteCacheWithLog(cacheName, reason))
+  }
+
+  cacheLog('cleanup stale runtime cache stores complete', {
+    reason,
+    runtimeCacheName,
+    staleCacheCount: staleCacheNames.length,
     deletedCacheCount: deletedCaches.filter((entry) => entry.deleted).length,
     deletedCaches,
   })
@@ -640,6 +662,9 @@ const inspectPrecacheState = async () => {
     verification.missingCachedUrls.length === 0 &&
     verification.missingRequiredPatterns.length === 0
   )
+  const removedStaleCacheStores = ready
+    ? await cleanupStaleRuntimeCacheStores('remove stale cache stores after current precache inspection passed')
+    : []
   const report = {
     status: ready ? 'ready' : 'stale',
     ready,
@@ -658,6 +683,7 @@ const inspectPrecacheState = async () => {
     missingCachedUrls: verification.missingCachedUrls,
     requiredPatternMatches: verification.requiredPatternMatches,
     missingRequiredPatterns: verification.missingRequiredPatterns,
+    removedStaleCacheStores,
   }
   cacheLog('inspect precache state', report)
   return report
@@ -702,7 +728,22 @@ const runPrecacheFullSite = async ({ force = false, progressPort = null } = {}) 
   const previousCachedUrls = await listCacheRequestUrls(runtimeCacheName).catch(() => [])
   const staticUpdatePlan = buildPrecacheStaticUpdatePlan(previousCachedUrls, entries)
   const signatureUnchanged = signature === await readPrecacheStateSignature(cache)
-  if (!force && signatureUnchanged && staticUpdatePlan.addedStaticCount === 0) {
+  const currentVerification = signatureUnchanged && staticUpdatePlan.addedStaticCount === 0
+    ? await verifyCacheMatchesManifest(
+      runtimeCacheName,
+      staticUpdatePlan.targetStaticUrls,
+      requiredCachePatterns,
+    )
+    : null
+  const currentCacheComplete = (
+    Boolean(currentVerification) &&
+    currentVerification.missingCachedUrls.length === 0 &&
+    currentVerification.missingRequiredPatterns.length === 0
+  )
+  if (!force && currentCacheComplete) {
+    const removedStaleCacheStores = await cleanupStaleRuntimeCacheStores(
+      'remove stale cache stores after unchanged precache manifest was confirmed',
+    )
     cacheLog('precache skipped because manifest signature is unchanged', {
       cacheName: runtimeCacheName,
       manifestEntryCount: entries.length,
@@ -710,6 +751,11 @@ const runPrecacheFullSite = async ({ force = false, progressPort = null } = {}) 
       buildHash,
       generatedAt: manifest?.generatedAt || '',
       staticUpdatePlan,
+      missingCachedCount: currentVerification.missingCachedCount,
+      missingCachedUrls: currentVerification.missingCachedUrls,
+      requiredPatternMatches: currentVerification.requiredPatternMatches,
+      missingRequiredPatterns: currentVerification.missingRequiredPatterns,
+      removedStaleCacheStores,
     })
     await notifyPrecacheProgress({
       status: 'skipped',
@@ -724,6 +770,11 @@ const runPrecacheFullSite = async ({ force = false, progressPort = null } = {}) 
       manifestEntryCount: entries.length,
       requiredCachePatterns,
       staticUpdatePlan,
+      missingCachedCount: currentVerification.missingCachedCount,
+      missingCachedUrls: currentVerification.missingCachedUrls,
+      requiredPatternMatches: currentVerification.requiredPatternMatches,
+      missingRequiredPatterns: currentVerification.missingRequiredPatterns,
+      removedStaleCacheStores,
     }
   }
 
@@ -736,6 +787,8 @@ const runPrecacheFullSite = async ({ force = false, progressPort = null } = {}) 
     generatedAt: manifest?.generatedAt || '',
     force,
     signatureUnchanged,
+    currentCacheComplete,
+    currentVerification,
   })
 
   cacheLog('precache static update plan', {
@@ -915,6 +968,9 @@ const runPrecacheFullSite = async ({ force = false, progressPort = null } = {}) 
   )
   await writePrecacheStateSignature(nextCache, signature)
   await deleteCacheWithLog(precachePendingCacheName, 'remove pending precache after active cache replacement')
+  const removedStaleCacheStores = await cleanupStaleRuntimeCacheStores(
+    'remove stale cache stores after active cache replacement',
+  )
 
   cacheLog('precache complete', {
     runtimeCacheName,
@@ -929,6 +985,7 @@ const runPrecacheFullSite = async ({ force = false, progressPort = null } = {}) 
     missingRequiredPatterns,
     staticUpdatePlan,
     removedStaleEntries,
+    removedStaleCacheStores,
     cachedEntries,
     copiedUrls,
   })
@@ -951,6 +1008,7 @@ const runPrecacheFullSite = async ({ force = false, progressPort = null } = {}) 
     missingRequiredPatterns,
     staticUpdatePlan,
     removedStaleEntries,
+    removedStaleCacheStores,
     cachedEntries,
     copiedUrls,
   }
@@ -1178,16 +1236,15 @@ const refreshRuntimeCache = async (urls = []) => {
     }
   }
 
-  await Promise.all(
-    (await getRuntimeCacheNames())
-      .filter((name) => name !== runtimeCacheName)
-      .map((name) => deleteCacheWithLog(name, 'delete stale runtime cache after refresh')),
+  const removedStaleCacheStores = await cleanupStaleRuntimeCacheStores(
+    'remove stale cache stores after runtime cache refresh',
   )
 
   cacheLog('refresh runtime cache complete', {
     runtimeCacheName,
     refreshedUrlCount: allUrls.size,
     refreshedUrls: [...allUrls],
+    removedStaleCacheStores,
   })
 }
 

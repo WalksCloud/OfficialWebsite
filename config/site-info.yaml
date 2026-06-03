@@ -36,6 +36,14 @@ clientNavigationRecovery:
   cacheInspectionPatterns:
     - /assets/app-pages-markdownpage-
     - /assets/MarkdownPage-
+  # Same-origin shell asset extensions that should always be included in the precache manifest.
+  precacheStaticAssetExtensions:
+    - .css
+    - .ico
+    - .js
+    - .json
+    - .svg
+    - .webmanifest
   # Maximum time to wait for console-triggered cache commands such as forceCache().
   cacheCommandTimeoutMs: 120000
   # Maximum time to wait for startup cache readiness inspection before scheduling automatic cache priming.
