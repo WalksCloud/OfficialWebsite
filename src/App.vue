@@ -4,6 +4,7 @@ import { RouterView } from 'vue-router'
 import Alert from './components/Alert.vue'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
+import OfflineCacheIndicator from './components/OfflineCacheIndicator.vue'
 
 const waitForDocumentLoad = () => {
   if (typeof window === 'undefined' || typeof document === 'undefined') {
@@ -38,6 +39,7 @@ onMounted(async () => {
 
 <template>
   <Alert />
+  <OfflineCacheIndicator />
   <div class="min-h-screen bg-white dark:bg-[#222831]" :class="($i18n.locale === 'en') ? 'font-barlow': ''">
     <Navbar />
     <RouterView />

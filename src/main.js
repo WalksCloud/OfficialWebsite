@@ -10,6 +10,7 @@ import { getSiteConfig, buildPrefixedPath, buildNonPrefixedPath, getPageConfig }
 import { getLocaleFallbackChain, getLocaleMessages } from './utils/localeBundles'
 import { registerGlobalComponents } from './registerGlobalComponents'
 import { useAlertStore } from './stores/alert'
+import { useOfflineCacheStore } from './stores/offlineCache'
 
 import './style.css'
 import ui from '@nuxt/ui/vue-plugin'
@@ -97,6 +98,7 @@ const extractBuildHashFromHtml = (html = '') => {
 
 const offlineCacheHeaderName = 'X-WalksCloud-Offline-Cache'
 const offlineCacheModeHeaderName = 'X-WalksCloud-Offline-Cache-Mode'
+const precacheProgressMessageType = 'WALKSCLOUD_PRECACHE_PROGRESS'
 
 library.add(faSquareFacebook, faLinkedin)
 
@@ -125,6 +127,7 @@ export const createApp = ViteSSG(
 
     if (!import.meta.env.SSR) {
       const alertStore = useAlertStore()
+      const offlineCacheStore = useOfflineCacheStore()
       let recoveringNavigation = false
       let backgroundRecoveringNavigation = false
       let pendingRecoveryTargetUrl = null
@@ -136,10 +139,74 @@ export const createApp = ViteSSG(
       let offlineCacheStartToken = 0
       let offlineCacheStarted = false
       let pendingOfflineCacheRoutePath = globalThis.window.location.href
+      let lastPrecacheProgressLogKey = ''
 
       const getLoadedBuildHash = () => String(import.meta.env.buildHash || '').trim()
+      const getLoadedBuildTime = () => String(import.meta.env.buildTime || '').trim()
 
       const normalizeBuildHash = (value) => String(value || '').trim() || 'dev'
+
+      const buildPrecacheProgressSnapshot = (data = {}) => {
+        const completed = Number(data.completed) || 0
+        const total = Number(data.total) || 0
+        const percent = Number(data.percent) || 0
+        return {
+          status: String(data.status || '').trim() || 'unknown',
+          completed,
+          total,
+          percent,
+          counter: `${completed}/${total}`,
+          url: data.url || '',
+          reason: data.reason || '',
+          buildHash: data.buildHash,
+          expectedBuildHash: normalizeBuildHash(getLoadedBuildHash()),
+          runtimeCacheName: data.runtimeCacheName,
+        }
+      }
+
+      const logPrecacheProgressEvent = (data, source, {
+        applied = false,
+        ignoredReason = '',
+      } = {}) => {
+        const snapshot = buildPrecacheProgressSnapshot(data)
+        const logKey = [
+          source,
+          applied ? 'applied' : 'ignored',
+          ignoredReason,
+          snapshot.status,
+          snapshot.completed,
+          snapshot.total,
+          snapshot.percent,
+          snapshot.url,
+          snapshot.reason,
+          snapshot.buildHash,
+        ].join('|')
+        if (logKey === lastPrecacheProgressLogKey) return
+        lastPrecacheProgressLogKey = logKey
+        console.log(
+          `[WalksCloud cache] precache progress ${snapshot.counter} (${snapshot.percent}%) ${snapshot.status}`,
+          {
+            source,
+            applied,
+            ignoredReason,
+            ...snapshot,
+          },
+        )
+      }
+
+      const applyPrecacheProgressMessage = (data, source) => {
+        if (data?.type !== precacheProgressMessageType) return false
+        if (normalizeBuildHash(data.buildHash) !== normalizeBuildHash(getLoadedBuildHash())) {
+          logPrecacheProgressEvent(data, source, {
+            applied: false,
+            ignoredReason: 'build-hash-mismatch',
+          })
+          return false
+        }
+        offlineCacheStore.applyPrecacheProgress(data)
+        logPrecacheProgressEvent(data, source, { applied: true })
+        return true
+      }
 
       const canUseRuntimeCacheServiceWorker = () => (
         'serviceWorker' in navigator &&
@@ -151,6 +218,7 @@ export const createApp = ViteSSG(
       const buildRuntimeCacheServiceWorkerUrl = (buildHash = getLoadedBuildHash()) => {
         const url = new URL(navigationRecoveryServiceWorkerPath, globalThis.window.location.origin)
         url.searchParams.set('v', normalizeBuildHash(buildHash))
+        url.searchParams.set('t', getLoadedBuildTime())
         url.searchParams.set('cachePrefix', navigationRecoveryRuntimeCachePrefix)
         url.searchParams.set('fallbackPath', navigationRecoveryRuntimeDocumentFallbackPath)
         url.searchParams.set('precacheManifestPath', navigationRecoveryPrecacheManifestPath)
@@ -233,6 +301,10 @@ export const createApp = ViteSSG(
         message,
         buildHash = getLoadedBuildHash(),
         timeoutMs = 5000,
+        {
+          onMessage = null,
+          finalTypes = [],
+        } = {},
       ) => {
         const serviceWorkerUrl = buildRuntimeCacheServiceWorkerUrl(buildHash)
         const registration = await registerRuntimeCacheServiceWorker(buildHash)
@@ -246,10 +318,18 @@ export const createApp = ViteSSG(
             resolve(null)
           }, timeoutMs)
           channel.port1.onmessage = (event) => {
+            const data = event.data || null
+            if (typeof onMessage === 'function') {
+              onMessage(data)
+            }
+            if (finalTypes.length && !finalTypes.includes(data?.type)) {
+              return
+            }
             clearTimeout(timeout)
             channel.port1.close()
-            resolve(event.data || null)
+            resolve(data)
           }
+          channel.port1.start?.()
           worker.postMessage(message, [channel.port2])
         })
       }
@@ -320,23 +400,33 @@ export const createApp = ViteSSG(
           return deletedCaches
         } finally {
           clearOfflineCacheBanner()
+          offlineCacheStore.reset()
         }
       }
 
       const forceCacheStorage = async () => {
+        offlineCacheStore.start()
+        const handleProgressMessage = (data) => {
+          applyPrecacheProgressMessage(data, 'message-channel')
+        }
         const workerReport = await postRuntimeCacheMessageWithResponse({
           type: 'FORCE_CACHE',
           reason: 'window.forceCache()',
           patterns: navigationRecoveryCacheInspectionPatterns,
-        }, getLoadedBuildHash(), navigationRecoveryCacheCommandTimeoutMs)
+        }, getLoadedBuildHash(), navigationRecoveryCacheCommandTimeoutMs, {
+          onMessage: handleProgressMessage,
+          finalTypes: ['FORCE_CACHE_RESULT'],
+        })
 
         if (workerReport?.report) {
           console.log('[WalksCloud cache] forceCache service worker report', workerReport)
+          offlineCacheStore.applyPrecacheReport(workerReport.report)
           cacheCurrentRuntimeState()
           return workerReport.report
         }
 
         console.warn('[WalksCloud cache] forceCache service worker did not respond.')
+        offlineCacheStore.markUnavailable('missing-response')
         return null
       }
 
@@ -439,10 +529,27 @@ export const createApp = ViteSSG(
         }, buildHash)
       }
 
-      const precacheFullSiteForCurrentVersion = () => {
-        void postRuntimeCacheMessage({
+      const precacheFullSiteForCurrentVersion = async () => {
+        offlineCacheStore.start()
+        const handleProgressMessage = (data) => {
+          applyPrecacheProgressMessage(data, 'message-channel')
+        }
+        const workerReport = await postRuntimeCacheMessageWithResponse({
           type: 'PRECACHE_FULL_SITE',
+        }, getLoadedBuildHash(), navigationRecoveryCacheCommandTimeoutMs, {
+          onMessage: handleProgressMessage,
+          finalTypes: ['PRECACHE_FULL_SITE_RESULT'],
         })
+
+        if (workerReport?.report) {
+          console.log('[WalksCloud cache] precache service worker report', workerReport)
+          offlineCacheStore.applyPrecacheReport(workerReport.report)
+          return workerReport.report
+        }
+
+        console.warn('[WalksCloud cache] precache service worker did not respond.')
+        offlineCacheStore.markUnavailable('missing-response')
+        return null
       }
 
       const showOfflineCacheBanner = () => {
@@ -586,7 +693,7 @@ export const createApp = ViteSSG(
           mobile: isMobileOfflineCacheContext(),
         })
         await registerRuntimeCacheServiceWorker()
-        precacheFullSiteForCurrentVersion()
+        void precacheFullSiteForCurrentVersion()
         cacheCurrentRuntimeState(routePath)
       }
 
@@ -871,8 +978,15 @@ export const createApp = ViteSSG(
       })
 
       navigator.serviceWorker?.addEventListener('message', (event) => {
-        if (event.data?.type === 'WALKSCLOUD_OFFLINE_CACHE_RESPONSE') {
+        const data = event.data || {}
+        if (data.type === 'WALKSCLOUD_OFFLINE_CACHE_RESPONSE') {
           showOfflineCacheBanner()
+          return
+        }
+        if (
+          data.type === precacheProgressMessageType
+        ) {
+          applyPrecacheProgressMessage(data, 'broadcast')
         }
       })
 

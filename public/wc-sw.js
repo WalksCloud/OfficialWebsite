@@ -24,6 +24,8 @@ const precachePendingCacheName = `${runtimeCacheName}${precachePendingCacheSuffi
 const offlineCacheHeaderName = 'X-WalksCloud-Offline-Cache'
 const offlineCacheModeHeaderName = 'X-WalksCloud-Offline-Cache-Mode'
 const offlineCacheMessageType = 'WALKSCLOUD_OFFLINE_CACHE_RESPONSE'
+const precacheProgressMessageType = 'WALKSCLOUD_PRECACHE_PROGRESS'
+const precacheProgressPorts = new Set()
 
 const cacheLog = (action, details = {}) => {
   console.log(`[WalksCloud cache] ${action}`, details)
@@ -251,6 +253,65 @@ const notifyOfflineCacheResponse = async (url) => {
       type: offlineCacheMessageType,
       url,
     })
+  })
+}
+
+const buildPrecacheProgressPayload = ({
+  status = 'running',
+  completed = 0,
+  total = 0,
+  url = '',
+  reason = '',
+} = {}) => {
+  const normalizedTotal = Math.max(0, Number(total) || 0)
+  const normalizedCompleted = Math.min(Math.max(0, Number(completed) || 0), normalizedTotal)
+  const percent = normalizedTotal > 0
+    ? Number(((normalizedCompleted / normalizedTotal) * 100).toFixed(2))
+    : 0
+  return {
+    type: precacheProgressMessageType,
+    buildHash,
+    runtimeCacheName,
+    status,
+    completed: normalizedCompleted,
+    total: normalizedTotal,
+    percent,
+    url,
+    reason,
+  }
+}
+
+const postPrecacheProgressToPort = (port, payload) => {
+  try {
+    port?.postMessage(payload)
+  } catch {
+    precacheProgressPorts.delete(port)
+  }
+}
+
+const notifyPrecacheProgress = async (progress = {}, port = null) => {
+  const payload = buildPrecacheProgressPayload(progress)
+  const counter = `${payload.completed}/${payload.total}`
+  cacheLog(`precache progress ${counter} (${payload.percent}%) ${payload.status}`, {
+    status: payload.status,
+    completed: payload.completed,
+    total: payload.total,
+    percent: payload.percent,
+    counter,
+    url: payload.url,
+    reason: payload.reason,
+    buildHash: payload.buildHash,
+    runtimeCacheName: payload.runtimeCacheName,
+  })
+  new Set([port, ...precacheProgressPorts].filter(Boolean)).forEach((progressPort) => {
+    postPrecacheProgressToPort(progressPort, payload)
+  })
+  const windowClients = await self.clients.matchAll({
+    type: 'window',
+    includeUncontrolled: true,
+  })
+  windowClients.forEach((client) => {
+    client.postMessage(payload)
   })
 }
 
@@ -543,7 +604,10 @@ const verifyCacheMatchesManifest = async (cacheName, targetUrls = [], requiredPa
   }
 }
 
-const runPrecacheFullSite = async ({ force = false } = {}) => {
+const runPrecacheFullSite = async ({ force = false, progressPort = null } = {}) => {
+  await notifyPrecacheProgress({
+    status: 'start',
+  }, progressPort)
   const manifest = await fetchPrecacheManifest()
   const entries = Array.isArray(manifest?.entries)
     ? manifest.entries.map(normalizePrecacheEntry).filter((entry) => entry.url)
@@ -554,6 +618,10 @@ const runPrecacheFullSite = async ({ force = false } = {}) => {
       precacheManifestPath,
       buildHash,
     })
+    await notifyPrecacheProgress({
+      status: 'empty',
+      reason: 'precache manifest has no entries',
+    }, progressPort)
     return {
       status: 'empty',
       reason: 'precache manifest has no entries',
@@ -562,6 +630,13 @@ const runPrecacheFullSite = async ({ force = false } = {}) => {
       buildHash,
     }
   }
+
+  await notifyPrecacheProgress({
+    status: 'running',
+    completed: 0,
+    total: entries.length,
+    reason: 'manifest loaded',
+  }, progressPort)
 
   const cache = await caches.open(runtimeCacheName)
   const signature = buildPrecacheStateSignature(manifest)
@@ -577,6 +652,12 @@ const runPrecacheFullSite = async ({ force = false } = {}) => {
       generatedAt: manifest?.generatedAt || '',
       staticUpdatePlan,
     })
+    await notifyPrecacheProgress({
+      status: 'skipped',
+      completed: entries.length,
+      total: entries.length,
+      reason: 'manifest signature unchanged and static cache entries are complete',
+    }, progressPort)
     return {
       status: 'skipped',
       reason: 'manifest signature unchanged and static cache entries are complete',
@@ -609,6 +690,7 @@ const runPrecacheFullSite = async ({ force = false } = {}) => {
   const pendingCache = await caches.open(precachePendingCacheName)
   const cachedEntries = []
   const failedEntries = []
+  let processedEntryCount = 0
 
   for (const entry of entries) {
     try {
@@ -627,7 +709,20 @@ const runPrecacheFullSite = async ({ force = false } = {}) => {
       })
       // Retry the full manifest on the next registration/message instead of marking it complete.
     }
+    processedEntryCount += 1
+    await notifyPrecacheProgress({
+      status: 'running',
+      completed: processedEntryCount,
+      total: entries.length,
+      url: entry.url,
+    }, progressPort)
   }
+
+  await notifyPrecacheProgress({
+    status: 'verifying',
+    completed: processedEntryCount,
+    total: entries.length,
+  }, progressPort)
 
   if (cachedEntries.length !== entries.length) {
     cacheWarn('precache incomplete; active cache was not replaced', {
@@ -643,6 +738,12 @@ const runPrecacheFullSite = async ({ force = false } = {}) => {
       staticUpdatePlan,
     })
     await deleteCacheWithLog(precachePendingCacheName, 'remove incomplete pending precache; active cache preserved')
+    await notifyPrecacheProgress({
+      status: 'incomplete',
+      completed: cachedEntries.length,
+      total: entries.length,
+      reason: 'one or more precache entries failed',
+    }, progressPort)
     return {
       status: 'incomplete',
       runtimeCacheName,
@@ -676,6 +777,12 @@ const runPrecacheFullSite = async ({ force = false } = {}) => {
       missingRequiredPatterns: pendingVerification.missingRequiredPatterns,
     })
     await deleteCacheWithLog(precachePendingCacheName, 'remove pending precache after failed pending cache verification')
+    await notifyPrecacheProgress({
+      status: 'incomplete',
+      completed: cachedEntries.length,
+      total: entries.length,
+      reason: 'pending cache verification failed before active cache replacement',
+    }, progressPort)
     return {
       status: 'incomplete',
       reason: 'pending cache verification failed before active cache replacement',
@@ -719,6 +826,12 @@ const runPrecacheFullSite = async ({ force = false } = {}) => {
       copiedUrls,
     })
     await deleteCacheWithLog(precachePendingCacheName, 'remove pending precache after failed active cache verification')
+    await notifyPrecacheProgress({
+      status: 'incomplete',
+      completed: cachedEntries.length,
+      total: entries.length,
+      reason: 'active cache verification failed after verified precache copy',
+    }, progressPort)
     return {
       status: 'incomplete',
       reason: 'active cache verification failed after verified precache copy',
@@ -760,6 +873,11 @@ const runPrecacheFullSite = async ({ force = false } = {}) => {
     cachedEntries,
     copiedUrls,
   })
+  await notifyPrecacheProgress({
+    status: 'complete',
+    completed: entries.length,
+    total: entries.length,
+  }, progressPort)
   return {
     status: 'complete',
     runtimeCacheName,
@@ -780,23 +898,48 @@ const runPrecacheFullSite = async ({ force = false } = {}) => {
 }
 
 const precacheFullSite = async (options = {}) => {
-  if (precacheFullSitePromise && !options.force) return precacheFullSitePromise
+  const progressPort = options.progressPort || null
+  if (progressPort) {
+    progressPort.start?.()
+    precacheProgressPorts.add(progressPort)
+  }
+  const releaseProgressPort = () => {
+    if (progressPort) {
+      precacheProgressPorts.delete(progressPort)
+    }
+  }
+
+  if (precacheFullSitePromise && !options.force) {
+    return precacheFullSitePromise.finally(releaseProgressPort)
+  }
   if (precacheFullSitePromise && options.force) {
     await precacheFullSitePromise
   }
   precacheFullSitePromise = runPrecacheFullSite(options)
-    .catch((error) => {
+    .catch(async (error) => {
+      const reason = String(error?.message || error)
       cacheWarn('precache failed', {
         runtimeCacheName,
         precachePendingCacheName,
         buildHash,
-        error: String(error?.message || error),
+        error: reason,
       })
+      await notifyPrecacheProgress({
+        status: 'failed',
+        reason,
+      }, options.progressPort)
+      return {
+        status: 'failed',
+        reason,
+        runtimeCacheName,
+        precachePendingCacheName,
+        buildHash,
+      }
     })
     .finally(() => {
       precacheFullSitePromise = null
     })
-  return precacheFullSitePromise
+  return precacheFullSitePromise.finally(releaseProgressPort)
 }
 
 const shouldUseDocumentFallbackForRequest = (request) => {
@@ -1051,7 +1194,9 @@ self.addEventListener('message', (event) => {
   }
   if (data.type === 'PRECACHE_FULL_SITE') {
     event.waitUntil((async () => {
-      const report = await precacheFullSite()
+      const report = await precacheFullSite({
+        progressPort: event.ports?.[0] || null,
+      })
       event.ports?.[0]?.postMessage({
         type: 'PRECACHE_FULL_SITE_RESULT',
         report,
@@ -1061,7 +1206,10 @@ self.addEventListener('message', (event) => {
   }
   if (data.type === 'FORCE_CACHE') {
     event.waitUntil((async () => {
-      const report = await precacheFullSite({ force: true })
+      const report = await precacheFullSite({
+        force: true,
+        progressPort: event.ports?.[0] || null,
+      })
       const cacheInspection = await inspectCachesWithLog(data.patterns || [])
       event.ports?.[0]?.postMessage({
         type: 'FORCE_CACHE_RESULT',

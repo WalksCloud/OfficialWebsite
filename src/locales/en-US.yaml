@@ -32,6 +32,8 @@ navigation-recovery:
   offline-cache:
     title: Offline cached page
     message: Live access is temporarily unavailable, so this page is displayed from the browser cache.
+    caching: Preparing offline cache
+    ready: This version is available offline
 relationship:
   sections:
     services: Related Services

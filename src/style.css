@@ -14,6 +14,7 @@
   --wc-color-900: #082754;
   --wc-color-950: #041532;
   --color-primary: var(--wc-color-500, #1e90ff);
+  --color-tint: #6d28d9;
 }
 
 @layer components {
@@ -55,9 +56,19 @@
   font-family: "Noto Sans TC", sans-serif;
   scroll-behavior: smooth;
   --wc-alert-banner-offset: 0px;
+  --wc-selection-background: color-mix(in srgb, var(--color-tint) 25%, white 75%);
   --header-offset: 100px;
   --header-offset-lg: 140px;
   --header-offset-bottom: 180px;
+}
+
+:is(.dark) {
+  --wc-selection-background: color-mix(in srgb, var(--color-tint) 25%, white 75%);
+}
+
+::selection {
+  color: #111827;
+  background: var(--wc-selection-background);
 }
 
 @media (min-width: 1024px) {

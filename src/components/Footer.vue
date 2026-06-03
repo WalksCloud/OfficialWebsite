@@ -2,9 +2,11 @@
   import { computed } from 'vue'
   import { useI18n } from 'vue-i18n'
   import { buildLocalizedPath } from '@/utils/contentIndex'
+  import { useOfflineCacheStore } from '@/stores/offlineCache'
 
   const env = import.meta.env
   const { locale } = useI18n()
+  const offlineCache = useOfflineCacheStore()
 
   const termsOfUsePath = computed(() =>
     buildLocalizedPath('/legal/terms-of-use', locale.value),
@@ -41,7 +43,15 @@
     <p class="text-sm lg:leading-1">
       <span class="block lg:inline">
         <a href="https://github.com/WalksCloud/OfficialWebsite">GitHub Repo</a>
-        (<a :href="`https://github.com/WalksCloud/OfficialWebsite/commit/` + env.buildHash">#{{env.buildHash}}</a> {{env.buildTime}})
+        (<span
+          v-if="offlineCache.isReady"
+          class="wc-offline-cache-ready"
+          role="status"
+          :aria-label="$t('navigation-recovery.offline-cache.ready')"
+          :title="$t('navigation-recovery.offline-cache.ready')"
+        >
+          <span class="sr-only">{{ $t('navigation-recovery.offline-cache.ready') }}</span>
+        </span><a :href="`https://github.com/WalksCloud/OfficialWebsite/commit/` + env.buildHash">#{{env.buildHash}}</a> {{env.buildTime}})
       </span>
       <span class="hidden lg:inline"> | </span>
       <span class="block lg:inline">
@@ -52,3 +62,17 @@
     </p>
   </footer>
 </template>
+
+<style scoped>
+.wc-offline-cache-ready {
+  display: inline-block;
+  width: 0.5rem;
+  height: 0.5rem;
+  margin-left: 0.125rem;
+  margin-right: 0.25rem;
+  border-radius: 9999px;
+  background: var(--color-tint);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-tint) 35%, transparent);
+  vertical-align: 0.05em;
+}
+</style>
