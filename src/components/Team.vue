@@ -1,3 +1,7 @@
+<script setup>
+import { Icon } from '@iconify/vue'
+</script>
+
 <template>
 <section class="section-anchor py-8 lg:py-18" id="team">
 	<div class="w-5/6 lg:w-3/4 mx-auto text-center">
@@ -14,7 +18,9 @@
 					<p class="font-bold my-2 lg:my-4">
 						{{ row.name }}
 						<a v-if="row.website_url" :href="row.website_url" target="_blank" class="ms-1">
-							<span class="text-gray-600 dark:text-gray-300 align-top material-symbols-outlined">public</span>
+							<span data-icon="i-material-symbols-public" aria-hidden="true" class="inline-flex text-gray-600 dark:text-gray-300 align-top text-2xl">
+								<Icon icon="material-symbols:public" width="1em" height="1em" />
+							</span>
 						</a>
 					</p>
 					<p class="text-gray-600 dark:text-gray-300">{{ row.intro }}</p>

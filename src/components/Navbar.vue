@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount, watch, computed } from 'vue'
+import { Icon } from '@iconify/vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { buildNonPrefixedPath, buildPrefixedPath, getPageConfig, getSiteConfig } from '@/utils/pageConfig'
@@ -294,8 +295,12 @@ const handleSectionClick = (event, key) => {
         </div>
 
         <button v-if="!isNotFound" class="lg:hidden dark:text-white" @click="isOpen = !isOpen">
-          <span v-if="!isOpen" class="material-symbols-outlined">menu</span>
-          <span v-else class="material-symbols-outlined">close</span>
+          <span v-if="!isOpen" data-icon="i-material-symbols-menu" aria-hidden="true" class="inline-flex text-2xl">
+            <Icon icon="material-symbols:menu" width="1em" height="1em" />
+          </span>
+          <span v-else data-icon="i-material-symbols-close" aria-hidden="true" class="inline-flex text-2xl">
+            <Icon icon="material-symbols:close" width="1em" height="1em" />
+          </span>
         </button>
 
         <!-- Desktop Menu -->
