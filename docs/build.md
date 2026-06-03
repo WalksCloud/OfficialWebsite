@@ -11,6 +11,7 @@
 - Long-lived watcher processes are started in their own process group so cleanup can terminate the whole group, not just the top-level pid.
 - Background process groups are launched with `stdin` redirected from `/dev/null` so they do not block on terminal input.
 - HTML pages are emitted only under locale folders after the bot/normal split. Non-prefixed route HTML is removed from `dist`, and nginx / Cloudflare Pages resolve non-prefixed human requests through the selected locale folder instead.
+- Bot/normal index generation is idempotent: rerunning the splitter against an already transformed `dist` skips successfully when only `index.normal.html` and `index.bot.html` files remain.
 - Cloudflare Pages builds are detected by the platform-provided `CF_PAGES=1` environment variable. In that environment, the build writes `dist/_worker.js` so Pages can route extensionless HTML requests to `index.normal.html` or `index.bot.html` by user agent. Local, nginx, and Fly builds do not generate this worker.
 - The static service worker at `/wc-sw.js` is copied from `public/` during the Vite build. Client registration appends the current build hash and runtime cache settings as query strings, allowing the runtime cache to separate old and new builds while preserving cached-page fallback during upstream outages.
 

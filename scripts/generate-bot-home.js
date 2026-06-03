@@ -38,6 +38,31 @@ const collectIndexHtmlFiles = (baseDir) => {
   return files
 }
 
+const countTransformedIndexHtmlFiles = (baseDir) => {
+  const stack = [baseDir]
+  let count = 0
+
+  while (stack.length) {
+    const current = stack.pop()
+    const entries = fs.readdirSync(current, { withFileTypes: true })
+    for (const entry of entries) {
+      const fullPath = path.join(current, entry.name)
+      if (entry.isDirectory()) {
+        stack.push(fullPath)
+        continue
+      }
+      if (
+        entry.isFile() &&
+        (entry.name === normalBasename || entry.name === botBasename)
+      ) {
+        count += 1
+      }
+    }
+  }
+
+  return count
+}
+
 const isLocaleScopedHtml = (filePath) => {
   const relative = path.relative(distDir, filePath).replace(/\\/g, '/')
   const firstSegment = relative.split('/')[0]
@@ -65,6 +90,13 @@ const run = () => {
   }
   const indexFiles = collectIndexHtmlFiles(distDir)
   if (!indexFiles.length) {
+    const transformedCount = countTransformedIndexHtmlFiles(distDir)
+    if (transformedCount > 0) {
+      console.log(
+        `Skipped bot/normal index generation because dist already contains ${transformedCount} transformed HTML files and no original index.html files.`
+      )
+      return
+    }
     throw new TypeError('No index.html files found in dist.')
   }
 
