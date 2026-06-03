@@ -54,6 +54,28 @@ clientNavigationRecovery:
   versionNoticeMinMs: 2000
   # Maximum time to show the newer-version notice before navigating to the target.
   versionNoticeMaxMs: 5000
+# Build-time same-origin mirror for Iconify API icon JSON used by UI components.
+iconifyMirror:
+  # Disable this to keep all icon loading on the public Iconify API.
+  enabled: true
+  # Public output path inside dist; the runtime provider reads `{prefix}.json` from here.
+  outputPath: /iconify/
+  # Upstream Iconify API endpoint used only at build time.
+  apiEndpoint: https://api.iconify.design
+  # Maximum generated request URL length used when splitting a prefix into multiple API calls.
+  maxURL: 500
+  # Maximum time to wait for each build-time Iconify API request before falling back to online runtime loading.
+  requestTimeoutMs: 5000
+  # Files scanned for static Iconify icon names before the mirror is generated.
+  scanInclude:
+    - dist/**/*.html
+    - src/**/*.{vue,js,yaml,yml,json,md}
+    - config/**/*.{yaml,yml,json}
+    - node_modules/@nuxt/ui/dist/runtime/**/*.{vue,js,mjs}
+    - node_modules/@nuxt/ui/dist/shared/**/*.{js,mjs}
+  # Files excluded from the Iconify name scanner.
+  scanExclude:
+    - dist/iconify/**
 robots:
   policy: index,follow
 socialImage: /og_image.webp

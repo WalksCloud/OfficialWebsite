@@ -39,6 +39,7 @@ run_build() {
   bun "${DIR}/generate-redirects.js"
   bun "${DIR}/generate-bot-home.js"
   bun "${DIR}/format-dist.js"
+  bun "${DIR}/generate-iconify-mirror.js"
   if is_cloudflare_pages_build; then
     bun "${DIR}/generate-cloudflare-pages-worker.js"
   fi
