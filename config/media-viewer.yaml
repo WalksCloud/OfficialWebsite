@@ -3,8 +3,16 @@ zoom:
   # Lower bound for image scaling.
   minimumScale: 1
   # Upper bound for image scaling.
-  maximumScale: 4
+  maximumScale: 8
   # Multiplier applied to wheel delta when zooming.
   wheelStep: 0.0015
   # Scale values at or below this threshold reset pan offsets.
   resetScaleThreshold: 1.01
+description:
+  # Maximum viewer description/control height as a viewport percentage.
+  maximumViewportHeight: 35
+canvas:
+  # Maximum device pixel ratio for in-memory canvas exports; set 0 to use the full device DPR.
+  maximumDevicePixelRatio: 3
+  # MIME type for viewer-only canvas blobs; no physical files are generated.
+  mimeType: image/png

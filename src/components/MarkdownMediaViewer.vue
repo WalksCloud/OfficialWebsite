@@ -13,6 +13,7 @@ const props = defineProps({
     type: Object,
     default: () => ({
       src: '',
+      svg: '',
       alt: '',
       title: '',
       description: '',
@@ -42,6 +43,7 @@ const props = defineProps({
 const emit = defineEmits(['update:open', 'previous', 'next'])
 
 const zoomConfig = mediaViewerConfig.zoom
+const descriptionConfig = mediaViewerConfig.description || {}
 const scale = ref(zoomConfig.minimumScale)
 const offsetX = ref(0)
 const offsetY = ref(0)
@@ -58,8 +60,27 @@ const isOpen = computed({
   set: (value) => emit('update:open', value),
 })
 
+const descriptionMaxViewportHeight = computed(() => {
+  const value = Number(descriptionConfig.maximumViewportHeight)
+  return Number.isFinite(value) && value > 0 ? value : 35
+})
+
 const viewerImageStyle = computed(() => ({
   transform: `translate3d(${offsetX.value}px, ${offsetY.value}px, 0) scale(${scale.value})`,
+}))
+
+const hasViewerTransform = computed(() =>
+  scale.value > zoomConfig.resetScaleThreshold || offsetX.value !== 0 || offsetY.value !== 0)
+
+const viewerSvgStyle = computed(() => {
+  if (!hasViewerTransform.value) return {}
+  return {
+    transform: `translate(${offsetX.value}px, ${offsetY.value}px) scale(${scale.value})`,
+  }
+})
+
+const viewerStyle = computed(() => ({
+  '--markdown-media-viewer-description-max-height': `${descriptionMaxViewportHeight.value}dvh`,
 }))
 
 const viewerDescription = computed(() => props.description || props.title || props.activeMedia.alt || '')
@@ -194,7 +215,7 @@ const handlePointerEnd = (event) => {
 }
 
 watch(
-  () => props.activeMedia.src,
+  () => [props.activeMedia.src, props.activeMedia.svg],
   () => {
     resetScale()
     resetPointers()
@@ -233,6 +254,7 @@ watch(
       <div
         class="markdown-media-viewer"
         :class="viewerSurfaceClasses"
+        :style="viewerStyle"
         @wheel="handleWheel"
         @pointerdown="handlePointerDown"
         @pointermove="handlePointerMove"
@@ -244,8 +266,14 @@ watch(
           class="markdown-media-viewer__figure"
           @click.stop
         >
+          <div
+            v-if="activeMedia.svg"
+            class="markdown-media-viewer__svg"
+            :style="viewerSvgStyle"
+            v-html="activeMedia.svg"
+          ></div>
           <img
-            v-if="activeMedia.src"
+            v-else-if="activeMedia.src"
             :src="activeMedia.src"
             :alt="activeMedia.alt"
             class="markdown-media-viewer__image"
@@ -365,16 +393,39 @@ watch(
   will-change: transform;
 }
 
+.markdown-media-viewer__svg {
+  display: flex;
+  width: 100%;
+  height: calc(100dvh - 13rem);
+  max-width: 100%;
+  max-height: calc(100dvh - 13rem);
+  align-items: center;
+  justify-content: center;
+  transform-origin: center center;
+  user-select: none;
+}
+
+.markdown-media-viewer__svg :deep(svg) {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  height: 100%;
+  max-height: calc(100dvh - 13rem);
+}
+
 .markdown-media-viewer__controls {
   position: absolute;
   z-index: 5;
   right: 1rem;
   bottom: max(1rem, env(safe-area-inset-bottom));
   left: 1rem;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.65rem;
+  max-height: var(--markdown-media-viewer-description-max-height, 35dvh);
+  overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 1rem;
   background: rgba(15, 23, 42, 0.78);
@@ -385,12 +436,13 @@ watch(
 }
 
 .markdown-media-viewer__caption {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: block;
   min-width: 0;
+  max-height: calc(var(--markdown-media-viewer-description-max-height, 35dvh) - 1.3rem);
   flex: 1 1 auto;
-  overflow: visible;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
   color: rgba(255, 255, 255, 0.82);
   font-size: 0.9rem;
   line-height: 1.35;
@@ -439,7 +491,13 @@ watch(
     padding: 4rem 0.75rem 9rem;
   }
 
-  .markdown-media-viewer__image {
+  .markdown-media-viewer__image,
+  .markdown-media-viewer__svg {
+    height: calc(100dvh - 13.5rem);
+    max-height: calc(100dvh - 13.5rem);
+  }
+
+  .markdown-media-viewer__svg :deep(svg) {
     max-height: calc(100dvh - 13.5rem);
   }
 

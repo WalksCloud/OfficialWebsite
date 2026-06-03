@@ -1,6 +1,7 @@
 <script setup>
 import { compile, computed, defineAsyncComponent, defineComponent, h, markRaw, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { ElementTypes, NodeTypes, parse } from '@vue/compiler-dom'
+import mediaViewerConfig from '../../config/media-viewer.yaml'
 
 const props = defineProps({
   source: {
@@ -33,6 +34,7 @@ const mediaViewerOpen = ref(false)
 const activeMediaIndex = ref(-1)
 const createEmptyActiveMedia = () => ({
   src: '',
+  svg: '',
   alt: '',
   title: '',
   description: '',
@@ -51,6 +53,8 @@ let mermaidInitialized = false
 let lastMermaidTheme = null
 let rootClassObserver = null
 let colorSchemeQuery = null
+
+const canvasConfig = mediaViewerConfig.canvas || {}
 
 const addEmbeddedComponentMarker = (source = '') => {
   if (!source.trim()) return source
@@ -339,6 +343,12 @@ const getDiagramTitle = (node) =>
   getFigureCaption(node) ||
   'Diagram'
 
+const getCanvasTitle = (node) =>
+  node.getAttribute('title')?.trim() ||
+  node.getAttribute('aria-label')?.trim() ||
+  getFigureCaption(node) ||
+  'Canvas'
+
 const createTrackedObjectUrl = (blob, sessionId) => {
   const objectUrl = URL.createObjectURL(blob)
   if (sessionId !== mediaSessionId) {
@@ -349,15 +359,112 @@ const createTrackedObjectUrl = (blob, sessionId) => {
   return objectUrl
 }
 
-const buildSvgObjectUrl = (svg, sessionId) => {
+const getCanvasExportPixelRatio = () => {
+  const devicePixelRatio = typeof window === 'undefined' ? 1 : Math.max(1, window.devicePixelRatio || 1)
+  const maximumPixelRatio = Number(canvasConfig.maximumDevicePixelRatio)
+  if (Number.isFinite(maximumPixelRatio) && maximumPixelRatio > 0) {
+    return Math.min(devicePixelRatio, maximumPixelRatio)
+  }
+  return devicePixelRatio
+}
+
+const getCanvasBlobType = () => {
+  const value = String(canvasConfig.mimeType || '').trim()
+  return value || 'image/png'
+}
+
+const canvasToBlob = (canvas) => new Promise((resolve, reject) => {
+  const blobType = getCanvasBlobType()
+  if (typeof canvas.toBlob === 'function') {
+    canvas.toBlob((blob) => {
+      if (blob) {
+        resolve(blob)
+        return
+      }
+      reject(new Error('Canvas export returned an empty blob.'))
+    }, blobType)
+    return
+  }
+
+  try {
+    const dataUrl = canvas.toDataURL(blobType)
+    fetch(dataUrl)
+      .then((response) => response.blob())
+      .then(resolve)
+      .catch(reject)
+  } catch (error) {
+    reject(error)
+  }
+})
+
+const getElementSize = (element) => {
+  const rect = element.getBoundingClientRect?.()
+  const width = rect?.width || Number(element.getAttribute?.('width')) || element.width || 1
+  const height = rect?.height || Number(element.getAttribute?.('height')) || element.height || 1
+  return {
+    width: Math.max(1, width),
+    height: Math.max(1, height),
+  }
+}
+
+const buildCanvasObjectUrl = async (canvasSource, sessionId) => {
+  if (!canvasSource) return ''
+  if (typeof document === 'undefined') {
+    const blob = await canvasToBlob(canvasSource)
+    return createTrackedObjectUrl(blob, sessionId)
+  }
+
+  const { width, height } = getElementSize(canvasSource)
+  const pixelRatio = getCanvasExportPixelRatio()
+  const canvas = document.createElement('canvas')
+  canvas.width = Math.ceil(width * pixelRatio)
+  canvas.height = Math.ceil(height * pixelRatio)
+
+  const context = canvas.getContext('2d')
+  if (!context) {
+    const blob = await canvasToBlob(canvasSource)
+    return createTrackedObjectUrl(blob, sessionId)
+  }
+  context.scale(pixelRatio, pixelRatio)
+  context.drawImage(canvasSource, 0, 0, width, height)
+
+  const blob = await canvasToBlob(canvas)
+  return createTrackedObjectUrl(blob, sessionId)
+}
+
+const getSvgExportSize = (svg) => {
+  const viewBox = svg?.viewBox?.baseVal
+  const rect = svg?.getBoundingClientRect?.()
+  const width = viewBox?.width || rect?.width || Number(svg?.getAttribute?.('width')) || 1
+  const height = viewBox?.height || rect?.height || Number(svg?.getAttribute?.('height')) || 1
+  return {
+    width: Math.max(1, width),
+    height: Math.max(1, height),
+  }
+}
+
+const buildSvgSource = (svg) => {
   if (!svg) return ''
+  const { width, height } = getSvgExportSize(svg)
+  const svgClone = svg.cloneNode(true)
+  svgClone.setAttribute('width', String(width))
+  svgClone.setAttribute('height', String(height))
+  svgClone.setAttribute('preserveAspectRatio', svgClone.getAttribute('preserveAspectRatio') || 'xMidYMid meet')
+  if (!svgClone.getAttribute('viewBox')) {
+    svgClone.setAttribute('viewBox', `0 0 ${width} ${height}`)
+  }
+
   const serializer = new XMLSerializer()
-  let source = serializer.serializeToString(svg)
+  let source = serializer.serializeToString(svgClone)
   if (!/\sxmlns=/.test(source)) {
     source = source.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"')
   }
-  const blob = new Blob([source], { type: 'image/svg+xml;charset=utf-8' })
-  return createTrackedObjectUrl(blob, sessionId)
+  return source
+}
+
+const buildDiagramPayload = (svg) => {
+  const svgSource = buildSvgSource(svg)
+  return svgSource ? { src: '', svg: svgSource } : { src: '', svg: '' }
 }
 
 const fetchImageObjectUrl = async (item, sessionId) => {
@@ -374,25 +481,29 @@ const fetchImageObjectUrl = async (item, sessionId) => {
   }
 }
 
-const getMediaViewerSrc = (item, sessionId) => {
-  if (item.viewerSrc) return Promise.resolve(item.viewerSrc)
-  if (item.viewerSrcPromise) return item.viewerSrcPromise
+const getMediaViewerPayload = (item, sessionId) => {
+  if (item.viewerPayload) return Promise.resolve(item.viewerPayload)
+  if (item.viewerPayloadPromise) return item.viewerPayloadPromise
 
-  item.viewerSrcPromise = (async () => {
-    let viewerSrc = ''
+  item.viewerPayloadPromise = (async () => {
+    let viewerPayload = { src: '', svg: '' }
     try {
-      viewerSrc = item.kind === 'diagram'
-        ? buildSvgObjectUrl(item.element.querySelector('svg'), sessionId)
-        : await fetchImageObjectUrl(item, sessionId)
+      if (item.kind === 'diagram') {
+        viewerPayload = buildDiagramPayload(item.element.querySelector('svg'))
+      } else if (item.kind === 'canvas') {
+        viewerPayload = { src: await buildCanvasObjectUrl(item.element, sessionId), svg: '' }
+      } else {
+        viewerPayload = { src: await fetchImageObjectUrl(item, sessionId), svg: '' }
+      }
     } catch (error) {
       console.error('Failed to create media blob for media viewer.', error)
-      viewerSrc = item.src || ''
+      viewerPayload = { src: item.src || '', svg: '' }
     }
-    item.viewerSrc = viewerSrc
-    return viewerSrc
+    item.viewerPayload = viewerPayload
+    return viewerPayload
   })()
 
-  return item.viewerSrcPromise
+  return item.viewerPayloadPromise
 }
 
 const collectMediaItems = () => {
@@ -403,7 +514,7 @@ const collectMediaItems = () => {
   if (!container) return []
 
   let diagramIndex = 0
-  return Array.from(container.querySelectorAll('img, pre.mermaid'))
+  return Array.from(container.querySelectorAll('img, pre.mermaid, canvas'))
     .map((node) => {
       if (node.matches('img')) {
         const src = node.currentSrc || node.getAttribute('src') || ''
@@ -416,6 +527,18 @@ const collectMediaItems = () => {
           alt: node.getAttribute('alt')?.trim() || '',
           title: getImageTitle(node),
           description: getMediaDescription([rawSrc, src]),
+        }
+      }
+
+      if (node.matches('canvas')) {
+        const canvasTarget = node.getAttribute('data-media-target') || node.getAttribute('id') || ''
+        return {
+          element: markRaw(node),
+          kind: 'canvas',
+          src: '',
+          alt: getCanvasTitle(node),
+          title: getCanvasTitle(node),
+          description: getMediaDescription([canvasTarget]),
         }
       }
 
@@ -439,20 +562,21 @@ const openMediaViewerAt = async (index) => {
   if (!item) return
 
   const sessionId = mediaSessionId
-  const src = await getMediaViewerSrc(item, sessionId)
+  const payload = await getMediaViewerPayload(item, sessionId)
   if (sessionId !== mediaSessionId || mediaItems[index] !== item) return
 
   activeMediaIndex.value = index
   activeMedia.value = {
     kind: item.kind,
-    src,
+    src: payload.src || '',
+    svg: payload.svg || '',
     alt: item.alt || item.title || '',
     title: item.title || item.alt || '',
     description: item.description || item.title || item.alt || '',
     index: index + 1,
     total: mediaItems.length,
   }
-  mediaViewerOpen.value = Boolean(activeMedia.value.src)
+  mediaViewerOpen.value = Boolean(activeMedia.value.src || activeMedia.value.svg)
 }
 
 const openAdjacentMedia = (offset) => {
@@ -469,7 +593,12 @@ const handleMediaClick = (event) => {
 
   const image = target.closest('img')
   const diagram = target.closest('pre.mermaid')
-  const mediaNode = image && container.contains(image) ? image : diagram
+  const canvas = target.closest('canvas')
+  const mediaNode = image && container.contains(image)
+    ? image
+    : diagram && container.contains(diagram)
+      ? diagram
+      : canvas
   if (!mediaNode || !container.contains(mediaNode)) return
 
   if (!mediaViewerOpen.value) {
@@ -676,12 +805,14 @@ watch(
 
 <style scoped>
 .markdown-runtime-content--media-viewer :deep(img),
-.markdown-runtime-content--media-viewer :deep(pre.mermaid svg) {
+.markdown-runtime-content--media-viewer :deep(pre.mermaid svg),
+.markdown-runtime-content--media-viewer :deep(canvas) {
   cursor: zoom-in;
 }
 
 .markdown-runtime-content--media-viewer :deep(img:hover),
-.markdown-runtime-content--media-viewer :deep(pre.mermaid:hover svg) {
+.markdown-runtime-content--media-viewer :deep(pre.mermaid:hover svg),
+.markdown-runtime-content--media-viewer :deep(canvas:hover) {
   filter: saturate(1.05);
 }
 
