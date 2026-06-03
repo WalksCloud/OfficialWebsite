@@ -246,7 +246,7 @@ const writeMirrorFiles = async ({ outputDir, endpoint, maxURL, requestTimeoutMs,
 
 const run = async () => {
   const enabled = mirror.enabled !== false
-  const outputPublicPath = normalizePublicDirectoryPath(mirror.outputPath, '/iconify/')
+  const outputPublicPath = normalizePublicDirectoryPath(mirror.outputPath, '/icons/iconify/')
   const outputDir = path.join(distDir, outputPublicPath.slice(1))
   const endpoint = normalizeApiEndpoint(mirror.apiEndpoint)
   const maxURL = normalizeMaxUrl(mirror.maxURL)

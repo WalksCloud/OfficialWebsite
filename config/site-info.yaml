@@ -59,7 +59,7 @@ iconifyMirror:
   # Disable this to keep all icon loading on the public Iconify API.
   enabled: true
   # Public output path inside dist; the runtime provider reads `{prefix}.json` from here.
-  outputPath: /iconify/
+  outputPath: /icons/iconify/
   # Upstream Iconify API endpoint used only at build time.
   apiEndpoint: https://api.iconify.design
   # Maximum generated request URL length used when splitting a prefix into multiple API calls.
@@ -75,7 +75,7 @@ iconifyMirror:
     - node_modules/@nuxt/ui/dist/shared/**/*.{js,mjs}
   # Files excluded from the Iconify name scanner.
   scanExclude:
-    - dist/iconify/**
+    - dist/icons/iconify/**
 robots:
   policy: index,follow
 socialImage: /og_image.webp
