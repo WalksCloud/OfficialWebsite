@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import ArticleList from '@/components/ArticleList.vue'
+import PageBreadcrumb from '@/components/PageBreadcrumb.vue'
 import { usePageHead } from '@/utils/usePageHead'
 import { getPageConfig } from '@/utils/pageConfig'
 import { listEntriesByPrefix } from '@/utils/contentIndex'
@@ -67,11 +68,14 @@ const groupedSections = computed(() => {
 </script>
 
 <template>
-  <section class="pt-28 lg:pt-32 pb-16">
+  <section class="pt-20 lg:pt-24 pb-16">
     <div class="mx-auto space-y-10">
-      <header class="text-center space-y-4">
-        <h1 class="text-3xl lg:text-5xl font-bold">{{ localizedTitle }}</h1>
-        <p v-if="localizedDescription" class="text-muted text-lg">{{ localizedDescription }}</p>
+      <header class="w-5/6 lg:w-2/3 mx-auto space-y-0">
+        <PageBreadcrumb :current-title="localizedTitle" />
+        <div class="text-center space-y-4">
+          <h1 class="text-3xl lg:text-5xl font-bold">{{ localizedTitle }}</h1>
+          <p v-if="localizedDescription" class="text-muted text-lg">{{ localizedDescription }}</p>
+        </div>
       </header>
       <div v-if="groupedSections.length" class="space-y-12">
         <ArticleList

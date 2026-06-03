@@ -10,6 +10,7 @@ import { resolveContentInfo } from '@/utils/contentIndex'
 import { getArticleCategoryTags } from '@/utils/articleTags'
 import MarkdownRuntimeContent from '@/components/MarkdownRuntimeContent.vue'
 import RelationShipArticleList from '@/components/RelationShipArticleList.vue'
+import PageBreadcrumb from '@/components/PageBreadcrumb.vue'
 import Contact from '@/components/Contact.vue'
 import { createMarkdownRenderer } from '@/utils/markdown'
 import { getContentImageAssetUrl } from '@/generated/contentImageAssets'
@@ -192,33 +193,36 @@ const articleTags = computed(() => {
 </script>
 
 <template>
-  <section class="pt-30 pb-12 lg:pb-18 w-5/6 lg:w-2/3 mx-auto space-y-10">
-    <div v-if="rendered" class="markdown-content space-y-2">
-      <div class="flex flex-wrap gap-2 pt-4">
-        <h1>{{ rendered.title }}</h1>
-        <div class="flex-end">
-          <UBadge
-            v-for="tag in articleTags"
-            :key="tag.id"
-            :label="tag.label"
-            color="neutral"
-            variant="soft"
-            class="font-bold rounded-full border border-transparent h-6"
-            :style="tag.style"
-          />
+  <section class="pt-20 lg:pt-24 pb-12 lg:pb-18 w-5/6 lg:w-2/3 mx-auto space-y-10">
+    <div>
+      <PageBreadcrumb :current-title="rendered?.title || contentTitle" />
+      <div v-if="rendered" class="markdown-content space-y-2">
+        <div class="flex flex-wrap gap-2">
+          <h1>{{ rendered.title }}</h1>
+          <div class="flex-end">
+            <UBadge
+              v-for="tag in articleTags"
+              :key="tag.id"
+              :label="tag.label"
+              color="neutral"
+              variant="soft"
+              class="font-bold rounded-full border border-transparent h-6"
+              :style="tag.style"
+            />
+          </div>
+          <div v-if="lastUpdatedLabel" class="markdown-last-updated flex-end ml-auto">
+            {{ lastUpdatedLabel }}
+          </div>
         </div>
-        <div v-if="lastUpdatedLabel" class="markdown-last-updated flex-end ml-auto">
-          {{ lastUpdatedLabel }}
+        <div v-if="rendered.descriptionHtml" class="markdown-description">
+          <MarkdownRuntimeContent :source="rendered.descriptionHtml" />
         </div>
+        <MarkdownRuntimeContent :source="rendered.html" enable-media-viewer />
       </div>
-      <div v-if="rendered.descriptionHtml" class="markdown-description">
-        <MarkdownRuntimeContent :source="rendered.descriptionHtml" />
-      </div>
-      <MarkdownRuntimeContent :source="rendered.html" enable-media-viewer />
+      <p v-else class="mt-2 text-center text-gray-600 dark:text-gray-300">
+        {{ t('placeholder.message') }}
+      </p>
     </div>
-    <p v-else class="text-center text-gray-600 dark:text-gray-300">
-      {{ t('placeholder.message') }}
-    </p>
     <RelationShipArticleList />
   </section>
   <Contact />

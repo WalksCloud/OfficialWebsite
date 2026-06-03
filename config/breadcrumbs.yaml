@@ -1,0 +1,12 @@
+# Visible breadcrumb marquee behavior.
+marquee:
+  # Pixel tolerance before the current page title switches to marquee.
+  overflowTolerance: 2
+  # Marquee animation duration for one full text pass.
+  duration: 12s
+  # Space between repeated marquee text copies.
+  gap: 2rem
+  # Fade width for the scrolling title edge; the left fade sits outside the title content box.
+  fadeWidth: 1.25rem
+  # The outside-left fade uses this ratio of fadeWidth to avoid colliding with the separator.
+  leftFadeScale: 0.75

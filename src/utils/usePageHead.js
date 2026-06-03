@@ -5,11 +5,10 @@ import {
   buildCanonicalUrl,
   getLocales,
   getPageConfig,
-  getPageConfigs,
   getSiteConfig,
-  getSlugForLocale,
 } from './pageConfig'
 import { renderMarkdownInlineToText } from './markdown'
+import { buildBreadcrumbJsonLdItems, resolveLocalizedValue } from './breadcrumbs'
 
 const site = getSiteConfig()
 
@@ -25,77 +24,11 @@ const toBcpLocale = (locale) => {
   return val.replace('_', '-')
 }
 
-const resolveLocalizedValue = (localizedMap, locale) => {
-  if (!localizedMap || typeof localizedMap !== 'object') return ''
-  const currentValue = localizedMap[locale]
-  if (typeof currentValue === 'string' && currentValue.trim()) return currentValue
-  const defaultValue = localizedMap[site.defaultLocale]
-  if (typeof defaultValue === 'string' && defaultValue.trim()) return defaultValue
-  const firstAvailable = Object.values(localizedMap).find(
-    (value) => typeof value === 'string' && value.trim(),
-  )
-  return typeof firstAvailable === 'string' ? firstAvailable : ''
-}
-
 const normalizeInlineText = (value = '') =>
   String(value || '')
     .replace(/\r\n/g, '\n')
     .replace(/\s+/g, ' ')
     .trim()
-
-const normalizeSlug = (slug = '') =>
-  String(slug || '')
-    .replace(/^\/+/, '')
-    .replace(/\/+$/, '')
-
-const prettifySegmentName = (segment = '') =>
-  String(segment || '')
-    .replace(/[-_]+/g, ' ')
-    .trim()
-
-const resolvePageByLocalizedSlug = (slug, locale) => {
-  const normalizedTarget = normalizeSlug(slug)
-  const pages = getPageConfigs()
-  return (
-    pages.find((page) => normalizeSlug(getSlugForLocale(page.pageKey, locale)) === normalizedTarget) ||
-    null
-  )
-}
-
-const buildBreadcrumbs = (pageKey, locale, options = {}) => {
-  const localizedSlug = normalizeSlug(getSlugForLocale(pageKey, locale))
-  const homeName = options.homeName || site.brandName
-  const crumbs = [
-    {
-      '@type': 'ListItem',
-      position: 1,
-      name: homeName,
-      item: buildCanonicalUrl('home', locale),
-    },
-  ]
-
-  if (!localizedSlug) return crumbs
-
-  const segments = localizedSlug.split('/').filter(Boolean)
-  let accumulated = ''
-  segments.forEach((segment, idx) => {
-    accumulated = accumulated ? `${accumulated}/${segment}` : segment
-    const resolvedPage = resolvePageByLocalizedSlug(accumulated, locale)
-    const resolvedName =
-      resolveLocalizedValue(resolvedPage?.titles, locale) || prettifySegmentName(segment)
-    const resolvedItem = resolvedPage
-      ? buildCanonicalUrl(resolvedPage.pageKey, locale)
-      : `${site.baseUrl}/${locale}/${accumulated}/`
-    crumbs.push({
-      '@type': 'ListItem',
-      position: idx + 2,
-      name: resolvedName,
-      item: resolvedItem,
-    })
-  })
-
-  return crumbs
-}
 
 const resolveJsonLdKind = (page = {}) => {
   const explicitKind = typeof page?.jsonld?.kind === 'string' ? page.jsonld.kind.trim() : ''
@@ -278,7 +211,7 @@ export const usePageHead = (route, options = {}) => {
     return site.brandName
   })
   const breadcrumbItems = computed(() =>
-    buildBreadcrumbs(pageKey.value, currentLocale.value, { homeName: homeBreadcrumbName.value }),
+    buildBreadcrumbJsonLdItems(pageKey.value, currentLocale.value, { homeName: homeBreadcrumbName.value }),
   )
 
   const jsonLd = computed(() =>

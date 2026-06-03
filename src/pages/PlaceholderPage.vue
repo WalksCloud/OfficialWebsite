@@ -4,6 +4,7 @@ import { useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { resolvePageConfig } from '@/utils/pageConfig'
 import { usePageHead } from '@/utils/usePageHead'
+import PageBreadcrumb from '@/components/PageBreadcrumb.vue'
 
 const route = useRoute()
 usePageHead(route)
@@ -16,9 +17,12 @@ const displayName = computed(() => title.value || route.meta.pageKey)
 </script>
 
 <template>
-  <section class="pt-30 pb-12 lg:pb-18 w-5/6 lg:w-2/3 mx-auto text-center">
-    <h1 class="text-3xl lg:text-4xl font-bold mb-4">{{ displayName }}</h1>
-    <p class="text-gray-600 dark:text-gray-300 mb-6" v-if="description">{{ description }}</p>
-    <p class="text-gray-500 dark:text-gray-400">{{ t('placeholder.message') }}</p>
+  <section class="pt-20 lg:pt-24 pb-12 lg:pb-18 w-5/6 lg:w-2/3 mx-auto space-y-0">
+    <PageBreadcrumb :current-title="displayName" />
+    <div class="text-center">
+      <h1 class="text-3xl lg:text-4xl font-bold mb-4">{{ displayName }}</h1>
+      <p class="text-gray-600 dark:text-gray-300 mb-6" v-if="description">{{ description }}</p>
+      <p class="text-gray-500 dark:text-gray-400">{{ t('placeholder.message') }}</p>
+    </div>
   </section>
 </template>
