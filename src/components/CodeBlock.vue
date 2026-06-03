@@ -317,14 +317,18 @@ onBeforeUnmount(() => {
 
 .wc-codeblock-body {
   display: grid;
-  grid-template-columns: auto 1fr;
-  overflow-x: auto;
+  grid-template-columns: auto minmax(0, 1fr);
+  overflow: hidden;
 }
 
 .wc-codeblock-lines {
+  position: sticky;
+  left: 0;
+  z-index: 1;
   user-select: none;
   color: var(--wc-codeblock-line-color);
   border-right: 1px solid var(--wc-codeblock-line-border);
+  background: var(--wc-codeblock-code-bg);
   padding: 1rem 0.65rem;
   text-align: right;
   min-width: 3rem;
@@ -341,7 +345,10 @@ onBeforeUnmount(() => {
 .wc-codeblock-pre {
   margin: 0;
   padding: 1rem;
-  min-width: fit-content;
+  min-width: 0;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
   background: var(--wc-codeblock-code-bg);
 }
 
