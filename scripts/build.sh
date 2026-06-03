@@ -33,6 +33,7 @@ is_cloudflare_pages_build() {
 run_build() {
   bun "${DIR}/description-single-line.js"
   bun "${DIR}/warn-faq-index.js"
+  bun "${DIR}/generate-content-image-assets.js"
   bun "$vite_ssg_cli" build
   bun "${DIR}/generate-meta.js"
   bun "${DIR}/generate-redirects.js"

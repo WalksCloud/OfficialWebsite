@@ -12,6 +12,7 @@ import MarkdownRuntimeContent from '@/components/MarkdownRuntimeContent.vue'
 import RelationShipArticleList from '@/components/RelationShipArticleList.vue'
 import Contact from '@/components/Contact.vue'
 import { createMarkdownRenderer } from '@/utils/markdown'
+import { getContentImageAssetUrl } from '@/generated/contentImageAssets'
 
 const md = createMarkdownRenderer({ html: true, linkify: true, breaks: true })
 const site = getSiteConfig()
@@ -28,13 +29,6 @@ const modules = import.meta.glob('../content/**/*.md', {
   eager: true,
 })
 const moduleKeys = Object.keys(modules)
-const contentAssetModules = import.meta.glob(
-  '../content/**/*.{png,jpg,jpeg,gif,webp,avif,svg}',
-  {
-    eager: true,
-    import: 'default',
-  },
-)
 
 const normalizeModulePath = (value = '') => {
   const segments = []
@@ -53,13 +47,6 @@ const normalizeModulePath = (value = '') => {
     })
   return segments.join('/')
 }
-
-const contentAssetMap = new Map(
-  Object.entries(contentAssetModules).map(([modulePath, assetUrl]) => [
-    normalizeModulePath(modulePath),
-    typeof assetUrl === 'string' ? assetUrl : String(assetUrl || ''),
-  ]),
-)
 
 const pageKey = computed(() => route.meta.pageKey || 'home')
 const currentLocale = computed(() => route.meta.locale || locale.value)
@@ -90,7 +77,7 @@ const parseSingleLocaleMd = (raw, filenameLocale) => {
 const resolveRelativeAssetUrl = (contentPath, assetPath) => {
   const baseDir = contentPath.slice(0, contentPath.lastIndexOf('/'))
   const resolvedModulePath = normalizeModulePath(`${baseDir}/${assetPath}`)
-  return contentAssetMap.get(resolvedModulePath) || ''
+  return getContentImageAssetUrl(resolvedModulePath)
 }
 
 const rewriteRelativeImagePaths = (body, contentPath) => {
