@@ -604,6 +604,65 @@ const verifyCacheMatchesManifest = async (cacheName, targetUrls = [], requiredPa
   }
 }
 
+const inspectPrecacheState = async () => {
+  const manifest = await fetchPrecacheManifest()
+  const entries = Array.isArray(manifest?.entries)
+    ? manifest.entries.map(normalizePrecacheEntry).filter((entry) => entry.url)
+    : []
+  const requiredCachePatterns = normalizeInspectionPatterns(manifest?.requiredCachePatterns || [])
+  if (!entries.length) {
+    const report = {
+      status: 'empty',
+      ready: false,
+      reason: 'precache manifest has no entries',
+      runtimeCacheName,
+      precacheManifestPath,
+      buildHash,
+    }
+    cacheLog('inspect precache state', report)
+    return report
+  }
+
+  const cache = await caches.open(runtimeCacheName)
+  const signature = buildPrecacheStateSignature(manifest)
+  const cachedSignature = await readPrecacheStateSignature(cache)
+  const signatureMatches = signature === cachedSignature
+  const previousCachedUrls = await listCacheRequestUrls(runtimeCacheName).catch(() => [])
+  const staticUpdatePlan = buildPrecacheStaticUpdatePlan(previousCachedUrls, entries)
+  const verification = await verifyCacheMatchesManifest(
+    runtimeCacheName,
+    staticUpdatePlan.targetStaticUrls,
+    requiredCachePatterns,
+  )
+  const ready = (
+    signatureMatches &&
+    staticUpdatePlan.addedStaticCount === 0 &&
+    verification.missingCachedUrls.length === 0 &&
+    verification.missingRequiredPatterns.length === 0
+  )
+  const report = {
+    status: ready ? 'ready' : 'stale',
+    ready,
+    reason: ready
+      ? 'manifest signature and static cache entries are complete'
+      : 'manifest signature or static cache entries are incomplete',
+    runtimeCacheName,
+    precacheManifestPath,
+    manifestEntryCount: entries.length,
+    requiredCachePatterns,
+    signatureMatches,
+    buildHash,
+    generatedAt: manifest?.generatedAt || '',
+    staticUpdatePlan,
+    missingCachedCount: verification.missingCachedCount,
+    missingCachedUrls: verification.missingCachedUrls,
+    requiredPatternMatches: verification.requiredPatternMatches,
+    missingRequiredPatterns: verification.missingRequiredPatterns,
+  }
+  cacheLog('inspect precache state', report)
+  return report
+}
+
 const runPrecacheFullSite = async ({ force = false, progressPort = null } = {}) => {
   await notifyPrecacheProgress({
     status: 'start',
@@ -1225,6 +1284,23 @@ self.addEventListener('message', (event) => {
       event.ports?.[0]?.postMessage({
         type: 'INSPECT_CACHES_RESULT',
         cacheInspection,
+      })
+    })())
+    return
+  }
+  if (data.type === 'INSPECT_PRECACHE_STATE') {
+    event.waitUntil((async () => {
+      const precacheState = await inspectPrecacheState().catch((error) => ({
+        status: 'failed',
+        ready: false,
+        reason: String(error?.message || error),
+        runtimeCacheName,
+        precacheManifestPath,
+        buildHash,
+      }))
+      event.ports?.[0]?.postMessage({
+        type: 'INSPECT_PRECACHE_STATE_RESULT',
+        precacheState,
       })
     })())
     return

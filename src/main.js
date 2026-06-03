@@ -76,6 +76,10 @@ const navigationRecoveryCacheCommandTimeoutMs = normalizePositiveNumber(
   navigationRecovery.cacheCommandTimeoutMs,
   120000,
 )
+const navigationRecoveryCacheReadinessTimeoutMs = normalizePositiveNumber(
+  navigationRecovery.cacheReadinessTimeoutMs,
+  5000,
+)
 const navigationRecoveryVersionCheckTimeoutMs = normalizePositiveNumber(
   navigationRecovery.versionCheckTimeoutMs,
   3000,
@@ -430,6 +434,21 @@ export const createApp = ViteSSG(
         return null
       }
 
+      const inspectPrecacheStateForCurrentVersion = async () => {
+        const workerReport = await postRuntimeCacheMessageWithResponse({
+          type: 'INSPECT_PRECACHE_STATE',
+          reason: 'startup cache readiness check',
+        }, getLoadedBuildHash(), navigationRecoveryCacheReadinessTimeoutMs)
+
+        if (workerReport?.precacheState) {
+          console.log('[WalksCloud cache] precache state service worker report', workerReport)
+          return workerReport.precacheState
+        }
+
+        console.warn('[WalksCloud cache] precache state service worker did not respond.')
+        return null
+      }
+
       const verifyCacheStorage = async () => {
         const workerReport = await postRuntimeCacheMessageWithResponse({
           type: 'INSPECT_CACHES',
@@ -678,7 +697,7 @@ export const createApp = ViteSSG(
 
       const startOfflineCacheForRoute = async (routePath, token) => {
         offlineCacheStartTimer = null
-        if (token !== offlineCacheStartToken || offlineCacheStarted) return
+        if (token !== offlineCacheStartToken || offlineCacheStarted || offlineCacheStore.isReady) return
         if (document.visibilityState === 'hidden') {
           console.log('[WalksCloud cache] automatic offline cache deferred while page is hidden', {
             routePath,
@@ -699,7 +718,7 @@ export const createApp = ViteSSG(
 
       const scheduleOfflineCacheStart = (routePath = globalThis.window.location.href) => {
         pendingOfflineCacheRoutePath = routePath
-        if (offlineCacheStarted) {
+        if (offlineCacheStarted || offlineCacheStore.isReady) {
           cacheCurrentRuntimeState(routePath)
           return
         }
@@ -716,6 +735,22 @@ export const createApp = ViteSSG(
         offlineCacheStartTimer = globalThis.window.setTimeout(() => {
           void startOfflineCacheForRoute(routePath, token)
         }, delayMs)
+      }
+
+      const initializeOfflineCacheState = async () => {
+        await registerRuntimeCacheServiceWorker()
+        const precacheState = await inspectPrecacheStateForCurrentVersion()
+        if (precacheState?.ready) {
+          offlineCacheStore.markReady(precacheState.status || 'ready')
+          console.log('[WalksCloud cache] automatic offline cache skipped because current cache is ready', {
+            status: precacheState.status,
+            runtimeCacheName: precacheState.runtimeCacheName,
+            manifestEntryCount: precacheState.manifestEntryCount,
+          })
+          cacheCurrentRuntimeState(pendingOfflineCacheRoutePath)
+          return
+        }
+        scheduleOfflineCacheStart(pendingOfflineCacheRoutePath)
       }
 
       const isTargetRouteAvailable = async (targetUrl) => {
@@ -998,7 +1033,7 @@ export const createApp = ViteSSG(
       globalThis.window.addEventListener('online', handleBrowserOnline)
       globalThis.window.addEventListener('offline', handleBrowserOffline)
       document.addEventListener('visibilitychange', handleDocumentVisibilityChange)
-      scheduleOfflineCacheStart()
+      void initializeOfflineCacheState()
     }
 
     // Persist locale for client navigation only
