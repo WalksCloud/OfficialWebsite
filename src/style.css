@@ -54,6 +54,7 @@
 :root {
   font-family: "Noto Sans TC", sans-serif;
   scroll-behavior: smooth;
+  --wc-alert-banner-offset: 0px;
   --header-offset: 100px;
   --header-offset-lg: 140px;
   --header-offset-bottom: 180px;

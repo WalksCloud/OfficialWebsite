@@ -1,11 +1,11 @@
 <script setup>
 import { useAlertStore } from '@/stores/alert'
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 
 const store = useAlertStore()
-const { alert, banner, loading, topProgress } = storeToRefs(store)
-const { clear, clearBanner } = store
+const { alert, banner, offlineBanner, loading, topProgress } = storeToRefs(store)
+const { clear, clearBanner, clearOfflineBanner } = store
 
 const bannerThemes = {
   error: {
@@ -27,6 +27,19 @@ const bannerThemes = {
 }
 
 const bannerTheme = computed(() => bannerThemes[banner.value.color] || bannerThemes.error)
+const bannerStack = ref(null)
+const hasAlertBanner = computed(() => Boolean(banner.value.title || offlineBanner.value.title))
+let bannerStackResizeObserver = null
+
+const setAlertBannerOffset = (height = 0) => {
+  if (typeof document === 'undefined') return
+  document.documentElement.style.setProperty('--wc-alert-banner-offset', `${height}px`)
+}
+
+const updateAlertBannerOffset = () => {
+  const height = bannerStack.value?.offsetHeight || 0
+  setAlertBannerOffset(height)
+}
 
 const runBannerAction = () => {
   if (!banner.value.action || typeof window === 'undefined') {
@@ -47,6 +60,32 @@ const dismissBanner = () => {
     }))
   }
 }
+
+onMounted(() => {
+  if (typeof ResizeObserver !== 'undefined') {
+    bannerStackResizeObserver = new ResizeObserver(updateAlertBannerOffset)
+  }
+  void nextTick(() => {
+    if (bannerStack.value && bannerStackResizeObserver) {
+      bannerStackResizeObserver.observe(bannerStack.value)
+    }
+    updateAlertBannerOffset()
+  })
+})
+
+onBeforeUnmount(() => {
+  bannerStackResizeObserver?.disconnect()
+  setAlertBannerOffset(0)
+})
+
+watch(hasAlertBanner, () => {
+  void nextTick(() => {
+    if (bannerStack.value && bannerStackResizeObserver) {
+      bannerStackResizeObserver.observe(bannerStack.value)
+    }
+    updateAlertBannerOffset()
+  })
+})
 </script>
 <template>
 	<!-- top progress -->
@@ -54,41 +93,71 @@ const dismissBanner = () => {
 		<div class="wc-top-progress-bar h-full w-1/2 bg-red-600 dark:bg-red-300"></div>
 	</div>
 
-	<!-- banner -->
-	<transition name="slide-down" appear>
-		<UBanner v-if="banner.title" :color="bannerTheme.color" :icon="bannerTheme.icon" :ui="{
-			container: 'h-auto min-h-16 py-2 sm:min-h-8 sm:py-1',
-			center: 'min-h-0 items-center gap-1.5',
-			title: 'w-full text-sm leading-4 text-gray-700 dark:text-gray-100',
-			icon: bannerTheme.iconClass,
-		}" :class="['fixed top-0 left-0 z-[210] w-full border-t shadow-sm backdrop-blur-sm', bannerTheme.containerClass]">
-			<template #title>
-				<span class="flex w-full flex-col gap-2 leading-4 whitespace-normal wrap-break-word sm:flex-row sm:items-center sm:justify-between">
-					<span class="min-w-0">
-						<span class="font-semibold block sm:inline">{{ banner.title }}</span>
-						<span class="font-normal block wrap-break-word sm:inline sm:ml-2">{{ banner.content }}</span>
+	<div v-if="hasAlertBanner" ref="bannerStack" class="fixed top-0 left-0 z-[210] w-full">
+		<!-- banner -->
+		<transition name="slide-down" appear>
+			<UBanner v-if="banner.title" :color="bannerTheme.color" :icon="bannerTheme.icon" :ui="{
+				container: 'h-auto min-h-16 py-2 sm:min-h-8 sm:py-1',
+				center: 'min-h-0 items-center gap-1.5',
+				title: 'w-full text-sm leading-4 text-gray-700 dark:text-gray-100',
+				icon: bannerTheme.iconClass,
+			}" :class="['w-full border-t shadow-sm backdrop-blur-sm', bannerTheme.containerClass]">
+				<template #title>
+					<span class="flex w-full flex-col gap-2 leading-4 whitespace-normal wrap-break-word sm:flex-row sm:items-center sm:justify-between">
+						<span class="min-w-0">
+							<span class="font-semibold block sm:inline">{{ banner.title }}</span>
+							<span class="font-normal block wrap-break-word sm:inline sm:ml-2">{{ banner.content }}</span>
+						</span>
+						<span class="flex shrink-0 items-center gap-2">
+						<button
+							v-if="banner.action && banner.actionLabel"
+							@click="runBannerAction"
+							type="button"
+							:class="['rounded-lg px-3 py-1.5 text-xs font-semibold', bannerTheme.actionButtonClass]"
+						>
+							{{ banner.actionLabel }}
+						</button>
+						<button
+							@click="dismissBanner"
+							type="button"
+							:class="['rounded-lg border px-3 py-1.5 text-xs font-semibold', bannerTheme.closeButtonClass]"
+						>
+							{{ $t('close') }}
+						</button>
+						</span>
 					</span>
-					<span class="flex shrink-0 items-center gap-2">
-					<button
-						v-if="banner.action && banner.actionLabel"
-						@click="runBannerAction"
-						type="button"
-						:class="['rounded-lg px-3 py-1.5 text-xs font-semibold', bannerTheme.actionButtonClass]"
-					>
-						{{ banner.actionLabel }}
-					</button>
-					<button
-						@click="dismissBanner"
-						type="button"
-						:class="['rounded-lg border px-3 py-1.5 text-xs font-semibold', bannerTheme.closeButtonClass]"
-					>
-						{{ $t('close') }}
-					</button>
+				</template>
+			</UBanner>
+		</transition>
+
+		<!-- offline cache banner -->
+		<transition name="slide-down" appear>
+			<UBanner v-if="offlineBanner.title" color="neutral" icon="i-lucide-cloud-off" :ui="{
+				container: 'h-auto min-h-16 py-2 sm:min-h-8 sm:py-1',
+				center: 'min-h-0 items-center gap-1.5',
+				title: 'w-full text-sm leading-4 text-gray-700 dark:text-gray-100',
+				icon: 'size-3.5 text-violet-700 dark:text-violet-200',
+			}" class="w-full border-t border-violet-300/60 bg-violet-200/80 shadow-sm backdrop-blur-sm dark:border-violet-400/55 dark:bg-violet-500/30">
+				<template #title>
+					<span class="flex w-full flex-col gap-2 leading-4 whitespace-normal wrap-break-word sm:flex-row sm:items-center sm:justify-between">
+						<span class="min-w-0">
+							<span class="font-semibold block sm:inline">{{ offlineBanner.title }}</span>
+							<span class="font-normal block wrap-break-word sm:inline sm:ml-2">{{ offlineBanner.content }}</span>
+						</span>
+						<span class="flex shrink-0 items-center gap-2">
+						<button
+							@click="clearOfflineBanner"
+							type="button"
+							class="rounded-lg border border-violet-300/80 bg-white/60 px-3 py-1.5 text-xs font-semibold text-violet-800 hover:bg-white dark:border-violet-300/50 dark:bg-violet-950/30 dark:text-violet-100 dark:hover:bg-violet-950/50"
+						>
+							{{ $t('close') }}
+						</button>
+						</span>
 					</span>
-				</span>
-			</template>
-		</UBanner>
-	</transition>
+				</template>
+			</UBanner>
+		</transition>
+	</div>
 
 	<!-- alert -->
 	<div v-if="alert.title" class="relative z-200">

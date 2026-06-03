@@ -32,6 +32,8 @@ clientNavigationRecovery:
   cacheInspectionPatterns:
     - /assets/app-pages-markdownpage-
     - /assets/MarkdownPage-
+  # Maximum time to wait for console-triggered cache commands such as forceCache().
+  cacheCommandTimeoutMs: 120000
   # Maximum time to wait while checking whether the target page is from a newer build.
   versionCheckTimeoutMs: 3000
 robots:

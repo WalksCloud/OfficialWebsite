@@ -238,7 +238,7 @@ const handleSectionClick = (event, key) => {
 </script>
 
 <template>
-  <header class="fixed top-0 left-0 w-full z-50">
+  <header class="wc-site-header fixed left-0 w-full z-50">
     <div class="bg-white/85 dark:bg-[#222831]/85 shadow backdrop-blur-sm">
       <nav class="px-3 lg:px-6 py-3 lg:py-4 flex justify-between items-center">
         <div>
@@ -303,6 +303,11 @@ const handleSectionClick = (event, key) => {
 </template>
 
 <style scoped>
+.wc-site-header {
+  top: var(--wc-alert-banner-offset, 0px);
+  transition: top 0.2s ease;
+}
+
 :deep(.wc-locale-select [data-slot="leading"]),
 :deep(.wc-locale-select [data-slot="itemLeading"]) {
   display: none !important;

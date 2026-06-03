@@ -13,6 +13,10 @@ export const useAlertStore = defineStore('alert', {
       actionLabel: '',
       color: 'error',
     },
+    offlineBanner: {
+      title: '',
+      content: '',
+    },
     topProgress: false,
     loading: false,
   }),
@@ -46,12 +50,20 @@ export const useAlertStore = defineStore('alert', {
       this.banner.actionLabel = actionLabel
       this.banner.color = color
     },
+    showOfflineBanner({ title, content }) {
+      this.offlineBanner.title = title
+      this.offlineBanner.content = content
+    },
     clearBanner() {
       this.banner.title = ''
       this.banner.content = ''
       this.banner.action = ''
       this.banner.actionLabel = ''
       this.banner.color = 'error'
+    },
+    clearOfflineBanner() {
+      this.offlineBanner.title = ''
+      this.offlineBanner.content = ''
     },
     clear() {
       this.alert.title = ''

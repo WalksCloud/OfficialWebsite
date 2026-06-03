@@ -30,6 +30,9 @@ navigation-recovery:
     title: New page version available
     message: This page has been updated. Continue to open the latest version.
     action: Continue
+  offline-cache:
+    title: Offline cached page
+    message: Live access is temporarily unavailable, so this page is displayed from the browser cache.
 relationship:
   sections:
     services: Related Services

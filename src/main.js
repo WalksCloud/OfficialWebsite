@@ -57,6 +57,16 @@ const navigationRecoveryRuntimeCachePrefix = navigationRecovery.runtimeCachePref
 const navigationRecoveryRuntimeDocumentFallbackPath = (
   navigationRecovery.runtimeDocumentFallbackPath || '/__wc-runtime-document-fallback__'
 )
+const navigationRecoveryPrecacheManifestPath = (
+  navigationRecovery.precacheManifestPath || '/wc-precache-manifest.json'
+)
+const navigationRecoveryCacheInspectionPatterns = Array.isArray(navigationRecovery.cacheInspectionPatterns)
+  ? navigationRecovery.cacheInspectionPatterns.map((pattern) => String(pattern || '').trim()).filter(Boolean)
+  : []
+const navigationRecoveryCacheCommandTimeoutMs = normalizePositiveNumber(
+  navigationRecovery.cacheCommandTimeoutMs,
+  120000,
+)
 const navigationRecoveryVersionCheckTimeoutMs = normalizePositiveNumber(
   navigationRecovery.versionCheckTimeoutMs,
   3000,
@@ -68,6 +78,9 @@ const extractBuildHashFromHtml = (html = '') => {
   const contentMatch = metaMatch[0].match(/\bcontent=(["'])([^"']+)\1/i)
   return contentMatch?.[2] || ''
 }
+
+const offlineCacheHeaderName = 'X-WalksCloud-Offline-Cache'
+const offlineCacheModeHeaderName = 'X-WalksCloud-Offline-Cache-Mode'
 
 library.add(faSquareFacebook, faLinkedin)
 
@@ -103,6 +116,7 @@ export const createApp = ViteSSG(
       let pendingNewVersionTargetUrl = null
       let runtimeCacheRegistrationPromise = null
       let runtimeCacheRegistrationBuildHash = ''
+      let consoleCacheCommandPromise = Promise.resolve()
 
       const getLoadedBuildHash = () => String(import.meta.env.buildHash || '').trim()
 
@@ -120,6 +134,7 @@ export const createApp = ViteSSG(
         url.searchParams.set('v', normalizeBuildHash(buildHash))
         url.searchParams.set('cachePrefix', navigationRecoveryRuntimeCachePrefix)
         url.searchParams.set('fallbackPath', navigationRecoveryRuntimeDocumentFallbackPath)
+        url.searchParams.set('precacheManifestPath', navigationRecoveryPrecacheManifestPath)
         return url.href
       }
 
@@ -195,6 +210,177 @@ export const createApp = ViteSSG(
         worker.postMessage(message)
       }
 
+      const postRuntimeCacheMessageWithResponse = async (
+        message,
+        buildHash = getLoadedBuildHash(),
+        timeoutMs = 5000,
+      ) => {
+        const serviceWorkerUrl = buildRuntimeCacheServiceWorkerUrl(buildHash)
+        const registration = await registerRuntimeCacheServiceWorker(buildHash)
+        const worker = await resolveServiceWorkerForBuild(registration, serviceWorkerUrl)
+        if (!worker) return null
+
+        return new Promise((resolve) => {
+          const channel = new MessageChannel()
+          const timeout = setTimeout(() => {
+            channel.port1.close()
+            resolve(null)
+          }, timeoutMs)
+          channel.port1.onmessage = (event) => {
+            clearTimeout(timeout)
+            channel.port1.close()
+            resolve(event.data || null)
+          }
+          worker.postMessage(message, [channel.port2])
+        })
+      }
+
+      const listBrowserCacheEntries = async (cacheName) => {
+        const cache = await caches.open(cacheName)
+        return (await cache.keys()).map((request) => request.url)
+      }
+
+      const deleteBrowserCacheWithLog = async (cacheName, reason) => {
+        const urls = await listBrowserCacheEntries(cacheName).catch(() => [])
+        const deleted = await caches.delete(cacheName)
+        const report = {
+          cacheName,
+          reason,
+          deleted,
+          entryCount: urls.length,
+          urls,
+        }
+        console.log('[WalksCloud cache] clearCache delete cache', report)
+        return report
+      }
+
+      const runConsoleCacheCommand = (label, runner) => {
+        consoleCacheCommandPromise = consoleCacheCommandPromise.catch(() => {}).then(async () => {
+          console.group(`[WalksCloud cache] ${label}`)
+          try {
+            console.log(`[WalksCloud cache] ${label} start`)
+            const result = await runner()
+            console.log(`[WalksCloud cache] ${label} complete`, result)
+          } catch (error) {
+            console.error(`[WalksCloud cache] ${label} failed`, error)
+          } finally {
+            console.groupEnd()
+          }
+        })
+      }
+
+      const clearCacheStorage = async () => {
+        let deletedCaches = []
+        try {
+          const workerReport = await postRuntimeCacheMessageWithResponse({
+            type: 'CLEAR_ALL_CACHES',
+            reason: 'window.clearCache()',
+          }, getLoadedBuildHash(), navigationRecoveryCacheCommandTimeoutMs)
+
+          if (workerReport?.deletedCaches) {
+            console.log('[WalksCloud cache] clearCache service worker report', workerReport)
+            deletedCaches = workerReport.deletedCaches
+            return deletedCaches
+          }
+
+          console.warn('[WalksCloud cache] clearCache service worker did not respond; deleting CacheStorage from window.')
+          if (!('caches' in globalThis)) {
+            console.warn('[WalksCloud cache] clearCache CacheStorage is not available in this browser context.')
+            return []
+          }
+
+          const cacheNames = await caches.keys()
+          console.log('[WalksCloud cache] clearCache discovered caches', cacheNames)
+          for (const cacheName of cacheNames) {
+            deletedCaches.push(await deleteBrowserCacheWithLog(cacheName, 'window.clearCache() fallback'))
+          }
+          console.log('[WalksCloud cache] clearCache complete', {
+            deletedCacheCount: deletedCaches.filter((entry) => entry.deleted).length,
+            deletedCaches,
+          })
+          return deletedCaches
+        } finally {
+          clearOfflineCacheBanner()
+        }
+      }
+
+      const forceCacheStorage = async () => {
+        const workerReport = await postRuntimeCacheMessageWithResponse({
+          type: 'FORCE_CACHE',
+          reason: 'window.forceCache()',
+          patterns: navigationRecoveryCacheInspectionPatterns,
+        }, getLoadedBuildHash(), navigationRecoveryCacheCommandTimeoutMs)
+
+        if (workerReport?.report) {
+          console.log('[WalksCloud cache] forceCache service worker report', workerReport)
+          cacheCurrentRuntimeState()
+          return workerReport.report
+        }
+
+        console.warn('[WalksCloud cache] forceCache service worker did not respond.')
+        return null
+      }
+
+      const verifyCacheStorage = async () => {
+        const workerReport = await postRuntimeCacheMessageWithResponse({
+          type: 'INSPECT_CACHES',
+          reason: 'window.verifyCache()',
+          patterns: navigationRecoveryCacheInspectionPatterns,
+        }, getLoadedBuildHash(), navigationRecoveryCacheCommandTimeoutMs)
+
+        if (workerReport?.cacheInspection) {
+          console.log('[WalksCloud cache] verifyCache service worker report', workerReport)
+          return workerReport.cacheInspection
+        }
+
+        console.warn('[WalksCloud cache] verifyCache service worker did not respond; inspecting CacheStorage from window.')
+        if (!('caches' in globalThis)) {
+          console.warn('[WalksCloud cache] verifyCache CacheStorage is not available in this browser context.')
+          return null
+        }
+
+        const cacheNames = await caches.keys()
+        const cachesReport = []
+        for (const cacheName of cacheNames) {
+          const urls = await listBrowserCacheEntries(cacheName).catch(() => [])
+          const patternMatches = Object.fromEntries(navigationRecoveryCacheInspectionPatterns.map((pattern) => [
+            pattern,
+            urls.filter((url) => url.includes(pattern)),
+          ]))
+          cachesReport.push({
+            cacheName,
+            entryCount: urls.length,
+            urls,
+            patternMatches,
+          })
+        }
+        const allUrls = cachesReport.flatMap((entry) => entry.urls)
+        const report = {
+          patterns: navigationRecoveryCacheInspectionPatterns,
+          cacheCount: cachesReport.length,
+          entryCount: allUrls.length,
+          patternMatches: Object.fromEntries(navigationRecoveryCacheInspectionPatterns.map((pattern) => [
+            pattern,
+            allUrls.filter((url) => url.includes(pattern)),
+          ])),
+          caches: cachesReport,
+        }
+        console.log('[WalksCloud cache] verifyCache window report', report)
+        return report
+      }
+
+      globalThis.window.clearCache = () => {
+        runConsoleCacheCommand('clearCache()', clearCacheStorage)
+      }
+
+      globalThis.window.forceCache = () => {
+        runConsoleCacheCommand('forceCache()', forceCacheStorage)
+      }
+
+      globalThis.window.verifyCache = () => {
+        runConsoleCacheCommand('verifyCache()', verifyCacheStorage)
+      }
+
       const isSameOriginUrl = (value) => {
         try {
           return new URL(value, globalThis.window.location.href).origin === globalThis.window.location.origin
@@ -234,6 +420,63 @@ export const createApp = ViteSSG(
         }, buildHash)
       }
 
+      const precacheFullSiteForCurrentVersion = () => {
+        void postRuntimeCacheMessage({
+          type: 'PRECACHE_FULL_SITE',
+        })
+      }
+
+      const showOfflineCacheBanner = () => {
+        alertStore.showOfflineBanner({
+          title: i18n.global.t('navigation-recovery.offline-cache.title'),
+          content: i18n.global.t('navigation-recovery.offline-cache.message'),
+        })
+      }
+
+      const clearOfflineCacheBanner = () => {
+        alertStore.clearOfflineBanner()
+      }
+
+      const isOfflineCacheResponse = (response) => (
+        response?.headers?.get(offlineCacheHeaderName) === '1'
+      )
+
+      const shouldShowOfflineBannerForResponse = (response) => (
+        !response ||
+        isOfflineCacheResponse(response) ||
+        response.status >= 400
+      )
+
+      const isDocumentFallbackCacheResponse = (response) => (
+        response?.headers?.get(offlineCacheModeHeaderName) === 'document-fallback'
+      )
+
+      const isExactOfflineCacheResponse = (response) => (
+        isOfflineCacheResponse(response) && !isDocumentFallbackCacheResponse(response)
+      )
+
+      const reportOfflineCheckIfNeeded = (response) => {
+        if (shouldShowOfflineBannerForResponse(response)) {
+          showOfflineCacheBanner()
+          return
+        }
+        clearOfflineCacheBanner()
+      }
+
+      const handleBrowserOnline = () => {
+        clearOfflineCacheBanner()
+      }
+
+      const handleBrowserOffline = () => {
+        showOfflineCacheBanner()
+      }
+
+      const detectOfflineCacheDocument = () => {
+        if (globalThis.window.__WC_OFFLINE_CACHE_HIT__) {
+          showOfflineCacheBanner()
+        }
+      }
+
       const serializeCurrentDocument = () => {
         const doctype = document.doctype
         const serializedDoctype = doctype
@@ -258,6 +501,12 @@ export const createApp = ViteSSG(
               new Request(new URL(navigationRecoveryRuntimeDocumentFallbackPath, globalThis.window.location.origin)),
               response.clone(),
             )
+            console.log('[WalksCloud cache] cache current document from window', {
+              cacheName: buildRuntimeCacheName(buildHash),
+              url: href,
+              fallbackPath: navigationRecoveryRuntimeDocumentFallbackPath,
+              htmlLength: html.length,
+            })
           }).catch(() => {})
         }
         void postRuntimeCacheMessage({
@@ -282,8 +531,12 @@ export const createApp = ViteSSG(
             credentials: 'same-origin',
             redirect: 'follow',
           })
+          reportOfflineCheckIfNeeded(response)
+          if (isDocumentFallbackCacheResponse(response)) return false
+          if (isExactOfflineCacheResponse(response)) return true
           return response.status === 200
         } catch {
+          reportOfflineCheckIfNeeded(null)
           return false
         }
       }
@@ -302,9 +555,12 @@ export const createApp = ViteSSG(
             redirect: 'follow',
             signal: controller.signal,
           })
+          reportOfflineCheckIfNeeded(response)
+          if (isDocumentFallbackCacheResponse(response)) return null
           if (response.status !== 200) return null
           return await response.text()
         } catch {
+          reportOfflineCheckIfNeeded(null)
           return null
         } finally {
           clearTimeout(timeout)
@@ -382,6 +638,13 @@ export const createApp = ViteSSG(
         if (recoveringNavigation || !to?.fullPath) return
         recoveringNavigation = true
         const targetUrl = new URL(to.fullPath, globalThis.window.location.href)
+        const currentUrl = new URL(globalThis.window.location.href)
+
+        if (targetUrl.href === currentUrl.href) {
+          recoveringNavigation = false
+          showOfflineCacheBanner()
+          return
+        }
 
         alertStore.clear()
         alertStore.showLoading()
@@ -481,11 +744,26 @@ export const createApp = ViteSSG(
         cacheCurrentRuntimeState(to.fullPath)
       })
 
+      navigator.serviceWorker?.addEventListener('message', (event) => {
+        if (event.data?.type === 'WALKSCLOUD_OFFLINE_CACHE_RESPONSE') {
+          showOfflineCacheBanner()
+        }
+      })
+
+      detectOfflineCacheDocument()
+
+      if (navigator.onLine === false) {
+        showOfflineCacheBanner()
+      }
+      globalThis.window.addEventListener('online', handleBrowserOnline)
+      globalThis.window.addEventListener('offline', handleBrowserOffline)
+
       void nextTick().then(() => {
         cacheCurrentRuntimeDocument()
       })
 
       void registerRuntimeCacheServiceWorker().then(() => {
+        precacheFullSiteForCurrentVersion()
         cacheCurrentRuntimeState()
       })
     }

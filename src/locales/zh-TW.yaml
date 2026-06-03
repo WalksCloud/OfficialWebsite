@@ -30,6 +30,9 @@ navigation-recovery:
     title: 已有新版頁面
     message: 此頁面已有更新版本，請繼續開啟新版頁面。
     action: 繼續
+  offline-cache:
+    title: 離線快取頁面
+    message: 目前暫時無法連線至即時網站，因此正在顯示瀏覽器快取版本。
 relationship:
   sections:
     services: 相關服務
