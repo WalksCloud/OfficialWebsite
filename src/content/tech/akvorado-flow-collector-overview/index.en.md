@@ -13,11 +13,20 @@ sitemap:
   changefreq: monthly
   lastmod: build
 ---
-## Who this Akvorado tutorial is for
+## Traffic problems Akvorado helps solve
 
 Akvorado is a flow collector, enricher, and visualizer. It receives traffic-summary data such as NetFlow/IPFIX/sFlow, enriches it with readable context from SNMP, GeoIP, routing data, or custom classification, writes the result into ClickHouse, and exposes it through a web Console. For enterprise IT teams, it is not a packet-capture platform and it does not replace device monitoring tools such as Zabbix or LibreNMS. Its value is the missing traffic-visibility layer: who is using bandwidth, where traffic is going, and which ASN, country, or service pattern looks abnormal.
 
-This article is for teams that already operate routers, switches, firewalls, or data-center edge devices and want open-source traffic visualization. If the goal is to know whether a device is online, whether an interface has errors, or whether CPU/PoE is overloaded, start with SNMP/NMS first. If the goal is to understand traffic sources, destinations, protocols, Top Talkers, and peak behavior, Akvorado is a stronger fit. In WalksCloud planning for [IT Monitoring and Management Systems](/services/it-monitoring/) and [Office Network Deployment and Operations](/services/office-network/), these two visibility needs are usually separated before selecting tools.
+Akvorado is worth deploying when a network team can already confirm that devices are online, but still cannot explain why links become full, which external networks dominate traffic, or which site, subnet, customer, or service causes a recurring peak. Typical readers are enterprise IT teams, IDC operators, managed network providers, and organizations that run routers, switches, firewalls, or data-center edge devices with NetFlow/IPFIX/sFlow support.
+
+If these problems keep troubling the environment, Akvorado can provide the traffic evidence needed to narrow the cause:
+
+1. Which Top Talkers are using the most bandwidth during peak hours?
+2. Which source or destination ASN, country, subnet, interface, or service group is responsible for an abnormal traffic pattern?
+3. Is the Internet uplink, inter-site link, peering path, or data-center edge close to capacity?
+4. Can flow data help separate normal business traffic from backup, update, scanning, abuse, or misrouted traffic?
+
+If the goal is to know whether a device is online, whether an interface has errors, or whether CPU/PoE is overloaded, start with SNMP/NMS first. If the goal is packet-level forensics, Akvorado is also not the first tool; use packet capture or mirror-port workflows instead. If the trouble is traffic-source, traffic-destination, protocol, Top Talkers, and peak-behavior visibility, Akvorado is a stronger fit. In WalksCloud planning for [IT Monitoring and Management Systems](/services/it-monitoring/) and [Office Network Deployment and Operations](/services/office-network/), these visibility needs are usually separated before selecting tools.
 
 ## Core architecture
 

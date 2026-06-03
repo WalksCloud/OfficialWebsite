@@ -13,11 +13,20 @@ sitemap:
   changefreq: monthly
   lastmod: build
 ---
-## 這篇 Akvorado 教學適合誰
+## Akvorado 可以協助釐清哪些流量問題
 
 Akvorado 是一套 flow collector、enricher 與 visualizer。它接收 NetFlow/IPFIX/sFlow 等流量摘要資料，透過 SNMP、GeoIP、路由資訊或自訂分類補上可讀欄位，再將結果寫入 ClickHouse，最後由 Web Console 查詢與視覺化。對企業 IT 而言，它不是封包側錄工具，也不是取代 Zabbix、LibreNMS 這類設備監控系統的工具，而是補上「誰在使用頻寬、流量往哪裡去、哪個 ASN/國家/服務佔比異常」的觀測層。
 
-這篇文章適合已經有網路設備、交換器、Router、防火牆或資料中心出口，並希望用開源工具建立流量可視化的人。若目標是知道設備是否在線、介面是否錯誤、CPU 或 PoE 是否超載，應優先規劃 SNMP/NMS；若目標是知道流量的來源、目的地、應用協定、Top Talkers 與尖峰行為，Akvorado 才是比較適合的切入點。行雲資訊在 [IT 監控與管理系統](/services/it-monitoring/) 與 [辦公室網路建置與維運](/services/office-network/) 的規劃中，通常會先確認這兩類觀測需求是否需要拆開處理。
+當網路團隊已經能確認設備在線，卻仍然說不清楚為什麼線路滿載、哪些外部網路佔用主要流量、哪個站點/網段/客戶/服務造成固定尖峰時，就值得導入 Akvorado 來補足流量證據。典型讀者會是企業 IT、IDC 維運團隊、代管網路服務商，或已經管理 Router、Switch、防火牆、資料中心出口設備，且設備支援 NetFlow/IPFIX/sFlow 的組織。
+
+如果以下問題持續困擾環境，Akvorado 可以協助把問題縮小到具體流量來源與行為：
+
+1. 尖峰時段到底是哪一些 Top Talkers 使用最多頻寬？
+2. 異常流量主要集中在哪個來源或目的 ASN、國家、網段、介面或服務群組？
+3. Internet uplink、跨站線路、peering path 或資料中心出口是否已經接近容量上限？
+4. 是否能用 flow 資料把正常業務流量和備份、更新、掃描、濫用或錯誤路由的流量分開？
+
+若目標是知道設備是否在線、介面是否錯誤、CPU 或 PoE 是否超載，應優先規劃 SNMP/NMS；若目標是封包層級鑑識，Akvorado 也不是第一個工具，應改用封包側錄或 mirror port 流程。若真正困擾的是流量來源、目的地、應用協定、Top Talkers 與尖峰行為看不清楚，Akvorado 才是比較適合的切入點。行雲資訊在 [IT 監控與管理系統](/services/it-monitoring/) 與 [辦公室網路建置與維運](/services/office-network/) 的規劃中，通常會先確認這幾類觀測需求是否需要拆開處理。
 
 ## 核心架構
 
