@@ -27,9 +27,8 @@ navigation-recovery:
     message: We could not complete this navigation right now. Please wait a moment and try again.
     action: Continue retrying
   version:
-    title: New page version available
-    message: This page has been updated. Continue to open the latest version.
-    action: Continue
+    title: New page version found
+    message: We found an updated page version and are loading the latest content.
   offline-cache:
     title: Offline cached page
     message: Live access is temporarily unavailable, so this page is displayed from the browser cache.

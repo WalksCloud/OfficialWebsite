@@ -36,6 +36,10 @@ clientNavigationRecovery:
   cacheCommandTimeoutMs: 120000
   # Maximum time to wait while checking whether the target page is from a newer build.
   versionCheckTimeoutMs: 3000
+  # Minimum time to show the newer-version notice before navigating to the target.
+  versionNoticeMinMs: 2000
+  # Maximum time to show the newer-version notice before navigating to the target.
+  versionNoticeMaxMs: 5000
 robots:
   policy: index,follow
 socialImage: /og_image.webp

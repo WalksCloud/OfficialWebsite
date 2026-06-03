@@ -219,9 +219,54 @@ const navigate = (target) => {
   return router.push(target).catch(() => { })
 }
 
-const handleHomeClick = (event) => {
+const requestNavigationCheck = (target, { blockUnavailable = false } = {}) => {
+  if (typeof window === 'undefined') return Promise.resolve({ blocked: false })
+  return new Promise((resolve) => {
+    const detail = {
+      target,
+      blockUnavailable,
+      handled: false,
+      resolve: (result) => resolve(result || { blocked: false }),
+    }
+    window.dispatchEvent(new CustomEvent('walkscloud:navigation-check', { detail }))
+    if (!detail.handled) resolve({ blocked: false })
+  })
+}
+
+const isSameRouteTarget = (target) => {
+  if (typeof window === 'undefined') return false
+  const targetUrl = new URL(target, window.location.href)
+  const currentUrl = new URL(route.fullPath, window.location.origin)
+  return targetUrl.pathname === currentUrl.pathname &&
+    targetUrl.search === currentUrl.search &&
+    targetUrl.hash === currentUrl.hash
+}
+
+const forceReloadTarget = (target) => {
+  const targetUrl = new URL(target, window.location.href)
+  if (targetUrl.href === window.location.href) {
+    window.location.reload()
+    return
+  }
+  window.location.assign(targetUrl.href)
+}
+
+const handleHomeClick = async (event) => {
   event?.preventDefault()
+  closeMenu()
   activeSection.value = null
+  const target = baseHomePath.value
+
+  if (route.meta.pageKey === 'home') {
+    const navigationCheck = await requestNavigationCheck(target, { blockUnavailable: true })
+    if (navigationCheck.blocked) return
+
+    if (isSameRouteTarget(target)) {
+      forceReloadTarget(target)
+      return
+    }
+  }
+
   navigate(baseHomePath.value).finally(() => {
     runAfterFrame(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' })

@@ -71,6 +71,14 @@ const navigationRecoveryVersionCheckTimeoutMs = normalizePositiveNumber(
   navigationRecovery.versionCheckTimeoutMs,
   3000,
 )
+const navigationRecoveryVersionNoticeMinMs = normalizePositiveNumber(
+  navigationRecovery.versionNoticeMinMs,
+  2000,
+)
+const navigationRecoveryVersionNoticeMaxMs = Math.max(
+  navigationRecoveryVersionNoticeMinMs,
+  normalizePositiveNumber(navigationRecovery.versionNoticeMaxMs, 5000),
+)
 
 const extractBuildHashFromHtml = (html = '') => {
   const metaMatch = String(html).match(/<meta\b[^>]*\bname=(["'])wc-build-hash\1[^>]*>/i)
@@ -105,18 +113,17 @@ export const createApp = ViteSSG(
     registerGlobalComponents(app)
     app.component('font-awesome-icon', FontAwesomeIcon)
 
-    let prepareNewerTargetVersion = async () => false
-    let showNewVersionBanner = () => {}
+    let checkTargetNavigation = async () => ({ blocked: false })
 
     if (!import.meta.env.SSR) {
       const alertStore = useAlertStore()
       let recoveringNavigation = false
       let backgroundRecoveringNavigation = false
       let pendingRecoveryTargetUrl = null
-      let pendingNewVersionTargetUrl = null
       let runtimeCacheRegistrationPromise = null
       let runtimeCacheRegistrationBuildHash = ''
       let consoleCacheCommandPromise = Promise.resolve()
+      let newVersionNavigationTimer = null
 
       const getLoadedBuildHash = () => String(import.meta.env.buildHash || '').trim()
 
@@ -567,37 +574,75 @@ export const createApp = ViteSSG(
         }
       }
 
-      const resolveTargetBuildHash = async (to) => {
-        if (!to?.fullPath) return ''
-        const targetUrl = new URL(to.fullPath, globalThis.window.location.href)
-        const html = await fetchTargetRouteDocument(targetUrl)
-        return extractBuildHashFromHtml(html)
+      const resolveVersionNoticeDelayMs = () => {
+        const spread = navigationRecoveryVersionNoticeMaxMs - navigationRecoveryVersionNoticeMinMs
+        return Math.round(navigationRecoveryVersionNoticeMinMs + Math.random() * spread)
       }
 
-      prepareNewerTargetVersion = async (to) => {
-        const targetBuildHash = await resolveTargetBuildHash(to)
+      const clearNewVersionNavigationTimer = () => {
+        if (newVersionNavigationTimer) {
+          clearTimeout(newVersionNavigationTimer)
+          newVersionNavigationTimer = null
+        }
+      }
+
+      const showNewVersionBanner = (to) => {
+        const targetUrl = to?.fullPath
+          ? new URL(to.fullPath, globalThis.window.location.href)
+          : null
+        if (!targetUrl) return
+
+        clearNewVersionNavigationTimer()
+
+        alertStore.showBanner({
+          title: i18n.global.t('navigation-recovery.version.title'),
+          content: i18n.global.t('navigation-recovery.version.message'),
+          color: 'warning',
+        })
+
+        newVersionNavigationTimer = setTimeout(() => {
+          newVersionNavigationTimer = null
+          globalThis.window.location.assign(targetUrl.href)
+        }, resolveVersionNoticeDelayMs())
+      }
+
+      const resolveNavigationCheckFullPath = (target) => {
+        const rawTarget = typeof target === 'string' ? target : target?.fullPath
+        if (!rawTarget) return ''
+        const targetUrl = new URL(rawTarget, globalThis.window.location.href)
+        return `${targetUrl.pathname}${targetUrl.search}${targetUrl.hash}`
+      }
+
+      checkTargetNavigation = async (target, { blockUnavailable = false } = {}) => {
+        const fullPath = resolveNavigationCheckFullPath(target)
+        if (!fullPath) return { blocked: false }
+
+        const targetUrl = new URL(fullPath, globalThis.window.location.href)
+        const html = await fetchTargetRouteDocument(targetUrl)
+        if (blockUnavailable && html === null) {
+          return {
+            blocked: true,
+            reason: 'unavailable',
+          }
+        }
+
+        const targetBuildHash = extractBuildHashFromHtml(html)
         const loadedBuildHash = getLoadedBuildHash()
         const hasNewerVersion = Boolean(targetBuildHash && loadedBuildHash && targetBuildHash !== loadedBuildHash)
         if (hasNewerVersion) {
           refreshRuntimeCacheForVersion(
-            collectCurrentRuntimeCacheUrls(new URL(to.fullPath, globalThis.window.location.href).href),
+            collectCurrentRuntimeCacheUrls(targetUrl.href),
             targetBuildHash,
           )
+          showNewVersionBanner({ fullPath })
+          return {
+            blocked: true,
+            reason: 'new-version',
+          }
         }
-        return hasNewerVersion
-      }
 
-      showNewVersionBanner = (to) => {
-        pendingNewVersionTargetUrl = to?.fullPath
-          ? new URL(to.fullPath, globalThis.window.location.href)
-          : null
-        alertStore.showBanner({
-          title: i18n.global.t('navigation-recovery.version.title'),
-          content: i18n.global.t('navigation-recovery.version.message'),
-          action: 'continue-new-version',
-          actionLabel: i18n.global.t('navigation-recovery.version.action'),
-          color: 'warning',
-        })
+        clearNewVersionNavigationTimer()
+        return { blocked: false }
       }
 
       const showUnavailableBanner = ({ passive = false } = {}) => {
@@ -706,11 +751,6 @@ export const createApp = ViteSSG(
         alertStore.hideTopProgress()
       }
 
-      const continueToNewVersion = () => {
-        if (!pendingNewVersionTargetUrl) return
-        globalThis.window.location.assign(pendingNewVersionTargetUrl.href)
-      }
-
       router.onError((error, to) => {
         if (isStaleClientAssetError(error)) {
           recoverTargetNavigation(to)
@@ -719,22 +759,27 @@ export const createApp = ViteSSG(
 
       globalThis.window.addEventListener('walkscloud:banner-action', (event) => {
         const action = event.detail?.action
-        if (action === 'continue-new-version') {
-          continueToNewVersion()
-          return
-        }
         if (action === 'retry-navigation') {
           retryPendingNavigationInBackground()
         }
       })
 
       globalThis.window.addEventListener('walkscloud:banner-dismiss', (event) => {
-        if (event.detail?.action === 'continue-new-version') {
-          pendingNewVersionTargetUrl = null
-        }
         if (['retry-navigation', 'retry-navigation-notice'].includes(event.detail?.action)) {
           cancelPendingNavigation()
         }
+      })
+
+      globalThis.window.addEventListener('walkscloud:navigation-check', (event) => {
+        const detail = event.detail || {}
+        detail.handled = true
+        void checkTargetNavigation(detail.target, {
+          blockUnavailable: Boolean(detail.blockUnavailable),
+        }).then((result) => {
+          if (typeof detail.resolve === 'function') {
+            detail.resolve(result)
+          }
+        })
       })
 
       router.afterEach((to) => {
@@ -889,8 +934,8 @@ export const createApp = ViteSSG(
 
       const isClientRouteNavigation = Array.isArray(from.matched) && from.matched.length > 0
       if (!import.meta.env.SSR && isClientRouteNavigation && to.fullPath !== from.fullPath) {
-        if (await prepareNewerTargetVersion(to)) {
-          showNewVersionBanner(to)
+        const navigationCheck = await checkTargetNavigation(to.fullPath)
+        if (navigationCheck.blocked) {
           return next(false)
         }
       }
