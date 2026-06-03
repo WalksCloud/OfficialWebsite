@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { Icon } from '@iconify/vue'
 import { RouterLink, useRoute } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { buildNonPrefixedPath, buildPrefixedPath, getPageConfig } from '@/utils/pageConfig'
@@ -38,15 +39,20 @@ const serviceGroups = computed(() => {
             :to="item.href"
             class="group inline-flex items-center gap-2 text-slate-900 dark:text-white hover:text-primary transition-colors"
           >
-            <span aria-hidden="true" class="material-symbols-outlined text-base transition duration-200 group-hover:text-primary chevron-wiggle">
-              chevron_right
+            <span
+              data-icon="i-material-symbols-chevron-right"
+              aria-hidden="true"
+              class="inline-flex shrink-0 text-base transition duration-200 group-hover:text-primary chevron-wiggle"
+            >
+              <Icon icon="material-symbols:chevron-right" width="1em" height="1em" />
             </span>
             <span class="text-base transition duration-200 group-hover:text-primary">{{ item.title }}</span>
             <span
+              data-icon="i-material-symbols-arrow-forward"
               aria-hidden="true"
-              class="material-symbols-outlined text-base opacity-0 -translate-x-1 transition duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-primary"
+              class="inline-flex shrink-0 text-base opacity-0 -translate-x-1 transition duration-200 group-hover:opacity-100 group-hover:translate-x-0 group-hover:text-primary"
             >
-              arrow_forward
+              <Icon icon="material-symbols:arrow-forward" width="1em" height="1em" />
             </span>
           </RouterLink>
           <span v-else>{{ item.title }}</span>
