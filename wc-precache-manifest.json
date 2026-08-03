@@ -1,0 +1,1580 @@
+{
+  "version": 1,
+  "generatedAt": "2026-08-03T16:28:03.379Z",
+  "requiredCachePatterns": [
+    "/assets/app-pages-markdownpage-",
+    "/assets/MarkdownPage-"
+  ],
+  "entries": [
+    {
+      "url": "/assets/akvorado-console-as-traffic-visualization-annotated-CbV-8U9X.png"
+    },
+    {
+      "url": "/assets/akvorado-console-home-traffic-overview-annotated-HUwLskL_.png"
+    },
+    {
+      "url": "/assets/app-app-DqDCaq2Y.js"
+    },
+    {
+      "url": "/assets/app-app-mW650mZV.css"
+    },
+    {
+      "url": "/assets/app-components-about-DQyp_0kn.js"
+    },
+    {
+      "url": "/assets/app-components-articlelist-BPmMn6Wj.js"
+    },
+    {
+      "url": "/assets/app-components-codeblock-Cb4JIRXj.js"
+    },
+    {
+      "url": "/assets/app-components-codeblock-U2sVByzN.css"
+    },
+    {
+      "url": "/assets/app-components-contact-64kmofb5.css"
+    },
+    {
+      "url": "/assets/app-components-contact-CEx4rJ_7.js"
+    },
+    {
+      "url": "/assets/app-components-faqarticlecard-CLhosivQ.css"
+    },
+    {
+      "url": "/assets/app-components-faqarticlecard-CsGYNnhw.js"
+    },
+    {
+      "url": "/assets/app-components-markdownmediaviewer-CY_X16Tu.css"
+    },
+    {
+      "url": "/assets/app-components-markdownmediaviewer-D28eYsOY.js"
+    },
+    {
+      "url": "/assets/app-components-pagebreadcrumb-aqQV90gp.js"
+    },
+    {
+      "url": "/assets/app-components-pagebreadcrumb-Bqt4T0JF.css"
+    },
+    {
+      "url": "/assets/app-components-partners-Dsid1i4v.js"
+    },
+    {
+      "url": "/assets/app-components-relationshiparticlelist-C8yjvmnN.js"
+    },
+    {
+      "url": "/assets/app-components-services-CekuoGnn.js"
+    },
+    {
+      "url": "/assets/app-components-servicesgrid-BF0YheVz.js"
+    },
+    {
+      "url": "/assets/app-components-servicesgrid-Bul0Vo1U.css"
+    },
+    {
+      "url": "/assets/app-components-team-wdzy9ozd.js"
+    },
+    {
+      "url": "/assets/app-DnChsoC0.js"
+    },
+    {
+      "url": "/assets/app-generated-contentimageassets--5P0biVT.js"
+    },
+    {
+      "url": "/assets/app-main-Dn7K9qBO.css"
+    },
+    {
+      "url": "/assets/app-main-w5E_u4KA.js"
+    },
+    {
+      "url": "/assets/app-pages-articleindexpage-C-ptkTKJ.js"
+    },
+    {
+      "url": "/assets/app-pages-homepage-CJf3Vpar.js"
+    },
+    {
+      "url": "/assets/app-pages-markdownpage-BuWrXDF9.css"
+    },
+    {
+      "url": "/assets/app-pages-markdownpage-ENMpwEzq.js"
+    },
+    {
+      "url": "/assets/app-pages-notfoundpage-Ba1nA2p3.js"
+    },
+    {
+      "url": "/assets/app-pages-placeholderpage-DlLmFzGQ.js"
+    },
+    {
+      "url": "/assets/architecture-7EHR7CIX-DtksfzWn.js"
+    },
+    {
+      "url": "/assets/architectureDiagram-3BPJPVTR-0TA4Y01W.js"
+    },
+    {
+      "url": "/assets/ArticleIndexPage-B6zuLv0p.js"
+    },
+    {
+      "url": "/assets/blockDiagram-GPEHLZMM-BBI-4ihx.js"
+    },
+    {
+      "url": "/assets/c4Diagram-AAUBKEIU-D4c-D8uc.js"
+    },
+    {
+      "url": "/assets/classDiagram-4FO5ZUOK-Ds6sn1rs.js"
+    },
+    {
+      "url": "/assets/classDiagram-v2-Q7XG4LA2-CpLqmws_.js"
+    },
+    {
+      "url": "/assets/cose-bilkent-S5V4N54A-HpSOiB9Z.js"
+    },
+    {
+      "url": "/assets/dagre-BM42HDAG-aKcLRhDC.js"
+    },
+    {
+      "url": "/assets/diagram-2AECGRRQ-DBp0K6dJ.js"
+    },
+    {
+      "url": "/assets/diagram-5GNKFQAL-Dn5vnfGM.js"
+    },
+    {
+      "url": "/assets/diagram-KO2AKTUF-BRTJABNX.js"
+    },
+    {
+      "url": "/assets/diagram-LMA3HP47-Ce7SrEMF.js"
+    },
+    {
+      "url": "/assets/diagram-OG6HWLK6-Bnv_YDBL.js"
+    },
+    {
+      "url": "/assets/erDiagram-TEJ5UH35-8anTmS0h.js"
+    },
+    {
+      "url": "/assets/eventmodeling-FCH6USID-BzgZIzB5.js"
+    },
+    {
+      "url": "/assets/flowDiagram-I6XJVG4X-BOt-VFJU.js"
+    },
+    {
+      "url": "/assets/ganttDiagram-6RSMTGT7-C1wess3a.js"
+    },
+    {
+      "url": "/assets/gitGraph-WXDBUCRP-D6rphf_5.js"
+    },
+    {
+      "url": "/assets/gitGraphDiagram-PVQCEYII-BudTVNVa.js"
+    },
+    {
+      "url": "/assets/HomePage-pHVe-n4O.js"
+    },
+    {
+      "url": "/assets/info-J43DQDTF-onjG1xQh.js"
+    },
+    {
+      "url": "/assets/infoDiagram-5YYISTIA-D26oQRhw.js"
+    },
+    {
+      "url": "/assets/ishikawaDiagram-YF4QCWOH-CKBe2Weg.js"
+    },
+    {
+      "url": "/assets/jamf-connect-application-screenshot-Dvd3jR8O.png"
+    },
+    {
+      "url": "/assets/journeyDiagram-JHISSGLW-BtGONwZ-.js"
+    },
+    {
+      "url": "/assets/kanban-definition-UN3LZRKU-BJRz-tuG.js"
+    },
+    {
+      "url": "/assets/katex-rUrYvfmp.js"
+    },
+    {
+      "url": "/assets/make-update-report-button-pbs-Cq1tmKf0.png"
+    },
+    {
+      "url": "/assets/make-update-report-button-pve-Ce2z4248.png"
+    },
+    {
+      "url": "/assets/MarkdownMediaViewer-B0T5zukk.js"
+    },
+    {
+      "url": "/assets/MarkdownPage-BbKdSABK.js"
+    },
+    {
+      "url": "/assets/mermaid.core-D3BK6NZc.js"
+    },
+    {
+      "url": "/assets/mindmap-definition-RKZ34NQL-BDGj1iWk.js"
+    },
+    {
+      "url": "/assets/NotFoundPage-DWv8dEBn.js"
+    },
+    {
+      "url": "/assets/packet-YPE3B663-CQGsfcW0.js"
+    },
+    {
+      "url": "/assets/pie-LRSECV5Y-CUc14M-U.js"
+    },
+    {
+      "url": "/assets/pieDiagram-4H26LBE5-Ce_SP2GD.js"
+    },
+    {
+      "url": "/assets/PlaceholderPage-BAknxs3C.js"
+    },
+    {
+      "url": "/assets/quadrantDiagram-W4KKPZXB-BHd8Qrbe.js"
+    },
+    {
+      "url": "/assets/radar-GUYGQ44K-DnRR2m30.js"
+    },
+    {
+      "url": "/assets/requirementDiagram-4Y6WPE33-BH1CKPCa.js"
+    },
+    {
+      "url": "/assets/rolldown-runtime-Dw2cE7zH.js"
+    },
+    {
+      "url": "/assets/sankeyDiagram-5OEKKPKP-DkbRhnGV.js"
+    },
+    {
+      "url": "/assets/sequenceDiagram-3UESZ5HK-Cnw8n_2M.js"
+    },
+    {
+      "url": "/assets/stateDiagram-AJRCARHV-CrfUUDHp.js"
+    },
+    {
+      "url": "/assets/stateDiagram-v2-BHNVJYJU-Cns5eYz9.js"
+    },
+    {
+      "url": "/assets/timeline-definition-PNZ67QCA-BpMiYd9k.js"
+    },
+    {
+      "url": "/assets/treemap-LRROVOQU-3827oHbU.js"
+    },
+    {
+      "url": "/assets/treeView-BLDUP644-DuUy7yZu.js"
+    },
+    {
+      "url": "/assets/vendor-aria-hidden-B3RwGKPJ.js"
+    },
+    {
+      "url": "/assets/vendor-braintree-sanitize-url-D5fgnEQ9.js"
+    },
+    {
+      "url": "/assets/vendor-cose-base-C6SCygMQ.js"
+    },
+    {
+      "url": "/assets/vendor-cytoscape-8hq31NtH.js"
+    },
+    {
+      "url": "/assets/vendor-cytoscape-cose-bilkent-Uv6ivrWu.js"
+    },
+    {
+      "url": "/assets/vendor-cytoscape-fcose-Bdh3rZrH.js"
+    },
+    {
+      "url": "/assets/vendor-d3-array-Dwy0Ek2-.js"
+    },
+    {
+      "url": "/assets/vendor-d3-axis-4X2BGOMs.js"
+    },
+    {
+      "url": "/assets/vendor-d3-CBg-IJxA.js"
+    },
+    {
+      "url": "/assets/vendor-d3-color-Dlp6BcDe.js"
+    },
+    {
+      "url": "/assets/vendor-d3-format-B-ig65Ha.js"
+    },
+    {
+      "url": "/assets/vendor-d3-hierarchy-BQMG1-D6.js"
+    },
+    {
+      "url": "/assets/vendor-d3-interpolate-Br0OxLhs.js"
+    },
+    {
+      "url": "/assets/vendor-d3-path-CKaf6qhP.js"
+    },
+    {
+      "url": "/assets/vendor-d3-sankey-BskLo5sG.js"
+    },
+    {
+      "url": "/assets/vendor-d3-scale-B0Hqovr7.js"
+    },
+    {
+      "url": "/assets/vendor-d3-scale-chromatic-BF4HqJEK.js"
+    },
+    {
+      "url": "/assets/vendor-d3-selection-BU8GDIQV.js"
+    },
+    {
+      "url": "/assets/vendor-d3-shape-DFNaAsiJ.js"
+    },
+    {
+      "url": "/assets/vendor-dagre-d3-es-516zqlJb.js"
+    },
+    {
+      "url": "/assets/vendor-dayjs-au8jF9Fu.js"
+    },
+    {
+      "url": "/assets/vendor-defu-DXKYrQA1.js"
+    },
+    {
+      "url": "/assets/vendor-dompurify-C7T9KYlL.js"
+    },
+    {
+      "url": "/assets/vendor-entities-Ca4nIqaH.js"
+    },
+    {
+      "url": "/assets/vendor-es-toolkit-BOACgulX.js"
+    },
+    {
+      "url": "/assets/vendor-floating-ui-core-BxGbrqob.js"
+    },
+    {
+      "url": "/assets/vendor-floating-ui-dom-CmfechQE.js"
+    },
+    {
+      "url": "/assets/vendor-floating-ui-vue-C28NmCs9.js"
+    },
+    {
+      "url": "/assets/vendor-fortawesome-fontawesome-svg-core-BJL-SltL.js"
+    },
+    {
+      "url": "/assets/vendor-fortawesome-free-brands-svg-icons-D19XXPsZ.js"
+    },
+    {
+      "url": "/assets/vendor-fortawesome-vue-fontawesome-HtoplPgL.js"
+    },
+    {
+      "url": "/assets/vendor-hookable-Bgb2_uaW.js"
+    },
+    {
+      "url": "/assets/vendor-iconify-utils-B6jNR1Mb.js"
+    },
+    {
+      "url": "/assets/vendor-iconify-vue-DivG0faK.js"
+    },
+    {
+      "url": "/assets/vendor-intlify-core-base-Dvfy1b8b.js"
+    },
+    {
+      "url": "/assets/vendor-katex-BViY7rrz.js"
+    },
+    {
+      "url": "/assets/vendor-khroma-Dutlr9jX.js"
+    },
+    {
+      "url": "/assets/vendor-linkify-it-Cevw0QkX.js"
+    },
+    {
+      "url": "/assets/vendor-markdown-it-BM3Tt0I0.js"
+    },
+    {
+      "url": "/assets/vendor-marked-CdzcDwZW.js"
+    },
+    {
+      "url": "/assets/vendor-mermaid-js-parser-r6JfGMzQ.js"
+    },
+    {
+      "url": "/assets/vendor-mermaid-lGehb28L.js"
+    },
+    {
+      "url": "/assets/vendor-nuxt-ui-D9YX0gYx.js"
+    },
+    {
+      "url": "/assets/vendor-pinia-DFbAWs6l.js"
+    },
+    {
+      "url": "/assets/vendor-speed-highlight-core-BjtuR5X_.js"
+    },
+    {
+      "url": "/assets/vendor-unhead-DJxJKFdT.js"
+    },
+    {
+      "url": "/assets/vendor-unhead-vue-C6gPxqDn.js"
+    },
+    {
+      "url": "/assets/vendor-vite-ssg-CRafZ5G6.js"
+    },
+    {
+      "url": "/assets/vendor-vue-i18n-C8gVcqv9.js"
+    },
+    {
+      "url": "/assets/vendor-yaml-CkaZpCe2.js"
+    },
+    {
+      "url": "/assets/vennDiagram-CIIHVFJN-Bz9dmwNz.js"
+    },
+    {
+      "url": "/assets/vgpu-guide-driver-download-DtNwvg2I.png"
+    },
+    {
+      "url": "/assets/vgpu-guide-nls-download-DNnUdhD_.png"
+    },
+    {
+      "url": "/assets/wardley-L42UT6IY-DDZnXzFv.js"
+    },
+    {
+      "url": "/assets/wardleyDiagram-YWT4CUSO-B4kbkr_8.js"
+    },
+    {
+      "url": "/assets/xychartDiagram-2RQKCTM6-B661Yml4.js"
+    },
+    {
+      "url": "/en/",
+      "aliases": [
+        "/en"
+      ]
+    },
+    {
+      "url": "/en/404/",
+      "aliases": [
+        "/en/404"
+      ]
+    },
+    {
+      "url": "/en/cases/",
+      "aliases": [
+        "/en/cases"
+      ]
+    },
+    {
+      "url": "/en/cases/ana-unifi-controller/",
+      "aliases": [
+        "/en/cases/ana-unifi-controller"
+      ]
+    },
+    {
+      "url": "/en/cases/cay-azure-erp/",
+      "aliases": [
+        "/en/cases/cay-azure-erp"
+      ]
+    },
+    {
+      "url": "/en/cases/cay-dns-filter/",
+      "aliases": [
+        "/en/cases/cay-dns-filter"
+      ]
+    },
+    {
+      "url": "/en/cases/cay-ldap-onboarding/",
+      "aliases": [
+        "/en/cases/cay-ldap-onboarding"
+      ]
+    },
+    {
+      "url": "/en/cases/cay-machine-room/",
+      "aliases": [
+        "/en/cases/cay-machine-room"
+      ]
+    },
+    {
+      "url": "/en/cases/cay-server-farm/",
+      "aliases": [
+        "/en/cases/cay-server-farm"
+      ]
+    },
+    {
+      "url": "/en/cases/cpa-jjp-network-audit/",
+      "aliases": [
+        "/en/cases/cpa-jjp-network-audit"
+      ]
+    },
+    {
+      "url": "/en/cases/jal-pa/",
+      "aliases": [
+        "/en/cases/jal-pa"
+      ]
+    },
+    {
+      "url": "/en/cases/klm-aua-erp/",
+      "aliases": [
+        "/en/cases/klm-aua-erp"
+      ]
+    },
+    {
+      "url": "/en/cases/lgl-awe-pve-vgpu-jamf/",
+      "aliases": [
+        "/en/cases/lgl-awe-pve-vgpu-jamf"
+      ]
+    },
+    {
+      "url": "/en/cases/lgl-cal-jamf-oidc/",
+      "aliases": [
+        "/en/cases/lgl-cal-jamf-oidc"
+      ]
+    },
+    {
+      "url": "/en/cases/lgl-csa-vpn/",
+      "aliases": [
+        "/en/cases/lgl-csa-vpn"
+      ]
+    },
+    {
+      "url": "/en/cases/lgl-hda-openvz-pve-eval/",
+      "aliases": [
+        "/en/cases/lgl-hda-openvz-pve-eval"
+      ]
+    },
+    {
+      "url": "/en/cases/lgl-nax-gpu-passthrough/",
+      "aliases": [
+        "/en/cases/lgl-nax-gpu-passthrough"
+      ]
+    },
+    {
+      "url": "/en/cases/lgl-tax-pve-io-wait/",
+      "aliases": [
+        "/en/cases/lgl-tax-pve-io-wait"
+      ]
+    },
+    {
+      "url": "/en/cases/tgw-mdm/",
+      "aliases": [
+        "/en/cases/tgw-mdm"
+      ]
+    },
+    {
+      "url": "/en/cases/tgw-remote-network/",
+      "aliases": [
+        "/en/cases/tgw-remote-network"
+      ]
+    },
+    {
+      "url": "/en/cases/tgw-zero-trust-monitoring/",
+      "aliases": [
+        "/en/cases/tgw-zero-trust-monitoring"
+      ]
+    },
+    {
+      "url": "/en/cases/ttw-mdm/",
+      "aliases": [
+        "/en/cases/ttw-mdm"
+      ]
+    },
+    {
+      "url": "/en/cases/ttw-remote-network/",
+      "aliases": [
+        "/en/cases/ttw-remote-network"
+      ]
+    },
+    {
+      "url": "/en/cases/uia-remote-network/",
+      "aliases": [
+        "/en/cases/uia-remote-network"
+      ]
+    },
+    {
+      "url": "/en/cases/wzz-contract-strategy/",
+      "aliases": [
+        "/en/cases/wzz-contract-strategy"
+      ]
+    },
+    {
+      "url": "/en/cases/wzz-nas-migration/",
+      "aliases": [
+        "/en/cases/wzz-nas-migration"
+      ]
+    },
+    {
+      "url": "/en/cases/wzz-network-controller/",
+      "aliases": [
+        "/en/cases/wzz-network-controller"
+      ]
+    },
+    {
+      "url": "/en/legal/privacy-policy/",
+      "aliases": [
+        "/en/legal/privacy-policy"
+      ]
+    },
+    {
+      "url": "/en/legal/terms-of-use/",
+      "aliases": [
+        "/en/legal/terms-of-use"
+      ]
+    },
+    {
+      "url": "/en/services/",
+      "aliases": [
+        "/en/services"
+      ]
+    },
+    {
+      "url": "/en/services/8021x/",
+      "aliases": [
+        "/en/services/8021x"
+      ]
+    },
+    {
+      "url": "/en/services/backup-security/",
+      "aliases": [
+        "/en/services/backup-security"
+      ]
+    },
+    {
+      "url": "/en/services/container-devops/",
+      "aliases": [
+        "/en/services/container-devops"
+      ]
+    },
+    {
+      "url": "/en/services/custom-dev/",
+      "aliases": [
+        "/en/services/custom-dev"
+      ]
+    },
+    {
+      "url": "/en/services/hosting-operations/",
+      "aliases": [
+        "/en/services/hosting-operations"
+      ]
+    },
+    {
+      "url": "/en/services/iam-zitadel/",
+      "aliases": [
+        "/en/services/iam-zitadel"
+      ]
+    },
+    {
+      "url": "/en/services/idc-deployment/",
+      "aliases": [
+        "/en/services/idc-deployment"
+      ]
+    },
+    {
+      "url": "/en/services/it-monitoring/",
+      "aliases": [
+        "/en/services/it-monitoring"
+      ]
+    },
+    {
+      "url": "/en/services/it-outsourcing/",
+      "aliases": [
+        "/en/services/it-outsourcing"
+      ]
+    },
+    {
+      "url": "/en/services/mdm/",
+      "aliases": [
+        "/en/services/mdm"
+      ]
+    },
+    {
+      "url": "/en/services/office-network/",
+      "aliases": [
+        "/en/services/office-network"
+      ]
+    },
+    {
+      "url": "/en/services/virtualization-cloud/",
+      "aliases": [
+        "/en/services/virtualization-cloud"
+      ]
+    },
+    {
+      "url": "/en/services/vpn-remote/",
+      "aliases": [
+        "/en/services/vpn-remote"
+      ]
+    },
+    {
+      "url": "/en/services/wazuh-asset/",
+      "aliases": [
+        "/en/services/wazuh-asset"
+      ]
+    },
+    {
+      "url": "/en/services/wazuh-siem/",
+      "aliases": [
+        "/en/services/wazuh-siem"
+      ]
+    },
+    {
+      "url": "/en/services/zero-trust/",
+      "aliases": [
+        "/en/services/zero-trust"
+      ]
+    },
+    {
+      "url": "/en/tech/",
+      "aliases": [
+        "/en/tech"
+      ]
+    },
+    {
+      "url": "/en/tech/akvorado-flow-collector-overview/",
+      "aliases": [
+        "/en/tech/akvorado-flow-collector-overview"
+      ]
+    },
+    {
+      "url": "/en/tech/akvorado-traffic-analysis-workflow/",
+      "aliases": [
+        "/en/tech/akvorado-traffic-analysis-workflow"
+      ]
+    },
+    {
+      "url": "/en/tech/app-ownership-transfer-process/",
+      "aliases": [
+        "/en/tech/app-ownership-transfer-process"
+      ]
+    },
+    {
+      "url": "/en/tech/budget-nas-refresh-plan/",
+      "aliases": [
+        "/en/tech/budget-nas-refresh-plan"
+      ]
+    },
+    {
+      "url": "/en/tech/closed-hypervisor-migration-validation/",
+      "aliases": [
+        "/en/tech/closed-hypervisor-migration-validation"
+      ]
+    },
+    {
+      "url": "/en/tech/controlled-ap-dual-path/",
+      "aliases": [
+        "/en/tech/controlled-ap-dual-path"
+      ]
+    },
+    {
+      "url": "/en/tech/custom-app-review-transfer/",
+      "aliases": [
+        "/en/tech/custom-app-review-transfer"
+      ]
+    },
+    {
+      "url": "/en/tech/datacenter-move-ups-improvement/",
+      "aliases": [
+        "/en/tech/datacenter-move-ups-improvement"
+      ]
+    },
+    {
+      "url": "/en/tech/it-inventory-recovery-manual/",
+      "aliases": [
+        "/en/tech/it-inventory-recovery-manual"
+      ]
+    },
+    {
+      "url": "/en/tech/it-refresh-migration-blueprint/",
+      "aliases": [
+        "/en/tech/it-refresh-migration-blueprint"
+      ]
+    },
+    {
+      "url": "/en/tech/jamf-audit-cross-team/",
+      "aliases": [
+        "/en/tech/jamf-audit-cross-team"
+      ]
+    },
+    {
+      "url": "/en/tech/jamf-trust-vpn-control/",
+      "aliases": [
+        "/en/tech/jamf-trust-vpn-control"
+      ]
+    },
+    {
+      "url": "/en/tech/multi-stage-migration-checklist/",
+      "aliases": [
+        "/en/tech/multi-stage-migration-checklist"
+      ]
+    },
+    {
+      "url": "/en/tech/network-audit-template-delivery/",
+      "aliases": [
+        "/en/tech/network-audit-template-delivery"
+      ]
+    },
+    {
+      "url": "/en/tech/network-license-takeover-checklist/",
+      "aliases": [
+        "/en/tech/network-license-takeover-checklist"
+      ]
+    },
+    {
+      "url": "/en/tech/offline-pve-gpu-passthrough/",
+      "aliases": [
+        "/en/tech/offline-pve-gpu-passthrough"
+      ]
+    },
+    {
+      "url": "/en/tech/oidc-test-logs-communication/",
+      "aliases": [
+        "/en/tech/oidc-test-logs-communication"
+      ]
+    },
+    {
+      "url": "/en/tech/on-site-troubleshooting-handbook/",
+      "aliases": [
+        "/en/tech/on-site-troubleshooting-handbook"
+      ]
+    },
+    {
+      "url": "/en/tech/onboarding-account-automation/",
+      "aliases": [
+        "/en/tech/onboarding-account-automation"
+      ]
+    },
+    {
+      "url": "/en/tech/operations-handover-package/",
+      "aliases": [
+        "/en/tech/operations-handover-package"
+      ]
+    },
+    {
+      "url": "/en/tech/passive-inspection-report-workflow/",
+      "aliases": [
+        "/en/tech/passive-inspection-report-workflow"
+      ]
+    },
+    {
+      "url": "/en/tech/pve-backup-schedule-tuning-guide/",
+      "aliases": [
+        "/en/tech/pve-backup-schedule-tuning-guide"
+      ]
+    },
+    {
+      "url": "/en/tech/pve-io-wait-diagnostics-workflow/",
+      "aliases": [
+        "/en/tech/pve-io-wait-diagnostics-workflow"
+      ]
+    },
+    {
+      "url": "/en/tech/pve-pbs-backup-schedule-validation/",
+      "aliases": [
+        "/en/tech/pve-pbs-backup-schedule-validation"
+      ]
+    },
+    {
+      "url": "/en/tech/pve-quarterly-report-template/",
+      "aliases": [
+        "/en/tech/pve-quarterly-report-template"
+      ]
+    },
+    {
+      "url": "/en/tech/pve-vgpu-rollout-training/",
+      "aliases": [
+        "/en/tech/pve-vgpu-rollout-training"
+      ]
+    },
+    {
+      "url": "/en/tech/remote-inspection-reporting/",
+      "aliases": [
+        "/en/tech/remote-inspection-reporting"
+      ]
+    },
+    {
+      "url": "/en/tech/shared-dns-radius-isolation/",
+      "aliases": [
+        "/en/tech/shared-dns-radius-isolation"
+      ]
+    },
+    {
+      "url": "/en/tech/unifi-controller-migration-light-ops/",
+      "aliases": [
+        "/en/tech/unifi-controller-migration-light-ops"
+      ]
+    },
+    {
+      "url": "/en/tech/vpn-radius-certificate-lifecycle/",
+      "aliases": [
+        "/en/tech/vpn-radius-certificate-lifecycle"
+      ]
+    },
+    {
+      "url": "/en/tech/wifi-controller-firmware-schedule/",
+      "aliases": [
+        "/en/tech/wifi-controller-firmware-schedule"
+      ]
+    },
+    {
+      "url": "/en/tech/zitadel-jamf-connect-validation-lab/",
+      "aliases": [
+        "/en/tech/zitadel-jamf-connect-validation-lab"
+      ]
+    },
+    {
+      "url": "/favicon.ico"
+    },
+    {
+      "url": "/icons/iconify/heroicons.json"
+    },
+    {
+      "url": "/icons/iconify/lucide.json"
+    },
+    {
+      "url": "/icons/iconify/material-symbols.json"
+    },
+    {
+      "url": "/icons/iconify/vscode-icons.json"
+    },
+    {
+      "url": "/img/hero-back.webp"
+    },
+    {
+      "url": "/logo_1.svg"
+    },
+    {
+      "url": "/logo_2.svg"
+    },
+    {
+      "url": "/logo-gradual.svg"
+    },
+    {
+      "url": "/logo-wordmark-company-white.svg"
+    },
+    {
+      "url": "/logo-wordmark-company.svg"
+    },
+    {
+      "url": "/og_image.webp"
+    },
+    {
+      "url": "/partner/jason-tools.webp"
+    },
+    {
+      "url": "/pic/Haraguroicha-Hsu.webp"
+    },
+    {
+      "url": "/pic/Jimmy-Pan.webp"
+    },
+    {
+      "url": "/pic/Pennyken-Huang.webp"
+    },
+    {
+      "url": "/walkscloud.svg"
+    },
+    {
+      "url": "/zh-tw/",
+      "aliases": [
+        "/zh-tw",
+        "/"
+      ]
+    },
+    {
+      "url": "/zh-tw/404/",
+      "aliases": [
+        "/zh-tw/404",
+        "/404/",
+        "/404"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/",
+      "aliases": [
+        "/zh-tw/cases",
+        "/cases/",
+        "/cases"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/ana-unifi-controller/",
+      "aliases": [
+        "/zh-tw/cases/ana-unifi-controller",
+        "/cases/ana-unifi-controller/",
+        "/cases/ana-unifi-controller"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/cay-azure-erp/",
+      "aliases": [
+        "/zh-tw/cases/cay-azure-erp",
+        "/cases/cay-azure-erp/",
+        "/cases/cay-azure-erp"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/cay-dns-filter/",
+      "aliases": [
+        "/zh-tw/cases/cay-dns-filter",
+        "/cases/cay-dns-filter/",
+        "/cases/cay-dns-filter"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/cay-ldap-onboarding/",
+      "aliases": [
+        "/zh-tw/cases/cay-ldap-onboarding",
+        "/cases/cay-ldap-onboarding/",
+        "/cases/cay-ldap-onboarding"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/cay-machine-room/",
+      "aliases": [
+        "/zh-tw/cases/cay-machine-room",
+        "/cases/cay-machine-room/",
+        "/cases/cay-machine-room"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/cay-server-farm/",
+      "aliases": [
+        "/zh-tw/cases/cay-server-farm",
+        "/cases/cay-server-farm/",
+        "/cases/cay-server-farm"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/cpa-jjp-network-audit/",
+      "aliases": [
+        "/zh-tw/cases/cpa-jjp-network-audit",
+        "/cases/cpa-jjp-network-audit/",
+        "/cases/cpa-jjp-network-audit"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/jal-pa/",
+      "aliases": [
+        "/zh-tw/cases/jal-pa",
+        "/cases/jal-pa/",
+        "/cases/jal-pa"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/klm-aua-erp/",
+      "aliases": [
+        "/zh-tw/cases/klm-aua-erp",
+        "/cases/klm-aua-erp/",
+        "/cases/klm-aua-erp"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/lgl-awe-pve-vgpu-jamf/",
+      "aliases": [
+        "/zh-tw/cases/lgl-awe-pve-vgpu-jamf",
+        "/cases/lgl-awe-pve-vgpu-jamf/",
+        "/cases/lgl-awe-pve-vgpu-jamf"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/lgl-cal-jamf-oidc/",
+      "aliases": [
+        "/zh-tw/cases/lgl-cal-jamf-oidc",
+        "/cases/lgl-cal-jamf-oidc/",
+        "/cases/lgl-cal-jamf-oidc"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/lgl-csa-vpn/",
+      "aliases": [
+        "/zh-tw/cases/lgl-csa-vpn",
+        "/cases/lgl-csa-vpn/",
+        "/cases/lgl-csa-vpn"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/lgl-hda-openvz-pve-eval/",
+      "aliases": [
+        "/zh-tw/cases/lgl-hda-openvz-pve-eval",
+        "/cases/lgl-hda-openvz-pve-eval/",
+        "/cases/lgl-hda-openvz-pve-eval"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/lgl-nax-gpu-passthrough/",
+      "aliases": [
+        "/zh-tw/cases/lgl-nax-gpu-passthrough",
+        "/cases/lgl-nax-gpu-passthrough/",
+        "/cases/lgl-nax-gpu-passthrough"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/lgl-tax-pve-io-wait/",
+      "aliases": [
+        "/zh-tw/cases/lgl-tax-pve-io-wait",
+        "/cases/lgl-tax-pve-io-wait/",
+        "/cases/lgl-tax-pve-io-wait"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/tgw-mdm/",
+      "aliases": [
+        "/zh-tw/cases/tgw-mdm",
+        "/cases/tgw-mdm/",
+        "/cases/tgw-mdm"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/tgw-remote-network/",
+      "aliases": [
+        "/zh-tw/cases/tgw-remote-network",
+        "/cases/tgw-remote-network/",
+        "/cases/tgw-remote-network"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/tgw-zero-trust-monitoring/",
+      "aliases": [
+        "/zh-tw/cases/tgw-zero-trust-monitoring",
+        "/cases/tgw-zero-trust-monitoring/",
+        "/cases/tgw-zero-trust-monitoring"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/ttw-mdm/",
+      "aliases": [
+        "/zh-tw/cases/ttw-mdm",
+        "/cases/ttw-mdm/",
+        "/cases/ttw-mdm"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/ttw-remote-network/",
+      "aliases": [
+        "/zh-tw/cases/ttw-remote-network",
+        "/cases/ttw-remote-network/",
+        "/cases/ttw-remote-network"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/uia-remote-network/",
+      "aliases": [
+        "/zh-tw/cases/uia-remote-network",
+        "/cases/uia-remote-network/",
+        "/cases/uia-remote-network"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/wzz-contract-strategy/",
+      "aliases": [
+        "/zh-tw/cases/wzz-contract-strategy",
+        "/cases/wzz-contract-strategy/",
+        "/cases/wzz-contract-strategy"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/wzz-nas-migration/",
+      "aliases": [
+        "/zh-tw/cases/wzz-nas-migration",
+        "/cases/wzz-nas-migration/",
+        "/cases/wzz-nas-migration"
+      ]
+    },
+    {
+      "url": "/zh-tw/cases/wzz-network-controller/",
+      "aliases": [
+        "/zh-tw/cases/wzz-network-controller",
+        "/cases/wzz-network-controller/",
+        "/cases/wzz-network-controller"
+      ]
+    },
+    {
+      "url": "/zh-tw/legal/privacy-policy/",
+      "aliases": [
+        "/zh-tw/legal/privacy-policy",
+        "/legal/privacy-policy/",
+        "/legal/privacy-policy"
+      ]
+    },
+    {
+      "url": "/zh-tw/legal/terms-of-use/",
+      "aliases": [
+        "/zh-tw/legal/terms-of-use",
+        "/legal/terms-of-use/",
+        "/legal/terms-of-use"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/",
+      "aliases": [
+        "/zh-tw/services",
+        "/services/",
+        "/services"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/8021x/",
+      "aliases": [
+        "/zh-tw/services/8021x",
+        "/services/8021x/",
+        "/services/8021x"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/backup-security/",
+      "aliases": [
+        "/zh-tw/services/backup-security",
+        "/services/backup-security/",
+        "/services/backup-security"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/container-devops/",
+      "aliases": [
+        "/zh-tw/services/container-devops",
+        "/services/container-devops/",
+        "/services/container-devops"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/custom-dev/",
+      "aliases": [
+        "/zh-tw/services/custom-dev",
+        "/services/custom-dev/",
+        "/services/custom-dev"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/hosting-operations/",
+      "aliases": [
+        "/zh-tw/services/hosting-operations",
+        "/services/hosting-operations/",
+        "/services/hosting-operations"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/iam-zitadel/",
+      "aliases": [
+        "/zh-tw/services/iam-zitadel",
+        "/services/iam-zitadel/",
+        "/services/iam-zitadel"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/idc-deployment/",
+      "aliases": [
+        "/zh-tw/services/idc-deployment",
+        "/services/idc-deployment/",
+        "/services/idc-deployment"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/it-monitoring/",
+      "aliases": [
+        "/zh-tw/services/it-monitoring",
+        "/services/it-monitoring/",
+        "/services/it-monitoring"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/it-outsourcing/",
+      "aliases": [
+        "/zh-tw/services/it-outsourcing",
+        "/services/it-outsourcing/",
+        "/services/it-outsourcing"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/mdm/",
+      "aliases": [
+        "/zh-tw/services/mdm",
+        "/services/mdm/",
+        "/services/mdm"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/office-network/",
+      "aliases": [
+        "/zh-tw/services/office-network",
+        "/services/office-network/",
+        "/services/office-network"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/virtualization-cloud/",
+      "aliases": [
+        "/zh-tw/services/virtualization-cloud",
+        "/services/virtualization-cloud/",
+        "/services/virtualization-cloud"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/vpn-remote/",
+      "aliases": [
+        "/zh-tw/services/vpn-remote",
+        "/services/vpn-remote/",
+        "/services/vpn-remote"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/wazuh-asset/",
+      "aliases": [
+        "/zh-tw/services/wazuh-asset",
+        "/services/wazuh-asset/",
+        "/services/wazuh-asset"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/wazuh-siem/",
+      "aliases": [
+        "/zh-tw/services/wazuh-siem",
+        "/services/wazuh-siem/",
+        "/services/wazuh-siem"
+      ]
+    },
+    {
+      "url": "/zh-tw/services/zero-trust/",
+      "aliases": [
+        "/zh-tw/services/zero-trust",
+        "/services/zero-trust/",
+        "/services/zero-trust"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/",
+      "aliases": [
+        "/zh-tw/tech",
+        "/tech/",
+        "/tech"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/akvorado-flow-collector-overview/",
+      "aliases": [
+        "/zh-tw/tech/akvorado-flow-collector-overview",
+        "/tech/akvorado-flow-collector-overview/",
+        "/tech/akvorado-flow-collector-overview"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/akvorado-traffic-analysis-workflow/",
+      "aliases": [
+        "/zh-tw/tech/akvorado-traffic-analysis-workflow",
+        "/tech/akvorado-traffic-analysis-workflow/",
+        "/tech/akvorado-traffic-analysis-workflow"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/app-ownership-transfer-process/",
+      "aliases": [
+        "/zh-tw/tech/app-ownership-transfer-process",
+        "/tech/app-ownership-transfer-process/",
+        "/tech/app-ownership-transfer-process"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/budget-nas-refresh-plan/",
+      "aliases": [
+        "/zh-tw/tech/budget-nas-refresh-plan",
+        "/tech/budget-nas-refresh-plan/",
+        "/tech/budget-nas-refresh-plan"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/closed-hypervisor-migration-validation/",
+      "aliases": [
+        "/zh-tw/tech/closed-hypervisor-migration-validation",
+        "/tech/closed-hypervisor-migration-validation/",
+        "/tech/closed-hypervisor-migration-validation"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/controlled-ap-dual-path/",
+      "aliases": [
+        "/zh-tw/tech/controlled-ap-dual-path",
+        "/tech/controlled-ap-dual-path/",
+        "/tech/controlled-ap-dual-path"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/custom-app-review-transfer/",
+      "aliases": [
+        "/zh-tw/tech/custom-app-review-transfer",
+        "/tech/custom-app-review-transfer/",
+        "/tech/custom-app-review-transfer"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/datacenter-move-ups-improvement/",
+      "aliases": [
+        "/zh-tw/tech/datacenter-move-ups-improvement",
+        "/tech/datacenter-move-ups-improvement/",
+        "/tech/datacenter-move-ups-improvement"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/it-inventory-recovery-manual/",
+      "aliases": [
+        "/zh-tw/tech/it-inventory-recovery-manual",
+        "/tech/it-inventory-recovery-manual/",
+        "/tech/it-inventory-recovery-manual"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/it-refresh-migration-blueprint/",
+      "aliases": [
+        "/zh-tw/tech/it-refresh-migration-blueprint",
+        "/tech/it-refresh-migration-blueprint/",
+        "/tech/it-refresh-migration-blueprint"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/jamf-audit-cross-team/",
+      "aliases": [
+        "/zh-tw/tech/jamf-audit-cross-team",
+        "/tech/jamf-audit-cross-team/",
+        "/tech/jamf-audit-cross-team"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/jamf-trust-vpn-control/",
+      "aliases": [
+        "/zh-tw/tech/jamf-trust-vpn-control",
+        "/tech/jamf-trust-vpn-control/",
+        "/tech/jamf-trust-vpn-control"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/multi-stage-migration-checklist/",
+      "aliases": [
+        "/zh-tw/tech/multi-stage-migration-checklist",
+        "/tech/multi-stage-migration-checklist/",
+        "/tech/multi-stage-migration-checklist"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/network-audit-template-delivery/",
+      "aliases": [
+        "/zh-tw/tech/network-audit-template-delivery",
+        "/tech/network-audit-template-delivery/",
+        "/tech/network-audit-template-delivery"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/network-license-takeover-checklist/",
+      "aliases": [
+        "/zh-tw/tech/network-license-takeover-checklist",
+        "/tech/network-license-takeover-checklist/",
+        "/tech/network-license-takeover-checklist"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/offline-pve-gpu-passthrough/",
+      "aliases": [
+        "/zh-tw/tech/offline-pve-gpu-passthrough",
+        "/tech/offline-pve-gpu-passthrough/",
+        "/tech/offline-pve-gpu-passthrough"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/oidc-test-logs-communication/",
+      "aliases": [
+        "/zh-tw/tech/oidc-test-logs-communication",
+        "/tech/oidc-test-logs-communication/",
+        "/tech/oidc-test-logs-communication"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/on-site-troubleshooting-handbook/",
+      "aliases": [
+        "/zh-tw/tech/on-site-troubleshooting-handbook",
+        "/tech/on-site-troubleshooting-handbook/",
+        "/tech/on-site-troubleshooting-handbook"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/onboarding-account-automation/",
+      "aliases": [
+        "/zh-tw/tech/onboarding-account-automation",
+        "/tech/onboarding-account-automation/",
+        "/tech/onboarding-account-automation"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/operations-handover-package/",
+      "aliases": [
+        "/zh-tw/tech/operations-handover-package",
+        "/tech/operations-handover-package/",
+        "/tech/operations-handover-package"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/passive-inspection-report-workflow/",
+      "aliases": [
+        "/zh-tw/tech/passive-inspection-report-workflow",
+        "/tech/passive-inspection-report-workflow/",
+        "/tech/passive-inspection-report-workflow"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/pve-backup-schedule-tuning-guide/",
+      "aliases": [
+        "/zh-tw/tech/pve-backup-schedule-tuning-guide",
+        "/tech/pve-backup-schedule-tuning-guide/",
+        "/tech/pve-backup-schedule-tuning-guide"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/pve-io-wait-diagnostics-workflow/",
+      "aliases": [
+        "/zh-tw/tech/pve-io-wait-diagnostics-workflow",
+        "/tech/pve-io-wait-diagnostics-workflow/",
+        "/tech/pve-io-wait-diagnostics-workflow"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/pve-pbs-backup-schedule-validation/",
+      "aliases": [
+        "/zh-tw/tech/pve-pbs-backup-schedule-validation",
+        "/tech/pve-pbs-backup-schedule-validation/",
+        "/tech/pve-pbs-backup-schedule-validation"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/pve-quarterly-report-template/",
+      "aliases": [
+        "/zh-tw/tech/pve-quarterly-report-template",
+        "/tech/pve-quarterly-report-template/",
+        "/tech/pve-quarterly-report-template"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/pve-vgpu-rollout-training/",
+      "aliases": [
+        "/zh-tw/tech/pve-vgpu-rollout-training",
+        "/tech/pve-vgpu-rollout-training/",
+        "/tech/pve-vgpu-rollout-training"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/remote-inspection-reporting/",
+      "aliases": [
+        "/zh-tw/tech/remote-inspection-reporting",
+        "/tech/remote-inspection-reporting/",
+        "/tech/remote-inspection-reporting"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/shared-dns-radius-isolation/",
+      "aliases": [
+        "/zh-tw/tech/shared-dns-radius-isolation",
+        "/tech/shared-dns-radius-isolation/",
+        "/tech/shared-dns-radius-isolation"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/unifi-controller-migration-light-ops/",
+      "aliases": [
+        "/zh-tw/tech/unifi-controller-migration-light-ops",
+        "/tech/unifi-controller-migration-light-ops/",
+        "/tech/unifi-controller-migration-light-ops"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/vpn-radius-certificate-lifecycle/",
+      "aliases": [
+        "/zh-tw/tech/vpn-radius-certificate-lifecycle",
+        "/tech/vpn-radius-certificate-lifecycle/",
+        "/tech/vpn-radius-certificate-lifecycle"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/wifi-controller-firmware-schedule/",
+      "aliases": [
+        "/zh-tw/tech/wifi-controller-firmware-schedule",
+        "/tech/wifi-controller-firmware-schedule/",
+        "/tech/wifi-controller-firmware-schedule"
+      ]
+    },
+    {
+      "url": "/zh-tw/tech/zitadel-jamf-connect-validation-lab/",
+      "aliases": [
+        "/zh-tw/tech/zitadel-jamf-connect-validation-lab",
+        "/tech/zitadel-jamf-connect-validation-lab/",
+        "/tech/zitadel-jamf-connect-validation-lab"
+      ]
+    }
+  ]
+}
