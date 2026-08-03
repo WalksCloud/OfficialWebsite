@@ -203,13 +203,22 @@ partners-section:
   intro:
     - 我們與頂尖 IT 企業及技術夥伴緊密合作，提供最專業的 IT 服務與技術支援，讓您獲得穩定、安全、高效的 IT 環境。
   partners:
-    - name: 節省工具箱有限公司 - Jason Tools
+    - name: Jason Tools<br/>節省工具箱有限公司
       image: "/partner/jason-tools.webp"
       image-class:
+        - bg-white
         - py-2
         - px-4
       url: https://www.jason.tools/
       intro: Proxmox, Zimbra, Graylog, LibreNMS, Wazuh
+    - name: Chang Hsin IT Consulting Corp.<br/>長欣科技顧問有限公司
+      image: "/partner/ericstar.webp"
+      image-class:
+        - bg-[#222831]
+        - py-2
+        - px-4
+      url: https://www.ericstar.tw/
+      intro: Proxmox
 contact-section:
   intro:
     - 想客製討論最適合您的需求，

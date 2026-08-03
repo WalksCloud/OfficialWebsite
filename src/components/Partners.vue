@@ -7,10 +7,10 @@
 		</div>
 		<div class="grid lg:grid-cols-3 gap-6 lg:gap-12">
 			<div v-bind:key="row" v-for="row in $tm('partners-section.partners')">
-				<div :class="row['image-class']" class="inline-block bg-white rounded-sm">
+				<div :class="row['image-class']" class="inline-block rounded-sm">
 					<img class="h-12.5 lg:h-20 m-auto" alt="" :src="row.image">
 				</div>
-				<a v-if="row.url" :href="row.url" target="_blank" class="font-bold my-2 lg:my-4 block">{{ row.name }}</a>
+				<a v-if="row.url" :href="row.url" target="_blank" class="font-bold my-2 lg:my-4 block" v-html="row.name"></a>
 				<p v-else class="font-bold my-2 lg:my-4" v-text="row.name"></p>
 				<p class="text-gray-600 dark:text-gray-400">{{ row.intro }}</p>
 			</div>

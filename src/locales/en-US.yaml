@@ -211,13 +211,22 @@ partners-section:
   intro:
     - We work closely with top IT companies and technology partners to provide professional services and support so you enjoy a stable, secure, and efficient IT environment.
   partners:
-    - name: Jason Tools - 節省工具箱有限公司
+    - name: Jason Tools<br/>節省工具箱有限公司
       image: "/partner/jason-tools.webp"
       image-class:
+        - bg-white
         - py-2
         - px-4
       url: https://www.jason.tools/
       intro: Proxmox, Zimbra, Graylog, LibreNMS, Wazuh
+    - name: Chang Hsin IT Consulting Corp.<br/>長欣科技顧問有限公司
+      image: "/partner/ericstar.webp"
+      image-class:
+        - bg-[#222831]
+        - py-2
+        - px-4
+      url: https://www.ericstar.tw/
+      intro: Proxmox
 contact-section:
   intro:
     - Want to discuss the solution that fits you best?
